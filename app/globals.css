@@ -23,4 +23,5 @@ body {
 	background: var(--background);
 	color: white;
 	font-family: 'Font007', Arial, Helvetica, sans-serif;
+	user-select: none;
 }
