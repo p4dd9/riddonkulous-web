@@ -1,0 +1,19 @@
+services:
+  riddonkulous-web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: riddonkulous-web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.riddonkulous-web.rule=Host(`riddonkulous.com`) || Host(`www.riddonkulous.com`)"
+      - "traefik.http.routers.riddonkulous-web.entrypoints=websecure"
+      - "traefik.http.routers.riddonkulous-web.tls.certresolver=myresolver"
+    networks:
+      internal:
+    restart: always
+
+networks:
+  internal:
+    name: paddy_internal
+    external: true
