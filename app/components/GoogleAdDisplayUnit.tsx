@@ -21,11 +21,9 @@ export const GoogleAdDisplayUnit = () => {
 		<div className="w-full h-[90px]">
 			<ins
 				className="adsbygoogle"
-				style={{ display: 'block' }}
+				style={{ display: 'inline-block', width: '728px', height: '90px' }}
 				data-ad-client="ca-pub-6902354361648358"
 				data-ad-slot="4750207295"
-				data-ad-format="auto"
-				data-full-width-responsive="true"
 			/>
 		</div>
 	)
