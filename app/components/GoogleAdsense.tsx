@@ -1,0 +1,9 @@
+export const GoogleAdsense = () => {
+	return (
+		<script
+			async
+			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6902354361648358"
+			crossOrigin="anonymous"
+		/>
+	)
+}

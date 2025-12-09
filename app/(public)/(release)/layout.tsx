@@ -1,5 +1,5 @@
+import { GoogleAdsense } from '@/app/components/GoogleAdsense'
 import type { Metadata } from 'next'
-import Head from 'next/head'
 import '../../globals.css'
 
 export const metadata: Metadata = {
@@ -14,15 +14,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<Head>
-				<meta charSet="UTF-8" />
-				{/* Adding Google AdSense script directly */}
-				<script
-					src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6902354361648358`}
-					async
-				/>
-			</Head>
-
+			<head>
+				<GoogleAdsense />
+			</head>
 			<body className="antialiased">{children}</body>
 		</html>
 	)
