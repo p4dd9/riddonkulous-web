@@ -1,3 +1,4 @@
+import { GoogleAdDisplayUnit } from '@/app/components/GoogleAdDisplayUnit'
 import { GoogleAdsense } from '@/app/components/GoogleAdsense'
 import type { Metadata } from 'next'
 import '../../globals.css'
@@ -17,7 +18,10 @@ export default function RootLayout({
 			<head>
 				<GoogleAdsense />
 			</head>
-			<body className="antialiased">{children}</body>
+			<body className="antialiased">
+				<GoogleAdDisplayUnit />
+				{children}
+			</body>
 		</html>
 	)
 }

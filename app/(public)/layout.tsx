@@ -1,6 +1,6 @@
 import { GoogleAdsense } from '@/app/components/GoogleAdsense'
 import type { Metadata } from 'next'
-import '../../globals.css'
+import '../globals.css'
 
 export const metadata: Metadata = {
 	title: 'Riddonkulous | Create and Solve Riddles',
