@@ -1,3 +1,4 @@
+import { GoogleAdsense } from '@/app/components/GoogleAdsense'
 import type { Metadata } from 'next'
 import '../../globals.css'
 
@@ -13,6 +14,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
+			<head>
+				<GoogleAdsense />
+			</head>
 			<body className="antialiased">{children}</body>
 		</html>
 	)
