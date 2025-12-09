@@ -1,3 +1,7 @@
 ---
 alwaysApply: true
 ---
+
+- Always follow the colros and design guide from global.css file
+- Prefer component export over default export syntax
+- Prefer arrow functions

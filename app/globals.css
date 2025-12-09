@@ -8,20 +8,30 @@
 	font-display: swap;
 }
 
+@font-face {
+	font-family: 'FONT001';
+	src: url('/font/FONT001.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
 @theme {
 	--color-primary: #a47600;
 	--color-secondary: #6f5b23;
 
-	--background: #0b1416;
-}
+	--color-sky: #622aff;
+	--color-tertiary: #3f5219;
+	--color-tertiary-hover: #2f3d14;
 
-:root {
-	--background: #0b1416;
+	--color-bg: #0b1416;
+	--color-bg-dark: #000;
 }
 
 body {
-	background: var(--background);
-	color: white;
+	color: var(--color-bg);
 	font-family: 'Font007', Arial, Helvetica, sans-serif;
-	user-select: none;
+}
+
+.drop-shadow-text {
 }

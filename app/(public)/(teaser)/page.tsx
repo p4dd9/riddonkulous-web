@@ -50,7 +50,10 @@ export default function Home() {
 	}, [spawnImage])
 
 	return (
-		<div className="relative min-h-screen w-full overflow-hidden cursor-pointer" onClick={spawnImage}>
+		<div
+			className="relative min-h-screen w-full overflow-hidden cursor-pointer user-select-none"
+			onClick={spawnImage}
+		>
 			{images.map((img) => (
 				<Image
 					key={img.id}
