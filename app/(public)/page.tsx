@@ -21,7 +21,7 @@ export default async function Home() {
 					</Link>
 					{riddleOfTheDay.date && <span> on {formatDate(riddleOfTheDay.date)}</span>}
 				</p>
-				<div className="relative p-4 rounded-lg h-[50vh] flex flex-col items-center overflow-hidden border-2">
+				<div className="relative py-4 px-2 rounded-lg min-h-[50vh] md:min-h-[60vh] lg:min-h-[70vh] w-full flex flex-col items-stretch overflow-hidden border-2">
 					<div
 						className="absolute inset-0 bg-position-[center_bottom] bg-no-repeat bg-cover rounded-lg"
 						style={{
@@ -30,9 +30,9 @@ export default async function Home() {
 						}}
 					/>
 
-					<div className="relative z-10 flex flex-col items-center justify-between h-full w-full">
+					<div className="relative z-10 flex flex-col items-center justify-between w-full py-2 flex-1 min-h-full">
 						<div></div>
-						<div className="relative text-xl md:text-2xl w-[75%] md:max-w-1/2 text-center flex-1 flex items-center justify-center">
+						<div className="relative text-xl md:text-2xl w-[95%] md:w-[80%] lg:w-[70%] text-center flex-1 flex items-center justify-center py-4">
 							<p>{riddleOfTheDay.riddle}</p>
 						</div>
 
