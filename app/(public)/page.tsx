@@ -21,7 +21,7 @@ export default async function Home() {
 					</Link>
 					{riddleOfTheDay.date && <span> on {formatDate(riddleOfTheDay.date)}</span>}
 				</p>
-				<div className="relative py-1 px-2 rounded-lg min-h-[50vh] md:min-h-[60vh] lg:min-h-[70vh] w-full flex flex-col items-stretch overflow-hidden border-2">
+				<div className="relative py-1 px-2 rounded-lg min-h-[50vh] md:min-h-[60vh] w-full flex flex-col items-stretch overflow-hidden border-2">
 					<div
 						className="absolute inset-0 bg-position-[center_bottom] bg-no-repeat bg-cover rounded-lg"
 						style={{
