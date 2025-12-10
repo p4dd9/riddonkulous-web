@@ -17,19 +17,20 @@
 }
 
 @theme {
-	--color-primary: #a47600;
-	--color-secondary: #6f5b23;
+	--color-primary: #d4a017;
+	--color-secondary: #b8944f;
 
 	--color-sky: #622aff;
-	--color-tertiary: #3f5219;
-	--color-tertiary-hover: #2f3d14;
+	--color-tertiary: #4a6b2a;
+	--color-tertiary-hover: #3a5520;
 
 	--color-bg: #0b1416;
-	--color-bg-dark: #000;
+	--color-bg-dark: #101d0f;
 }
 
 body {
-	color: var(--color-bg);
+	background: var(--color-bg);
+	color: white;
 	font-family: 'Font007', Arial, Helvetica, sans-serif;
 }
 

@@ -1,6 +1,6 @@
-# Riddonkulous Web  
+# Riddonkulous Web
 
-r/riddonkulous  
+r/riddonkulous
 
 # docker
 

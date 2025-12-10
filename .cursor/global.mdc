@@ -5,3 +5,5 @@ alwaysApply: true
 - Always follow the colros and design guide from global.css file
 - Prefer component export over default export syntax
 - Prefer arrow functions
+- Do not use any kind of font "boldness" in the code your produce. That includes "semibold", "bold" and others. Neither in Tailwind nor inline styles.
+- Do not implement any gradients except requested

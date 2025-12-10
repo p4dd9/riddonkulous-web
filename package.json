@@ -12,7 +12,8 @@
 	"dependencies": {
 		"next": "16.0.7",
 		"react": "19.2.0",
-		"react-dom": "19.2.0"
+		"react-dom": "19.2.0",
+		"zod": "^4.1.13"
 	},
 	"devDependencies": {
 		"@tailwindcss/postcss": "^4",
@@ -21,8 +22,8 @@
 		"@types/react-dom": "^19",
 		"eslint": "^9",
 		"eslint-config-next": "16.0.7",
+		"prettier": "^3.0.1",
 		"tailwindcss": "^4",
-		"typescript": "^5",
-		"prettier": "^3.0.1"
+		"typescript": "^5"
 	}
 }
