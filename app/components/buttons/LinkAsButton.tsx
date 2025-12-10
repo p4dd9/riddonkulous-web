@@ -7,6 +7,7 @@ interface LinkAsButtonProps {
 	href: string
 	text?: string
 	customClass?: string
+	className?: string
 	threeD?: boolean
 	icon?: string
 	iconClass?: string
@@ -25,6 +26,7 @@ export const LinkAsButton = ({
 	href,
 	text = '',
 	customClass = '',
+	className = '',
 	threeD = true,
 	icon,
 	iconClass = 'w-5 h-5',
@@ -35,11 +37,9 @@ export const LinkAsButton = ({
 }: LinkAsButtonProps) => {
 	const buttonClasses = useMemo(() => {
 		const baseClasses = customClass || defaultClasses
-		if (threeD) {
-			return `${baseClasses} ${threeDClasses}`
-		}
-		return baseClasses
-	}, [customClass, threeD])
+		const classesWith3D = threeD ? `${baseClasses} ${threeDClasses}` : baseClasses
+		return className ? `${classesWith3D} ${className}` : classesWith3D
+	}, [customClass, threeD, className])
 
 	const textAlignClass = useMemo(() => {
 		if (textAlign === 'center') {
@@ -64,7 +64,7 @@ export const LinkAsButton = ({
 			href={href}
 			target={target}
 			rel={rel}
-			className={`inline-block ${buttonClasses} ${textAlignClass}`}
+			className={className ? `${buttonClasses} ${textAlignClass}` : `inline-block ${buttonClasses} ${textAlignClass}`}
 			style={textAlignStyle}
 		>
 			<div className={icon ? 'flex items-center gap-2' : ''}>

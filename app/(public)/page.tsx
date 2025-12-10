@@ -53,6 +53,7 @@ export default async function Home() {
 					href={`https://www.reddit.com/r/riddonkulous/comments/${riddleOfTheDay.postId}`}
 					target="_blank"
 					rel="noopener noreferrer"
+					className="w-full text-center py-2"
 				>
 					Visit on Reddit
 				</LinkAsButton>
