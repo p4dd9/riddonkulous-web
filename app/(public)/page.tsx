@@ -1,4 +1,4 @@
-import { GoogleAdDisplayUnit } from '@/app/components/ads/GoogleAdDisplayUnit'
+import { GoogleAdDisplayUnitResponsive } from '@/app/components/ads/GoogleAdUnitResponsive'
 import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { getRiddleOfTheDay } from '@/app/services/riddleService'
 import { getCanvasBackground } from '@/app/util/cosmetics'
@@ -58,7 +58,17 @@ export default async function Home() {
 				</LinkAsButton>
 			</div>
 
-			<GoogleAdDisplayUnit />
+			<div className="w-full flex justify-center items-center">
+				<div
+					className="w-full"
+					style={{
+						minWidth: '120px',
+						maxWidth: 'min(100%, 1200px)',
+					}}
+				>
+					<GoogleAdDisplayUnitResponsive />
+				</div>
+			</div>
 		</div>
 	)
 }

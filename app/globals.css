@@ -36,3 +36,39 @@ body {
 
 .drop-shadow-text {
 }
+
+/* Hide Google Ad when constraints are violated */
+/* Hide when viewport width is less than minimum (120px) */
+@media (max-width: 119px) {
+	.google-ad-responsive-container {
+		display: none !important;
+	}
+}
+
+/* Hide when viewport height is less than minimum (50px) */
+@media (max-height: 49px) {
+	.google-ad-responsive-container {
+		display: none !important;
+	}
+}
+
+/* Hide when viewport width exceeds maximum (1200px) */
+@media (min-width: 1201px) {
+	.google-ad-responsive-container {
+		display: none !important;
+	}
+}
+
+/* Hide when viewport height exceeds maximum (1200px) */
+@media (min-height: 1201px) {
+	.google-ad-responsive-container {
+		display: none !important;
+	}
+}
+
+/* Hide when both width and height are greater than 450px (only one dimension can be > 450px) */
+@media (min-width: 451px) and (min-height: 451px) {
+	.google-ad-responsive-container {
+		display: none !important;
+	}
+}
