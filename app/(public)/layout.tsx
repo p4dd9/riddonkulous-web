@@ -1,4 +1,5 @@
 import { GoogleAdsense } from '@/app/components/ads/GoogleAdsense'
+import { Footer } from '@/app/components/layout/Footer'
 import type { Metadata } from 'next'
 import '../globals.css'
 
@@ -19,6 +20,7 @@ export default function RootLayout({
 			</head>
 			<body className="antialiased flex flex-col min-h-screen">
 				<main className="flex-1 h-full">{children}</main>
+				<Footer />
 			</body>
 		</html>
 	)

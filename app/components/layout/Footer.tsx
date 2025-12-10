@@ -1,7 +1,30 @@
+import Link from 'next/link'
+
 export const Footer = () => {
 	return (
-		<footer className="w-full h-[100px] bg-(--color-bg-dark)">
-			<h1>Footer</h1>
+		<footer className="w-full bg-(--color-bg-dark) py-6 px-4">
+			<div className="max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 text-sm">
+				<div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+					<Link
+						href="https://hammertime.studio/en/reddit/terms-of-service"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="hover:underline"
+					>
+						Terms of Service
+					</Link>
+					<span className="hidden md:inline">|</span>
+					<Link
+						href="https://hammertime.studio/en/reddit/privacy-policy"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="hover:underline"
+					>
+						Privacy Policy
+					</Link>
+				</div>
+				<p className="text-xs">© 2025 Hammertime e.U.</p>
+			</div>
 		</footer>
 	)
 }
