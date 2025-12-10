@@ -64,6 +64,7 @@ export default async function Home() {
 					style={{
 						minWidth: '120px',
 						maxWidth: 'min(100%, 1200px)',
+						minHeight: '75px',
 					}}
 				>
 					<GoogleAdDisplayUnitResponsive />
