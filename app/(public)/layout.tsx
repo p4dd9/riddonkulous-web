@@ -17,7 +17,9 @@ export default function RootLayout({
 			<head>
 				<GoogleAdsense />
 			</head>
-			<body className="antialiased">{children}</body>
+			<body className="antialiased flex flex-col min-h-screen">
+				<main className="flex-1 h-full">{children}</main>
+			</body>
 		</html>
 	)
 }
