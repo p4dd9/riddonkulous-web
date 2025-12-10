@@ -76,7 +76,6 @@ export const GoogleAdDisplayUnitResponsive = () => {
 			/>
 			<div
 				ref={containerRef}
-				className="google-ad-responsive-container w-full flex justify-center items-center"
 				style={{
 					minWidth: '120px',
 					minHeight: '100px', // Reserve space to prevent reflow on mobile
