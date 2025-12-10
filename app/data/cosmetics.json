@@ -1,0 +1,2562 @@
+[
+	{
+		"name": "New World Colosseum",
+		"sku": "BG001",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG001.png",
+		"description": "Once the heart of forgotten riddle battles, the New World Coloseum tells stories of unsolved riddles and the applause of long gone crowds. Legends say the walls remember every question ever asked and the silence that followed when AI hints ruined everything.",
+		"type": "canvas",
+		"pack": "Coloseum"
+	},
+	{
+		"name": "Ember Colosseum",
+		"sku": "BG002",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG002.png",
+		"description": "Beneath the blood-hued sky, the Ember Colosseum smolders with the memories of riddles that burned too brightly. It was once used for trials of forbidden knowledge, where a wrong answer ended \"the game\".",
+		"type": "canvas",
+		"pack": "Coloseum"
+	},
+	{
+		"name": "Sunfall Colosseum",
+		"sku": "BG003",
+		"priceCredits": 10,
+		"tag": "Uncommon",
+		"assetName": "BG003.png",
+		"description": "The Sunfall Colosseum once crowned the brightest minds of the age. Here, riddles were not only solved, they were celebrated in thunderous cheer. Now, the wind carries echoes of laughter and joy throughout the community.",
+		"type": "canvas",
+		"pack": "Coloseum"
+	},
+	{
+		"name": "Disturb No Silk",
+		"sku": "BG004",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG004.png",
+		"description": "Beneath the earth, where silk clings to stone and silence breathes heavy, the warning still hangs: Disturb No Silk. The spiders here are not hunters of flesh, but of thought drawn to riddles whispered too loud or too bold. One wrong word, and the weavers awaken.",
+		"type": "canvas",
+		"pack": "Spider Nest"
+	},
+	{
+		"name": "Do Not Follow",
+		"sku": "BG005",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG005.png",
+		"description": "The green glow ahead tempts the curious, but every thread spun in this tunnel is a warning, not a welcome. Do Not Follow was carved in eight different scripts along the walls, before the spiders covered them in silk. Those who ignore the message are never heard from again, except in riddles whispered by the webs.",
+		"type": "canvas",
+		"pack": "Spider Nest"
+	},
+	{
+		"name": "Stay on Path",
+		"sku": "BG006",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG006.png",
+		"description": "This forest was once mapped, but the paths shift like threads in a loom, woven and rewoven by the spiders that rule the canopy. Stray from the trail, and you may find yourself wrapped in riddles with no right answers. The path is narrow, the silence absolute.",
+		"type": "canvas",
+		"pack": "Spider Nest"
+	},
+	{
+		"name": "Finally Home",
+		"sku": "BG007",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "BG007.png",
+		"description": "After countless questions and colder nights, Finally Home is where riddlers return to calm down from a long day. The fire is warm, the mountains watch, and for once, the only answer you need is rest. Finally Home.",
+		"type": "canvas",
+		"pack": "Scavanger Camp"
+	},
+	{
+		"name": "Before the Questions",
+		"sku": "BG008",
+		"priceCredits": 50,
+		"tag": "Common",
+		"assetName": "BG008.png",
+		"description": "The fire crackles, the sky hums with fading light, and for a moment, the world is still. Before the Questions is a safe harbor where riddlers gather not to answer, but to sit together and celebrate. Here, stories begin, friendships form.",
+		"type": "canvas",
+		"pack": "Scavanger Camp"
+	},
+	{
+		"name": "After the Answer",
+		"sku": "BG009",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "BG009.png",
+		"description": "The riddle is over, but the night has only begun. Whatever was solved out there, something else still waits in the dark.",
+		"type": "canvas",
+		"pack": "Scavanger Camp"
+	},
+	{
+		"name": "Moonveil Colosseum",
+		"sku": "BG010",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG010.png",
+		"description": "In Moonveil Colosseum, riddles were not answered, they were unveiled, like secrets teased from the dark by moonlight. Each pillar once bore a symbol, each stone a question only the stars could solve. Some say if you speak a riddle here under a full moon, Redditors will answer back.",
+		"type": "canvas",
+		"pack": "Coloseum"
+	},
+	{
+		"name": "Colosseum of Silence",
+		"sku": "BG011",
+		"priceCredits": 10,
+		"tag": "Uncommon",
+		"assetName": "BG011.png",
+		"description": "Here, words fall heavy and echoes refuse to carry. The Colosseum of Silence was once the final arena of legendary riddle duels, where noise meant failure, and only clarity of thought could cut through the stillness of Posts.",
+		"type": "canvas",
+		"pack": "Coloseum"
+	},
+	{
+		"name": "The Brood Hall",
+		"sku": "BG012",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG012.png",
+		"description": "Deep beneath forgotten stone, The Brood Hall pulses with quiet breath and candlelight. The spiders here do not guard treasure, they tend to old riddles, nesting in questions left unanswered.",
+		"type": "canvas",
+		"pack": "Spider Nest"
+	},
+	{
+		"name": "Nest of Knowing",
+		"sku": "BG013",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG013.png",
+		"description": "Tucked deep in the earth, the Nest of Knowing is warm, still, and alive with quiet tension. The spiders here do not hunt; they listen. Every egg pulses with a question not yet asked, and every step closer invites an answer you may not want to hear.",
+		"type": "canvas",
+		"pack": "Spider Nest"
+	},
+	{
+		"name": "Lost in the Woods",
+		"sku": "BG014",
+		"priceCredits": 50,
+		"tag": "Common",
+		"assetName": "BG014.png",
+		"description": "A place untouched by urgency, Lost in the Woods offers warmth without question. The light never falters, even when the woods grow dark and riddles press close. Here, stories are shared softly, and the only answer expected is your presence.",
+		"type": "canvas",
+		"pack": "Scavanger Camp"
+	},
+	{
+		"name": "Campfire Promises",
+		"sku": "BG015",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "BG015.png",
+		"description": "Raised by those who trade answers for survival, Campfire Promises is a scavenger's outpost built on bartered truths and half-told tales. The fire burns not for warmth, but for deals, rumors, and warnings whispered after dark. Here, every riddle has a price and every promise lights the path to the next find.",
+		"type": "canvas",
+		"pack": "Scavanger Camp"
+	},
+	{
+		"name": "Tintenfische",
+		"sku": "FONT001",
+		"priceCredits": 0,
+		"tag": "Common",
+		"assetName": "FONT001.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Pixel Friends"
+	},
+	{
+		"name": "Jupiteroid",
+		"sku": "FONT002",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT002.ttf",
+		"description": "This font has a tall, narrow and monospaced appearance with clean, slightly playful curves. It gives off a retro-futuristic or whimsical typewriter vibe.",
+		"type": "font",
+		"pack": "Sans"
+	},
+	{
+		"name": "Bore Blasters All Caps",
+		"sku": "FONT003",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "FONT003.ttf",
+		"description": "Unlocked through sheer speed and sharp thinking, this pixel-crisp font feels like a secret left behind in a glitched-out puzzle game. It's bold, boxy, and unapologetically retro.",
+		"type": "font",
+		"pack": "Pixel Friends"
+	},
+	{
+		"name": "Cheese Font",
+		"sku": "FONT004",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "FONT004.ttf",
+		"description": "Originally spotted on a suspicious sign near a mouse trap, this font lures you in with charm and leaves you questioning everything. It's playful, risky, and perfect for baiting riddles that bite back.",
+		"type": "font",
+		"pack": "Cartoon"
+	},
+	{
+		"name": "Not Jam Serif",
+		"sku": "FONT005",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "FONT005.ttf",
+		"description": "A font with just enough structure to sound convincing, and just enough wobble to keep you guessing. It's what a riddle would wear to a job interview - confident, clever, and slightly off.",
+		"type": "font",
+		"pack": "Pixel Friends"
+	},
+	{
+		"name": "Not Jam Old Style",
+		"sku": "FONT006",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT006.ttf",
+		"description": "Used by the earliest Riddlers of the Realm, this type was scrawled beside half-finished clues and laughably wrong guesses. It's blocky, bold, and born to host trickery.",
+		"type": "font",
+		"pack": "Pixel Friends"
+	},
+	{
+		"name": "The Verdant Archive",
+		"sku": "BG016",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG016.png",
+		"description": "Long ago, this overgrown sanctuary served as a gathering place for the wisest minds of r/riddonkulous, where riddles were debated like scripture. Now, only the vines remember the upvoted truths and downvoted dares.",
+		"type": "canvas",
+		"pack": "Overgrown Library"
+	},
+	{
+		"name": "Hollow Hall of Threads",
+		"sku": "BG017",
+		"priceCredits": 10,
+		"tag": "Uncommon",
+		"assetName": "BG017.png",
+		"description": "Carved deep beneath the subreddit's roots, the Hollow Hall was once where mods wove the great riddle threads by torchlight. Now, broken statues and empty chairs mark the end of debates that once earned gilded glory.",
+		"type": "canvas",
+		"pack": "Overgrown Library"
+	},
+	{
+		"name": "The Archivist's Nook",
+		"sku": "BG018",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG018.png",
+		"description": "A quieter corner, the Archivist's Nook was once the staging ground for legendary riddle drafts. Some say if you listen closely at dusk, you can still hear the scribbles of anons chasing karma through cleverness.",
+		"type": "canvas",
+		"pack": "Overgrown Library"
+	},
+	{
+		"name": "Greenlit Atrium",
+		"sku": "BG019",
+		"priceCredits": 10,
+		"tag": "Uncommon",
+		"assetName": "BG019.png",
+		"description": "Once a thriving hub where the highest voted riddles basked in sunlight, the Greenlit Atrium now lies sealed, its walls overgrown, its posts forgotten.",
+		"type": "canvas",
+		"pack": "Overgrown Library"
+	},
+	{
+		"name": "Gilded Veranda",
+		"sku": "BG020",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG020.png",
+		"description": "Legends say this veranda was built where the first riddle was ever spoken aloud, a place where logic and language danced at dawn. Though nature has reclaimed the marble and ink, the air still hums with the energy of unsolved wonders.",
+		"type": "canvas",
+		"pack": "Overgrown Library"
+	},
+	{
+		"name": "Whispermill Hollow",
+		"sku": "BG021",
+		"priceCredits": 75,
+		"tag": "Uncommon",
+		"assetName": "BG021.png",
+		"description": "Before the rise of the great halls, Whispermill Hollow was where the earliest riddlers crafted their posts by candlelight, letting the stream carry drafts downstream for others to ponder. Its waterwheel once powered the flow of upvotes.",
+		"type": "canvas",
+		"pack": "Stylized Medieval"
+	},
+	{
+		"name": "Observatory of Forgotten Stars",
+		"sku": "BG022",
+		"priceCredits": 125,
+		"tag": "Rare",
+		"assetName": "BG022.gif",
+		"description": "Hidden atop the cliffs of the Realm Between Riddles, this ancient observatory peers into constellations no longer mapped. Legend says the book on its pedestal only reveals its pages to outstanding riddle authors.",
+		"type": "canvas",
+		"pack": "Arcane"
+	},
+	{
+		"name": "Cozy Cabin",
+		"sku": "BG023",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG023.png",
+		"description": "Tucked away in a snow dusted glade, this crackling hearth has seen a thousand late-night theories, shower thoughts, and riddle debates. It's said that every upvote stokes the fire and every clever post earns a spot on the ever-shifting shelf of riddle legends.",
+		"type": "canvas",
+		"pack": "Stylized Medieval"
+	},
+	{
+		"name": "The Riddle And Tankard",
+		"sku": "BG024",
+		"priceCredits": 75,
+		"tag": "Uncommon",
+		"assetName": "BG024.png",
+		"description": "A favorite haunt for riddlemakers, the developer, lurkers, and late-night threaders, this dimly lit tavern serves hot stew, cold mead, and even colder takes. Above the bar hangs a scroll of unsolved riddles - solve one, and your name gets whispered across the subreddit like a bardic meme.",
+		"type": "canvas",
+		"pack": "Stylized Medieval"
+	},
+	{
+		"name": "Modwatch Spire",
+		"sku": "BG025",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG025.png",
+		"description": "Bathed in moonlight and mischief, this crooked tower is where the mods dwell, guardians of lore, spoilers, and subreddit balance. Rumor has it they craft the hardest riddles at midnight, each wrapped in layers of irony, sarcasm, and just the right amount of karma bait.",
+		"type": "canvas",
+		"pack": "Stylized Medieval"
+	},
+	{
+		"name": "Karma Arena",
+		"sku": "BG026",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG026.png",
+		"description": "Where riddlers rise and fall, this grand arena echoes with cheers, groans, and the occasional sarcastic slow clap. Posts are made, points are claimed, and only the wittiest survive the front page - while the rest are left to bask in the shade of downvote oblivion.",
+		"type": "canvas",
+		"pack": "Stylized Medieval"
+	},
+	{
+		"name": "Threadtown Commons",
+		"sku": "BG027",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG027.png",
+		"description": "The heart of the riddle realm, where posts are born and comment chains wander like curious cats. Every door hides a different debate, every window flickers with new lore, and somewhere, someone is definitely writing Actually ... on a scroll, right this second.",
+		"type": "canvas",
+		"pack": "Stylized Medieval"
+	},
+	{
+		"name": "Riddlecore",
+		"sku": "BG028",
+		"priceCredits": 100,
+		"tag": "Rare",
+		"assetName": "BG028.gif",
+		"description": "Beneath the upvoted noise and archived riddle posts, the Riddlecore hums - a reflection of every question that ever stumped a worthy thread. Gribnik waits by the glow, where only the sharpest minds earn their place. Some say Medusa sleeps deep - will she rise again?",
+		"type": "canvas",
+		"pack": "Arcane"
+	},
+	{
+		"name": "Toadwick the Brown",
+		"sku": "PAL001",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "PAL001.gif",
+		"description": "Toadwick the Brown, a swamp-born sorcerer of mud and mystery, brews spells from tea leaves and old secrets. Rarely seen, he leaves behind damp footprints and riddles that linger.",
+		"type": "pal",
+		"pack": "Frogfolk"
+	},
+	{
+		"name": "Grumleaf the Green",
+		"sku": "PAL002",
+		"priceCredits": 75,
+		"tag": "Uncommon",
+		"assetName": "PAL002.gif",
+		"description": "Old Grumleaf the Green has been grumbling at spirits and squirrels since the swamp was a puddle. His staff is half fungus, half walking stick, and entirely unreliable - just like his prophecies.",
+		"type": "pal",
+		"pack": "Frogfolk"
+	},
+	{
+		"name": "Chief Brawlump",
+		"sku": "PAL003",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "PAL003.gif",
+		"description": "Chief Brawlump the Greenback rules the riddle-swamps of r/riddonkulous with iron thighs and a brain full of half-remembered wisdom. He challenges newcomers to flex their minds before their muscles, answer his riddle, or do swamp push-ups until the frogs laugh. It's said his croak once broke a server.",
+		"type": "pal",
+		"pack": "Frogfolk"
+	},
+	{
+		"name": "Murklo",
+		"sku": "PAL004",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "PAL004.gif",
+		"description": "Murklo the Mudmancer wears a grin half-sunk in grime, He speaks in sludge and riddles that don't rhyme. With a squelch and a slither he'll cloud what you know. Answer him wrong, and down you go.",
+		"type": "pal",
+		"pack": "Frogfolk"
+	},
+	{
+		"name": "Longlimb",
+		"sku": "PAL005",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "PAL005.gif",
+		"description": "Long of leg and sharp of eye, this green-streaked sentinel melts into reeds and shadow. Each arrow carries the weight of silence and swamp justice, loosed without warning but never without reason. They say you'll hear the twang just after your clever answer proves wrong.",
+		"type": "pal",
+		"pack": "Frogfolk"
+	},
+	{
+		"name": "Cragspire the Red",
+		"sku": "PAL006",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "PAL006.gif",
+		"description": "Scarlet-skinned and stone-still, he waits by the water's edge, spear tip glinting like a lie half-told. He speaks in riddles sharp as his thrust - answer true, and he lets you pass, answer false, and you meet the point.",
+		"type": "pal",
+		"pack": "Frogfolk"
+	},
+	{
+		"name": "Bogmash",
+		"sku": "PAL007",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "PAL007.gif",
+		"description": "Bogmash the Hulking Green lumbers through the muck with fists like mossy boulders and a laugh that shakes lily pads loose. He doesn't like riddles - he loves them, but only the kind with one-word answers and the chance to smash a log if you're wrong.",
+		"type": "pal",
+		"pack": "Frogfolk"
+	},
+	{
+		"name": "Chook",
+		"sku": "PAL008",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "PAL008.gif",
+		"description": "A round little featherball with eyes full of wonder and absolutely no idea what's going on. She pecks at clues, flaps at danger, and occasionally solves riddles by pure accident. Don't underestimate her: behind that cute cluck is chaos in adorable form.",
+		"type": "pal",
+		"pack": "Fae & Fur"
+	},
+	{
+		"name": "Rooster Randy",
+		"sku": "PAL009",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL009.gif",
+		"description": "Strutting through the scene with chest puffed and comb flared, this brown-plumed showoff treats every moment like a parade in his honor. He cracks jokes louder than his crow and winks after every punchline - even the bad ones.",
+		"type": "pal",
+		"pack": "Fae & Fur"
+	},
+	{
+		"name": "Pucklet",
+		"sku": "PAL010",
+		"priceCredits": 75,
+		"tag": "Mythic",
+		"assetName": "PAL010.gif",
+		"description": "Pucklets are tiny satyr sprites born from laughter echoing through enchanted forests. With cloven hooves, leafy hair, and a flute made from a curled riddle scroll, they speak only in playful puzzles.",
+		"type": "pal",
+		"pack": "Fae & Fur"
+	},
+	{
+		"name": "Sir Prism McChroma",
+		"sku": "PAL011",
+		"priceCredits": 75,
+		"tag": "Uncommon",
+		"assetName": "PAL011.gif",
+		"description": "Sir Prism McChroma is a legendary leprechaun of the Chromatic Court, known less for hoarding gold and more for his uncontrollable bursts of rainbow-spewing delight. Whenever he laughs too hard (which is often), a vibrant arc erupts from his mouth, painting the sky and confusing nearby weather systems.",
+		"type": "pal",
+		"pack": "Fae & Fur"
+	},
+	{
+		"name": "Meredith",
+		"sku": "PAL012",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "PAL012.gif",
+		"description": "Its said if you whisper a wonder into the wind and never speak of it again, she may carry it to the one who knows.",
+		"type": "pal",
+		"pack": "Fae & Fur"
+	},
+	{
+		"name": "Skull Puff",
+		"sku": "SPELL001",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL001.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Danger"
+	},
+	{
+		"name": "Skull Puff (Pink)",
+		"sku": "SPELL002",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL002.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Danger"
+	},
+	{
+		"name": "Poison Call",
+		"sku": "SPELL003",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL003.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Danger"
+	},
+	{
+		"name": "Poison Call (Dark)",
+		"sku": "SPELL004",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL004.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Danger"
+	},
+	{
+		"name": "Explosion",
+		"sku": "SPELL005",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "SPELL005.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Danger"
+	},
+	{
+		"name": "Explosion (Gold)",
+		"sku": "SPELL006",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "SPELL006.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Danger"
+	},
+	{
+		"name": "Earth",
+		"sku": "SPELL007",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL007.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Elements"
+	},
+	{
+		"name": "Earth (Evil)",
+		"sku": "SPELL008",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "SPELL008.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Elements"
+	},
+	{
+		"name": "Fire",
+		"sku": "SPELL009",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL009.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Elements"
+	},
+	{
+		"name": "Fire (Glacial)",
+		"sku": "SPELL010",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "SPELL010.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Elements"
+	},
+	{
+		"name": "Frost",
+		"sku": "SPELL011",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL011.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Elements"
+	},
+	{
+		"name": "Frost (Amethyst)",
+		"sku": "SPELL012",
+		"priceCredits": 75,
+		"tag": "Mythic",
+		"assetName": "SPELL012.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Elements"
+	},
+	{
+		"name": "Wind",
+		"sku": "SPELL013",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "SPELL013.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Elements"
+	},
+	{
+		"name": "Wind (Gold)",
+		"sku": "SPELL014",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL014.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Elements"
+	},
+	{
+		"name": "Supercharge",
+		"sku": "SPELL015",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL015.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Sci-Fi"
+	},
+	{
+		"name": "Hacking",
+		"sku": "SPELL016",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "SPELL016.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Sci-Fi"
+	},
+	{
+		"name": "Hex-Shield",
+		"sku": "SPELL017",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "SPELL017.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Sci-Fi"
+	},
+	{
+		"name": "Scan",
+		"sku": "SPELL018",
+		"priceCredits": 75,
+		"tag": "Mythic",
+		"assetName": "SPELL018.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Sci-Fi"
+	},
+	{
+		"name": "Warp",
+		"sku": "SPELL019",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "SPELL019.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Sci-Fi"
+	},
+	{
+		"name": "Zap",
+		"sku": "SPELL020",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "SPELL020.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Sci-Fi"
+	},
+	{
+		"name": "Cure",
+		"sku": "SPELL021",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "SPELL021.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Twinkles"
+	},
+	{
+		"name": "Burst",
+		"sku": "SPELL022",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL022.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Twinkles"
+	},
+	{
+		"name": "Prismancy",
+		"sku": "SPELL023",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "SPELL023.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Twinkles"
+	},
+	{
+		"name": "Bluepuff",
+		"sku": "SPELL024",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL024.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Twinkles"
+	},
+	{
+		"name": "Berrypuff",
+		"sku": "SPELL025",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL025.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Twinkles"
+	},
+	{
+		"name": "Spellcast",
+		"sku": "SPELL026",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "SPELL026.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Twinkles"
+	},
+	{
+		"name": "17015 D.E.M",
+		"sku": "BG029",
+		"priceCredits": 50,
+		"tag": "Mythic",
+		"assetName": "BG029.gif",
+		"description": "In 17015 D.E.M., when most had forgotten how to wonder, an old desk by a round window became the birthplace of a legend. Armed with a magical feather, the Riddler began writing epic stories no one had asked in centuries.",
+		"type": "canvas",
+		"pack": "Arcane"
+	},
+	{
+		"name": "Baby Dragon (Earth)",
+		"sku": "PAL013",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "PAL013.gif",
+		"description": "This dragon is a master of earth magic, able to control the ground and create earthquakes.",
+		"type": "pal",
+		"pack": "Baby Dragons"
+	},
+	{
+		"name": "Baby Dragon (Night)",
+		"sku": "PAL014",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "PAL014.gif",
+		"description": "This dragon is a master of night magic, able to control the night and create darkness.",
+		"type": "pal",
+		"pack": "Baby Dragons"
+	},
+	{
+		"name": "Baby Dragon (Thunder)",
+		"sku": "PAL015",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "PAL015.gif",
+		"description": "This dragon is a master of thunder magic, able to control storms and create lightning.",
+		"type": "pal",
+		"pack": "Baby Dragons"
+	},
+	{
+		"name": "Baby Dragon (Snow)",
+		"sku": "PAL016",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "PAL016.gif",
+		"description": "This dragon is a master of snow magic, able to control blizzards and create snowstorms.",
+		"type": "pal",
+		"pack": "Baby Dragons"
+	},
+	{
+		"name": "Baby Dragon (Sun)",
+		"sku": "PAL017",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "PAL017.gif",
+		"description": "This dragon is a master of sun magic, able to control sunlight and create solar flares.",
+		"type": "pal",
+		"pack": "Baby Dragons"
+	},
+	{
+		"name": "Baby Dragon (Ice)",
+		"sku": "PAL018",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "PAL018.gif",
+		"description": "This dragon is a master of ice magic, able to control blizzards and create ice storms.",
+		"type": "pal",
+		"pack": "Baby Dragons"
+	},
+	{
+		"name": "Baby Dragon (Fire)",
+		"sku": "PAL019",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "PAL019.gif",
+		"description": "This dragon is a master of fire magic, able to control flames and create firestorms.",
+		"type": "pal",
+		"pack": "Baby Dragons"
+	},
+	{
+		"name": "Baby Dragon (Obsidian)",
+		"sku": "PAL020",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "PAL020.gif",
+		"description": "This dragon is a master of obsidian magic, able to control shadows and create dark illusions.",
+		"type": "pal",
+		"pack": "Baby Dragons"
+	},
+	{
+		"name": "Royal Swordsman (Attack)",
+		"sku": "PAL021",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL021.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Swordsman"
+	},
+	{
+		"name": "Royal Swordsman (Try Me)",
+		"sku": "PAL022",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "PAL022.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Swordsman"
+	},
+	{
+		"name": "Royal Swordsman (Explore)",
+		"sku": "PAL023",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "PAL023.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Swordsman"
+	},
+	{
+		"name": "Royal Swordsman (Hodor)",
+		"sku": "PAL024",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "PAL024.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Swordsman"
+	},
+	{
+		"name": "Queen (Resting)",
+		"sku": "PAL025",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "PAL025.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Family"
+	},
+	{
+		"name": "Queen (On My Way)",
+		"sku": "PAL026",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "PAL026.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Family"
+	},
+	{
+		"name": "Princess (Adventure)",
+		"sku": "PAL027",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL027.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Family"
+	},
+	{
+		"name": "Princess (Take This!)",
+		"sku": "PAL028",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "PAL028.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Family"
+	},
+	{
+		"name": "King (Resting)",
+		"sku": "PAL029",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "PAL029.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Family"
+	},
+	{
+		"name": "King (Ready For Dinner)",
+		"sku": "PAL030",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "PAL030.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Family"
+	},
+	{
+		"name": "Prince (Laugh)",
+		"sku": "PAL031",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "PAL031.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Family"
+	},
+	{
+		"name": "Prince (Escaping From Prison)",
+		"sku": "PAL032",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "PAL032.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Family"
+	},
+	{
+		"name": "Royal Archer (On Alert)",
+		"sku": "PAL033",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "PAL033.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Archer"
+	},
+	{
+		"name": "Royal Archer (On The Hunt)",
+		"sku": "PAL034",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL034.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Archer"
+	},
+	{
+		"name": "Royal Archer (Nailed it)",
+		"sku": "PAL035",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "PAL035.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Archer"
+	},
+	{
+		"name": "Royal Mage (Chilling)",
+		"sku": "PAL036",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL036.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Mage"
+	},
+	{
+		"name": "Royal Mage (Running)",
+		"sku": "PAL037",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "PAL037.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Mage"
+	},
+	{
+		"name": "Royal Mage (Spellcast)",
+		"sku": "PAL038",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "PAL038.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Mage"
+	},
+	{
+		"name": "Elite Swordsman (Lunchbreak)",
+		"sku": "PAL039",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "PAL039.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Elite Swordsman"
+	},
+	{
+		"name": "Elite Swordsman (Walking)",
+		"sku": "PAL040",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL040.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Elite Swordsman"
+	},
+	{
+		"name": "Elite Swordsman (Attack)",
+		"sku": "PAL041",
+		"priceCredits": 175,
+		"tag": "ShadowMythic",
+		"assetName": "PAL041.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Elite Swordsman"
+	},
+	{
+		"name": "Elite Swordsman (Defend)",
+		"sku": "PAL042",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL042.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Elite Swordsman"
+	},
+	{
+		"name": "Elite Mage (Spellcast)",
+		"sku": "PAL043",
+		"priceCredits": 175,
+		"tag": "ShadowMythic",
+		"assetName": "PAL043.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Elite Mage"
+	},
+	{
+		"name": "Elite Mage (Resting)",
+		"sku": "PAL044",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "PAL044.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Elite Mage"
+	},
+	{
+		"name": "Elite Mage (Hurry Up)",
+		"sku": "PAL045",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL045.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Elite Mage"
+	},
+	{
+		"name": "Royal Knight (Waiting)",
+		"sku": "PAL046",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "PAL046.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Knight"
+	},
+	{
+		"name": "Royal Knight (Get Ready To Fight)",
+		"sku": "PAL047",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL047.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Knight"
+	},
+	{
+		"name": "Royal Knight (Hide And Seek)",
+		"sku": "PAL048",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "PAL048.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Knight"
+	},
+	{
+		"name": "Royal Knight (Swing)",
+		"sku": "PAL049",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "PAL049.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Knight"
+	},
+	{
+		"name": "Imposter Elite Royal Archer (Standing)",
+		"sku": "PAL050",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL050.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Imposter Elite Royal Archer"
+	},
+	{
+		"name": "Imposter Elite Royal Archer (Getting Ready)",
+		"sku": "PAL051",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL051.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Imposter Elite Royal Archer"
+	},
+	{
+		"name": "Imposter Elite Royal Archer (Triple The Fun)",
+		"sku": "PAL052",
+		"priceCredits": 175,
+		"tag": "ShadowMythic",
+		"assetName": "PAL052.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Imposter Elite Royal Archer"
+	},
+	{
+		"name": "Royal Elite Knight (Cool As Ice)",
+		"sku": "PAL053",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "PAL053.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Elite Royal Knight"
+	},
+	{
+		"name": "Royal Elite Knight (Alerted)",
+		"sku": "PAL054",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL054.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Elite Royal Knight"
+	},
+	{
+		"name": "Royal Elite Knight (Flexing)",
+		"sku": "PAL055",
+		"priceCredits": 125,
+		"tag": "Mythic",
+		"assetName": "PAL055.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Elite Royal Knight"
+	},
+	{
+		"name": "Royal Spearman (Guarding)",
+		"sku": "PAL056",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL056.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Spearman"
+	},
+	{
+		"name": "Royal Spearman (Patrolling)",
+		"sku": "PAL057",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL057.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Spearman"
+	},
+	{
+		"name": "Royal Spearman (Poke)",
+		"sku": "PAL058",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "PAL058.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Royal Spearman"
+	},
+	{
+		"name": "Delicious Sunrise Diner",
+		"sku": "BG030",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG030.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Retro Diner"
+	},
+	{
+		"name": "Evening Date Diner",
+		"sku": "BG031",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG031.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Retro Diner"
+	},
+	{
+		"name": "Time To Dance Diner",
+		"sku": "BG032",
+		"priceCredits": 175,
+		"tag": "ShadowMythic",
+		"assetName": "BG032.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Retro Diner"
+	},
+	{
+		"name": "It's Been A Good Day Diner",
+		"sku": "BG033",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG033.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Retro Diner"
+	},
+	{
+		"name": "How Time Flies Diner",
+		"sku": "BG034",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG034.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Retro Diner"
+	},
+	{
+		"name": "Our First Date Diner",
+		"sku": "BG035",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG035.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Retro Diner"
+	},
+	{
+		"name": "The Usual, Please Diner",
+		"sku": "BG036",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG036.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Retro Diner"
+	},
+	{
+		"name": "Seas' Finest Diner",
+		"sku": "BG037",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG037.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Retro Diner"
+	},
+	{
+		"name": "Sunset Diner",
+		"sku": "BG038",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG038.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Retro Diner"
+	},
+	{
+		"name": "Cozy Diner",
+		"sku": "BG039",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG039.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Retro Diner"
+	},
+	{
+		"name": "Golden Alley",
+		"sku": "BG040",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG040.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Sidewalk Cafe"
+	},
+	{
+		"name": "Cornerstone Cafe",
+		"sku": "BG041",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG041.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Sidewalk Cafe"
+	},
+	{
+		"name": "Midday Coffee",
+		"sku": "BG042",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG042.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Sidewalk Cafe"
+	},
+	{
+		"name": "Evening Touch",
+		"sku": "BG043",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG043.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Sidewalk Cafe"
+	},
+	{
+		"name": "Just One More Coffee",
+		"sku": "BG044",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG044.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Sidewalk Cafe"
+	},
+	{
+		"name": "Sunlight Dreams",
+		"sku": "BG045",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG045.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Sidewalk Cafe"
+	},
+	{
+		"name": "Lamp & Leaf",
+		"sku": "BG046",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG046.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Sidewalk Cafe"
+	},
+	{
+		"name": "Lantern Brew",
+		"sku": "BG047",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG047.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Sidewalk Cafe"
+	},
+	{
+		"name": "Moonbrew",
+		"sku": "BG048",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG048.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Sidewalk Cafe"
+	},
+	{
+		"name": "Skyline Coffee",
+		"sku": "BG049",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG049.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Sidewalk Cafe"
+	},
+	{
+		"name": "Henhill Hollow",
+		"sku": "BG050",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG050.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Chicken and Barn"
+	},
+	{
+		"name": "Cluckhaven",
+		"sku": "BG051",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG051.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Chicken and Barn"
+	},
+	{
+		"name": "Thatch & Talon",
+		"sku": "BG052",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG052.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Chicken and Barn"
+	},
+	{
+		"name": "Amber Roost Hollow",
+		"sku": "BG053",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG053.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Chicken and Barn"
+	},
+	{
+		"name": "The Nesting Glen",
+		"sku": "BG054",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG054.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Chicken and Barn"
+	},
+	{
+		"name": "Cindercoop",
+		"sku": "BG055",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG055.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Chicken and Barn"
+	},
+	{
+		"name": "Featherfall Farm",
+		"sku": "BG056",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG056.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Chicken and Barn"
+	},
+	{
+		"name": "Everfeather Homestead",
+		"sku": "BG057",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG057.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Chicken and Barn"
+	},
+	{
+		"name": "Cacklebrook Farm",
+		"sku": "BG058",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG058.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Chicken and Barn"
+	},
+	{
+		"name": "Chicken Welcome",
+		"sku": "BG059",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG059.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Chicken and Barn"
+	},
+	{
+		"name": "Fresh From The Ground",
+		"sku": "BG060",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG060.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "The Great Yield"
+	},
+	{
+		"name": "Mellow Mood",
+		"sku": "BG061",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG061.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "The Great Yield"
+	},
+	{
+		"name": "Corn In The Wind",
+		"sku": "BG062",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG062.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "The Great Yield"
+	},
+	{
+		"name": "Harvest Calling",
+		"sku": "BG063",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG063.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "The Great Yield"
+	},
+	{
+		"name": "Clouds And Green Delight",
+		"sku": "BG064",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG064.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "The Great Yield"
+	},
+	{
+		"name": "Ready To Harvest",
+		"sku": "BG065",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG065.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "The Great Yield"
+	},
+	{
+		"name": "Golden Harvest",
+		"sku": "BG066",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG066.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "The Great Yield"
+	},
+	{
+		"name": "Skyridge Fields",
+		"sku": "BG067",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG067.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "The Great Yield"
+	},
+	{
+		"name": "Sunveil Acres",
+		"sku": "BG068",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG068.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "The Great Yield"
+	},
+	{
+		"name": "Cornbloom Vale",
+		"sku": "BG069",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG069.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "The Great Yield"
+	},
+	{
+		"name": "Light's Out",
+		"sku": "BG070",
+		"priceCredits": 150,
+		"tag": "ShadowMythic",
+		"assetName": "BG070.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "Delicious Night",
+		"sku": "BG071",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG071.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "Home By Day",
+		"sku": "BG072",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG072.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "Home By Night",
+		"sku": "BG073",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG073.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "Mother's Flower Shop",
+		"sku": "BG074",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG074.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "Freedom In Sight",
+		"sku": "BG075",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG075.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "Countryside Jam",
+		"sku": "BG076",
+		"priceCredits": 10,
+		"tag": "Common",
+		"assetName": "BG076.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "Neighborhood Dreams",
+		"sku": "BG077",
+		"priceCredits": 75,
+		"tag": "Rare",
+		"assetName": "BG077.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "Father's Corner Store",
+		"sku": "BG078",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG078.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "By The River",
+		"sku": "BG079",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "BG079.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "School Kitty On Car",
+		"sku": "BG080",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG080.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "Ready For Race",
+		"sku": "BG081",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG081.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "Train Goes By",
+		"sku": "BG082",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG082.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "We'll Figure It Out",
+		"sku": "BG083",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG083.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan"
+	},
+	{
+		"name": "Midnight Walk",
+		"sku": "BG084",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG084.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Rest in Pieces",
+		"sku": "BG085",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG085.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Under the Blood Moon",
+		"sku": "BG086",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG086.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Hollow Estate",
+		"sku": "BG087",
+		"priceCredits": 125,
+		"tag": "Mythic",
+		"assetName": "BG087.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Home Sweet Haunt",
+		"sku": "BG088",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG088.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "The Forgotten Harvest",
+		"sku": "BG089",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG089.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Spookin' & Squashin'",
+		"sku": "BG090",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG090.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "The Great Pumpkin Hangout",
+		"sku": "BG091",
+		"priceCredits": 150,
+		"tag": "ShadowMythic",
+		"assetName": "BG091.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Ghoulberry Grove",
+		"sku": "BG092",
+		"priceCredits": 35,
+		"tag": "Uncommon",
+		"assetName": "BG092.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Grimroot Forest",
+		"sku": "BG093",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG093.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Transfang-ia",
+		"sku": "BG094",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "BG094.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Crimsonspire Keep",
+		"sku": "BG095",
+		"priceCredits": 150,
+		"tag": "ShadowMythic",
+		"assetName": "BG095.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Bloodmoon Bastion",
+		"sku": "BG096",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG096.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Cauldron & Company Cabin",
+		"sku": "BG097",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG097.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Ashroot Cottage",
+		"sku": "BG098",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG098.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Spooky Season"
+	},
+	{
+		"name": "Pumpkinstein",
+		"sku": "PAL059",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "PAL059.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Monster Friends"
+	},
+	{
+		"name": "Skullbert",
+		"sku": "PAL060",
+		"priceCredits": 150,
+		"tag": "ShadowMythic",
+		"assetName": "PAL060.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Monster Friends"
+	},
+	{
+		"name": "Webella",
+		"sku": "PAL061",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "PAL061.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Monster Friends"
+	},
+	{
+		"name": "Glowy Joe",
+		"sku": "PAL062",
+		"priceCredits": 0,
+		"tag": "Rare",
+		"assetName": "PAL062.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Monster Friends"
+	},
+	{
+		"name": "Batilda",
+		"sku": "PAL063",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "PAL063.gif",
+		"description": "",
+		"type": "pal",
+		"pack": "Monster Friends"
+	},
+	{
+		"name": "Gingerbread Hearth",
+		"sku": "BG099",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG099.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Frostvale Morning",
+		"sku": "BG100",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG100.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Peppermint Plaza",
+		"sku": "BG101",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG101.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Candlelight Crossing",
+		"sku": "BG102",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG102.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Silent Star Trail",
+		"sku": "BG103",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG103.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Candycane Constellation",
+		"sku": "BG104",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG104.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Moonlit Marshmallow",
+		"sku": "BG105",
+		"priceCredits": 75,
+		"tag": "Mythic",
+		"assetName": "BG105.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Twilight Tinsel Path",
+		"sku": "BG106",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG106.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Sugarpeak Valley",
+		"sku": "BG107",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG107.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Northwind Post",
+		"sku": "BG108",
+		"priceCredits": 15,
+		"tag": "Uncommon",
+		"assetName": "BG108.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Gala of the Golden Star",
+		"sku": "BG109",
+		"priceCredits": 125,
+		"tag": "Mythic",
+		"assetName": "BG109.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Candy Cane Cottage",
+		"sku": "BG110",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG110.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Gingerbread Row",
+		"sku": "BG111",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG111.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Crystal Waltz Hall",
+		"sku": "BG112",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG112.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Aurora Grand Hall",
+		"sku": "BG113",
+		"priceCredits": 75,
+		"tag": "Mythic",
+		"assetName": "BG113.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Velvet Winter Court",
+		"sku": "BG114",
+		"priceCredits": 150,
+		"tag": "ShadowMythic",
+		"assetName": "BG114.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Solstice Ballroom",
+		"sku": "BG115",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG115.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Starlit Sapphire Hall",
+		"sku": "BG116",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG116.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Crimson Garland Hall",
+		"sku": "BG117",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "BG117.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Nocturne Hall",
+		"sku": "BG118",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "BG118.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Crown of Winter Hall",
+		"sku": "BG119",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "BG119.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Christmas Time"
+	},
+	{
+		"name": "Xerxes",
+		"sku": "FONT007",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT007.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Pixel Friends"
+	},
+	{
+		"name": "Troll",
+		"sku": "FONT008",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT008.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Pixel Friends"
+	},
+	{
+		"name": "Awesome",
+		"sku": "FONT009",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT009.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Pixel Friends"
+	},
+	{
+		"name": "Salty",
+		"sku": "FONT010",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT010.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Pixel Friends"
+	},
+	{
+		"name": "Quit",
+		"sku": "FONT011",
+		"priceCredits": 75,
+		"tag": "Rare",
+		"assetName": "FONT011.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Pixel Friends"
+	},
+	{
+		"name": "Curse",
+		"sku": "FONT012",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT012.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Pixel Friends"
+	},
+	{
+		"name": "Hungry",
+		"sku": "FONT013",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT013.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Pixel Friends"
+	},
+	{
+		"name": "Loser",
+		"sku": "FONT014",
+		"priceCredits": 50,
+		"tag": "Common",
+		"assetName": "FONT014.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Pixel Friends"
+	},
+	{
+		"name": "Piescese",
+		"sku": "FONT015",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT015.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Sans"
+	},
+	{
+		"name": "Yetimology",
+		"sku": "FONT016",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT016.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Sans"
+	},
+	{
+		"name": "Front Page Supplement",
+		"sku": "FONT017",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT017.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Sans"
+	},
+	{
+		"name": "Asleepytiming",
+		"sku": "FONT018",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT018.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Sans"
+	},
+	{
+		"name": "Arcane Nine",
+		"sku": "FONT019",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT019.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Sans"
+	},
+	{
+		"name": "Egosurf Stiffler",
+		"sku": "FONT020",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT020.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Sans"
+	},
+	{
+		"name": "Mister Fisher",
+		"sku": "FONT021",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT021.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Sans"
+	},
+	{
+		"name": "Supermarketed",
+		"sku": "FONT022",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT022.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Sans"
+	},
+	{
+		"name": "Joyful Theatre",
+		"sku": "FONT023",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT023.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Sans"
+	},
+	{
+		"name": "Love Around",
+		"sku": "SPELL027",
+		"priceCredits": 25,
+		"tag": "Uncommon",
+		"assetName": "SPELL027.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Twinkles"
+	},
+	{
+		"name": "Bubble Fans",
+		"sku": "SPELL028",
+		"priceCredits": 75,
+		"tag": "Rare",
+		"assetName": "SPELL028.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Twinkles"
+	},
+	{
+		"name": "Deadly Stroke",
+		"sku": "SPELL029",
+		"priceCredits": 125,
+		"tag": "ShadowMythic",
+		"assetName": "SPELL029.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Danger"
+	},
+	{
+		"name": "Haste",
+		"sku": "SPELL030",
+		"priceCredits": 75,
+		"tag": "Mythic",
+		"assetName": "SPELL030.gif",
+		"description": "",
+		"type": "spell",
+		"pack": "Fantasy"
+	},
+	{
+		"name": "Go Everywhere",
+		"sku": "FONT024",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT024.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Western"
+	},
+	{
+		"name": "Flight of the Ocean",
+		"sku": "FONT025",
+		"priceCredits": 50,
+		"tag": "Common",
+		"assetName": "FONT025.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Western"
+	},
+	{
+		"name": "Strings Theory",
+		"sku": "FONT026",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT026.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Western"
+	},
+	{
+		"name": "19th Century Renegade",
+		"sku": "FONT027",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT027.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Western"
+	},
+	{
+		"name": "Effortless Tattoo",
+		"sku": "FONT028",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "FONT028.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Western"
+	},
+	{
+		"name": "Real Fun Time",
+		"sku": "FONT029",
+		"priceCredits": 100,
+		"tag": "Rare",
+		"assetName": "FONT029.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Cartoon"
+	},
+	{
+		"name": "Chibi Metro Lines",
+		"sku": "FONT030",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "FONT030.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Cartoon"
+	},
+	{
+		"name": "Chiptune Valentine",
+		"sku": "FONT031",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "FONT031.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Cartoon"
+	},
+	{
+		"name": "Sweet Pancakes",
+		"sku": "FONT032",
+		"priceCredits": 75,
+		"tag": "Rare",
+		"assetName": "FONT032.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Cartoon"
+	},
+	{
+		"name": "Have a Banana",
+		"sku": "FONT033",
+		"priceCredits": 125,
+		"tag": "ShadowMythic",
+		"assetName": "FONT033.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Cartoon"
+	},
+	{
+		"name": "Chubby Thumbs",
+		"sku": "FONT034",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT034.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Cartoon"
+	},
+	{
+		"name": "Naripho",
+		"sku": "FONT035",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "FONT035.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Cartoon"
+	},
+	{
+		"name": "Questrian",
+		"sku": "FONT036",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT036.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Cartoon"
+	},
+	{
+		"name": "Relapse Into Madness",
+		"sku": "FONT037",
+		"priceCredits": 75,
+		"tag": "Mythic",
+		"assetName": "FONT037.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Cartoon"
+	},
+	{
+		"name": "Very Cartoon Christmas",
+		"sku": "FONT038",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT038.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Handwriting"
+	},
+	{
+		"name": "Battenberg and Custard Bold",
+		"sku": "FONT039",
+		"priceCredits": 15,
+		"tag": "Common",
+		"assetName": "FONT039.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Handwriting"
+	},
+	{
+		"name": "Hopelessly In Lurve",
+		"sku": "FONT040",
+		"priceCredits": 50,
+		"tag": "Rare",
+		"assetName": "FONT040.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Handwriting"
+	},
+	{
+		"name": "Smooth Marker",
+		"sku": "FONT041",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "FONT041.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Handwriting"
+	},
+	{
+		"name": "Thickedy Quick",
+		"sku": "FONT042",
+		"priceCredits": 150,
+		"tag": "ShadowMythic",
+		"assetName": "FONT042.otf",
+		"description": "",
+		"type": "font",
+		"pack": "Handwriting"
+	},
+	{
+		"name": "QA Reports",
+		"sku": "FONT043",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "FONT043.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Handwriting"
+	},
+	{
+		"name": "Game Dev Dan",
+		"sku": "FONT044",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "FONT044.ttf",
+		"description": "",
+		"type": "font",
+		"pack": "Handwriting"
+	}
+]

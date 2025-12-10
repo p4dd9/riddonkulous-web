@@ -1,4 +1,4 @@
-import { GoogleAdsense } from '@/app/components/GoogleAdsense'
+import { GoogleAdsense } from '@/app/components/ads/GoogleAdsense'
 import type { Metadata } from 'next'
 import '../globals.css'
 
