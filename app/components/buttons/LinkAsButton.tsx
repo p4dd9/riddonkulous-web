@@ -38,8 +38,8 @@ export const LinkAsButton = ({
 	const buttonClasses = useMemo(() => {
 		const baseClasses = customClass || defaultClasses
 		const classesWith3D = threeD ? `${baseClasses} ${threeDClasses}` : baseClasses
-		return className ? `${classesWith3D} ${className}` : classesWith3D
-	}, [customClass, threeD, className])
+		return classesWith3D
+	}, [customClass, threeD])
 
 	const textAlignClass = useMemo(() => {
 		if (textAlign === 'center') {
@@ -59,14 +59,11 @@ export const LinkAsButton = ({
 
 	const displayText = children || text
 
+	// Merge all classes: default display (inline-block), button classes, text align, and custom className (last so it can override)
+	const mergedClassName = `inline-block ${buttonClasses} ${textAlignClass} ${className}`.trim()
+
 	return (
-		<Link
-			href={href}
-			target={target}
-			rel={rel}
-			className={className ? `${buttonClasses} ${textAlignClass}` : `inline-block ${buttonClasses} ${textAlignClass}`}
-			style={textAlignStyle}
-		>
+		<Link href={href} target={target} rel={rel} className={mergedClassName} style={textAlignStyle}>
 			<div className={icon ? 'flex items-center gap-2' : ''}>
 				{icon && <img src={icon} alt="" className={iconClass} />}
 				{displayText}
