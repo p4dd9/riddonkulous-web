@@ -223,7 +223,7 @@ export default function AdminDashboard() {
 
 				{(showCreateForm || editingTag) && (
 					<div className="bg-gray-800 border border-gray-700 rounded-lg p-6 mb-6">
-						<h2 className="text-xl font-bold mb-4">{editingTag ? 'Edit Tag' : 'Create New Tag'}</h2>
+						<h2 className="text-xl mb-4">{editingTag ? 'Edit Tag' : 'Create New Tag'}</h2>
 						<form onSubmit={editingTag ? handleUpdate : handleCreate} className="space-y-4">
 							{!editingTag && (
 								<div>

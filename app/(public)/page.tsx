@@ -1,4 +1,4 @@
-import { GoogleAdDisplayUnitResponsive } from '@/app/components/ads/GoogleAdUnitResponsive'
+import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { CategoryCard } from '@/app/components/categories/CategoryCard'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
@@ -46,7 +46,7 @@ export default async function Home() {
 					</h2>
 					<div className="flex flex-col gap-3">
 						{filteredTrendingRiddles.map((riddle) => (
-							<RiddleCard riddle={riddle} variant="compact" key={riddle.riddleNumber} />
+							<RiddleCard riddle={riddle} variant="compact" key={riddle.postId} />
 						))}
 					</div>
 				</div>
@@ -80,7 +80,41 @@ export default async function Home() {
 				</div>
 			</div>
 
-			<div className="w-full flex justify-center items-center">
+			{/* About Section */}
+			<div className="w-full flex flex-col gap-4">
+				<div className="flex justify-center">
+					<Image
+						src="/pals/frog_magician.gif"
+						alt="Frog Magician"
+						width={200}
+						height={200}
+						className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56"
+					/>
+				</div>
+				<h2 className="text-2xl md:text-3xl mt-12 text-center">Where Am I?</h2>
+				<div className="flex flex-col gap-3 text-base md:text-lg">
+					<p className="text-center">
+						Riddonkulous is a Reddit App and Community for Creating and Solving Riddles. Our goal is to
+						embrace Human Creativity and make it available (and as accessible as possible) to everyone.
+					</p>
+					<p className="text-center">
+						Riddonkulous.com extends this creative experience beyond the Reddit App, opening up also for
+						everyone where every Riddle Creator and Solver can explore, discover, and celebrate community
+						talent and creativity. Welcome to Riddonkulous!
+					</p>
+					<div className="flex justify-center mt-4">
+						<LinkAsButton
+							href="https://www.reddit.com/r/riddonkulous/"
+							text="Visit r/riddonkulous"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-lg md:text-xl px-4 py-2 block md:inline-block w-full md:w-auto text-center"
+						/>
+					</div>
+				</div>
+			</div>
+
+			{/*<div className="w-full flex justify-center items-center">
 				<div
 					className="w-full"
 					style={{
@@ -91,7 +125,7 @@ export default async function Home() {
 				>
 					<GoogleAdDisplayUnitResponsive />
 				</div>
-			</div>
+			</div>*/}
 		</div>
 	)
 }
