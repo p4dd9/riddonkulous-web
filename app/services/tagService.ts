@@ -1,6 +1,7 @@
 'use server'
 
 import { getApiBaseUrl, getApiKey } from '../util/apiConfig'
+import { clientLogger } from '../util/logger'
 import { fetcher } from './fetcher'
 
 export interface Tag {
@@ -58,6 +59,8 @@ export interface TagListResponse {
 
 export const listTags = async (limit = 50, offset = 0): Promise<TagListResponse> => {
 	const url = await getTagApiUrl(`?limit=${limit}&offset=${offset}`)
+	clientLogger.info('listTags')
+	clientLogger.info(url)
 	const headers = await getAuthHeaders()
 	const response = await fetcher<TagApiResponse>(url, {
 		headers,
