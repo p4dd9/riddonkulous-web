@@ -5,6 +5,10 @@ import { getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleServ
 import { listTags } from '@/app/services/tagService'
 import Image from 'next/image'
 
+// Configure revalidation for this page (ISR - Incremental Static Regeneration)
+// The page will be regenerated at most once every 60 seconds
+export const revalidate = 60
+
 export default async function Home() {
 	const [riddleOfTheDay, trendingRiddles, tagsData] = await Promise.all([
 		getRiddleOfTheDay(),
