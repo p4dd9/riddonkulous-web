@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { LinkAsButton } from '../buttons/LinkAsButton'
 
 export const Header = () => {
 	return (
@@ -8,7 +9,18 @@ export const Header = () => {
 				<h1>Riddonkulous</h1>
 			</div>
 
-			<div></div>
+			<div className="flex items-center justify-center gap-2">
+				<LinkAsButton
+					href="https://www.reddit.com/r/riddonkulous"
+					className="text-sm py-2 flex items-center gap-2"
+					icon="/icons/pencil.png"
+					target="_blank"
+					rel="noopener noreferrer"
+					iconClass="w-4 h-4"
+				>
+					Create
+				</LinkAsButton>
+			</div>
 		</header>
 	)
 }
