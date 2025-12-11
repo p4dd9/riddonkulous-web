@@ -1,4 +1,5 @@
 import { Footer } from '@/app/components/layout/Footer'
+import { Header } from '@/app/components/layout/Header'
 import type { Metadata } from 'next'
 import '../globals.css'
 
@@ -22,6 +23,7 @@ export default function RootLayout({
 				/>
 			</head>
 			<body className="antialiased flex flex-col min-h-screen">
+				<Header />
 				<main className="flex-1 h-full">{children}</main>
 				<Footer />
 			</body>
