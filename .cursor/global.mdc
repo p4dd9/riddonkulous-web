@@ -1,9 +1,94 @@
----
-alwaysApply: true
----
+# Riddonkulous Web - Global Documentation
 
-- Always follow the colros and design guide from global.css file
-- Prefer component export over default export syntax
-- Prefer arrow functions
-- Do not use any kind of font "boldness" in the code your produce. That includes "semibold", "bold" and others. Neither in Tailwind nor inline styles.
-- Do not implement any gradients except requested
+## API Configuration Pattern
+
+### Overview
+
+All API service files should use the centralized API configuration utilities from `app/util/apiConfig.ts` to manage environment variables for API base URLs and API keys.
+
+### Utility Functions
+
+#### `getApiBaseUrl(envVarName: string): Promise<string>`
+
+Gets an API base URL from environment variables.
+
+**Parameters:**
+
+- `envVarName`: The name of the environment variable (e.g., 'REDDICORE_API_BASE_URL')
+
+**Returns:** The API base URL
+
+**Throws:** Error if the environment variable is not set
+
+**Example:**
+
+```typescript
+import { getApiBaseUrl } from '../util/apiConfig'
+
+const apiBaseUrl = await getApiBaseUrl('REDDICORE_API_BASE_URL')
+```
+
+#### `getApiKey(envVarName: string): Promise<string>`
+
+Gets an API key from environment variables.
+
+**Parameters:**
+
+- `envVarName`: The name of the environment variable (e.g., 'REDDICORE_API_KEY')
+
+**Returns:** The API key
+
+**Throws:** Error if the environment variable is not set
+
+**Example:**
+
+```typescript
+import { getApiKey } from '../util/apiConfig'
+
+const apiKey = await getApiKey('REDDICORE_API_KEY')
+```
+
+### Usage Pattern
+
+All service files should follow this pattern:
+
+```typescript
+'use server'
+
+import { getApiBaseUrl, getApiKey } from '../util/apiConfig'
+import { fetcher } from './fetcher'
+
+export const someServiceFunction = async () => {
+	const apiBaseUrl = await getApiBaseUrl('SERVICE_API_BASE_URL')
+	const apiKey = await getApiKey('SERVICE_API_KEY') // if needed
+
+	return fetcher(`${apiBaseUrl}/endpoint`, {
+		headers: {
+			Authorization: `Bearer ${apiKey}`,
+		},
+	})
+}
+```
+
+### Benefits
+
+- Centralized error handling and logging
+- Consistent pattern across all services
+- Clear error messages when environment variables are missing
+- Type-safe API configuration
+
+### Current Services Using This Pattern
+
+- `app/services/riddleService.ts` - Uses `REDDICORE_API_BASE_URL` and `REDDICORE_API_KEY`
+- `app/services/tagService.ts` - Uses relative path `/tags` (constructs absolute URL from request headers using `getAbsoluteUrl()` helper)
+
+### Special Cases
+
+#### Tag Service (`app/services/tagService.ts`)
+
+The tag service uses the Reddicore API base URL to construct tag API endpoints. This approach:
+
+- Eliminates the need for `TAG_API_BASE_URL` environment variable
+- Reuses the `REDDICORE_API_BASE_URL` environment variable
+- Constructs tag API URLs as `/api/v1/tags` on the same server as the Reddicore API
+- Uses the `getTagApiUrl()` helper function to build the correct endpoint URLs

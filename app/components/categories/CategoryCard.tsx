@@ -4,7 +4,7 @@ import Link from 'next/link'
 interface CategoryCardProps {
 	title: string
 	description: string
-	backgroundImage: string
+	backgroundImage?: string
 	riddleCount: number
 	href?: string
 	className?: string
@@ -25,13 +25,13 @@ export const CategoryCard = ({
 			<div
 				className="absolute inset-0 bg-position-center bg-no-repeat bg-cover rounded-lg"
 				style={{
-					backgroundImage: `url(${backgroundImage})`,
-					filter: 'brightness(0.5)',
+					backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
+					filter: backgroundImage ? 'brightness(0.5)' : 'none',
 				}}
 			/>
 			<div className="relative z-10 flex flex-col items-center justify-between text-center px-4 h-full py-4">
 				<div className="flex flex-col items-center justify-center flex-1">
-					<h3 className="text-2xl md:text-3xl mb-2">{title}</h3>
+					<h3 className="text-xl md:text-3xl mb-2">{title}</h3>
 					<p className="text-sm md:text-base opacity-90">{description}</p>
 				</div>
 				<div className="flex items-center justify-center gap-2">

@@ -1,12 +1,16 @@
 import { GoogleAdDisplayUnitResponsive } from '@/app/components/ads/GoogleAdUnitResponsive'
-import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { CategoryCard } from '@/app/components/categories/CategoryCard'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
+import { listTags } from '@/app/services/tagService'
 import Image from 'next/image'
 
 export default async function Home() {
-	const [riddleOfTheDay, trendingRiddles] = await Promise.all([getRiddleOfTheDay(), getTrendingRiddles()])
+	const [riddleOfTheDay, trendingRiddles, tagsData] = await Promise.all([
+		getRiddleOfTheDay(),
+		getTrendingRiddles(),
+		listTags(50, 0),
+	])
 	const filteredTrendingRiddles = trendingRiddles
 		.filter((riddle) => riddle.postId !== riddleOfTheDay.postId)
 		.slice(0, 3)
@@ -22,15 +26,6 @@ export default async function Home() {
 					</h1>
 
 					<RiddleCard riddle={riddleOfTheDay} className="lg:h-[384px]" />
-
-					<LinkAsButton
-						href={`https://www.reddit.com/r/riddonkulous/comments/${riddleOfTheDay.postId}`}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="w-full text-center py-2"
-					>
-						Visit on Reddit
-					</LinkAsButton>
 				</div>
 
 				{/* Trending Sidebar - 1/3 width */}
@@ -56,25 +51,28 @@ export default async function Home() {
 			{/* Explore Riddles Section */}
 			<div className="w-full flex flex-col gap-4">
 				<h2 className="text-2xl md:text-3xl">Explore Riddles</h2>
-				<div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
-					<CategoryCard
-						title="Classic"
-						riddleCount={10}
-						description="Serious, warm, classic riddles, you get what you expect"
-						backgroundImage="/canvas/BG029.gif"
-					/>
-					<CategoryCard
-						title="Fun"
-						riddleCount={42}
-						description="Absolutely ridiculous riddles that are fun, have a lot of wordplay and so on"
-						backgroundImage="/canvas/BG021.png"
-					/>
-					<CategoryCard
-						title="Family"
-						riddleCount={222}
-						description="Suitable for kids and family"
-						backgroundImage="/canvas/BG023.png"
-					/>
+				<div className="w-full grid grid-cols-2 md:grid-cols-3 gap-4">
+					{tagsData.tags
+						.sort((a, b) => {
+							const orderA = a.order ?? Number.MAX_SAFE_INTEGER
+							const orderB = b.order ?? Number.MAX_SAFE_INTEGER
+
+							if (orderA !== orderB) {
+								return orderA - orderB
+							}
+
+							return a.label.localeCompare(b.label)
+						})
+						.map((tag) => (
+							<CategoryCard
+								key={tag.id}
+								title={tag.label}
+								riddleCount={tag.count || 0}
+								description={tag.description || ''}
+								backgroundImage={tag.asset_name_path}
+								href={`/tags/${tag.id}`}
+							/>
+						))}
 				</div>
 			</div>
 
