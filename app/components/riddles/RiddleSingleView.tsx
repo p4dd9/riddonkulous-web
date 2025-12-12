@@ -137,7 +137,6 @@ export const RiddleSingleView = ({
 		dispatch({ type: 'SET_FEEDBACK', payload: 'correct' })
 	}
 
-	console.log(riddle)
 	return (
 		<div className="w-full flex flex-col gap-6 max-w-4xl mx-auto px-4 py-8">
 			{/* Main Riddle Card */}

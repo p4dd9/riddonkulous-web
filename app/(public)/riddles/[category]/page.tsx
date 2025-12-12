@@ -74,8 +74,6 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 		getRiddlesByTag(category, RIDDLES_PER_PAGE, currentPage * RIDDLES_PER_PAGE),
 	])
 
-	console.log(riddlesResponse)
-
 	if (!tag || !riddlesResponse || riddlesResponse.riddles.length === 0) {
 		notFound()
 	}
@@ -84,7 +82,6 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 	const hasNext = riddlesResponse.pagination.hasNext
 	const hasPrevious = riddlesResponse.pagination.hasPrev
 
-	console.log(currentRiddle)
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
 			<div className="w-full flex flex-col gap-4 max-w-4xl mx-auto px-4">
