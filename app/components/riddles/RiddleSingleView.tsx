@@ -7,7 +7,7 @@ import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useReducer } from 'react'
 
 interface RiddleSingleViewProps {
 	riddle: DailyRiddleType
@@ -29,12 +29,61 @@ export const RiddleSingleView = ({
 	previousUrl,
 }: RiddleSingleViewProps) => {
 	const router = useRouter()
-	const [answer, setAnswer] = useState('')
-	const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null)
-	const [isSolved, setIsSolved] = useState(false)
-	const [isRevealed, setIsRevealed] = useState(false)
-	const [isRevealModalOpen, setIsRevealModalOpen] = useState(false)
-	const [hasGuessed, setHasGuessed] = useState(false)
+
+	type RiddleState = {
+		answer: string
+		feedback: 'correct' | 'incorrect' | null
+		isSolved: boolean
+		isRevealed: boolean
+		isRevealModalOpen: boolean
+		hasGuessed: boolean
+	}
+
+	type RiddleAction =
+		| { type: 'SET_ANSWER'; payload: string }
+		| { type: 'SET_FEEDBACK'; payload: 'correct' | 'incorrect' | null }
+		| { type: 'SET_IS_SOLVED'; payload: boolean }
+		| { type: 'SET_IS_REVEALED'; payload: boolean }
+		| { type: 'SET_IS_REVEAL_MODAL_OPEN'; payload: boolean }
+		| { type: 'SET_HAS_GUESSED'; payload: boolean }
+		| { type: 'RESET' }
+
+	const initialState: RiddleState = {
+		answer: '',
+		feedback: null,
+		isSolved: false,
+		isRevealed: false,
+		isRevealModalOpen: false,
+		hasGuessed: false,
+	}
+
+	const reducer = (state: RiddleState, action: RiddleAction): RiddleState => {
+		switch (action.type) {
+			case 'SET_ANSWER':
+				return { ...state, answer: action.payload }
+			case 'SET_FEEDBACK':
+				return { ...state, feedback: action.payload }
+			case 'SET_IS_SOLVED':
+				return { ...state, isSolved: action.payload }
+			case 'SET_IS_REVEALED':
+				return { ...state, isRevealed: action.payload }
+			case 'SET_IS_REVEAL_MODAL_OPEN':
+				return { ...state, isRevealModalOpen: action.payload }
+			case 'SET_HAS_GUESSED':
+				return { ...state, hasGuessed: action.payload }
+			case 'RESET':
+				return initialState
+			default:
+				return state
+		}
+	}
+
+	const [state, dispatch] = useReducer(reducer, initialState)
+
+	// Reset state when riddle changes
+	useEffect(() => {
+		dispatch({ type: 'RESET' })
+	}, [riddle.postId])
 
 	const handleNext = () => {
 		if (onNext) {
@@ -53,39 +102,39 @@ export const RiddleSingleView = ({
 	}
 
 	const checkAnswer = () => {
-		if (!answer.trim()) return
+		if (!state.answer.trim()) return
 
-		setHasGuessed(true)
+		dispatch({ type: 'SET_HAS_GUESSED', payload: true })
 
-		const normalizedAnswer = answer.trim().toLowerCase()
+		const normalizedAnswer = state.answer.trim().toLowerCase()
 		const correctAnswer = riddle.word.toLowerCase()
 		const altAnswers = riddle.altwords ? riddle.altwords.split(',').map((w) => w.trim().toLowerCase()) : []
 
 		const isCorrect = normalizedAnswer === correctAnswer || altAnswers.some((alt) => normalizedAnswer === alt)
 
 		if (isCorrect) {
-			setFeedback('correct')
-			setIsSolved(true)
+			dispatch({ type: 'SET_FEEDBACK', payload: 'correct' })
+			dispatch({ type: 'SET_IS_SOLVED', payload: true })
 		} else {
-			setFeedback('incorrect')
+			dispatch({ type: 'SET_FEEDBACK', payload: 'incorrect' })
 			setTimeout(() => {
-				setFeedback(null)
-				setAnswer('')
+				dispatch({ type: 'SET_FEEDBACK', payload: null })
+				dispatch({ type: 'SET_ANSWER', payload: '' })
 			}, 2000)
 		}
 	}
 
 	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Enter' && !isSolved) {
+		if (e.key === 'Enter' && !state.isSolved) {
 			checkAnswer()
 		}
 	}
 
 	const handleReveal = () => {
-		setIsRevealed(true)
-		setIsSolved(true)
-		setAnswer(riddle.word)
-		setFeedback('correct')
+		dispatch({ type: 'SET_IS_REVEALED', payload: true })
+		dispatch({ type: 'SET_IS_SOLVED', payload: true })
+		dispatch({ type: 'SET_ANSWER', payload: riddle.word })
+		dispatch({ type: 'SET_FEEDBACK', payload: 'correct' })
 	}
 
 	console.log(riddle)
@@ -103,30 +152,30 @@ export const RiddleSingleView = ({
 						<input
 							id="riddle-answer"
 							type="text"
-							value={answer}
-							onChange={(e) => setAnswer(e.target.value)}
+							value={state.answer}
+							onChange={(e) => dispatch({ type: 'SET_ANSWER', payload: e.target.value })}
 							onKeyPress={handleKeyPress}
-							disabled={isSolved}
-							className={`w-full md:flex-1 px-4 py-2 rounded-md border-2 ${
-								feedback === 'correct'
-									? 'border-green-500 bg-green-50'
-									: feedback === 'incorrect'
-										? 'border-red-500 bg-red-50'
+							disabled={state.isSolved}
+							className={`w-full md:flex-1 px-4 py-2 rounded-md border-2 outline-none focus:outline-none focus:ring-0 ${
+								state.feedback === 'correct'
+									? 'border-green-500'
+									: state.feedback === 'incorrect'
+										? 'border-red-500'
 										: 'border-gray-300'
-							} ${isSolved ? 'opacity-60 cursor-not-allowed' : ''}`}
+							} ${state.isSolved ? 'opacity-60 cursor-not-allowed' : ''}`}
 							placeholder="Type your answer here..."
 						/>
 						<BasicButton
-							text={isSolved ? 'Solved!' : 'Check Answer'}
+							text={state.isSolved ? 'Solved!' : 'Check Answer'}
 							onClick={checkAnswer}
-							customClass={`w-full md:w-auto py-3 ${isSolved ? 'opacity-60 cursor-not-allowed' : ''}`}
-							disabled={isSolved || !answer.trim()}
+							customClass={`w-full md:w-auto py-3 ${state.isSolved ? 'opacity-60 cursor-not-allowed' : ''}`}
+							disabled={state.isSolved || !state.answer.trim()}
 						/>
 					</div>
 					<div className="w-full md:w-auto">
-						{hasGuessed && !isSolved && !isRevealed ? (
+						{state.hasGuessed && !state.isSolved && !state.isRevealed ? (
 							<button
-								onClick={() => setIsRevealModalOpen(true)}
+								onClick={() => dispatch({ type: 'SET_IS_REVEAL_MODAL_OPEN', payload: true })}
 								className="flex items-center justify-center gap-2 px-3 py-3 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors w-full md:w-auto"
 								aria-label="Reveal answer"
 							>
@@ -139,30 +188,33 @@ export const RiddleSingleView = ({
 								/>
 								<span className="text-sm">Reveal</span>
 							</button>
-						) : !hasGuessed ? (
+						) : !state.hasGuessed ? (
 							<div className="flex items-center justify-center gap-2 px-3 py-3 rounded-md w-full md:w-auto invisible pointer-events-none">
 								<Image src="/icons/unlock.png" alt="" width={20} height={20} className="w-5 h-5" />
 								<span className="text-sm">Reveal</span>
 							</div>
 						) : null}
 					</div>
-					{feedback === 'correct' && (
+					{state.feedback === 'correct' && (
 						<p className="text-green-600 ">
-							{isRevealed ? '🔓 Answer revealed!' : '🎉 Correct! Well done!'}
+							{state.isRevealed ? '🔓 Answer revealed!' : '🎉 Correct! Well done!'}
 						</p>
 					)}
-					{feedback === 'incorrect' && <p className="text-red-600 ">❌ Incorrect. Try again!</p>}
+					{state.feedback === 'incorrect' && <p className="text-red-600 ">❌ Incorrect. Try again!</p>}
 				</div>
 			</div>
 
 			{/* Reveal Modal */}
 			<BottomSheetModal
-				isOpen={isRevealModalOpen}
-				onClose={() => setIsRevealModalOpen(false)}
+				isOpen={state.isRevealModalOpen}
+				onClose={() => dispatch({ type: 'SET_IS_REVEAL_MODAL_OPEN', payload: false })}
 				title="Reveal Answer"
 				icon="/icons/unlock.png"
 			>
-				<RevealModal onConfirm={handleReveal} onClose={() => setIsRevealModalOpen(false)} />
+				<RevealModal
+					onConfirm={handleReveal}
+					onClose={() => dispatch({ type: 'SET_IS_REVEAL_MODAL_OPEN', payload: false })}
+				/>
 			</BottomSheetModal>
 
 			{/* Navigation Buttons (for category playlists) */}
