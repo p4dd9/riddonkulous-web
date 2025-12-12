@@ -227,7 +227,7 @@ export default function AdminDashboard() {
 						<form onSubmit={editingTag ? handleUpdate : handleCreate} className="space-y-4">
 							{!editingTag && (
 								<div>
-									<label htmlFor="formId" className="block text-sm font-medium mb-2">
+									<label htmlFor="formId" className="block text-sm  mb-2">
 										Tag ID
 									</label>
 									<input
@@ -242,7 +242,7 @@ export default function AdminDashboard() {
 								</div>
 							)}
 							<div>
-								<label htmlFor="formLabel" className="block text-sm font-medium mb-2">
+								<label htmlFor="formLabel" className="block text-sm  mb-2">
 									Tag Label
 								</label>
 								<input
@@ -256,7 +256,7 @@ export default function AdminDashboard() {
 								/>
 							</div>
 							<div>
-								<label htmlFor="formDescription" className="block text-sm font-medium mb-2">
+								<label htmlFor="formDescription" className="block text-sm  mb-2">
 									Description (optional)
 								</label>
 								<textarea
@@ -269,7 +269,7 @@ export default function AdminDashboard() {
 								/>
 							</div>
 							<div>
-								<label htmlFor="formAssetNamePath" className="block text-sm font-medium mb-2">
+								<label htmlFor="formAssetNamePath" className="block text-sm  mb-2">
 									Asset Name Path (optional)
 								</label>
 								<input
@@ -282,7 +282,7 @@ export default function AdminDashboard() {
 								/>
 							</div>
 							<div>
-								<label htmlFor="formOrder" className="block text-sm font-medium mb-2">
+								<label htmlFor="formOrder" className="block text-sm  mb-2">
 									Order (optional)
 								</label>
 								<input
@@ -332,22 +332,22 @@ export default function AdminDashboard() {
 						<table className="w-full">
 							<thead className="bg-gray-900">
 								<tr>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+									<th className="px-6 py-3 text-left text-xs  text-gray-300 uppercase tracking-wider">
 										ID
 									</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+									<th className="px-6 py-3 text-left text-xs  text-gray-300 uppercase tracking-wider">
 										Label
 									</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+									<th className="px-6 py-3 text-left text-xs  text-gray-300 uppercase tracking-wider">
 										Description
 									</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+									<th className="px-6 py-3 text-left text-xs  text-gray-300 uppercase tracking-wider">
 										Asset Path
 									</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+									<th className="px-6 py-3 text-left text-xs  text-gray-300 uppercase tracking-wider">
 										Order
 									</th>
-									<th className="px-6 py-3 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">
+									<th className="px-6 py-3 text-right text-xs  text-gray-300 uppercase tracking-wider">
 										Actions
 									</th>
 								</tr>
@@ -355,7 +355,7 @@ export default function AdminDashboard() {
 							<tbody className="divide-y divide-gray-700">
 								{tags.map((tag) => (
 									<tr key={tag.id} className="hover:bg-gray-750">
-										<td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{tag.id}</td>
+										<td className="px-6 py-4 whitespace-nowrap text-sm ">{tag.id}</td>
 										<td className="px-6 py-4 whitespace-nowrap text-sm">{tag.label}</td>
 										<td className="px-6 py-4 text-sm text-gray-400">{tag.description || '-'}</td>
 										<td className="px-6 py-4 text-sm text-gray-400">

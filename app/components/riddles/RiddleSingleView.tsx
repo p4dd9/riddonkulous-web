@@ -147,11 +147,11 @@ export const RiddleSingleView = ({
 						) : null}
 					</div>
 					{feedback === 'correct' && (
-						<p className="text-green-600 font-semibold">
+						<p className="text-green-600 ">
 							{isRevealed ? '🔓 Answer revealed!' : '🎉 Correct! Well done!'}
 						</p>
 					)}
-					{feedback === 'incorrect' && <p className="text-red-600 font-semibold">❌ Incorrect. Try again!</p>}
+					{feedback === 'incorrect' && <p className="text-red-600 ">❌ Incorrect. Try again!</p>}
 				</div>
 			</div>
 

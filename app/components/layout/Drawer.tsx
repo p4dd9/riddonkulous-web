@@ -90,7 +90,7 @@ export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
 				<div className="flex-1 overflow-y-auto p-4">
 					{/* Featured */}
 					<div className="flex flex-col gap-2 mb-4">
-						<h3 className="text-lg font-semibold px-4 mb-2">Featured</h3>
+						<h3 className="text-lg  px-4 mb-2">Featured</h3>
 						<Link
 							href="/"
 							onClick={onClose}
@@ -109,7 +109,7 @@ export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
 
 					{/* Categories */}
 					<div className="flex flex-col gap-2">
-						<h3 className="text-lg font-semibold px-4 mb-2">Categories</h3>
+						<h3 className="text-lg  px-4 mb-2">Categories</h3>
 						{loading ? (
 							<div className="px-4 py-2 text-gray-400">Loading...</div>
 						) : tags.length === 0 ? (
@@ -138,7 +138,7 @@ export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
 						href="https://www.reddit.com/r/riddonkulous"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary hover:bg-secondary rounded-md transition-colors text-white font-medium"
+						className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary hover:bg-secondary rounded-md transition-colors text-white "
 					>
 						Join On Reddit
 					</a>

@@ -73,7 +73,7 @@ export default function AdminLoginPage() {
 					<h1 className="text-3xl mb-6 text-center">Admin Login</h1>
 					<form onSubmit={handleSubmit} className="space-y-4">
 						<div>
-							<label htmlFor="username" className="block text-sm font-medium mb-2">
+							<label htmlFor="username" className="block text-sm  mb-2">
 								Username
 							</label>
 							<input
@@ -87,7 +87,7 @@ export default function AdminLoginPage() {
 							/>
 						</div>
 						<div>
-							<label htmlFor="password" className="block text-sm font-medium mb-2">
+							<label htmlFor="password" className="block text-sm  mb-2">
 								Password
 							</label>
 							<input
@@ -108,7 +108,7 @@ export default function AdminLoginPage() {
 						<button
 							type="submit"
 							disabled={loading}
-							className="w-full bg-primary hover:bg-secondary text-white font-medium py-2 px-4 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+							className="w-full bg-primary hover:bg-secondary text-white  py-2 px-4 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
 						>
 							{loading ? 'Logging in...' : 'Login'}
 						</button>

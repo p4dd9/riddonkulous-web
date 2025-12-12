@@ -50,7 +50,7 @@ export default function PasswordPage() {
 
 				<form onSubmit={handleSubmit} className="flex flex-col gap-4">
 					<div className="flex flex-col gap-2">
-						<label htmlFor="password" className="text-lg font-semibold">
+						<label htmlFor="password" className="text-lg ">
 							Password
 						</label>
 						<input
@@ -77,4 +77,3 @@ export default function PasswordPage() {
 		</div>
 	)
 }
-

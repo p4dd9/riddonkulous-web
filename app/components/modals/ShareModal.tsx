@@ -75,7 +75,7 @@ export const ShareModal = ({ url, title, onClose }: ShareModalProps) => {
 			<div className="flex gap-3 flex-col">
 				<button
 					onClick={copyToClipboard}
-					className="flex items-center justify-center gap-3 bg-gray-700 hover:bg-gray-600 px-5 py-3 rounded-lg font-medium transition-colors"
+					className="flex items-center justify-center gap-3 bg-gray-700 hover:bg-gray-600 px-5 py-3 rounded-lg  transition-colors"
 				>
 					<Image src="/icons/link.png" alt="Copy link" width={20} height={20} className="w-5 h-5" />
 					<span>{copied ? 'Copied!' : 'Copy URL'}</span>
@@ -83,7 +83,7 @@ export const ShareModal = ({ url, title, onClose }: ShareModalProps) => {
 				{canShare && (
 					<button
 						onClick={handleShare}
-						className="flex items-center justify-center gap-3 bg-primary hover:bg-secondary px-5 py-3 rounded-lg font-medium transition-colors"
+						className="flex items-center justify-center gap-3 bg-primary hover:bg-secondary px-5 py-3 rounded-lg  transition-colors"
 					>
 						<Image src="/icons/world.png" alt="Share" width={20} height={20} className="w-5 h-5" />
 						<span>Share</span>

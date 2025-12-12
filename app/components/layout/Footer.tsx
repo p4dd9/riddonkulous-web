@@ -24,7 +24,10 @@ export const Footer = () => {
 						Privacy Policy
 					</Link>
 					<span className="hidden md:inline">|</span>
-
+					<Link href="/credits" className="hover:underline">
+						Credits
+					</Link>
+					<span className="hidden md:inline">|</span>
 					<Link
 						href="https://hammertime.studio/en/support-my-work"
 						target="_blank"
