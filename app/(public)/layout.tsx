@@ -21,6 +21,13 @@ export default function RootLayout({
 					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6902354361648358"
 					crossOrigin="anonymous"
 				/>
+				{/* Privacy-friendly analytics by Plausible */}
+				<script async src="https://plausible.hammertime.studio/js/pa-x-KEXLTn7CNv9VeZQ3Y3C.js"></script>
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()`,
+					}}
+				/>
 			</head>
 			<body className="antialiased flex flex-col min-h-screen">
 				<Header />
@@ -30,3 +37,4 @@ export default function RootLayout({
 		</html>
 	)
 }
+
