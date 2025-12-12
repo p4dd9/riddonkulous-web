@@ -76,11 +76,14 @@ export async function proxy(request: NextRequest) {
 	}
 
 	// Handle public password protection
+	// TEMPORARY: Set to true to disable password protection
+	const DISABLE_PASSWORD_PROTECTION = true
+
 	const PUBLIC_PASSWORD = process.env.PUBLIC_PASSWORD
 	const PUBLIC_SESSION_COOKIE_NAME = 'riddonk_public_access'
 
-	// Skip password check if no password is set
-	if (!PUBLIC_PASSWORD) {
+	// Skip password check if disabled or no password is set
+	if (DISABLE_PASSWORD_PROTECTION || !PUBLIC_PASSWORD) {
 		return NextResponse.next()
 	}
 
