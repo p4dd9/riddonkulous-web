@@ -94,13 +94,11 @@ export default async function Home() {
 				<h2 className="text-2xl md:text-3xl mt-12 text-center">Where Am I?</h2>
 				<div className="flex flex-col gap-3 text-base md:text-lg">
 					<p className="text-center">
-						Riddonkulous is a Reddit App and Community for Creating and Solving Riddles. Our goal is to
-						embrace Human Creativity and make it available (and as accessible as possible) to everyone.
+						Riddonkulous is a Reddit App for Creating and Solving Riddles. Our goal is to embrace Creativity
+						and make it available to everyone.
 					</p>
 					<p className="text-center">
-						Riddonkulous.com extends this creative experience beyond the Reddit App, opening up also for
-						everyone where every Riddle Creator and Solver can explore, discover, and celebrate community
-						talent and creativity. Welcome to Riddonkulous!
+						riddonkulous.com extends this beyond the Reddit App. Welcome to Riddonkulous!
 					</p>
 					<div className="flex justify-center mt-4">
 						<LinkAsButton

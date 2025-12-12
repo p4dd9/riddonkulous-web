@@ -13,7 +13,7 @@ interface BasicButtonProps {
 	children?: ReactNode
 }
 
-const defaultClasses = 'bg-primary hover:bg-primary px-2 py-.5 rounded-md text-white transition-colors'
+const defaultClasses = 'bg-primary hover:bg-primary px-2 py-.5 rounded-md text-white transition-colors cursor-pointer'
 
 const threeDClasses =
 	'shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px] active:shadow-[0_1px_0_0_rgba(0,0,0,0.7)] active:translate-y-[4px] transition-all duration-150'
@@ -29,7 +29,7 @@ export const BasicButton = ({
 	children,
 }: BasicButtonProps) => {
 	const buttonClasses = useMemo(() => {
-		const baseClasses = customClass || defaultClasses
+		const baseClasses = ` ${defaultClasses} ${customClass}`
 		if (threeD) {
 			return `${baseClasses} ${threeDClasses}`
 		}

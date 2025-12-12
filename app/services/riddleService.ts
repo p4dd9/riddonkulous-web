@@ -22,7 +22,7 @@ export const getTrendingRiddles = async () => {
 	const apiBaseUrl = await getApiBaseUrl()
 	const apiKey = await getApiKey()
 	const { data } = await fetcher<ReddicoreResponseType<DailyRiddleType[]>>(
-		`${apiBaseUrl}/trending/riddles?days=200&limit=10`,
+		`${apiBaseUrl}/trending/riddles?days=5&limit=10`,
 		{
 			headers: {
 				'Content-Type': 'application/json',
