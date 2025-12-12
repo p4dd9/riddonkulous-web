@@ -234,21 +234,6 @@ export const RiddleSingleView = ({
 					/>
 				</div>
 			)}
-
-			{/* Ad Placeholder */}
-			<div className="w-full flex justify-center items-center mt-4">
-				<div
-					className="w-full flex items-center justify-center rounded-lg"
-					style={{
-						minWidth: '120px',
-						minHeight: '100px',
-						maxWidth: 'min(100%, 1200px)',
-						backgroundColor: '#f3f4f6',
-					}}
-				>
-					<span className="text-sm text-gray-500">Advertisement</span>
-				</div>
-			</div>
 		</div>
 	)
 }

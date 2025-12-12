@@ -111,19 +111,6 @@ export default async function Home() {
 					</div>
 				</div>
 			</div>
-
-			{/*<div className="w-full flex justify-center items-center">
-				<div
-					className="w-full"
-					style={{
-						minWidth: '120px',
-						maxWidth: 'min(100%, 1200px)',
-						minHeight: '75px',
-					}}
-				>
-					<GoogleAdDisplayUnitResponsive />
-				</div>
-			</div>*/}
 		</div>
 	)
 }
