@@ -11,6 +11,7 @@ interface BasicButtonProps {
 	textAlign?: 'left' | 'center' | 'right'
 	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 	children?: ReactNode
+	disabled?: boolean
 }
 
 const defaultClasses = 'bg-primary hover:bg-primary px-2 py-.5 rounded-md text-white transition-colors cursor-pointer'
@@ -27,6 +28,7 @@ export const BasicButton = ({
 	textAlign,
 	onClick,
 	children,
+	disabled = false,
 }: BasicButtonProps) => {
 	const buttonClasses = useMemo(() => {
 		const baseClasses = ` ${defaultClasses} ${customClass}`
@@ -55,7 +57,13 @@ export const BasicButton = ({
 	const displayText = children || text
 
 	return (
-		<button type="button" onClick={onClick} className={`${buttonClasses} ${textAlignClass}`} style={textAlignStyle}>
+		<button
+			type="button"
+			onClick={onClick}
+			disabled={disabled}
+			className={`${buttonClasses} ${textAlignClass}`}
+			style={textAlignStyle}
+		>
 			<div className={icon ? 'flex items-center gap-2' : ''}>
 				{icon && <img src={icon} alt="" className={iconClass} />}
 				{displayText}

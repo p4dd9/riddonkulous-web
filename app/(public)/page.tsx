@@ -74,7 +74,7 @@ export default async function Home() {
 								riddleCount={tag.count || 0}
 								description={tag.description || ''}
 								backgroundImage={tag.asset_name_path}
-								href={`/tags/${tag.id}`}
+								href={`/riddles/${tag.id}`}
 							/>
 						))}
 				</div>

@@ -1,4 +1,4 @@
-export const formatDate = (milliDate: string) => {
+export const formatDate = (milliDate: string | number | null) => {
 	if (!milliDate) {
 		return `-`
 	}

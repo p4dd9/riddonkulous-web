@@ -1,17 +1,23 @@
 'use client'
 
-import { BasicButton } from '@/app/components/buttons/BasicButton'
 import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import { getCanvasBackground } from '@/app/util/cosmetics'
 import Image from 'next/image'
+import { LinkAsButton } from '../buttons/LinkAsButton'
 
 interface RiddleCardProps {
 	riddle: DailyRiddleType
 	className?: string
 	variant?: 'default' | 'compact'
+	hideSolveButton?: boolean
 }
 
-export const RiddleCard = ({ riddle, className = '', variant = 'default' }: RiddleCardProps) => {
+export const RiddleCard = ({
+	riddle,
+	className = '',
+	variant = 'default',
+	hideSolveButton = false,
+}: RiddleCardProps) => {
 	const isCompact = variant === 'compact'
 
 	return (
@@ -58,20 +64,20 @@ export const RiddleCard = ({ riddle, className = '', variant = 'default' }: Ridd
 				>
 					<p className={isCompact ? 'line-clamp-2' : ''}>{riddle.riddle}</p>
 				</div>
-				<div className={`flex items-center w-full pb-2 ${isCompact ? 'justify-end' : 'justify-center'}`}>
-					<BasicButton
-						text="Solve"
-						onClick={() => {
-							console.log('Solve')
-						}}
-						textAlign="center"
-						customClass={
-							isCompact
-								? 'bg-primary hover:bg-primary px-1.5 py-0.5 rounded-md text-white text-xs transition-colors'
-								: 'px-4 py-1'
-						}
-					/>
-				</div>
+				{!hideSolveButton && (
+					<div className={`flex items-center w-full pb-2 ${isCompact ? 'justify-end' : 'justify-center'}`}>
+						<LinkAsButton
+							href={`/riddle/${riddle.postId}`}
+							text="Solve"
+							textAlign="center"
+							customClass={
+								isCompact
+									? 'bg-primary hover:bg-primary px-1.5 py-0.5 rounded-md text-white text-xs transition-colors'
+									: 'px-4 py-1'
+							}
+						/>
+					</div>
+				)}
 			</div>
 		</div>
 	)

@@ -36,7 +36,7 @@ export const LinkAsButton = ({
 	rel,
 }: LinkAsButtonProps) => {
 	const buttonClasses = useMemo(() => {
-		const baseClasses = customClass || defaultClasses
+		const baseClasses = `${defaultClasses} ${customClass}`
 		const classesWith3D = threeD ? `${baseClasses} ${threeDClasses}` : baseClasses
 		return classesWith3D
 	}, [customClass, threeD])
