@@ -1,26 +1,41 @@
+'use client'
+
 import Image from 'next/image'
+import { useState } from 'react'
 import { LinkAsButton } from '../buttons/LinkAsButton'
+import { Drawer } from './Drawer'
 
 export const Header = () => {
-	return (
-		<header className="w-full flex items-center justify-between py-2 px-2 ">
-			<div className="flex items-center justify-center gap-2">
-				<Image src="/img/detective.png" alt="Riddonkulous" width={32} height={32} />
-				<h1>Riddonkulous</h1>
-			</div>
+	const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
-			<div className="flex items-center justify-center gap-2">
-				<LinkAsButton
-					href="https://www.reddit.com/r/riddonkulous"
-					className="text-sm py-2 flex items-center gap-2"
-					icon="/icons/pencil.png"
-					target="_blank"
-					rel="noopener noreferrer"
-					iconClass="w-4 h-4"
-				>
-					Create
-				</LinkAsButton>
-			</div>
-		</header>
+	return (
+		<>
+			<header className="w-full flex items-center justify-between py-2 px-2 ">
+				<div className="flex items-center justify-center gap-2">
+					<button
+						onClick={() => setIsDrawerOpen((prev) => !prev)}
+						className="flex items-center justify-center p-1 hover:bg-gray-800 rounded transition-colors cursor-pointer"
+						aria-label={isDrawerOpen ? 'Close menu' : 'Open menu'}
+					>
+						<Image src="/icons/folder.png" alt="Menu" width={28} height={28} className="w-7 h-7" />
+					</button>
+					<h1>Riddonkulous</h1>
+				</div>
+
+				<div className="flex items-center justify-center gap-2">
+					<LinkAsButton
+						href="https://www.reddit.com/r/riddonkulous"
+						className="text-sm py-1 flex items-center gap-2"
+						icon="/icons/pencil.png"
+						target="_blank"
+						rel="noopener noreferrer"
+						iconClass="w-4 h-4"
+					>
+						Create
+					</LinkAsButton>
+				</div>
+			</header>
+			<Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
+		</>
 	)
 }
