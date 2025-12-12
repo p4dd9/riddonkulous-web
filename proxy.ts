@@ -3,10 +3,19 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 export const config = {
-	matcher: '/admin/:path*',
+	matcher: [
+		/*
+		 * Match all request paths except for the ones starting with:
+		 * - _next/static (static files)
+		 * - _next/image (image optimization files)
+		 * - favicon.ico (favicon file)
+		 * - public files (public folder)
+		 */
+		'/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|otf|ttf|woff|woff2|json|webmanifest)).*)',
+	],
 }
 
-const getSecretKey = () => {
+const getAdminSecretKey = () => {
 	const secret = process.env.ADMIN_SESSION_SECRET
 	if (!secret) {
 		throw new Error('ADMIN_SESSION_SECRET environment variable is not set')
@@ -14,32 +23,93 @@ const getSecretKey = () => {
 	return new TextEncoder().encode(secret)
 }
 
+const getPublicSecretKey = () => {
+	const secret = process.env.PUBLIC_SESSION_SECRET || process.env.ADMIN_SESSION_SECRET
+	if (!secret) {
+		return null
+	}
+	return new TextEncoder().encode(secret)
+}
+
 export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl
 
-	if (
-		pathname === '/admin/login' ||
-		pathname.startsWith('/admin/api/login') ||
-		pathname.startsWith('/admin/api/logout')
-	) {
+	// Handle admin routes
+	if (pathname.startsWith('/admin')) {
+		if (
+			pathname === '/admin/login' ||
+			pathname.startsWith('/admin/api/login') ||
+			pathname.startsWith('/admin/api/logout')
+		) {
+			return NextResponse.next()
+		}
+
+		const sessionCookie = request.cookies.get('riddonk_x')
+
+		if (!sessionCookie) {
+			// For API routes, return 401 JSON; for pages, redirect to login
+			if (pathname.startsWith('/admin/api/')) {
+				return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+			}
+			return NextResponse.redirect(new URL('/admin/login', request.url))
+		}
+
+		try {
+			const { payload } = await jwtVerify(sessionCookie.value, getAdminSecretKey())
+
+			if (payload.authenticated !== true) {
+				// For API routes, return 401 JSON; for pages, redirect to login
+				if (pathname.startsWith('/admin/api/')) {
+					return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+				}
+				return NextResponse.redirect(new URL('/admin/login', request.url))
+			}
+		} catch {
+			// For API routes, return 401 JSON; for pages, redirect to login
+			if (pathname.startsWith('/admin/api/')) {
+				return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+			}
+			return NextResponse.redirect(new URL('/admin/login', request.url))
+		}
+
 		return NextResponse.next()
 	}
 
-	const sessionCookie = request.cookies.get('riddonk_x')
+	// Handle public password protection
+	const PUBLIC_PASSWORD = process.env.PUBLIC_PASSWORD
+	const PUBLIC_SESSION_COOKIE_NAME = 'riddonk_public_access'
+
+	// Skip password check if no password is set
+	if (!PUBLIC_PASSWORD) {
+		return NextResponse.next()
+	}
+
+	// Allow access to password page and API routes
+	if (pathname === '/password' || pathname.startsWith('/api/')) {
+		return NextResponse.next()
+	}
+
+	const sessionCookie = request.cookies.get(PUBLIC_SESSION_COOKIE_NAME)
 
 	if (!sessionCookie) {
-		// No session, redirect to login
-		return NextResponse.redirect(new URL('/admin/login', request.url))
+		// No session, redirect to password page
+		return NextResponse.redirect(new URL('/password', request.url))
+	}
+
+	const secretKey = getPublicSecretKey()
+	if (!secretKey) {
+		return NextResponse.next()
 	}
 
 	try {
-		const { payload } = await jwtVerify(sessionCookie.value, getSecretKey())
+		const { payload } = await jwtVerify(sessionCookie.value, secretKey)
 
 		if (payload.authenticated !== true) {
-			return NextResponse.redirect(new URL('/admin/login', request.url))
+			return NextResponse.redirect(new URL('/password', request.url))
 		}
 	} catch {
-		return NextResponse.redirect(new URL('/admin/login', request.url))
+		// Invalid token, redirect to password page
+		return NextResponse.redirect(new URL('/password', request.url))
 	}
 
 	return NextResponse.next()
