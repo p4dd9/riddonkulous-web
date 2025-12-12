@@ -20,7 +20,7 @@ export const GoogleAdDisplayUnit = () => {
 	return (
 		<div className="w-full h-[90px] flex justify-center items-center">
 			<div
-				className="bg-(--color-bg-dark) flex items-center justify-center relative"
+				className="bg-[var(--color-bg)] flex items-center justify-center relative"
 				style={{ width: '728px', height: '90px' }}
 			>
 				<span className="text-sm" style={{ color: '#0B1416' }}>

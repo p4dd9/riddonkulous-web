@@ -43,15 +43,15 @@ export const BottomSheetModal = ({ isOpen, onClose, title, icon, children }: Bot
 
 			{/* Bottom Sheet */}
 			<div
-				className="fixed inset-0 z-50 flex flex-col justify-end max-w-[900px] mx-auto translate-y-0 opacity-100 transition-all duration-300 ease-out"
+				className="fixed inset-0 z-50 flex flex-col justify-end mx-auto translate-y-0 opacity-100 transition-all duration-300 ease-out"
 				onClick={handleOverlayClick}
 			>
 				<div
-					className="bg-[var(--color-bg-dark)] w-full shadow-lg max-h-[90vh] flex flex-col rounded-t-2xl relative z-10"
+					className="bg-[var(--color-bg)] w-full shadow-lg max-h-[90vh] flex flex-col rounded-t-2xl relative z-10"
 					onClick={(e) => e.stopPropagation()}
 				>
 					{/* Header */}
-					<div className="flex items-center justify-between px-2 py-2 border-b-2 border-primary sticky top-0 z-10 bg-[var(--color-bg-dark)]">
+					<div className="flex items-center justify-between px-2 py-2 border-b-2 border-primary sticky top-0 z-10 bg-[var(--color-bg)]">
 						<h2 className="text-xl whitespace-nowrap overflow-hidden text-ellipsis pl-2 flex items-center gap-2">
 							{icon && <img src={icon} alt="" className="w-6 h-6" />}
 							{title || 'Modal'}
@@ -66,11 +66,10 @@ export const BottomSheetModal = ({ isOpen, onClose, title, icon, children }: Bot
 					</div>
 
 					{/* Scrollable Content */}
-					<div className="p-4 overflow-auto bg-[var(--color-bg-dark)]">{children}</div>
+					<div className="p-4 overflow-auto">{children}</div>
 				</div>
 			</div>
 		</>,
 		document.body
 	)
 }
-

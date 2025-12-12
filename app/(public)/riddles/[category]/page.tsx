@@ -1,4 +1,6 @@
+import { RedditLinkButton } from '@/app/components/buttons/RedditLinkButton'
 import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
+import { ShareButton } from '@/app/components/ShareButton'
 import { getRiddlesByTag } from '@/app/services/riddleService'
 import { getTagById } from '@/app/services/tagService'
 import { formatDate } from '@/app/util/format'
@@ -85,10 +87,24 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 	console.log(currentRiddle)
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
-			<div className="w-full flex flex-col gap-4 mb-4 max-w-4xl mx-auto px-4">
+			<div className="w-full flex flex-col gap-4 max-w-4xl mx-auto px-4">
 				<h1 className="text-2xl md:text-4xl font-bold">{tag.label}</h1>
-				<p>{formatDate(currentRiddle.date)}</p>
+
+				<div>
+					<div className="w-full flex items-center justify-between gap-4">
+						<p>{formatDate(currentRiddle.date)}</p>
+						<div className="flex items-center gap-2">
+							{currentRiddle.subreddit && currentRiddle.postId && (
+								<RedditLinkButton
+									href={`https://www.reddit.com/r/${currentRiddle.subreddit}/comments/${currentRiddle.postId}/`}
+								/>
+							)}
+							<ShareButton title="Share this riddle" />
+						</div>
+					</div>
+				</div>
 			</div>
+
 			<RiddleSingleView
 				riddle={currentRiddle}
 				hasNext={hasNext}

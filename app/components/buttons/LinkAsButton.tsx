@@ -36,7 +36,12 @@ export const LinkAsButton = ({
 	rel,
 }: LinkAsButtonProps) => {
 	const buttonClasses = useMemo(() => {
-		const baseClasses = `${defaultClasses} ${customClass}`
+		// If customClass contains bg- or hover:bg-, remove default bg-primary and hover:bg-primary
+		let baseClasses = defaultClasses
+		if (customClass.includes('bg-') || customClass.includes('hover:bg-')) {
+			baseClasses = baseClasses.replace('bg-primary', '').replace('hover:bg-primary', '').trim()
+		}
+		baseClasses = `${baseClasses} ${customClass}`.trim()
 		const classesWith3D = threeD ? `${baseClasses} ${threeDClasses}` : baseClasses
 		return classesWith3D
 	}, [customClass, threeD])
