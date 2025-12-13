@@ -1,8 +1,10 @@
+import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { CategoryCard } from '@/app/components/categories/CategoryCard'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
 import { listTags } from '@/app/services/tagService'
 import Image from 'next/image'
+import Link from 'next/link'
 
 // Configure revalidation for this page (ISR - Incremental Static Regeneration)
 // The page will be regenerated at most once every 60 seconds
@@ -79,6 +81,76 @@ export default async function Home() {
 				</div>
 			</div>
 
+			{/* About Riddles Section */}
+			<div id="about-riddles" className="w-full flex flex-col gap-4">
+				<h2 className="text-2xl md:text-3xl text-center">About Riddles</h2>
+				<div className="text-center mb-4">
+					<p className="text-lg md:text-xl opacity-90">Riddles and how to use them</p>
+				</div>
+				<div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
+					<div className="relative py-6 px-4 rounded-lg w-full flex flex-col items-center justify-center">
+						<Image
+							src="/icons/book.png"
+							alt="Book"
+							width={56}
+							height={56}
+							className="w-14 h-14 md:w-16 md:h-16 mb-4"
+						/>
+						<h3 className="text-xl md:text-2xl mb-3 text-center">Riddles in History</h3>
+						<p className="text-sm md:text-base text-center opacity-90 mb-4">
+							Discover how riddles have shaped cultures and civilizations throughout human history, from
+							ancient mythology to modern literature.
+						</p>
+						<LinkAsButton
+							href="/riddles-in-history"
+							text="Read More"
+							textAlign="center"
+							customClass="px-8 py-1"
+						/>
+					</div>
+					<div className="relative py-6 px-4 rounded-lg w-full flex flex-col items-center justify-center">
+						<Image
+							src="/icons/wizard.png"
+							alt="Wizard"
+							width={56}
+							height={56}
+							className="w-14 h-14 md:w-16 md:h-16 mb-4"
+						/>
+						<h3 className="text-xl md:text-2xl mb-3 text-center">Using Riddles</h3>
+						<p className="text-sm md:text-base text-center opacity-90 mb-4">
+							Learn practical ways to incorporate riddles into education, entertainment, and cognitive
+							development.
+						</p>
+						<LinkAsButton
+							href="/using-riddles"
+							text="Read More"
+							textAlign="center"
+							customClass="px-8 py-1"
+						/>
+					</div>
+					<div className="relative py-6 px-4 rounded-lg w-full flex flex-col items-center justify-center">
+						<Image
+							src="/icons/pencil.png"
+							alt="Pencil"
+							width={56}
+							height={56}
+							className="w-14 h-14 md:w-16 md:h-16 mb-4"
+						/>
+						<h3 className="text-xl md:text-2xl mb-3 text-center">Writing Riddles</h3>
+						<p className="text-sm md:text-base text-center opacity-90 mb-4">
+							Learn the art and craft of creating engaging riddles, from understanding structure to
+							mastering wordplay and creative expression.
+						</p>
+						<LinkAsButton
+							href="/writing-riddles"
+							text="Read More"
+							textAlign="center"
+							customClass="px-8 py-1"
+						/>
+					</div>
+				</div>
+			</div>
+
 			{/* About Section */}
 			<div className="w-full flex flex-col gap-4">
 				<div className="flex justify-center">
@@ -93,7 +165,16 @@ export default async function Home() {
 				<h2 className="text-2xl md:text-3xl mt-12 text-center">Welcome to Riddonkulous!</h2>
 				<div className="flex flex-col gap-3 text-base md:text-lg">
 					<p className="text-center">
-						Riddonkulous is a Community and Platform for Creating and Solving Riddles.
+						Riddonkulous is{' '}
+						<Link
+							href="https://www.reddit.com/r/riddonkulous"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="hover:underline text-primary"
+						>
+							a Community
+						</Link>{' '}
+						and Platform for Creating and Solving Riddles.
 					</p>
 					<p className="text-center">Our goal is to embrace Creativity and make it available to everyone.</p>
 				</div>

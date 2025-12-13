@@ -80,7 +80,11 @@ export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
 	return (
 		<div
 			ref={drawerRef}
-			style={{ boxShadow: '0px 10px 8px 0px #0f0f0f', height: 'calc(100dvh - 57px)' }}
+			style={{
+				boxShadow: '0px 10px 8px 0px #0f0f0f',
+				height: 'calc(100dvh - 64px)',
+				marginTop: '7px',
+			}}
 			className={`fixed left-0 top-[57px] md:top-[57px] w-full md:w-80 bg-[var(--color-bg)] z-[110] shadow-lg transform transition-transform duration-300 ease-out ${
 				isOpen ? 'translate-x-0' : '-translate-x-full'
 			}`}
@@ -104,6 +108,20 @@ export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
 								className="w-6 h-6"
 							/>
 							<span className="text-lg">Riddle of the Day</span>
+						</Link>
+						<Link
+							href="/#about-riddles"
+							onClick={onClose}
+							className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors"
+						>
+							<Image
+								src="/icons/book.png"
+								alt="About Riddles"
+								width={24}
+								height={24}
+								className="w-6 h-6"
+							/>
+							<span className="text-lg">About Riddles</span>
 						</Link>
 					</div>
 
@@ -134,14 +152,15 @@ export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
 
 				{/* Bottom Button */}
 				<div className="p-4 flex-shrink-0">
-					<a
-						href="https://www.reddit.com/r/riddonkulous"
+					<Link
+						href="https://hammertime.studio/en/support-my-work"
 						target="_blank"
 						rel="noopener noreferrer"
-						className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary hover:bg-secondary rounded-md transition-colors text-white "
+						className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary hover:bg-secondary rounded-md transition-colors text-white"
 					>
-						Join On Reddit
-					</a>
+						<Image src="/icons/heart.png" alt="Heart" width={16} height={16} />
+						Support this
+					</Link>
 				</div>
 			</div>
 		</div>

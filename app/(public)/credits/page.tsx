@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+export const dynamic = 'force-static'
+
 export default function CreditsPage() {
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
