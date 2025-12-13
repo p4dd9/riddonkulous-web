@@ -148,6 +148,28 @@ export default async function Home() {
 							customClass="px-8 py-1"
 						/>
 					</div>
+					<div className="relative py-6 px-4 rounded-lg w-full flex flex-col items-center justify-center">
+						<Image
+							src="/icons/star.png"
+							alt="Star"
+							width={56}
+							height={56}
+							className="w-14 h-14 md:w-16 md:h-16 mb-4"
+						/>
+						<h3 className="text-xl md:text-2xl mb-3 text-center">Riddonkulous Origins</h3>
+						<p className="text-sm md:text-base text-center opacity-90 mb-4">
+							Learn about the story behind Riddonkulous, how it was built on Reddit&apos;s Developer
+							Platform, and where we are now.
+						</p>
+						<LinkAsButton
+							href="https://developers.reddit.com/docs/blog/riddonkulous"
+							text="Read More"
+							textAlign="center"
+							customClass="px-8 py-1"
+							target="_blank"
+							rel="noopener noreferrer"
+						/>
+					</div>
 				</div>
 			</div>
 
