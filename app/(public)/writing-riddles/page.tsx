@@ -1,6 +1,7 @@
 import { RelatedResources } from '@/app/components/articles/RelatedResources'
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export const dynamic = 'force-static'
 
@@ -13,7 +14,18 @@ export const metadata: Metadata = {
 export default function WritingRiddles() {
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col max-w-4xl mx-auto px-4 py-8 gap-8">
-			<h1 className="text-3xl md:text-4xl text-center mb-4">Writing Riddles</h1>
+			<h1 className="text-3xl md:text-4xl text-center mb-2">Writing Riddles</h1>
+			<p className="text-center italic mb-4 text-gray-400">
+				By{' '}
+				<Link
+					href="https://exilian.co.uk/forum/index.php?PHPSESSID=e2ce9d37ltfs2ojc49rffcvgo1;topic=5701.msg123309#msg123309"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="hover:underline text-primary"
+				>
+					Jubal
+				</Link>
+			</p>
 
 			{/* Image Block */}
 			<div className="w-full flex justify-center mb-8">
