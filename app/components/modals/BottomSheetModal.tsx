@@ -37,13 +37,13 @@ export const BottomSheetModal = ({ isOpen, onClose, title, icon, children }: Bot
 		<>
 			{/* Overlay with fade transition */}
 			<div
-				className="fixed inset-0 bg-black z-40 opacity-50 transition-opacity duration-[250ms] ease-linear"
+				className="fixed inset-0 bg-black z-[120] opacity-50 transition-opacity duration-[250ms] ease-linear"
 				onClick={handleOverlayClick}
 			/>
 
 			{/* Bottom Sheet */}
 			<div
-				className="fixed inset-0 z-50 flex flex-col justify-end mx-auto translate-y-0 opacity-100 transition-all duration-300 ease-out"
+				className="fixed inset-0 z-[120] flex flex-col justify-end mx-auto translate-y-0 opacity-100 transition-all duration-300 ease-out"
 				onClick={handleOverlayClick}
 			>
 				<div

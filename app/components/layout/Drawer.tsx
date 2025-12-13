@@ -81,7 +81,7 @@ export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
 		<div
 			ref={drawerRef}
 			style={{ boxShadow: '0px 10px 8px 0px #0f0f0f', height: 'calc(100dvh - 57px)' }}
-			className={`fixed left-0 top-[57px] md:top-[57px] w-full md:w-80 bg-[var(--color-bg)] z-50 shadow-lg transform transition-transform duration-300 ease-out ${
+			className={`fixed left-0 top-[57px] md:top-[57px] w-full md:w-80 bg-[var(--color-bg)] z-[110] shadow-lg transform transition-transform duration-300 ease-out ${
 				isOpen ? 'translate-x-0' : '-translate-x-full'
 			}`}
 		>
