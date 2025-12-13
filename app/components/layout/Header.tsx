@@ -102,7 +102,7 @@ export const Header = () => {
 						</Link>
 					</div>
 
-					<div className="flex items-center justify-center gap-2">
+					<div className="flex items-center justify-center gap-2 mr-2">
 						<button
 							onClick={() => setIsRedditModalOpen(true)}
 							className="text-sm py-1 flex items-center gap-2 bg-primary hover:bg-secondary px-2 rounded-md text-white transition-colors"

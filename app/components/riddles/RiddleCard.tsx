@@ -24,7 +24,7 @@ export const RiddleCard = ({
 		<div
 			className={`relative py-1 px-2 rounded-lg ${
 				isCompact ? 'h-[120px]' : ''
-			} w-full flex flex-col items-stretch overflow-hidden border-2 ${className}`}
+			} w-full flex flex-col items-stretch overflow-hidden border-2 border-white transition-all duration-50 ${className}`}
 		>
 			<div
 				className="absolute inset-0 bg-position-[center_bottom] bg-no-repeat bg-cover rounded-lg"

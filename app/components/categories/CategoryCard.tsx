@@ -20,7 +20,7 @@ export const CategoryCard = ({
 }: CategoryCardProps) => {
 	const cardContent = (
 		<div
-			className={`relative py-6 px-4 rounded-lg aspect-square w-full flex flex-col items-center justify-center overflow-hidden border-2 cursor-pointer ${className}`}
+			className={`relative py-6 px-4 rounded-lg aspect-square w-full flex flex-col hover:border-primary border-2 border-transparent transition-all duration-50 items-center justify-center overflow-hidden  cursor-pointer ${className}`}
 		>
 			<div
 				className="absolute inset-0 bg-position-center bg-no-repeat bg-cover rounded-lg"
