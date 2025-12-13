@@ -1,4 +1,3 @@
-import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { CategoryCard } from '@/app/components/categories/CategoryCard'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
@@ -91,24 +90,12 @@ export default async function Home() {
 						className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56"
 					/>
 				</div>
-				<h2 className="text-2xl md:text-3xl mt-12 text-center">Where Am I?</h2>
+				<h2 className="text-2xl md:text-3xl mt-12 text-center">Welcome to Riddonkulous!</h2>
 				<div className="flex flex-col gap-3 text-base md:text-lg">
 					<p className="text-center">
-						Riddonkulous is a Reddit App for Creating and Solving Riddles. Our goal is to embrace Creativity
-						and make it available to everyone.
+						Riddonkulous is a Community and Platform for Creating and Solving Riddles.
 					</p>
-					<p className="text-center">
-						riddonkulous.com extends this beyond the Reddit App. Welcome to Riddonkulous!
-					</p>
-					<div className="flex justify-center mt-4">
-						<LinkAsButton
-							href="https://www.reddit.com/r/riddonkulous/"
-							text="Visit r/riddonkulous"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="text-lg md:text-xl px-4 py-2 block md:inline-block w-full md:w-auto text-center"
-						/>
-					</div>
+					<p className="text-center">Our goal is to embrace Creativity and make it available to everyone.</p>
 				</div>
 			</div>
 		</div>
