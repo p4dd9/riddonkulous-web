@@ -2,6 +2,7 @@
 
 import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import { getCanvasBackground } from '@/app/util/cosmetics'
+import { formatPopularity } from '@/app/util/format'
 import Image from 'next/image'
 import { LinkAsButton } from '../buttons/LinkAsButton'
 
@@ -54,7 +55,7 @@ export const RiddleCard = ({
 							height={isCompact ? 16 : 28}
 							className={isCompact ? 'w-4 h-4' : 'w-7 h-7'}
 						/>{' '}
-						<span className={isCompact ? 'text-xs' : ''}>{riddle.popularity}</span>
+						<span className={isCompact ? 'text-xs' : ''}>{formatPopularity(riddle.popularity)}</span>
 					</div>
 				</div>
 				<div
