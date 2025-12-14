@@ -84,6 +84,17 @@ export default function CreditsPage() {
 								</Link>
 								<span className="text-gray-400 ml-2">- Fonts</span>
 							</li>
+							<li>
+								<Link
+									href="https://untiedgames.itch.io/"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="hover:underline text-primary"
+								>
+									unTied Games
+								</Link>
+								<span className="text-gray-400 ml-2">- VFX</span>
+							</li>
 						</ul>
 					</div>
 
