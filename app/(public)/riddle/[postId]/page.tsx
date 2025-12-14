@@ -41,7 +41,7 @@ export default async function RiddlePage({ params }: RiddlePageProps) {
 	const riddle = await getRiddleByPostId(postId)
 
 	return (
-		<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
+		<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8">
 			<RiddleSingleView
 				riddle={riddle}
 				showDate={true}

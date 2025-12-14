@@ -80,7 +80,7 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 	const hasPrevious = riddlesResponse.pagination.hasPrev
 
 	return (
-		<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
+		<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8">
 			<RiddleSingleView
 				riddle={currentRiddle}
 				hasNext={hasNext}
