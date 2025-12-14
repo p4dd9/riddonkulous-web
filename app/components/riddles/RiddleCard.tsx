@@ -12,6 +12,7 @@ interface RiddleCardProps {
 	variant?: 'default' | 'compact'
 	hideSolveButton?: boolean
 	solveHref?: string
+	textClassName?: string
 }
 
 export const RiddleCard = ({
@@ -20,6 +21,7 @@ export const RiddleCard = ({
 	variant = 'default',
 	hideSolveButton = false,
 	solveHref,
+	textClassName,
 }: RiddleCardProps) => {
 	const isCompact = variant === 'compact'
 
@@ -65,7 +67,7 @@ export const RiddleCard = ({
 							: 'text-xl w-[95%] md:w-[80%] lg:w-[70%] text-center flex-1 flex items-center justify-center py-4'
 					}`}
 				>
-					<p className={isCompact ? 'line-clamp-2' : ''}>{riddle.riddle}</p>
+					<p className={isCompact ? 'line-clamp-2' : textClassName || ''}>{riddle.riddle}</p>
 				</div>
 				{!hideSolveButton && (
 					<div className={`flex items-center w-full pb-2 ${isCompact ? 'justify-end' : 'justify-center'}`}>

@@ -50,6 +50,7 @@ export default async function Home() {
 						riddle={riddleOfTheDay}
 						className="lg:h-[384px]"
 						solveHref={`/riddle/daily/${riddleOfTheDay.riddleNumber}`}
+						textClassName="line-clamp-7"
 					/>
 				</div>
 
