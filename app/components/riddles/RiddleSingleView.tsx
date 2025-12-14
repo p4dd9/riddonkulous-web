@@ -1,13 +1,16 @@
 'use client'
 
 import { BasicButton } from '@/app/components/buttons/BasicButton'
+import { RedditLinkButton } from '@/app/components/buttons/RedditLinkButton'
 import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
 import { RevealModal } from '@/app/components/modals/RevealModal'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
+import { ShareButton } from '@/app/components/ShareButton'
 import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
+import { formatDate } from '@/app/util/format'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useEffect, useReducer } from 'react'
+import { useEffect, useReducer, type ReactNode } from 'react'
 
 interface RiddleSingleViewProps {
 	riddle: DailyRiddleType
@@ -17,6 +20,10 @@ interface RiddleSingleViewProps {
 	hasPrevious?: boolean
 	nextUrl?: string
 	previousUrl?: string
+	title?: string | ReactNode
+	showDate?: boolean
+	showRedditButton?: boolean
+	showShareButton?: boolean
 }
 
 export const RiddleSingleView = ({
@@ -27,6 +34,10 @@ export const RiddleSingleView = ({
 	hasPrevious = false,
 	nextUrl,
 	previousUrl,
+	title,
+	showDate = false,
+	showRedditButton = false,
+	showShareButton = false,
 }: RiddleSingleViewProps) => {
 	const router = useRouter()
 
@@ -139,6 +150,28 @@ export const RiddleSingleView = ({
 
 	return (
 		<div className="w-full flex flex-col gap-6 max-w-4xl mx-auto px-4 py-8">
+			{/* Header Section */}
+			{(title || showDate || showRedditButton || showShareButton) && (
+				<div className="w-full flex flex-col gap-4">
+					{title && (
+						<h1 className="text-2xl md:text-4xl font-bold flex items-center gap-2">{title}</h1>
+					)}
+					{(showDate || showRedditButton || showShareButton) && (
+						<div className="w-full flex items-center justify-between gap-4">
+							{showDate && <p>{formatDate(riddle.date)}</p>}
+							<div className="flex items-center gap-2">
+								{showRedditButton && riddle.subreddit && riddle.postId && (
+									<RedditLinkButton
+										href={`https://www.reddit.com/r/${riddle.subreddit}/comments/${riddle.postId}/`}
+									/>
+								)}
+								{showShareButton && <ShareButton title="Share this riddle" />}
+							</div>
+						</div>
+					)}
+				</div>
+			)}
+
 			{/* Main Riddle Card */}
 			<div className="w-full">
 				<RiddleCard riddle={riddle} className="lg:h-[400px]" hideSolveButton={true} />

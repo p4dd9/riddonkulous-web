@@ -19,6 +19,8 @@ export default async function Home() {
 		.filter((riddle) => riddle.postId !== riddleOfTheDay.postId)
 		.slice(0, 3)
 
+	console.log(riddleOfTheDay)
+
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8 gap-8 md:gap-18">
 			{/* About Section */}
@@ -44,7 +46,11 @@ export default async function Home() {
 						{riddleOfTheDay.riddleNumber} Riddle of the Day
 					</h1>
 
-					<RiddleCard riddle={riddleOfTheDay} className="lg:h-[384px]" />
+					<RiddleCard
+						riddle={riddleOfTheDay}
+						className="lg:h-[384px]"
+						solveHref={`/riddle/daily/${riddleOfTheDay.riddleNumber}`}
+					/>
 				</div>
 
 				{/* Trending Sidebar - 1/3 width */}

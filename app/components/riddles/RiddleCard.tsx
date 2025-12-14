@@ -10,6 +10,7 @@ interface RiddleCardProps {
 	className?: string
 	variant?: 'default' | 'compact'
 	hideSolveButton?: boolean
+	solveHref?: string
 }
 
 export const RiddleCard = ({
@@ -17,6 +18,7 @@ export const RiddleCard = ({
 	className = '',
 	variant = 'default',
 	hideSolveButton = false,
+	solveHref,
 }: RiddleCardProps) => {
 	const isCompact = variant === 'compact'
 
@@ -67,7 +69,7 @@ export const RiddleCard = ({
 				{!hideSolveButton && (
 					<div className={`flex items-center w-full pb-2 ${isCompact ? 'justify-end' : 'justify-center'}`}>
 						<LinkAsButton
-							href={`/riddle/${riddle.postId}`}
+							href={solveHref || `/riddle/${riddle.postId}`}
 							text="Solve"
 							textAlign="center"
 							customClass={

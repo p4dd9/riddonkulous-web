@@ -19,6 +19,22 @@ export const getRiddleOfTheDay = async () => {
 	return data
 }
 
+export const getRiddleByNumber = async (number?: number | undefined) => {
+	const apiBaseUrl = await getApiBaseUrl()
+	const apiKey = await getApiKey()
+	const { data } = await fetcher<ReddicoreResponseType<DailyRiddleType>>(
+		`${apiBaseUrl}/daily/riddle/${number ?? ''}`,
+		{
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${apiKey}`,
+			},
+			method: 'GET',
+		}
+	)
+	return data
+}
+
 export const getTrendingRiddles = async () => {
 	const apiBaseUrl = await getApiBaseUrl()
 	const apiKey = await getApiKey()
