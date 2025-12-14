@@ -4,7 +4,6 @@ import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
 import { listTags } from '@/app/services/tagService'
 import Image from 'next/image'
-import Link from 'next/link'
 
 // Configure revalidation for this page (ISR - Incremental Static Regeneration)
 // The page will be regenerated at most once every 60 seconds
@@ -22,6 +21,21 @@ export default async function Home() {
 
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8 gap-8 md:gap-18">
+			{/* About Section */}
+			<div className="w-full flex gap-4 md:gap-8 items-end justify-start">
+				<Image
+					src="/pals/frog_magician.gif"
+					alt="Frog Magician"
+					width={64}
+					height={64}
+					className="w-18 h-18 sm:w-24 sm:h-24 md:w-32 md:h-32 "
+				/>
+				<div className="flex flex-col gap-3 text-xs md:text-3xl">
+					<p className="text-left">
+						Riddonkulous is a Platform <br className="hidden md:block" /> for Creating and Solving Riddles.
+					</p>
+				</div>
+			</div>
 			<div className="w-full flex flex-col lg:flex-row lg:items-start gap-6">
 				{/* Main Content - 2/3 width */}
 				<div className="flex flex-col gap-4 lg:w-2/3">
@@ -150,13 +164,13 @@ export default async function Home() {
 					</div>
 					<div className="relative py-6 px-4 rounded-lg w-full flex flex-col items-center justify-center">
 						<Image
-							src="/icons/star.png"
-							alt="Star"
+							src="/icons/window_dialogue.png"
+							alt="Window Dialogue"
 							width={56}
 							height={56}
 							className="w-14 h-14 md:w-16 md:h-16 mb-4"
 						/>
-						<h3 className="text-xl md:text-2xl mb-3 text-center">Riddonkulous Origins</h3>
+						<h3 className="text-xl md:text-2xl mb-3 text-center">Developer Interview</h3>
 						<p className="text-sm md:text-base text-center opacity-90 mb-4">
 							Learn about the story behind Riddonkulous, how it was built on Reddit&apos;s Developer
 							Platform, and where we are now.
@@ -170,35 +184,27 @@ export default async function Home() {
 							rel="noopener noreferrer"
 						/>
 					</div>
-				</div>
-			</div>
-
-			{/* About Section */}
-			<div className="w-full flex flex-col gap-4">
-				<div className="flex justify-center">
-					<Image
-						src="/pals/frog_magician.gif"
-						alt="Frog Magician"
-						width={200}
-						height={200}
-						className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56"
-					/>
-				</div>
-				<h2 className="text-2xl md:text-3xl mt-12 text-center">Welcome to Riddonkulous!</h2>
-				<div className="flex flex-col gap-3 text-base md:text-lg">
-					<p className="text-center">
-						Riddonkulous is{' '}
-						<Link
-							href="https://www.reddit.com/r/riddonkulous"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="hover:underline text-primary"
-						>
-							a Community
-						</Link>{' '}
-						and Platform for Creating and Solving Riddles.
-					</p>
-					<p className="text-center">Our goal is to embrace Creativity and make it available to everyone.</p>
+					<div className="relative py-6 px-4 rounded-lg w-full flex flex-col items-center justify-center">
+						<Image
+							src="/icons/party.png"
+							alt="Party"
+							width={56}
+							height={56}
+							className="w-14 h-14 md:w-16 md:h-16 mb-4"
+						/>
+						<h3 className="text-xl md:text-2xl mb-3 text-center">Community Interview</h3>
+						<p className="text-sm md:text-base text-center opacity-90 mb-4">
+							Get to know one of the most active members of our community, what they love about riddles
+							and what makes a great riddle.
+						</p>
+						<LinkAsButton
+							href="/community-interview"
+							text="Coming Soon"
+							textAlign="center"
+							disabled={true}
+							customClass="px-8 py-1"
+						/>
+					</div>
 				</div>
 			</div>
 		</div>

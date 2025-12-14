@@ -2,7 +2,7 @@ import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import Image from 'next/image'
 
 interface RelatedResourcesProps {
-	excludePage?: 'riddles-in-history' | 'using-riddles' | 'writing-riddles'
+	excludePage?: 'riddles-in-history' | 'using-riddles' | 'writing-riddles' | 'community-interview'
 }
 
 export const RelatedResources = ({ excludePage }: RelatedResourcesProps) => {
@@ -33,6 +33,15 @@ export const RelatedResources = ({ excludePage }: RelatedResourcesProps) => {
 			title: 'Writing Riddles',
 			description:
 				'Learn the art and craft of creating engaging riddles, from understanding structure to mastering wordplay and creative expression.',
+		},
+		{
+			id: 'community-interview',
+			href: '/community-interview',
+			icon: '/icons/party.png',
+			iconAlt: 'Party',
+			title: 'Community Interview',
+			description:
+				'Get to know one of the most active members of our community, what they love about riddles and what makes a great riddle.',
 		},
 	]
 

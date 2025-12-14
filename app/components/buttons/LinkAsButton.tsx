@@ -15,6 +15,7 @@ interface LinkAsButtonProps {
 	children?: ReactNode
 	target?: string
 	rel?: string
+	disabled?: boolean
 }
 
 const defaultClasses = 'bg-primary hover:bg-primary px-2 py-.5 rounded-md text-white transition-colors'
@@ -34,6 +35,7 @@ export const LinkAsButton = ({
 	children,
 	target,
 	rel,
+	disabled = false,
 }: LinkAsButtonProps) => {
 	const buttonClasses = useMemo(() => {
 		// If customClass contains bg- or hover:bg-, remove default bg-primary and hover:bg-primary
@@ -42,9 +44,12 @@ export const LinkAsButton = ({
 			baseClasses = baseClasses.replace('bg-primary', '').replace('hover:bg-primary', '').trim()
 		}
 		baseClasses = `${baseClasses} ${customClass}`.trim()
-		const classesWith3D = threeD ? `${baseClasses} ${threeDClasses}` : baseClasses
-		return classesWith3D
-	}, [customClass, threeD])
+		// Only apply 3D effect if not disabled
+		const classesWith3D = threeD && !disabled ? `${baseClasses} ${threeDClasses}` : baseClasses
+		// Add disabled styles if disabled
+		const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''
+		return `${classesWith3D} ${disabledClasses}`.trim()
+	}, [customClass, threeD, disabled])
 
 	const textAlignClass = useMemo(() => {
 		if (textAlign === 'center') {
@@ -67,12 +72,24 @@ export const LinkAsButton = ({
 	// Merge all classes: default display (inline-block), button classes, text align, and custom className (last so it can override)
 	const mergedClassName = `inline-block ${buttonClasses} ${textAlignClass} ${className}`.trim()
 
+	const content = (
+		<div className={icon ? 'flex items-center gap-2' : ''}>
+			{icon && <img src={icon} alt="" className={iconClass} />}
+			{displayText}
+		</div>
+	)
+
+	if (disabled) {
+		return (
+			<span className={mergedClassName} style={textAlignStyle} aria-disabled="true">
+				{content}
+			</span>
+		)
+	}
+
 	return (
 		<Link href={href} target={target} rel={rel} className={mergedClassName} style={textAlignStyle}>
-			<div className={icon ? 'flex items-center gap-2' : ''}>
-				{icon && <img src={icon} alt="" className={iconClass} />}
-				{displayText}
-			</div>
+			{content}
 		</Link>
 	)
 }
