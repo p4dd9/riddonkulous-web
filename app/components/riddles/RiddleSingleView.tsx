@@ -3,6 +3,7 @@
 import { BasicButton } from '@/app/components/buttons/BasicButton'
 import { RedditLinkButton } from '@/app/components/buttons/RedditLinkButton'
 import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
+import { HintModal } from '@/app/components/modals/HintModal'
 import { RevealModal } from '@/app/components/modals/RevealModal'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { ShareButton } from '@/app/components/ShareButton'
@@ -47,6 +48,7 @@ export const RiddleSingleView = ({
 		isSolved: boolean
 		isRevealed: boolean
 		isRevealModalOpen: boolean
+		isHintModalOpen: boolean
 		hasGuessed: boolean
 	}
 
@@ -56,6 +58,7 @@ export const RiddleSingleView = ({
 		| { type: 'SET_IS_SOLVED'; payload: boolean }
 		| { type: 'SET_IS_REVEALED'; payload: boolean }
 		| { type: 'SET_IS_REVEAL_MODAL_OPEN'; payload: boolean }
+		| { type: 'SET_IS_HINT_MODAL_OPEN'; payload: boolean }
 		| { type: 'SET_HAS_GUESSED'; payload: boolean }
 		| { type: 'RESET' }
 
@@ -65,6 +68,7 @@ export const RiddleSingleView = ({
 		isSolved: false,
 		isRevealed: false,
 		isRevealModalOpen: false,
+		isHintModalOpen: false,
 		hasGuessed: false,
 	}
 
@@ -80,6 +84,8 @@ export const RiddleSingleView = ({
 				return { ...state, isRevealed: action.payload }
 			case 'SET_IS_REVEAL_MODAL_OPEN':
 				return { ...state, isRevealModalOpen: action.payload }
+			case 'SET_IS_HINT_MODAL_OPEN':
+				return { ...state, isHintModalOpen: action.payload }
 			case 'SET_HAS_GUESSED':
 				return { ...state, hasGuessed: action.payload }
 			case 'RESET':
@@ -128,11 +134,16 @@ export const RiddleSingleView = ({
 			dispatch({ type: 'SET_IS_SOLVED', payload: true })
 		} else {
 			dispatch({ type: 'SET_FEEDBACK', payload: 'incorrect' })
-			setTimeout(() => {
-				dispatch({ type: 'SET_FEEDBACK', payload: null })
-				dispatch({ type: 'SET_ANSWER', payload: '' })
-			}, 2000)
 		}
+	}
+
+	const handleAnswerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const newAnswer = e.target.value
+		// Clear incorrect feedback when user starts typing again (but keep correct feedback if solved)
+		if (state.feedback === 'incorrect' && !state.isSolved) {
+			dispatch({ type: 'SET_FEEDBACK', payload: null })
+		}
+		dispatch({ type: 'SET_ANSWER', payload: newAnswer })
 	}
 
 	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -153,9 +164,7 @@ export const RiddleSingleView = ({
 			{/* Header Section */}
 			{(title || showDate || showRedditButton || showShareButton) && (
 				<div className="w-full flex flex-col gap-4">
-					{title && (
-						<h1 className="text-2xl md:text-4xl font-bold flex items-center gap-2">{title}</h1>
-					)}
+					{title && <h1 className="text-2xl md:text-4xl font-bold flex items-center gap-2">{title}</h1>}
 					{(showDate || showRedditButton || showShareButton) && (
 						<div className="w-full flex items-center justify-between gap-4">
 							{showDate && <p>{formatDate(riddle.date)}</p>}
@@ -185,7 +194,7 @@ export const RiddleSingleView = ({
 							id="riddle-answer"
 							type="text"
 							value={state.answer}
-							onChange={(e) => dispatch({ type: 'SET_ANSWER', payload: e.target.value })}
+							onChange={handleAnswerChange}
 							onKeyPress={handleKeyPress}
 							disabled={state.isSolved}
 							className={`w-full md:flex-1 px-4 py-2 rounded-md border-2 outline-none focus:outline-none focus:ring-0 ${
@@ -204,7 +213,22 @@ export const RiddleSingleView = ({
 							disabled={state.isSolved || !state.answer.trim()}
 						/>
 					</div>
-					<div className="w-full md:w-auto">
+					<div className="w-full flex flex-col md:flex-row gap-2">
+						{state.hasGuessed && !state.isSolved ? (
+							<button
+								onClick={() => dispatch({ type: 'SET_IS_HINT_MODAL_OPEN', payload: true })}
+								className="flex items-center justify-center gap-2 px-3 py-3 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors w-full md:w-auto"
+								aria-label="Show hint"
+							>
+								<Image src="/icons/light.png" alt="Hint" width={20} height={20} className="w-5 h-5" />
+								<span className="text-sm">Show Hint</span>
+							</button>
+						) : !state.hasGuessed ? (
+							<div className="flex items-center justify-center gap-2 px-3 py-3 rounded-md w-full md:w-auto invisible pointer-events-none">
+								<Image src="/icons/light.png" alt="" width={20} height={20} className="w-5 h-5" />
+								<span className="text-sm">Show Hint</span>
+							</div>
+						) : null}
 						{state.hasGuessed && !state.isSolved && !state.isRevealed ? (
 							<button
 								onClick={() => dispatch({ type: 'SET_IS_REVEAL_MODAL_OPEN', payload: true })}
@@ -235,6 +259,19 @@ export const RiddleSingleView = ({
 					{state.feedback === 'incorrect' && <p className="text-red-600 ">❌ Incorrect. Try again!</p>}
 				</div>
 			</div>
+
+			{/* Hint Modal */}
+			<BottomSheetModal
+				isOpen={state.isHintModalOpen}
+				onClose={() => dispatch({ type: 'SET_IS_HINT_MODAL_OPEN', payload: false })}
+				title="Hint"
+				icon="/icons/light.png"
+			>
+				<HintModal
+					wordLength={riddle.word.length}
+					onClose={() => dispatch({ type: 'SET_IS_HINT_MODAL_OPEN', payload: false })}
+				/>
+			</BottomSheetModal>
 
 			{/* Reveal Modal */}
 			<BottomSheetModal
