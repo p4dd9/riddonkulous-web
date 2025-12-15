@@ -1,7 +1,6 @@
 'use client'
 
 import { CreateButton } from '@/app/components/buttons/CreateButton'
-import { LoginButton } from '@/app/components/buttons/LoginButton'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
@@ -99,7 +98,7 @@ export const Header = () => {
 
 					<div className="flex items-center justify-center gap-2 mr-2">
 						<CreateButton variant="header" />
-						<LoginButton variant="header" />
+						{/*<LoginButton variant="header" />*/}
 					</div>
 				</header>
 			</div>

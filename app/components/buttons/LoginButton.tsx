@@ -136,7 +136,7 @@ export const LoginButton = ({ variant = 'header', className = '' }: LoginButtonP
 		<>
 			<BasicButton
 				icon="/icons/character.png"
-				iconClass="w-6 h-6"
+				iconClass="w-5 h-5"
 				customClass={`${iconButtonCustomClass} ${className}`}
 				threeD={false}
 				onClick={handleLoginClick}

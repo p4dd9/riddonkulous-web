@@ -19,11 +19,9 @@ export default async function Home() {
 		.filter((riddle) => riddle.postId !== riddleOfTheDay.postId)
 		.slice(0, 3)
 
-	console.log(riddleOfTheDay)
-
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8 gap-8 md:gap-18">
-			{/* About Section */}
+			{/* About Section 
 			<div className="w-full flex gap-4 md:gap-8 items-end justify-start">
 				<Image
 					src="/pals/frog_magician.gif"
@@ -37,39 +35,69 @@ export default async function Home() {
 						Riddonkulous is a Platform <br className="hidden md:block" /> for Creating and Solving Riddles.
 					</p>
 				</div>
-			</div>
-			<div className="w-full flex flex-col lg:flex-row lg:items-start gap-6">
-				{/* Main Content - 2/3 width */}
-				<div className="flex flex-col gap-4 lg:w-2/3">
-					<h1 className="text-2xl md:text-4xl lg:h-12 flex items-center gap-2">
-						<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />#
-						{riddleOfTheDay.riddleNumber} Riddle of the Day
-					</h1>
+			</div>*/}
+			<div className="w-full flex flex-col gap-6">
+				<div className="w-full flex flex-col lg:flex-row lg:items-start gap-6">
+					{/* Main Content - 2/3 width */}
+					<div className="flex flex-col gap-4 lg:w-2/3">
+						<h1 className="text-2xl md:text-4xl lg:h-12 flex items-center gap-2">
+							<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />#
+							{riddleOfTheDay.riddleNumber} Riddle of the Day
+						</h1>
 
-					<RiddleCard
-						riddle={riddleOfTheDay}
-						className="lg:h-[384px]"
-						solveHref={`/riddle/daily/${riddleOfTheDay.riddleNumber}`}
-						textClassName="line-clamp-7"
-					/>
+						<RiddleCard
+							riddle={riddleOfTheDay}
+							className="lg:h-[384px]"
+							solveHref={`/riddle/daily/${riddleOfTheDay.riddleNumber}`}
+							textClassName="line-clamp-7"
+						/>
+					</div>
+
+					{/* Trending Sidebar - 1/3 width */}
+					<div className="flex flex-col gap-4 lg:w-1/3">
+						<h2 className="text-xl md:text-2xl lg:h-12 flex items-center gap-2">
+							<Image
+								src="/icons/script_lightning.png"
+								alt="Trending"
+								width={24}
+								height={24}
+								className="w-6 h-6"
+							/>
+							Trending
+						</h2>
+						<div className="flex flex-col gap-3">
+							{filteredTrendingRiddles.map((riddle) => (
+								<RiddleCard riddle={riddle} variant="compact" key={riddle.postId} />
+							))}
+						</div>
+					</div>
 				</div>
 
-				{/* Trending Sidebar - 1/3 width */}
-				<div className="flex flex-col gap-4 lg:w-1/3">
-					<h2 className="text-xl md:text-2xl lg:h-12 flex items-center gap-2">
-						<Image
-							src="/icons/script_lightning.png"
-							alt="Trending"
-							width={24}
-							height={24}
-							className="w-6 h-6"
+				{/* Riddle Feed Section - Below existing content */}
+				<div className="w-full flex flex-col gap-4">
+					<div className="relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[200px] md:min-h-[250px]">
+						<div
+							className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
+							style={{
+								backgroundImage: 'url(/canvas/BG100.png)',
+								filter: 'brightness(0.5)',
+							}}
 						/>
-						Trending
-					</h2>
-					<div className="flex flex-col gap-3">
-						{filteredTrendingRiddles.map((riddle) => (
-							<RiddleCard riddle={riddle} variant="compact" key={riddle.postId} />
-						))}
+						<div className="relative z-10 flex flex-col items-center justify-center text-center px-4 gap-4">
+							<h3 className="text-2xl md:text-4xl ">Discover New Riddles</h3>
+							<p className="text-base md:text-lg opacity-90 max-w-2xl">
+								Explore our growing collection of riddles. New puzzles are added every day by our
+								awesome community.
+							</p>
+							<div className="mt-4">
+								<LinkAsButton
+									href="/riddle-feed"
+									text="View Riddle Feed"
+									textAlign="center"
+									customClass="px-8 py-2"
+								/>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

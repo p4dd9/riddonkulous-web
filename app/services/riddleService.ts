@@ -81,3 +81,52 @@ export const getRiddlesByTag = async (tagId: string, limit = 10, offset = 0): Pr
 	)
 	return data
 }
+
+export const getLatestRiddles = async (limit = 5, offset = 0, maxDays = 30): Promise<PaginatedRiddlesDataType> => {
+	const apiBaseUrl = await getApiBaseUrl()
+	const apiKey = await getApiKey()
+	const urlObj = new URL(apiBaseUrl)
+	const baseUrl = `${urlObj.protocol}//${urlObj.host}`
+
+	const fetchLimit = Math.max(limit * 10, 100)
+	const { data } = await fetcher<ReddicoreResponseType<PaginatedRiddlesDataType>>(
+		`${baseUrl}/api/v1/riddonk/web/riddles?limit=${fetchLimit}&offset=0&sort=newest`,
+		{
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${apiKey}`,
+			},
+			method: 'GET',
+		}
+	)
+
+	const now = Date.now()
+	const maxDaysAgo = now - maxDays * 24 * 60 * 60 * 1000
+
+	const filteredRiddles = data.riddles.filter((riddle) => {
+		if (!riddle.date) return false
+		const riddleDate = Number(riddle.date)
+		return riddleDate >= maxDaysAgo
+	})
+
+	const paginatedRiddles = filteredRiddles.slice(offset, offset + limit)
+	const total = filteredRiddles.length
+	const hasNext = offset + limit < total
+	const hasPrev = offset > 0
+	const currentPage = Math.floor(offset / limit) + 1
+	const totalPages = Math.ceil(total / limit)
+
+	return {
+		riddles: paginatedRiddles,
+		pagination: {
+			currentPage,
+			totalPages,
+			total,
+			limit,
+			offset,
+			hasNext,
+			hasPrev,
+		},
+		filters: {},
+	}
+}
