@@ -212,6 +212,26 @@ export default async function Home() {
 							customClass="px-8 py-1"
 						/>
 					</div>
+					<div className="relative py-6 px-4 rounded-lg w-full flex flex-col items-center justify-center">
+						<Image
+							src="/icons/help.png"
+							alt="Help"
+							width={56}
+							height={56}
+							className="w-14 h-14 md:w-16 md:h-16 mb-4"
+						/>
+						<h3 className="text-xl md:text-2xl mb-3 text-center">FAQ</h3>
+						<p className="text-sm md:text-base text-center opacity-90 mb-4">
+							Find answers to frequently asked questions about Riddonkulous, how to use the platform, and
+							more.
+						</p>
+						<LinkAsButton
+							href="/faq"
+							text="Read More"
+							textAlign="center"
+							customClass="px-8 py-1"
+						/>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -151,8 +151,15 @@ export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
 					</div>
 				</div>
 
-				{/* Bottom Button */}
-				<div className="p-4 flex-shrink-0">
+				{/* Bottom Section */}
+				<div className="p-4 flex-shrink-0 flex flex-col gap-1">
+					<Link
+						href="/faq"
+						onClick={onClose}
+						className="w-full flex items-center justify-center gap-2 px-4 py-2 hover:underline text-center"
+					>
+						<span className="text-xs">Frequently Asked Questions</span>
+					</Link>
 					<CreateButton variant="drawer" className="w-full" />
 				</div>
 			</div>

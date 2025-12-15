@@ -4,6 +4,13 @@ alwaysApply: true
 
 # Riddonkulous Web - Global Documentation
 
+## Styling and CSS
+
+- Never use font-semibold, bold or other related boldness the projects Fonts do not support this
+- Use the global.css file at all times for styling related questions (we exlusively use tailwind custom theming)
+- Prefer Arrow functions
+- Never use </strong>
+
 ## API Configuration Pattern
 
 ### Overview

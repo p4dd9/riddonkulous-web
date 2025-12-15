@@ -15,12 +15,25 @@ export const Footer = () => {
 					</Link>
 					<span className="hidden md:inline">|</span>
 					<Link
+						href="https://hammertime.studio/en/reddit/terms-of-service"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="hover:underline"
+					>
+						Content Policy
+					</Link>
+					<span className="hidden md:inline">|</span>
+					<Link
 						href="https://hammertime.studio/en/reddit/privacy-policy"
 						target="_blank"
 						rel="noopener noreferrer"
 						className="hover:underline"
 					>
 						Privacy Policy
+					</Link>
+					<span className="hidden md:inline">|</span>
+					<Link href="/faq#contact" className="hover:underline">
+						Contact
 					</Link>
 					<span className="hidden md:inline">|</span>
 					<Link href="/credits" className="hover:underline">
