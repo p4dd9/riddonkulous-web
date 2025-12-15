@@ -27,18 +27,22 @@ export const metadata: Metadata = {
 export default function RiddlesInHistory() {
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col max-w-4xl mx-auto px-4 py-8 gap-8">
-			<h1 className="text-3xl md:text-4xl text-center mb-2">Riddles in History</h1>
-			<p className="text-center italic mb-4 text-gray-400">
-				By{' '}
-				<Link
-					href="https://exilian.co.uk/forum/index.php?PHPSESSID=e2ce9d37ltfs2ojc49rffcvgo1;topic=5701.msg123309#msg123309"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="hover:underline text-primary"
-				>
-					Jubal
-				</Link>
-			</p>
+			<div className="text-center mb-4">
+				<h1 className="text-3xl md:text-4xl mb-2">Riddles in History</h1>
+				<p className="italic text-gray-400">
+					Written by James Baillie
+					<br />
+					In cooperation with{' '}
+					<Link
+						href="https://exilian.co.uk/articles.php"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="hover:underline text-primary"
+					>
+						Exilian Articles
+					</Link>
+				</p>
+			</div>
 
 			{/* Image Block */}
 			<div className="w-full flex justify-center mb-8">
@@ -48,6 +52,7 @@ export default function RiddlesInHistory() {
 					width={200}
 					height={200}
 					className="w-48 h-48 md:w-64 md:h-64"
+					unoptimized
 				/>
 			</div>
 
