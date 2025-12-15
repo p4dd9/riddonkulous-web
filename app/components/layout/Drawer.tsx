@@ -1,5 +1,6 @@
 'use client'
 
+import { CreateButton } from '@/app/components/buttons/CreateButton'
 import type { Tag } from '@/app/services/tagService'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -152,15 +153,7 @@ export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
 
 				{/* Bottom Button */}
 				<div className="p-4 flex-shrink-0">
-					<Link
-						href="https://hammertime.studio/en/support-my-work"
-						target="_blank"
-						rel="noopener noreferrer"
-						className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary hover:bg-secondary rounded-md transition-colors text-white"
-					>
-						<Image src="/icons/heart.png" alt="Heart" width={16} height={16} />
-						Support this
-					</Link>
+					<CreateButton variant="drawer" className="w-full" />
 				</div>
 			</div>
 		</div>

@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
 export const Footer = () => {
@@ -26,16 +25,6 @@ export const Footer = () => {
 					<span className="hidden md:inline">|</span>
 					<Link href="/credits" className="hover:underline">
 						Credits
-					</Link>
-					<span className="hidden md:inline">|</span>
-					<Link
-						href="https://hammertime.studio/en/support-my-work"
-						target="_blank"
-						rel="noopener noreferrer"
-						className="hover:underline flex items-center gap-2"
-					>
-						<Image src="/icons/heart.png" alt="Heart" width={16} height={16} />
-						Support Riddonkulous
 					</Link>
 				</div>
 				<p className="text-xs">© 2025 Hammertime e.U.</p>

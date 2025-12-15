@@ -1,15 +1,13 @@
 'use client'
 
+import { CreateButton } from '@/app/components/buttons/CreateButton'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import { BottomSheetModal } from '../modals/BottomSheetModal'
-import { RedditConfirmModal } from '../modals/RedditConfirmModal'
 import { Drawer } from './Drawer'
 
 export const Header = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-	const [isRedditModalOpen, setIsRedditModalOpen] = useState(false)
 	const [isScrolled, setIsScrolled] = useState(false)
 	const headerRef = useRef<HTMLElement>(null)
 	const sentinelRef = useRef<HTMLDivElement>(null)
@@ -72,10 +70,6 @@ export const Header = () => {
 		}
 	}, [])
 
-	const handleRedditConfirm = () => {
-		window.open('https://www.reddit.com/r/riddonkulous', '_blank', 'noopener,noreferrer')
-	}
-
 	return (
 		<>
 			<div className="relative">
@@ -103,13 +97,7 @@ export const Header = () => {
 					</div>
 
 					<div className="flex items-center justify-center gap-2 mr-2">
-						<button
-							onClick={() => setIsRedditModalOpen(true)}
-							className="text-sm cursor-pointer py-1 flex items-center gap-2 bg-primary hover:bg-secondary px-2 rounded-md text-white transition-colors"
-						>
-							<Image src="/icons/pencil.png" alt="Create" width={16} height={16} className="w-4 h-4" />
-							Create
-						</button>
+						<CreateButton variant="header" />
 					</div>
 				</header>
 			</div>
@@ -121,14 +109,6 @@ export const Header = () => {
 				aria-hidden="true"
 			/>
 			<Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
-			<BottomSheetModal
-				isOpen={isRedditModalOpen}
-				onClose={() => setIsRedditModalOpen(false)}
-				title="Go to Reddit"
-				icon="/icons/pencil.png"
-			>
-				<RedditConfirmModal onConfirm={handleRedditConfirm} onClose={() => setIsRedditModalOpen(false)} />
-			</BottomSheetModal>
 		</>
 	)
 }

@@ -17,8 +17,17 @@ export const CreditsContent = () => {
 			</div>
 
 			<p className="text-gray-300 text-center mb-6">
-				Hey everyone! I'm Patrick. I'm a software engineer and game developer who loves to create fun and
-				creative games that run in the browser.
+				Hey everyone! I&apos;m Patrick. I&apos;m a software engineer and game developer who loves to create fun
+				and creative games that run in the browser. <br /> You can support Riddonkulous{' '}
+				<Link
+					href="https://hammertime.studio/en/support-my-work"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="underline flex items-center gap-2 inline-block"
+				>
+					here
+				</Link>
+				.
 			</p>
 
 			<p className="text-gray-300 text-center mb-6">
