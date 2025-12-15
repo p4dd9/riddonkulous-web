@@ -34,40 +34,22 @@ const getPublicSecretKey = () => {
 export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl
 
-	// Handle admin routes
+	// Handle admin routes - NEW: Uses Google OAuth with role-based access
 	if (pathname.startsWith('/admin')) {
-		if (
-			pathname === '/admin/login' ||
-			pathname.startsWith('/admin/api/login') ||
-			pathname.startsWith('/admin/api/logout')
-		) {
+		// Allow login page and logout endpoint
+		if (pathname === '/admin/login' || pathname.startsWith('/admin/api/logout')) {
 			return NextResponse.next()
 		}
 
-		const sessionCookie = request.cookies.get('riddonk_x')
+		// Check for admin role using new auth system
+		const { verifyAdminAccess } = await import('@/app/lib/adminAuth')
+		const cookieHeader = request.headers.get('cookie') || ''
+		const { isAdmin } = await verifyAdminAccess(cookieHeader)
 
-		if (!sessionCookie) {
+		if (!isAdmin) {
 			// For API routes, return 401 JSON; for pages, redirect to login
 			if (pathname.startsWith('/admin/api/')) {
-				return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-			}
-			return NextResponse.redirect(new URL('/admin/login', request.url))
-		}
-
-		try {
-			const { payload } = await jwtVerify(sessionCookie.value, getAdminSecretKey())
-
-			if (payload.authenticated !== true) {
-				// For API routes, return 401 JSON; for pages, redirect to login
-				if (pathname.startsWith('/admin/api/')) {
-					return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-				}
-				return NextResponse.redirect(new URL('/admin/login', request.url))
-			}
-		} catch {
-			// For API routes, return 401 JSON; for pages, redirect to login
-			if (pathname.startsWith('/admin/api/')) {
-				return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+				return NextResponse.json({ error: 'Unauthorized - Admin access required' }, { status: 401 })
 			}
 			return NextResponse.redirect(new URL('/admin/login', request.url))
 		}

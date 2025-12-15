@@ -51,8 +51,9 @@ export default function AdminDashboard() {
 			const data: TagListResponse = await response.json()
 			setTags(data.tags || [])
 			setTotal(data.total || 0)
-		} catch (err: any) {
-			setError(err.message || 'Failed to load tags')
+		} catch (err: unknown) {
+			const error = err instanceof Error ? err : new Error('Failed to load tags')
+			setError(error.message)
 			setTags([])
 			setTotal(0)
 		} finally {
@@ -65,9 +66,13 @@ export default function AdminDashboard() {
 	}, [offset])
 
 	const handleLogout = async () => {
-		await fetch('/admin/api/logout', { method: 'POST' })
-		router.push('/admin/login')
-		router.refresh()
+		try {
+			await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
+			router.push('/admin/login')
+			router.refresh()
+		} catch (error) {
+			console.error('Logout failed:', error)
+		}
 	}
 
 	const handleCreate = async (e: React.FormEvent) => {
@@ -100,8 +105,9 @@ export default function AdminDashboard() {
 			setFormAssetNamePath('')
 			setFormOrder('')
 			fetchTags()
-		} catch (err: any) {
-			setError(err.message || 'Failed to create tag')
+		} catch (err: unknown) {
+			const error = err instanceof Error ? err : new Error('Failed to create tag')
+			setError(error.message)
 		} finally {
 			setFormLoading(false)
 		}
@@ -137,8 +143,9 @@ export default function AdminDashboard() {
 			setFormAssetNamePath('')
 			setFormOrder('')
 			fetchTags()
-		} catch (err: any) {
-			setError(err.message || 'Failed to update tag')
+		} catch (err: unknown) {
+			const error = err instanceof Error ? err : new Error('Failed to update tag')
+			setError(error.message)
 		} finally {
 			setFormLoading(false)
 		}
@@ -161,8 +168,9 @@ export default function AdminDashboard() {
 			}
 
 			fetchTags()
-		} catch (err: any) {
-			setError(err.message || 'Failed to delete tag')
+		} catch (err: unknown) {
+			const error = err instanceof Error ? err : new Error('Failed to delete tag')
+			setError(error.message)
 		}
 	}
 

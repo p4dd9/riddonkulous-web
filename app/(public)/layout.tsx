@@ -1,5 +1,6 @@
 import { Footer } from '@/app/components/layout/Footer'
 import { Header } from '@/app/components/layout/Header'
+import { AuthProvider } from '@/app/contexts/AuthContext'
 import type { Metadata } from 'next'
 import '../globals.css'
 
@@ -28,11 +29,15 @@ export default function RootLayout({
 						__html: `window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()`,
 					}}
 				/>
+				{/* Google OAuth */}
+				<script src="https://accounts.google.com/gsi/client" async></script>
 			</head>
 			<body className="antialiased flex flex-col min-h-screen">
-				<Header />
-				<main className="flex-1 h-full">{children}</main>
-				<Footer />
+				<AuthProvider>
+					<Header />
+					<main className="flex-1 h-full">{children}</main>
+					<Footer />
+				</AuthProvider>
 			</body>
 		</html>
 	)

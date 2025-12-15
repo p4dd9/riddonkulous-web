@@ -11,11 +11,16 @@ alwaysApply: true
 - Prefer Arrow functions
 - Never use </strong>
 
+## Env variables
+
+See .env.example
+
 ## API Configuration Pattern
 
 ### Overview
 
 All API service files should use the centralized API configuration utilities from `app/util/apiConfig.ts` to manage environment variables for API base URLs and API keys.
+Utilize `fetcher.ts`
 
 ### Utility Functions
 

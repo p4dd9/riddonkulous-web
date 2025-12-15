@@ -1,71 +1,84 @@
-'use server'
+'use client'
 
-import { SignJWT, jwtVerify } from 'jose'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
-const SESSION_COOKIE_NAME = 'riddonk_x'
-const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET
-
-if (!SESSION_SECRET) {
-	throw new Error('ADMIN_SESSION_SECRET environment variable is not set')
+export interface User {
+	id: string
+	email: string
+	role: string
 }
 
-// Get the secret key for JWT signing/verification
-const getSecretKey = () => {
-	return new TextEncoder().encode(SESSION_SECRET)
+export interface LoginResponse {
+	status: string
+	data: {
+		user: User
+		sessionToken: string
+	}
 }
 
-export const verifyAdminSession = async (): Promise<boolean> => {
-	const cookieStore = await cookies()
-	const session = cookieStore.get(SESSION_COOKIE_NAME)
+export interface AuthError {
+	status: number
+	message: string
+	details?: unknown
+}
 
-	if (!session) {
-		return false
+/**
+ * Login with Google ID token (proxied through Next.js API)
+ */
+export const login = async (idToken: string): Promise<LoginResponse> => {
+	console.log('idToken', idToken)
+	const response = await fetch('/api/auth/login', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		credentials: 'include', // Important: sends cookies
+		body: JSON.stringify({ idToken }),
+	})
+
+	console.log('response', response)
+
+	if (!response.ok) {
+		const error: AuthError = await response.json().catch(() => ({
+			status: response.status,
+			message: 'Login failed',
+		}))
+		throw new Error(error.message || 'Login failed')
 	}
 
+	return response.json()
+}
+
+/**
+ * Logout current session (proxied through Next.js API)
+ */
+export const logout = async (): Promise<void> => {
+	const response = await fetch('/api/auth/logout', {
+		method: 'POST',
+		credentials: 'include', // Important: sends cookies
+	})
+
+	if (!response.ok) {
+		throw new Error('Logout failed')
+	}
+}
+
+/**
+ * Get current authenticated user (proxied through Next.js API)
+ */
+export const getCurrentUser = async (): Promise<User | null> => {
 	try {
-		const { payload } = await jwtVerify(session.value, getSecretKey())
-		return payload.authenticated === true
-	} catch {
-		return false
-	}
-}
-
-export const loginAdmin = async (username: string, password: string): Promise<{ success: boolean; error?: string }> => {
-	if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-		const cookieStore = await cookies()
-
-		const token = await new SignJWT({ authenticated: true })
-			.setProtectedHeader({ alg: 'HS256' })
-			.setIssuedAt()
-			.setExpirationTime('7d') // 7 days expiration
-			.sign(getSecretKey())
-
-		cookieStore.set(SESSION_COOKIE_NAME, token, {
-			httpOnly: true,
-			secure: process.env.NODE_ENV === 'production',
-			sameSite: 'lax',
-			maxAge: 60 * 60 * 24 * 7, // 7 days
+		const response = await fetch('/api/auth/me', {
+			method: 'GET',
+			credentials: 'include', // Important: sends cookies
 		})
 
-		return { success: true }
-	}
+		if (!response.ok) {
+			return null
+		}
 
-	return { success: false, error: 'Invalid username or password' }
-}
-
-export const logoutAdmin = async (): Promise<void> => {
-	const cookieStore = await cookies()
-	cookieStore.delete(SESSION_COOKIE_NAME)
-	redirect('/admin/login')
-}
-
-export const requireAdmin = async (): Promise<void> => {
-	const isAuthenticated = await verifyAdminSession()
-	if (!isAuthenticated) {
-		redirect('/admin/login')
+		const data = await response.json()
+		return data.data.user
+	} catch (error) {
+		console.error('Error fetching current user:', error)
+		return null
 	}
 }
