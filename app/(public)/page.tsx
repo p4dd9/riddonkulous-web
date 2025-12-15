@@ -225,12 +225,7 @@ export default async function Home() {
 							Find answers to frequently asked questions about Riddonkulous, how to use the platform, and
 							more.
 						</p>
-						<LinkAsButton
-							href="/faq"
-							text="Read More"
-							textAlign="center"
-							customClass="px-8 py-1"
-						/>
+						<LinkAsButton href="/faq" text="Read More" textAlign="center" customClass="px-8 py-1" />
 					</div>
 				</div>
 			</div>

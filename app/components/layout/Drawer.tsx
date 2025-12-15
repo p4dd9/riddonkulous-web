@@ -160,7 +160,7 @@ export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
 					>
 						<span className="text-xs">Frequently Asked Questions</span>
 					</Link>
-					<CreateButton variant="drawer" className="w-full" />
+					<CreateButton variant="drawer" className="w-full cursor-pointer" />
 				</div>
 			</div>
 		</div>
