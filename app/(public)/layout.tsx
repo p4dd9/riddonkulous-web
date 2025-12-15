@@ -5,8 +5,74 @@ import type { Metadata } from 'next'
 import '../globals.css'
 
 export const metadata: Metadata = {
-	title: 'Riddonkulous | Create and Solve Riddles',
-	description: 'Riddonkulous is a platform for creating and solving riddles.',
+	metadataBase: new URL('https://riddonkulous.com'),
+	title: {
+		default: 'Riddonkulous | Create and Solve Riddles',
+		template: '%s | Riddonkulous',
+	},
+	description:
+		'Riddonkulous is a platform for creating and solving riddles. Join our community to create, share, and solve engaging riddles every day.',
+	keywords: [
+		'riddles',
+		'puzzles',
+		'brain teasers',
+		'riddle solving',
+		'riddle creation',
+		'riddle community',
+		'riddonkulous',
+		'daily riddles',
+	],
+	authors: [{ name: 'Hammertime e.U.' }],
+	creator: 'Hammertime e.U.',
+	publisher: 'Hammertime e.U.',
+	formatDetection: {
+		email: false,
+		address: false,
+		telephone: false,
+	},
+	openGraph: {
+		type: 'website',
+		locale: 'en_US',
+		url: 'https://riddonkulous.com',
+		siteName: 'Riddonkulous',
+		title: 'Riddonkulous | Create and Solve Riddles',
+		description:
+			'Riddonkulous is a platform for creating and solving riddles. Join our community to create, share, and solve engaging riddles every day.',
+		images: [
+			{
+				url: '/web-app-manifest-512x512.png',
+				width: 512,
+				height: 512,
+				alt: 'Riddonkulous Logo',
+			},
+		],
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: 'Riddonkulous | Create and Solve Riddles',
+		description:
+			'Riddonkulous is a platform for creating and solving riddles. Join our community to create, share, and solve engaging riddles every day.',
+		images: ['/web-app-manifest-512x512.png'],
+	},
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1,
+		},
+	},
+	verification: {
+		// Add Google Search Console verification when available
+		// google: 'your-verification-code',
+	},
+	alternates: {
+		canonical: 'https://riddonkulous.com',
+	},
+	category: 'Entertainment',
 }
 
 export default function RootLayout({

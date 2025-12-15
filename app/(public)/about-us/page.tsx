@@ -6,6 +6,20 @@ export const dynamic = 'force-static'
 export const metadata: Metadata = {
 	title: 'About Us | Riddonkulous',
 	description: 'Learn about the contributors, authors, and special thanks behind Riddonkulous.',
+	openGraph: {
+		title: 'About Us | Riddonkulous',
+		description: 'Learn about the contributors, authors, and special thanks behind Riddonkulous.',
+		url: 'https://riddonkulous.com/about-us',
+		type: 'website',
+	},
+	twitter: {
+		card: 'summary',
+		title: 'About Us | Riddonkulous',
+		description: 'Learn about the contributors, authors, and special thanks behind Riddonkulous.',
+	},
+	alternates: {
+		canonical: 'https://riddonkulous.com/about-us',
+	},
 }
 
 export default function AboutUsPage() {

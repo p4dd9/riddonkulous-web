@@ -30,18 +30,33 @@ export const generateMetadata = async ({ params }: DailyRiddlePageProps): Promis
 			? `Solve this riddle: ${riddle.riddle?.substring(0, 150) || ''}`
 			: `Challenge yourself with Daily Riddle #${riddleNumber} on Riddonkulous!`
 
+		const url = `https://riddonkulous.com/riddle/daily/${riddleNumber}`
+
 		return {
 			title: `${title} | Riddonkulous`,
 			description,
 			openGraph: {
 				title: `${title} | Riddonkulous`,
 				description,
-				type: 'website',
+				type: 'article',
+				url,
+				images: [
+					{
+						url: '/web-app-manifest-512x512.png',
+						width: 512,
+						height: 512,
+						alt: title,
+					},
+				],
 			},
 			twitter: {
-				card: 'summary',
+				card: 'summary_large_image',
 				title: `${title} | Riddonkulous`,
 				description,
+				images: ['/web-app-manifest-512x512.png'],
+			},
+			alternates: {
+				canonical: url,
 			},
 		}
 	} catch {

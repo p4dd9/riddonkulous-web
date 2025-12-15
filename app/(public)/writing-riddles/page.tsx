@@ -9,6 +9,20 @@ export const metadata: Metadata = {
 	title: 'Writing Riddles | Riddonkulous',
 	description:
 		'Learn the art and craft of creating engaging riddles, from understanding structure to mastering wordplay.',
+	openGraph: {
+		title: 'Writing Riddles | Riddonkulous',
+		description: 'Learn the art and craft of creating engaging riddles, from understanding structure to mastering wordplay.',
+		url: 'https://riddonkulous.com/writing-riddles',
+		type: 'article',
+	},
+	twitter: {
+		card: 'summary',
+		title: 'Writing Riddles | Riddonkulous',
+		description: 'Learn the art and craft of creating engaging riddles.',
+	},
+	alternates: {
+		canonical: 'https://riddonkulous.com/writing-riddles',
+	},
 }
 
 export default function WritingRiddles() {

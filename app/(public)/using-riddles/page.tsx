@@ -9,6 +9,20 @@ export const metadata: Metadata = {
 	title: 'Using Riddles | Riddonkulous',
 	description:
 		'Learn practical ways to incorporate riddles into education, entertainment, and cognitive development.',
+	openGraph: {
+		title: 'Using Riddles | Riddonkulous',
+		description: 'Learn practical ways to incorporate riddles into education, entertainment, and cognitive development.',
+		url: 'https://riddonkulous.com/using-riddles',
+		type: 'article',
+	},
+	twitter: {
+		card: 'summary',
+		title: 'Using Riddles | Riddonkulous',
+		description: 'Learn practical ways to incorporate riddles into education and entertainment.',
+	},
+	alternates: {
+		canonical: 'https://riddonkulous.com/using-riddles',
+	},
 }
 
 export default function UsingRiddles() {

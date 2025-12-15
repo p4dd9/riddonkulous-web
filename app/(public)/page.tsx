@@ -1,13 +1,34 @@
 import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { CategoryCard } from '@/app/components/categories/CategoryCard'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
+import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
 import { listTags } from '@/app/services/tagService'
 import Image from 'next/image'
+import type { Metadata } from 'next'
 
 // Configure revalidation for this page (ISR - Incremental Static Regeneration)
 // The page will be regenerated at most once every 60 seconds
 export const revalidate = 60
+
+export const metadata: Metadata = {
+	title: 'Riddonkulous | Create and Solve Riddles',
+	description: 'Join Riddonkulous to solve daily riddles, explore trending puzzles, and challenge yourself with brain teasers. Create and share your own riddles with our community.',
+	openGraph: {
+		title: 'Riddonkulous | Create and Solve Riddles',
+		description: 'Join Riddonkulous to solve daily riddles, explore trending puzzles, and challenge yourself with brain teasers.',
+		url: 'https://riddonkulous.com',
+		type: 'website',
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: 'Riddonkulous | Create and Solve Riddles',
+		description: 'Join Riddonkulous to solve daily riddles, explore trending puzzles, and challenge yourself with brain teasers.',
+	},
+	alternates: {
+		canonical: 'https://riddonkulous.com',
+	},
+}
 
 export default async function Home() {
 	const [riddleOfTheDay, trendingRiddles, tagsData] = await Promise.all([
@@ -19,8 +40,49 @@ export default async function Home() {
 		.filter((riddle) => riddle.postId !== riddleOfTheDay.postId)
 		.slice(0, 3)
 
+	const structuredData = {
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		name: 'Riddonkulous',
+		description: 'A platform for creating and solving riddles',
+		url: 'https://riddonkulous.com',
+		potentialAction: {
+			'@type': 'SearchAction',
+			target: {
+				'@type': 'EntryPoint',
+				urlTemplate: 'https://riddonkulous.com/riddles/{search_term_string}',
+			},
+			'query-input': 'required name=search_term_string',
+		},
+		mainEntity: {
+			'@type': 'ItemList',
+			itemListElement: [
+				{
+					'@type': 'ListItem',
+					position: 1,
+					name: 'Daily Riddles',
+					url: 'https://riddonkulous.com',
+				},
+				{
+					'@type': 'ListItem',
+					position: 2,
+					name: 'Riddle Feed',
+					url: 'https://riddonkulous.com/riddle-feed',
+				},
+				...tagsData.tags.slice(0, 10).map((tag, index) => ({
+					'@type': 'ListItem' as const,
+					position: index + 3,
+					name: `${tag.label} Riddles`,
+					url: `https://riddonkulous.com/riddles/${tag.id}`,
+				})),
+			],
+		},
+	}
+
 	return (
-		<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8 gap-8 md:gap-18">
+		<>
+			<StructuredData data={structuredData} />
+			<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8 gap-8 md:gap-18">
 			{/* About Section 
 			<div className="w-full flex gap-4 md:gap-8 items-end justify-start">
 				<Image
@@ -258,5 +320,6 @@ export default async function Home() {
 				</div>
 			</div>
 		</div>
+		</>
 	)
 }

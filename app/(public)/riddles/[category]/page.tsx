@@ -40,6 +40,8 @@ export const generateMetadata = async ({ params, searchParams }: RiddlesCategory
 		tag.description ||
 		`Explore ${tag.label.toLowerCase()} riddles on Riddonkulous. Challenge yourself with fun and engaging Riddles!`
 
+	const url = `https://riddonkulous.com/riddles/${category}${currentPage > 0 ? `?page=${currentPage}` : ''}`
+
 	return {
 		title,
 		description,
@@ -47,11 +49,24 @@ export const generateMetadata = async ({ params, searchParams }: RiddlesCategory
 			title,
 			description,
 			type: 'website',
+			url,
+			images: [
+				{
+					url: '/web-app-manifest-512x512.png',
+					width: 512,
+					height: 512,
+					alt: tag.label,
+				},
+			],
 		},
 		twitter: {
-			card: 'summary',
+			card: 'summary_large_image',
 			title,
 			description,
+			images: ['/web-app-manifest-512x512.png'],
+		},
+		alternates: {
+			canonical: url,
 		},
 	}
 }

@@ -8,6 +8,20 @@ export const dynamic = 'force-static'
 export const metadata: Metadata = {
 	title: 'Riddles in History | Riddonkulous',
 	description: 'Discover how riddles have shaped cultures and civilizations throughout human history.',
+	openGraph: {
+		title: 'Riddles in History | Riddonkulous',
+		description: 'Discover how riddles have shaped cultures and civilizations throughout human history.',
+		url: 'https://riddonkulous.com/riddles-in-history',
+		type: 'article',
+	},
+	twitter: {
+		card: 'summary',
+		title: 'Riddles in History | Riddonkulous',
+		description: 'Discover how riddles have shaped cultures and civilizations throughout human history.',
+	},
+	alternates: {
+		canonical: 'https://riddonkulous.com/riddles-in-history',
+	},
 }
 
 export default function RiddlesInHistory() {
