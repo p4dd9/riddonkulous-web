@@ -45,44 +45,11 @@ export default function UserProfilePage() {
 				<h1 className="text-3xl mb-6 text-center">User Profile</h1>
 
 				<div className="flex flex-col items-center gap-6">
-					{/* User Information */}
 					<div className="w-full space-y-4">
 						<div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
 							<label className="text-sm text-gray-400 block mb-1">Email</label>
 							<p className="text-lg">{user.email}</p>
 						</div>
-
-						<div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
-							<label className="text-sm text-gray-400 block mb-1">User ID</label>
-							<p className="text-lg font-mono text-sm break-all">{user.id}</p>
-						</div>
-
-						<div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
-							<label className="text-sm text-gray-400 block mb-1">Role</label>
-							<p className="text-lg">
-								<span
-									className={`inline-block px-3 py-1 rounded-md ${
-										user.role === 'admin'
-											? 'bg-red-900/50 text-red-200 border border-red-700'
-											: 'bg-primary/20 text-primary border border-primary/50'
-									}`}
-								>
-									{user.role}
-								</span>
-							</p>
-						</div>
-					</div>
-
-					{/* Actions */}
-					<div className="flex gap-4 mt-4">
-						{user.role === 'admin' && (
-							<button
-								onClick={() => router.push('/admin')}
-								className="bg-primary hover:bg-secondary text-white px-6 py-2 rounded-md transition-colors"
-							>
-								Go to Admin Panel
-							</button>
-						)}
 					</div>
 				</div>
 			</div>

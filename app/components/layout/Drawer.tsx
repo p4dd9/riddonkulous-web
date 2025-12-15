@@ -1,7 +1,6 @@
 'use client'
 
 import { CreateButton } from '@/app/components/buttons/CreateButton'
-import { LoginButton } from '@/app/components/buttons/LoginButton'
 import type { Tag } from '@/app/services/tagService'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -162,7 +161,6 @@ export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
 						<span className="text-xs">Frequently Asked Questions</span>
 					</Link>
 					<CreateButton variant="drawer" className="w-full cursor-pointer" />
-					<LoginButton variant="drawer" className="w-full cursor-pointer" />
 				</div>
 			</div>
 		</div>
