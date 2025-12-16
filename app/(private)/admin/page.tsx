@@ -47,6 +47,13 @@ export default function AdminDashboard() {
 	const [formAssetNamePath, setFormAssetNamePath] = useState('')
 	const [formOrder, setFormOrder] = useState<string>('')
 	const [formLoading, setFormLoading] = useState(false)
+	const [dailyRiddleLoading, setDailyRiddleLoading] = useState(false)
+	const [dailyRiddleSuccess, setDailyRiddleSuccess] = useState('')
+
+	// Cronjob state
+	const [cronjobStatus, setCronjobStatus] = useState<{ running: boolean; schedule: string } | null>(null)
+	const [cronjobLoading, setCronjobLoading] = useState(false)
+	const [cronjobActionLoading, setCronjobActionLoading] = useState(false)
 
 	const fetchStats = async () => {
 		setStatsLoading(true)
@@ -96,8 +103,33 @@ export default function AdminDashboard() {
 		}
 	}
 
+	const fetchCronjobStatus = async () => {
+		setCronjobLoading(true)
+		try {
+			const response = await fetch('/admin/api/cronjob/status', {
+				credentials: 'include',
+			})
+			if (!response.ok) {
+				if (response.status === 401) {
+					router.push('/admin/login')
+					return
+				}
+				throw new Error('Failed to fetch cronjob status')
+			}
+			const data = await response.json()
+			if (data.status === 'success' && data.data?.dailyRiddleJob) {
+				setCronjobStatus(data.data.dailyRiddleJob)
+			}
+		} catch (err: unknown) {
+			console.error('Failed to fetch cronjob status:', err)
+		} finally {
+			setCronjobLoading(false)
+		}
+	}
+
 	useEffect(() => {
 		fetchStats()
+		fetchCronjobStatus()
 	}, [])
 
 	useEffect(() => {
@@ -232,6 +264,103 @@ export default function AdminDashboard() {
 		setFormId('')
 	}
 
+	const handleGenerateDailyRiddle = async () => {
+		if (!confirm('Generate a new daily riddle? This will auto-select the most popular riddle from the last 7 days.')) {
+			return
+		}
+
+		setDailyRiddleLoading(true)
+		setDailyRiddleSuccess('')
+		setError('')
+
+		try {
+			const response = await fetch('/admin/api/daily-riddle', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				credentials: 'include',
+				body: JSON.stringify({ days: 7 }),
+			})
+
+			if (!response.ok) {
+				const data = await response.json()
+				throw new Error(data.message || data.error || 'Failed to generate daily riddle')
+			}
+
+			const data = await response.json()
+			setDailyRiddleSuccess(data.message || `Daily riddle #${data.data?.riddleNumber} created successfully!`)
+			setTimeout(() => setDailyRiddleSuccess(''), 5000)
+		} catch (err: unknown) {
+			const error = err instanceof Error ? err : new Error('Failed to generate daily riddle')
+			setError(error.message)
+		} finally {
+			setDailyRiddleLoading(false)
+		}
+	}
+
+	const handleStopCronjob = async () => {
+		if (!confirm('Stop the daily riddle cronjob? This will disable automated daily riddle creation until restarted.')) {
+			return
+		}
+
+		setCronjobActionLoading(true)
+		setError('')
+
+		try {
+			const response = await fetch('/admin/api/cronjob/stop', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				credentials: 'include',
+			})
+
+			if (!response.ok) {
+				const data = await response.json()
+				throw new Error(data.message || data.error || 'Failed to stop cronjob')
+			}
+
+			const data = await response.json()
+			setDailyRiddleSuccess(data.message || 'Daily riddle cronjob stopped successfully')
+			setTimeout(() => setDailyRiddleSuccess(''), 5000)
+			await fetchCronjobStatus()
+		} catch (err: unknown) {
+			const error = err instanceof Error ? err : new Error('Failed to stop cronjob')
+			setError(error.message)
+		} finally {
+			setCronjobActionLoading(false)
+		}
+	}
+
+	const handleRestartCronjob = async () => {
+		if (!confirm('Restart the daily riddle cronjob? This will resume automated daily riddle creation.')) {
+			return
+		}
+
+		setCronjobActionLoading(true)
+		setError('')
+
+		try {
+			const response = await fetch('/admin/api/cronjob/restart', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				credentials: 'include',
+			})
+
+			if (!response.ok) {
+				const data = await response.json()
+				throw new Error(data.message || data.error || 'Failed to restart cronjob')
+			}
+
+			const data = await response.json()
+			setDailyRiddleSuccess(data.message || 'Daily riddle cronjob restarted successfully')
+			setTimeout(() => setDailyRiddleSuccess(''), 5000)
+			await fetchCronjobStatus()
+		} catch (err: unknown) {
+			const error = err instanceof Error ? err : new Error('Failed to restart cronjob')
+			setError(error.message)
+		} finally {
+			setCronjobActionLoading(false)
+		}
+	}
+
 	const redditRiddleCount = stats ? stats.totalRiddleCount - stats.webRiddleCount : 0
 
 	return (
@@ -239,6 +368,13 @@ export default function AdminDashboard() {
 			<div className="flex justify-between items-center mb-8">
 				<h1 className="text-3xl ">Admin Dashboard - Tag Management</h1>
 				<div className="flex gap-2">
+					<button
+						onClick={handleGenerateDailyRiddle}
+						disabled={dailyRiddleLoading}
+						className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+					>
+						{dailyRiddleLoading ? 'Generating...' : 'Generate Daily Riddle'}
+					</button>
 					<button
 						onClick={() => router.push('/admin/moderation')}
 						className="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md transition-colors"
@@ -281,6 +417,64 @@ export default function AdminDashboard() {
 					{error}
 				</div>
 			)}
+
+			{dailyRiddleSuccess && (
+				<div className="bg-green-900/50 border border-green-700 text-green-200 px-4 py-3 rounded-md mb-4">
+					{dailyRiddleSuccess}
+				</div>
+			)}
+
+			{/* Cronjob Management Section */}
+			<div className="bg-gray-800 border border-gray-700 rounded-lg p-6 mb-6">
+				<div className="flex justify-between items-center mb-4">
+					<h2 className="text-xl">Daily Riddle Cronjob</h2>
+					<button
+						onClick={fetchCronjobStatus}
+						disabled={cronjobLoading}
+						className="text-sm bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-md transition-colors disabled:opacity-50"
+					>
+						{cronjobLoading ? 'Refreshing...' : 'Refresh Status'}
+					</button>
+				</div>
+
+				{cronjobLoading && !cronjobStatus ? (
+					<div className="text-center text-gray-400 py-4">Loading cronjob status...</div>
+				) : cronjobStatus ? (
+					<div className="space-y-4">
+						<div className="flex items-center gap-4">
+							<div className="flex items-center gap-2">
+								<div
+									className={`w-3 h-3 rounded-full ${cronjobStatus.running ? 'bg-green-500' : 'bg-red-500'}`}
+								/>
+								<span className="text-sm">
+									Status: <span className="font-semibold">{cronjobStatus.running ? 'Running' : 'Stopped'}</span>
+								</span>
+							</div>
+							<div className="text-sm text-gray-400">
+								Schedule: <span className="font-mono">{cronjobStatus.schedule}</span> (Daily at midnight UTC)
+							</div>
+						</div>
+						<div className="flex gap-2">
+							<button
+								onClick={handleStopCronjob}
+								disabled={cronjobActionLoading || !cronjobStatus.running}
+								className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+							>
+								{cronjobActionLoading ? 'Processing...' : 'Stop Cronjob'}
+							</button>
+							<button
+								onClick={handleRestartCronjob}
+								disabled={cronjobActionLoading || cronjobStatus.running}
+								className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+							>
+								{cronjobActionLoading ? 'Processing...' : 'Restart Cronjob'}
+							</button>
+						</div>
+					</div>
+				) : (
+					<div className="text-center text-gray-400 py-4">Failed to load cronjob status</div>
+				)}
+			</div>
 
 			<div className="mb-6">
 				{!showCreateForm && !editingTag && (
