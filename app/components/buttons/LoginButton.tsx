@@ -5,6 +5,7 @@ import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
 import { LoginModal } from '@/app/components/modals/LoginModal'
 import { UserMenuModal } from '@/app/components/modals/UserMenuModal'
 import { useAuth } from '@/app/contexts/AuthContext'
+import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 
 interface LoginButtonProps {
@@ -132,15 +133,17 @@ export const LoginButton = ({ variant = 'header', className = '' }: LoginButtonP
 		)
 	}
 
+	const buttonClasses =
+		variant === 'header'
+			? `text-sm cursor-pointer py-1 flex items-center gap-2 bg-primary hover:bg-secondary px-2 rounded-md text-white transition-colors max-[346px]:gap-0 ${className}`
+			: `w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary hover:bg-secondary rounded-md transition-colors text-white ${className}`
+
 	return (
 		<>
-			<BasicButton
-				icon="/icons/character.png"
-				iconClass="w-5 h-5"
-				customClass={`${iconButtonCustomClass} ${className}`}
-				threeD={false}
-				onClick={handleLoginClick}
-			/>
+			<button onClick={handleLoginClick} className={buttonClasses}>
+				<Image src="/icons/character.png" alt="Login" width={20} height={20} className="w-5 h-5" />
+				<span className={variant === 'header' ? 'max-[346px]:hidden' : ''}>Login</span>
+			</button>
 			<BottomSheetModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} title="Sign In">
 				<LoginModal onClose={() => setIsLoginModalOpen(false)} />
 			</BottomSheetModal>

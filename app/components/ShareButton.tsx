@@ -10,9 +10,10 @@ interface ShareButtonProps {
 	title?: string
 	className?: string
 	iconOnly?: boolean
+	buttonText?: string
 }
 
-export const ShareButton = ({ url, title, className = '', iconOnly = false }: ShareButtonProps) => {
+export const ShareButton = ({ url, title, className = '', iconOnly = false, buttonText = 'Share' }: ShareButtonProps) => {
 	const [isShareModalOpen, setIsShareModalOpen] = useState(false)
 
 	return (
@@ -23,7 +24,7 @@ export const ShareButton = ({ url, title, className = '', iconOnly = false }: Sh
 				aria-label="Share"
 			>
 				<Image src="/icons/world.png" alt="Share" width={20} height={20} className="w-5 h-5" />
-				{!iconOnly && <span className="text-sm">Share</span>}
+				{!iconOnly && <span className="text-sm hidden md:inline">{buttonText}</span>}
 			</button>
 
 			<BottomSheetModal

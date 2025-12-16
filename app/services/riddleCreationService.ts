@@ -10,8 +10,8 @@ export interface RiddleFormData {
 export interface CreateRiddleResponse {
 	status: 'success'
 	data: {
-		message: string
 		postId: string
+		status: 'APPROVED' | 'IN_REVIEW'
 	}
 }
 
@@ -86,4 +86,3 @@ export const validateExplanation = (explanation: string): string | null => {
 	if (explanation.length > 1000) return 'Explanation must be 1000 characters or less'
 	return null
 }
-

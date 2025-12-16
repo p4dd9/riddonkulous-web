@@ -107,3 +107,55 @@ export const validateUsername = (value: string): string | null => {
 
 	return null
 }
+
+export interface UserRiddle {
+	postId: string
+	type?: string
+	author?: string
+	userid: string
+	word: string
+	riddle: string
+	bg?: string
+	explanation?: string
+	status: 'IN_REVIEW' | 'APPROVED' | 'REJECTED' | 'REMOVED'
+	score: number
+	tags: string[]
+	createdAt: string
+	updatedAt: string
+}
+
+export interface GetUserRiddlesResponse {
+	status: 'success'
+	data: {
+		riddles: UserRiddle[]
+		limit: number
+		offset: number
+	}
+}
+
+/**
+ * Get current user's riddles
+ */
+export const getMyRiddles = async (limit: number = 20, offset: number = 0): Promise<GetUserRiddlesResponse> => {
+	const params = new URLSearchParams({
+		limit: limit.toString(),
+		offset: offset.toString(),
+	})
+
+	const response = await fetch(`/api/user/me/riddles?${params}`, {
+		credentials: 'include',
+	})
+
+	if (!response.ok) {
+		if (response.status === 401) {
+			throw new Error('Unauthorized - Please log in')
+		}
+		const error: ErrorResponse = await response.json().catch(() => ({
+			status: response.status,
+			message: 'Failed to fetch riddles',
+		}))
+		throw error
+	}
+
+	return response.json()
+}

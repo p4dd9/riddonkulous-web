@@ -197,12 +197,20 @@ export default function AdminDashboard() {
 		<div className="min-h-screen w-full max-w-6xl mx-auto px-4 py-8">
 			<div className="flex justify-between items-center mb-8">
 				<h1 className="text-3xl ">Admin Dashboard - Tag Management</h1>
-				<button
-					onClick={handleLogout}
-					className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors"
-				>
-					Logout
-				</button>
+				<div className="flex gap-2">
+					<button
+						onClick={() => router.push('/admin/moderation')}
+						className="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md transition-colors"
+					>
+						Moderation Queue
+					</button>
+					<button
+						onClick={handleLogout}
+						className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors"
+					>
+						Logout
+					</button>
+				</div>
 			</div>
 
 			{error && (

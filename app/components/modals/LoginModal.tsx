@@ -89,7 +89,10 @@ export const LoginModal = ({ onClose }: LoginModalProps) => {
 	return (
 		<div className="login-modal overflow-hidden">
 			<div className="mb-6">
-				<p className="text-gray-300 text-center">Sign in with your Google account to continue.</p>
+				<p className="text-gray-300 text-center mb-2">Login or create an account</p>
+				<p className="text-gray-400 text-sm text-center">
+					Sign in with your Google account. If you don&apos;t have an account, signing in will create one automatically.
+				</p>
 			</div>
 
 			<div className="flex gap-3 flex-col">

@@ -34,6 +34,23 @@ const getPublicSecretKey = () => {
 export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl
 
+	// Handle moderation routes - Requires moderator or admin role
+	if (pathname.startsWith('/api/moderation') || pathname.startsWith('/admin/moderation')) {
+		const { verifyModeratorAccess } = await import('@/app/lib/moderationAuth')
+		const cookieHeader = request.headers.get('cookie') || ''
+		const { isModerator } = await verifyModeratorAccess(cookieHeader)
+
+		if (!isModerator) {
+			// For API routes, return 403 JSON; for pages, redirect to 403
+			if (pathname.startsWith('/api/moderation')) {
+				return NextResponse.json({ error: 'Forbidden', message: 'Insufficient permissions' }, { status: 403 })
+			}
+			return NextResponse.redirect(new URL('/403', request.url))
+		}
+
+		return NextResponse.next()
+	}
+
 	// Handle admin routes - NEW: Uses Google OAuth with role-based access
 	if (pathname.startsWith('/admin')) {
 		// Allow login page and logout endpoint

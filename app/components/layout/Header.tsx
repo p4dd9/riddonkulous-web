@@ -4,6 +4,7 @@ import { CreateButton } from '@/app/components/buttons/CreateButton'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { LoginButton } from '../buttons/LoginButton'
 import { Drawer } from './Drawer'
 
 export const Header = () => {
@@ -98,7 +99,7 @@ export const Header = () => {
 
 					<div className="flex items-center justify-center gap-2 mr-2">
 						<CreateButton variant="header" />
-						{/*<LoginButton variant="header" />*/}
+						<LoginButton variant="header" />
 					</div>
 				</header>
 			</div>

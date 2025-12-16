@@ -33,6 +33,18 @@ body {
 	font-family: 'Font007', Arial, Helvetica, sans-serif;
 }
 
+/* Safe area insets for iOS devices */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+	.pb-safe {
+		padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);
+	}
+}
+
+/* Hide footer on user dashboard pages */
+body:has([data-user-dashboard]) footer {
+	display: none;
+}
+
 .drop-shadow-text {
 }
 

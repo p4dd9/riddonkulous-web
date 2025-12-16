@@ -126,6 +126,15 @@ export default function FAQPage() {
 						answer="You can create a riddle by clicking the 'Create' button in the header or drawer menu, which will take you to Reddit where you can submit your riddle to the community."
 					/>
 					<FAQItem
+						id="approval-process"
+						question="Why does the approval process take time?"
+						answer={
+							<p>
+								The approval process can take time if we detect malicious, poor, or NSFW (Not Safe For Work) content. Our moderation team reviews all submissions to ensure they meet our quality standards and content policies. This helps maintain a safe and enjoyable experience for all users. If your riddle is flagged for review, please be patient while we process it. Approval decisions are ultimately up to the moderation team.
+							</p>
+						}
+					/>
+					<FAQItem
 						id="solve-without-account"
 						question="Can I solve riddles without creating an account?"
 						answer={
@@ -141,6 +150,15 @@ export default function FAQPage() {
 									reddit.com/r/riddonkulous
 								</Link>
 								.
+							</p>
+						}
+					/>
+					<FAQItem
+						id="how-to-login"
+						question="How do I login or create an account?"
+						answer={
+							<p>
+								You can login or create an account using Google login only. Simply click the login button in the header or drawer menu, and you&apos;ll be prompted to sign in with your Google account. If you don&apos;t have an account yet, the same process will create one for you automatically.
 							</p>
 						}
 					/>
@@ -196,6 +214,15 @@ export default function FAQPage() {
 									.
 								</p>
 							</div>
+						}
+					/>
+					<FAQItem
+						id="how-to-delete-account"
+						question="How do I delete my account?"
+						answer={
+							<p>
+								To delete your account, go to your Profile page and scroll down to the &quot;Advanced Settings&quot; section. Click on &quot;Advanced Settings&quot; to expand it, then click the &quot;Delete Account&quot; button in the Danger Zone. You&apos;ll be asked to confirm the deletion. Please note that this action is permanent and cannot be undone. All your data will be permanently deleted.
+							</p>
 						}
 					/>
 					<FAQItem

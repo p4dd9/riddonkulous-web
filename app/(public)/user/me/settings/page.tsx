@@ -46,18 +46,18 @@ export default function SettingsPage() {
 
 	return (
 		<div className="w-full">
-			<div className="bg-gray-800 rounded-lg shadow-lg p-6 md:p-8 border border-gray-700">
+			<div className="bg-[var(--color-bg)] rounded-lg shadow-lg md:p-8">
 				<h1 className="text-2xl md:text-3xl mb-6">Settings</h1>
 
 				<div className="flex flex-col gap-6">
 					{/* Delete Account Section */}
-					<div className="bg-gray-700/50 rounded-lg p-6 border border-gray-600">
+					<div className="bg-[var(--color-bg)] rounded-lg p-6 border-2 border-red-500/50">
 						<h2 className="text-xl mb-4 text-red-400">Danger Zone</h2>
 						{showDeleteConfirm ? (
-							<div className="bg-red-900/20 border border-red-700 rounded-lg p-4 space-y-4">
+							<div className="bg-[var(--color-bg)] border-2 border-red-500/50 rounded-lg p-4 space-y-4">
 								<p className="text-red-300">
-									Are you sure you want to delete your account? This action cannot be undone. All your data will
-									be permanently deleted.
+									Are you sure you want to delete your account? This action cannot be undone. All your
+									data will be permanently deleted.
 								</p>
 								<div className="flex flex-col sm:flex-row gap-3">
 									<BasicButton
@@ -69,7 +69,7 @@ export default function SettingsPage() {
 									/>
 									<BasicButton
 										text="Cancel"
-										customClass="flex-1 bg-gray-600 hover:bg-gray-500"
+										customClass="flex-1 bg-[var(--color-bg)] hover:bg-primary/20 border-2 border-primary/50"
 										threeD={false}
 										onClick={() => {
 											setShowDeleteConfirm(false)
@@ -81,7 +81,7 @@ export default function SettingsPage() {
 							</div>
 						) : (
 							<div>
-								<p className="text-gray-300 mb-4">
+								<p className="text-white/70 mb-4">
 									Once you delete your account, there is no going back. Please be certain.
 								</p>
 								<BasicButton
@@ -98,5 +98,3 @@ export default function SettingsPage() {
 		</div>
 	)
 }
-
-

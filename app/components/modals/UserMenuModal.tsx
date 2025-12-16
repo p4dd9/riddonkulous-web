@@ -13,7 +13,7 @@ export const UserMenuModal = ({ onClose }: UserMenuModalProps) => {
 	const { signOut } = useAuth()
 
 	const handleCreate = () => {
-		window.open('https://www.reddit.com/r/riddonkulous', '_blank', 'noopener,noreferrer')
+		router.push('/user/me/create')
 		onClose()
 	}
 
@@ -22,9 +22,8 @@ export const UserMenuModal = ({ onClose }: UserMenuModalProps) => {
 		onClose()
 	}
 
-	const handleSettings = () => {
-		// TODO: Navigate to settings page when it exists
-		// For now, just close the modal
+	const handleMyRiddles = () => {
+		router.push('/user/me/riddles')
 		onClose()
 	}
 
@@ -57,11 +56,11 @@ export const UserMenuModal = ({ onClose }: UserMenuModalProps) => {
 				</button>
 
 				<button
-					onClick={handleSettings}
+					onClick={handleMyRiddles}
 					className="flex items-center justify-start gap-3 bg-gray-700 hover:bg-gray-600 px-5 py-3 rounded-lg transition-colors"
 				>
-					<Image src="/icons/gear.png" alt="Settings" width={20} height={20} className="w-5 h-5" />
-					<span>Settings</span>
+					<Image src="/icons/script_lightning.png" alt="My Riddles" width={20} height={20} className="w-5 h-5" />
+					<span>My Riddles</span>
 				</button>
 
 				<div className="border-t border-gray-600 my-2" />

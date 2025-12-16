@@ -1,5 +1,8 @@
 'use client'
 
+import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
+import { RiddleApprovedModal } from '@/app/components/modals/RiddleApprovedModal'
+import { RiddleReviewModal } from '@/app/components/modals/RiddleReviewModal'
 import cosmetics from '@/app/data/cosmetics.json'
 import {
 	createRiddle,
@@ -28,10 +31,9 @@ const canvasCosmetics = (cosmetics as Cosmetic[]).filter((item) => item.type ===
 interface CharacterCounterProps {
 	current: number
 	max: number
-	fieldName: string
 }
 
-const CharacterCounter = ({ current, max, fieldName }: CharacterCounterProps) => {
+const CharacterCounter = ({ current, max }: CharacterCounterProps) => {
 	const percentage = (current / max) * 100
 	const isWarning = percentage > 80
 	const isError = current > max
@@ -53,10 +55,12 @@ export const CreateRiddleForm = () => {
 	const [errors, setErrors] = useState<Record<string, string>>({})
 	const [isSubmitting, setIsSubmitting] = useState(false)
 	const [submitError, setSubmitError] = useState('')
-	const [submitSuccess, setSubmitSuccess] = useState('')
 	const [rateLimitCooldown, setRateLimitCooldown] = useState<number | null>(null)
 	const [hasUsername, setHasUsername] = useState<boolean | null>(null)
 	const [isCheckingUsername, setIsCheckingUsername] = useState(true)
+	const [isApprovedModalOpen, setIsApprovedModalOpen] = useState(false)
+	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
+	const [createdPostId, setCreatedPostId] = useState<string | null>(null)
 
 	// Check username on mount
 	useEffect(() => {
@@ -90,6 +94,12 @@ export const CreateRiddleForm = () => {
 		return () => clearInterval(interval)
 	}, [rateLimitCooldown])
 
+	const handleModalClose = () => {
+		setIsApprovedModalOpen(false)
+		setIsReviewModalOpen(false)
+		setCreatedPostId(null)
+	}
+
 	const handleChange = (field: keyof RiddleFormData, value: string) => {
 		setFormData((prev) => ({ ...prev, [field]: value }))
 		// Clear error for this field
@@ -99,10 +109,6 @@ export const CreateRiddleForm = () => {
 				delete newErrors[field]
 				return newErrors
 			})
-		}
-		// Clear success message when user starts typing
-		if (submitSuccess) {
-			setSubmitSuccess('')
 		}
 	}
 
@@ -132,7 +138,6 @@ export const CreateRiddleForm = () => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 		setSubmitError('')
-		setSubmitSuccess('')
 
 		// Validate all fields
 		const validationErrors: Record<string, string> = {}
@@ -156,16 +161,20 @@ export const CreateRiddleForm = () => {
 		try {
 			const result = await createRiddle(formData)
 
-			// Success: Show message and reset form
-			setSubmitSuccess(`Riddle created successfully! Post ID: ${result.data.postId}`)
+			// Reset form
 			setFormData({ word: '', riddle: '', bg: '', explanation: '' })
 			setErrors({})
+			setCreatedPostId(result.data.postId)
 
-			// Clear success message after 5 seconds
-			setTimeout(() => {
-				setSubmitSuccess('')
-			}, 5000)
-		} catch (error: any) {
+			// Show appropriate modal based on status from response
+			const riddleStatus = result.data.status || 'IN_REVIEW'
+
+			if (riddleStatus === 'APPROVED') {
+				setIsApprovedModalOpen(true)
+			} else {
+				setIsReviewModalOpen(true)
+			}
+		} catch (error) {
 			const errorResponse = error as ErrorResponse
 
 			if (errorResponse.status === 429) {
@@ -194,20 +203,6 @@ export const CreateRiddleForm = () => {
 		}
 	}
 
-	const handleReset = () => {
-		if (
-			(formData.word || formData.riddle || formData.bg || formData.explanation) &&
-			!confirm('Are you sure you want to clear the form?')
-		) {
-			return
-		}
-
-		setFormData({ word: '', riddle: '', bg: '', explanation: '' })
-		setErrors({})
-		setSubmitError('')
-		setSubmitSuccess('')
-	}
-
 	const isFormDisabled = isSubmitting || rateLimitCooldown !== null || hasUsername === false
 
 	if (isCheckingUsername) {
@@ -232,12 +227,6 @@ export const CreateRiddleForm = () => {
 			{submitError && (
 				<div className="bg-red-900/20 border border-red-700 rounded-lg p-4 mb-6">
 					<p className="text-red-300">{submitError}</p>
-				</div>
-			)}
-
-			{submitSuccess && (
-				<div className="bg-green-900/20 border border-green-700 rounded-lg p-4 mb-6">
-					<p className="text-green-300">{submitSuccess}</p>
 				</div>
 			)}
 
@@ -275,7 +264,7 @@ export const CreateRiddleForm = () => {
 						aria-required="true"
 						maxLength={1000}
 					/>
-					<CharacterCounter current={formData.word.length} max={1000} fieldName="word" />
+					<CharacterCounter current={formData.word.length} max={1000} />
 					{errors.word && (
 						<div id="word-error" role="alert" aria-live="polite" className="text-red-400 text-sm mt-1">
 							{errors.word}
@@ -306,7 +295,7 @@ export const CreateRiddleForm = () => {
 						aria-required="true"
 						maxLength={1000}
 					/>
-					<CharacterCounter current={formData.riddle.length} max={1000} fieldName="riddle" />
+					<CharacterCounter current={formData.riddle.length} max={1000} />
 					{errors.riddle && (
 						<div id="riddle-error" role="alert" aria-live="polite" className="text-red-400 text-sm mt-1">
 							{errors.riddle}
@@ -350,7 +339,7 @@ export const CreateRiddleForm = () => {
 								return (
 									<div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
 										<div className="flex flex-col sm:flex-row gap-4">
-											<div className="flex-shrink-0">
+											<div className="shrink-0">
 												<Image
 													src={`/canvas/${selectedCanvas.assetName}`}
 													alt={selectedCanvas.name}
@@ -399,7 +388,7 @@ export const CreateRiddleForm = () => {
 						aria-invalid={!!errors.explanation}
 						maxLength={1000}
 					/>
-					<CharacterCounter current={formData.explanation.length} max={1000} fieldName="explanation" />
+					<CharacterCounter current={formData.explanation?.length || 0} max={1000} />
 					{errors.explanation && (
 						<div
 							id="explanation-error"
@@ -421,16 +410,28 @@ export const CreateRiddleForm = () => {
 					>
 						{isSubmitting ? 'Creating Riddle...' : 'Create Riddle'}
 					</button>
-					<button
-						type="button"
-						onClick={handleReset}
-						disabled={isSubmitting}
-						className="flex-1 bg-gray-600 hover:bg-gray-500 px-2 py-2 rounded-md text-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-					>
-						Clear Form
-					</button>
 				</div>
 			</form>
+
+			{/* Approved Modal */}
+			<BottomSheetModal
+				isOpen={isApprovedModalOpen}
+				onClose={handleModalClose}
+				title="Riddle Approved"
+				icon="/icons/light.png"
+			>
+				{createdPostId && <RiddleApprovedModal postId={createdPostId} onContinue={handleModalClose} />}
+			</BottomSheetModal>
+
+			{/* Review Modal */}
+			<BottomSheetModal
+				isOpen={isReviewModalOpen}
+				onClose={handleModalClose}
+				title="Riddle Submitted"
+				icon="/icons/pencil.png"
+			>
+				<RiddleReviewModal onContinue={handleModalClose} />
+			</BottomSheetModal>
 		</div>
 	)
 }

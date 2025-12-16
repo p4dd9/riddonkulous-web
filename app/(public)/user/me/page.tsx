@@ -2,11 +2,19 @@
 
 import { BasicButton } from '@/app/components/buttons/BasicButton'
 import { useAuth } from '@/app/contexts/AuthContext'
-import { getCurrentUserData, updateUserData, validateUsername, type UserData } from '@/app/services/userService'
+import {
+	deleteUserAccount,
+	getCurrentUserData,
+	updateUserData,
+	validateUsername,
+	type UserData,
+} from '@/app/services/userService'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function GeneralPage() {
-	const { user, isLoading, refreshUser } = useAuth()
+	const { user, isLoading, refreshUser, signOut } = useAuth()
+	const router = useRouter()
 	const [userData, setUserData] = useState<UserData | null>(null)
 	const [isLoadingUserData, setIsLoadingUserData] = useState(true)
 	const [isEditingUsername, setIsEditingUsername] = useState(false)
@@ -14,6 +22,9 @@ export default function GeneralPage() {
 	const [usernameError, setUsernameError] = useState('')
 	const [isSaving, setIsSaving] = useState(false)
 	const [saveMessage, setSaveMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+	const [showSettings, setShowSettings] = useState(false)
+	const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+	const [isDeleting, setIsDeleting] = useState(false)
 
 	useEffect(() => {
 		if (!isLoading && user) {
@@ -98,6 +109,26 @@ export default function GeneralPage() {
 		setIsEditingUsername(false)
 	}
 
+	const handleDeleteAccount = async () => {
+		if (!showDeleteConfirm) {
+			setShowDeleteConfirm(true)
+			return
+		}
+
+		setIsDeleting(true)
+
+		try {
+			await deleteUserAccount()
+			// Sign out and redirect to home page
+			await signOut()
+			router.push('/')
+		} catch (error: any) {
+			alert(error.message || 'Failed to delete account. Please try again.')
+			setIsDeleting(false)
+			setShowDeleteConfirm(false)
+		}
+	}
+
 	if (isLoading || isLoadingUserData) {
 		return (
 			<div className="flex items-center justify-center py-8">
@@ -112,20 +143,20 @@ export default function GeneralPage() {
 
 	return (
 		<div className="w-full">
-			<div className="bg-gray-800 rounded-lg shadow-lg p-6 md:p-8 border border-gray-700">
-				<h1 className="text-2xl md:text-3xl mb-6">General</h1>
+			<div className="bg-[var(--color-bg)] rounded-lg shadow-lg md:p-8">
+				<h1 className="text-2xl md:text-3xl mb-6">Profile</h1>
 
-				<div className="flex flex-col gap-6">
+				<div className="flex flex-col gap-4">
 					{/* Email */}
-					<div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
-						<label className="text-sm text-gray-400 block mb-1">Email</label>
-						<p className="text-lg">{userData.email}</p>
+					<div className="bg-[var(--color-bg)] rounded-lg ">
+						<label className="text-sm text-white/60 block mb-2">Email</label>
+						<p className="text-lg text-white">{userData.email}</p>
 					</div>
 
 					{/* Username */}
-					<div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
+					<div className="bg-[var(--color-bg)] rounded-lg ">
 						<div className="flex items-center justify-between mb-2">
-							<label className="text-sm text-gray-400 block">Username</label>
+							<label className="text-sm text-white/60 block">Username</label>
 							{!isEditingUsername && (
 								<BasicButton
 									text="Edit"
@@ -136,12 +167,12 @@ export default function GeneralPage() {
 							)}
 						</div>
 						{isEditingUsername ? (
-							<div className="space-y-2">
+							<div className="space-y-3">
 								<input
 									type="text"
 									value={username}
 									onChange={(e) => handleUsernameChange(e.target.value)}
-									className="w-full bg-gray-600 border border-gray-500 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary"
+									className="w-full bg-[var(--color-bg)] border-2 border-primary rounded-md px-3 py-2 text-white focus:outline-none focus:border-primary"
 									placeholder="Enter username"
 									disabled={isSaving}
 								/>
@@ -163,7 +194,7 @@ export default function GeneralPage() {
 									/>
 									<BasicButton
 										text="Cancel"
-										customClass="flex-1 bg-gray-600 hover:bg-gray-500"
+										customClass="flex-1 bg-[var(--color-bg)] border-2 border-primary"
 										threeD={false}
 										onClick={handleCancelEdit}
 										disabled={isSaving}
@@ -171,21 +202,78 @@ export default function GeneralPage() {
 								</div>
 							</div>
 						) : (
-							<p className="text-lg">{userData.username || 'Not set'}</p>
+							<p className="text-lg text-white">{userData.username || 'Not set'}</p>
 						)}
 					</div>
 
 					{/* Role */}
-					<div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
-						<label className="text-sm text-gray-400 block mb-1">Role</label>
-						<p className="text-lg capitalize">{userData.role}</p>
+					<div className="bg-[var(--color-bg)] rounded-lg ">
+						<label className="text-sm text-white/60 block mb-2">Role</label>
+						<p className="text-lg text-white capitalize">{userData.role}</p>
 					</div>
 
 					{/* Account Created */}
 					{userData.createdAt && (
-						<div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
-							<label className="text-sm text-gray-400 block mb-1">Account Created</label>
-							<p className="text-lg">{new Date(userData.createdAt).toLocaleDateString()}</p>
+						<div className="bg-[var(--color-bg)] rounded-lg ">
+							<label className="text-sm text-white/60 block mb-2">Account Created</label>
+							<p className="text-lg text-white">{new Date(userData.createdAt).toLocaleDateString()}</p>
+						</div>
+					)}
+
+					{/* Advanced Settings Section */}
+					<BasicButton
+						onClick={() => setShowSettings(!showSettings)}
+						customClass="w-full text-left justify-between"
+						threeD={false}
+					>
+						<div className="flex items-center justify-between w-full">
+							<span>Advanced Settings</span>
+							<img src="/icons/gear.png" alt="" className="w-5 h-5" />
+						</div>
+					</BasicButton>
+
+					{showSettings && (
+						<div className="bg-[var(--color-bg)] rounded-lg p-6 border-2 border-red-500">
+							<h3 className="text-xl mb-4 text-red-500">Danger Zone</h3>
+							{showDeleteConfirm ? (
+								<div className="bg-red-500/20 border border-red-700 rounded-lg p-4 space-y-4">
+									<p className="text-red-300">
+										Are you sure you want to delete your account? This action cannot be undone. All
+										your data will be permanently deleted.
+									</p>
+									<div className="flex flex-col sm:flex-row gap-3">
+										<BasicButton
+											text={isDeleting ? 'Deleting...' : 'Yes, Delete My Account'}
+											customClass="flex-1 bg-red-600 hover:bg-red-700"
+											threeD={false}
+											onClick={handleDeleteAccount}
+											disabled={isDeleting}
+										/>
+										<BasicButton
+											text="Cancel"
+											customClass="flex-1 bg-[var(--color-bg)] border-2 border-primary"
+											threeD={false}
+											onClick={() => {
+												setShowDeleteConfirm(false)
+												setIsDeleting(false)
+											}}
+											disabled={isDeleting}
+										/>
+									</div>
+								</div>
+							) : (
+								<div>
+									<p className="text-white/70 mb-4">
+										Once you delete your account, there is no going back. Please be certain.
+									</p>
+									<BasicButton
+										text="Delete Account"
+										customClass="bg-red-600 hover:bg-red-700"
+										threeD={false}
+										onClick={handleDeleteAccount}
+									/>
+								</div>
+							)}
 						</div>
 					)}
 				</div>
