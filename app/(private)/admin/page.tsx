@@ -16,6 +16,17 @@ interface TagListResponse {
 	total: number
 }
 
+interface AdminStats {
+	userCount: number
+	webRiddleCount: number
+	totalRiddleCount: number
+}
+
+interface AdminStatsResponse {
+	status: 'success'
+	data: AdminStats
+}
+
 export default function AdminDashboard() {
 	const router = useRouter()
 	const [tags, setTags] = useState<Tag[]>([])
@@ -24,6 +35,8 @@ export default function AdminDashboard() {
 	const [error, setError] = useState('')
 	const [limit] = useState(50)
 	const [offset, setOffset] = useState(0)
+	const [stats, setStats] = useState<AdminStats | null>(null)
+	const [statsLoading, setStatsLoading] = useState(true)
 
 	// Form state
 	const [showCreateForm, setShowCreateForm] = useState(false)
@@ -34,6 +47,28 @@ export default function AdminDashboard() {
 	const [formAssetNamePath, setFormAssetNamePath] = useState('')
 	const [formOrder, setFormOrder] = useState<string>('')
 	const [formLoading, setFormLoading] = useState(false)
+
+	const fetchStats = async () => {
+		setStatsLoading(true)
+		try {
+			const response = await fetch('/admin/api/stats', {
+				credentials: 'include',
+			})
+			if (!response.ok) {
+				if (response.status === 401) {
+					router.push('/admin/login')
+					return
+				}
+				throw new Error('Failed to fetch statistics')
+			}
+			const data: AdminStatsResponse = await response.json()
+			setStats(data.data)
+		} catch (err: unknown) {
+			console.error('Failed to fetch admin stats:', err)
+		} finally {
+			setStatsLoading(false)
+		}
+	}
 
 	const fetchTags = async () => {
 		setLoading(true)
@@ -60,6 +95,10 @@ export default function AdminDashboard() {
 			setLoading(false)
 		}
 	}
+
+	useEffect(() => {
+		fetchStats()
+	}, [])
 
 	useEffect(() => {
 		fetchTags()
@@ -193,6 +232,8 @@ export default function AdminDashboard() {
 		setFormId('')
 	}
 
+	const redditRiddleCount = stats ? stats.totalRiddleCount - stats.webRiddleCount : 0
+
 	return (
 		<div className="min-h-screen w-full max-w-6xl mx-auto px-4 py-8">
 			<div className="flex justify-between items-center mb-8">
@@ -212,6 +253,28 @@ export default function AdminDashboard() {
 					</button>
 				</div>
 			</div>
+
+			{/* Statistics Section */}
+			{statsLoading ? (
+				<div className="bg-gray-800 border border-gray-700 rounded-lg p-6 mb-6">
+					<div className="text-center text-gray-400">Loading statistics...</div>
+				</div>
+			) : stats ? (
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+					<div className="bg-gray-800 border border-gray-700 rounded-lg p-6">
+						<div className="text-sm text-gray-400 mb-2">Total Users</div>
+						<div className="text-3xl font-bold">{stats.userCount.toLocaleString()}</div>
+					</div>
+					<div className="bg-gray-800 border border-gray-700 rounded-lg p-6">
+						<div className="text-sm text-gray-400 mb-2">Web-Created Riddles</div>
+						<div className="text-3xl font-bold">{stats.webRiddleCount.toLocaleString()}</div>
+					</div>
+					<div className="bg-gray-800 border border-gray-700 rounded-lg p-6">
+						<div className="text-sm text-gray-400 mb-2">Reddit-Created Riddles</div>
+						<div className="text-3xl font-bold">{redditRiddleCount.toLocaleString()}</div>
+					</div>
+				</div>
+			) : null}
 
 			{error && (
 				<div className="bg-red-900/50 border border-red-700 text-red-200 px-4 py-3 rounded-md mb-4">
