@@ -1,21 +1,12 @@
 'use client'
 
 import { BasicButton } from '@/app/components/buttons/BasicButton'
-import { LoginButton } from '@/app/components/buttons/LoginButton'
 import { useAuth } from '@/app/contexts/AuthContext'
-import {
-	deleteUserAccount,
-	getCurrentUserData,
-	updateUserData,
-	validateUsername,
-	type UserData,
-} from '@/app/services/userService'
-import { useRouter } from 'next/navigation'
+import { getCurrentUserData, updateUserData, validateUsername, type UserData } from '@/app/services/userService'
 import { useEffect, useState } from 'react'
 
-export default function UserProfilePage() {
-	const { user, isLoading, refreshUser, signOut } = useAuth()
-	const router = useRouter()
+export default function GeneralPage() {
+	const { user, isLoading, refreshUser } = useAuth()
 	const [userData, setUserData] = useState<UserData | null>(null)
 	const [isLoadingUserData, setIsLoadingUserData] = useState(true)
 	const [isEditingUsername, setIsEditingUsername] = useState(false)
@@ -23,8 +14,6 @@ export default function UserProfilePage() {
 	const [usernameError, setUsernameError] = useState('')
 	const [isSaving, setIsSaving] = useState(false)
 	const [saveMessage, setSaveMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
-	const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
-	const [isDeleting, setIsDeleting] = useState(false)
 
 	useEffect(() => {
 		if (!isLoading && user) {
@@ -109,54 +98,22 @@ export default function UserProfilePage() {
 		setIsEditingUsername(false)
 	}
 
-	const handleDeleteAccount = async () => {
-		if (!showDeleteConfirm) {
-			setShowDeleteConfirm(true)
-			return
-		}
-
-		setIsDeleting(true)
-
-		try {
-			await deleteUserAccount()
-			// Sign out and redirect to home page
-			await signOut()
-			router.push('/')
-		} catch (error: any) {
-			alert(error.message || 'Failed to delete account. Please try again.')
-			setIsDeleting(false)
-			setShowDeleteConfirm(false)
-		}
-	}
-
 	if (isLoading || isLoadingUserData) {
 		return (
-			<div className="min-h-screen flex items-center justify-center px-4">
+			<div className="flex items-center justify-center py-8">
 				<div className="text-center">Loading...</div>
 			</div>
 		)
 	}
 
 	if (!user || !userData) {
-		return (
-			<div className="min-h-screen flex items-center justify-center px-4">
-				<div className="w-full max-w-md">
-					<div className="bg-gray-800 rounded-lg shadow-lg p-8 border border-gray-700">
-						<h1 className="text-3xl mb-6 text-center">User Profile</h1>
-						<p className="text-gray-400 mb-6 text-center">You need to be logged in to view your profile.</p>
-						<div className="flex justify-center">
-							<LoginButton variant="drawer" className="w-full" />
-						</div>
-					</div>
-				</div>
-			</div>
-		)
+		return null
 	}
 
 	return (
-		<div className="min-h-screen w-full max-w-4xl mx-auto px-4 py-8">
-			<div className="bg-gray-800 rounded-lg shadow-lg p-8 border border-gray-700">
-				<h1 className="text-3xl mb-6 text-center">User Profile</h1>
+		<div className="w-full">
+			<div className="bg-gray-800 rounded-lg shadow-lg p-6 md:p-8 border border-gray-700">
+				<h1 className="text-2xl md:text-3xl mb-6">General</h1>
 
 				<div className="flex flex-col gap-6">
 					{/* Email */}
@@ -231,45 +188,6 @@ export default function UserProfilePage() {
 							<p className="text-lg">{new Date(userData.createdAt).toLocaleDateString()}</p>
 						</div>
 					)}
-
-					{/* Delete Account Section */}
-					<div className="mt-8 pt-6 border-t border-gray-600">
-						<h2 className="text-xl mb-4 text-red-400">Danger Zone</h2>
-						{showDeleteConfirm ? (
-							<div className="bg-red-900/20 border border-red-700 rounded-lg p-4 space-y-4">
-								<p className="text-red-300">
-									Are you sure you want to delete your account? This action cannot be undone. All your
-									data will be permanently deleted.
-								</p>
-								<div className="flex gap-3">
-									<BasicButton
-										text={isDeleting ? 'Deleting...' : 'Yes, Delete My Account'}
-										customClass="flex-1 bg-red-600 hover:bg-red-700"
-										threeD={false}
-										onClick={handleDeleteAccount}
-										disabled={isDeleting}
-									/>
-									<BasicButton
-										text="Cancel"
-										customClass="flex-1 bg-gray-600 hover:bg-gray-500"
-										threeD={false}
-										onClick={() => {
-											setShowDeleteConfirm(false)
-											setIsDeleting(false)
-										}}
-										disabled={isDeleting}
-									/>
-								</div>
-							</div>
-						) : (
-							<BasicButton
-								text="Delete Account"
-								customClass="bg-red-600 hover:bg-red-700"
-								threeD={false}
-								onClick={handleDeleteAccount}
-							/>
-						)}
-					</div>
 				</div>
 			</div>
 		</div>

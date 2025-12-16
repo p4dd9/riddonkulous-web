@@ -10,6 +10,7 @@ alwaysApply: true
 - Use the global.css file at all times for styling related questions (we exlusively use tailwind custom theming)
 - Prefer Arrow functions
 - Never use </strong>
+- Avoid using default css tailwind classes for styling, use the styleguide we have and existsin `components` in the folder directory
 
 ## Env variables
 
