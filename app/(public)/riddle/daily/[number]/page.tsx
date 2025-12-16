@@ -1,4 +1,5 @@
 import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
+import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getRiddleByNumber, getRiddleOfTheDay } from '@/app/services/riddleService'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -18,8 +19,8 @@ export const generateMetadata = async ({ params }: DailyRiddlePageProps): Promis
 
 	if (isNaN(riddleNumber) || riddleNumber < 1) {
 		return {
-			title: 'Daily Riddle | Riddonkulous',
-			description: 'Solve daily riddles on Riddonkulous!',
+			title: 'Daily Riddles | Riddles with Answers',
+			description: 'New riddle every day, with answers. Brain teasers, logic puzzles, and tricky riddles. Fresh daily.',
 		}
 	}
 
@@ -27,17 +28,17 @@ export const generateMetadata = async ({ params }: DailyRiddlePageProps): Promis
 		const riddle = await getRiddleByNumber()
 		const title = riddle.title || riddle.riddle?.substring(0, 60) || `Daily Riddle #${riddleNumber}`
 		const description = riddle.title
-			? `Solve this riddle: ${riddle.riddle?.substring(0, 150) || ''}`
-			: `Challenge yourself with Daily Riddle #${riddleNumber} on Riddonkulous!`
+			? `${riddle.riddle?.substring(0, 120) || ''} Think you know the answer?`
+			: `Daily Riddle #${riddleNumber}: ${riddle.riddle?.substring(0, 120) || 'Here\'s today\'s brain teaser'} Can you crack it?`
 
 		const url = `https://riddonkulous.com/riddle/daily/${riddleNumber}`
 
 		return {
-			title: `${title} | Riddonkulous`,
+			title: `${title} | Daily Riddles`,
 			description,
 			openGraph: {
-				title: `${title} | Riddonkulous`,
-				description,
+				title: `${title} | Daily Riddles with Answers`,
+				description: `${description} Answer included.`,
 				type: 'article',
 				url,
 				images: [
@@ -45,14 +46,14 @@ export const generateMetadata = async ({ params }: DailyRiddlePageProps): Promis
 						url: '/web-app-manifest-512x512.png',
 						width: 512,
 						height: 512,
-						alt: title,
+						alt: title || 'Daily riddle with answer',
 					},
 				],
 			},
 			twitter: {
 				card: 'summary_large_image',
-				title: `${title} | Riddonkulous`,
-				description,
+				title: `${title} | Daily Riddles with Answers`,
+				description: `${description} Answer included.`,
 				images: ['/web-app-manifest-512x512.png'],
 			},
 			alternates: {
@@ -61,8 +62,8 @@ export const generateMetadata = async ({ params }: DailyRiddlePageProps): Promis
 		}
 	} catch {
 		return {
-			title: 'Daily Riddle | Riddonkulous',
-			description: 'Solve daily riddles on Riddonkulous!',
+			title: 'Daily Riddles | Riddles with Answers',
+			description: 'New riddle every day, with answers. Brain teasers, logic puzzles, and tricky riddles. Fresh daily.',
 		}
 	}
 }
@@ -90,8 +91,41 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 	const hasNext = riddleNumber < currentNumber
 	const hasPrevious = riddleNumber > 1
 
+	const structuredData = {
+		'@context': 'https://schema.org',
+		'@type': 'Article',
+		headline: riddle.title || `Daily Riddle #${riddleNumber}: ${riddle.riddle?.substring(0, 60) || 'Brain Teaser'}`,
+		description: riddle.riddle || '',
+		author: {
+			'@type': 'Person',
+			name: riddle.author || 'Anonymous',
+		},
+		datePublished: riddle.date ? new Date(Number(riddle.date)).toISOString() : undefined,
+		mainEntityOfPage: {
+			'@type': 'WebPage',
+			'@id': `https://riddonkulous.com/riddle/daily/${riddleNumber}`,
+		},
+		// Add FAQPage structured data for riddles with answers
+		...(riddle.word && {
+			mainEntity: {
+				'@type': 'FAQPage',
+				mainEntity: {
+					'@type': 'Question',
+					name: riddle.title || `Daily Riddle #${riddleNumber}` || 'Riddle',
+					text: riddle.riddle || '',
+					acceptedAnswer: {
+						'@type': 'Answer',
+						text: riddle.word,
+					},
+				},
+			},
+		}),
+	}
+
 	return (
-		<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8">
+		<>
+			<StructuredData data={structuredData} />
+			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8">
 			<RiddleSingleView
 				riddle={riddle}
 				hasNext={hasNext}
@@ -108,6 +142,7 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 				showRedditButton={true}
 				showShareButton={true}
 			/>
-		</div>
+			</div>
+		</>
 	)
 }

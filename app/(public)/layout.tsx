@@ -7,20 +7,32 @@ import '../globals.css'
 export const metadata: Metadata = {
 	metadataBase: new URL('https://riddonkulous.com'),
 	title: {
-		default: 'Riddonkulous | Create and Solve Riddles',
+		default: 'Riddles with Answers | Brain Teasers & Logic Puzzles',
 		template: '%s | Riddonkulous',
 	},
 	description:
-		'Riddonkulous is a platform for creating and solving riddles. Join our community to create, share, and solve engaging riddles every day.',
+		'Riddles with answers, fresh every day. Brain teasers, logic puzzles, and tricky riddles that make you think. No fluff, just good riddles.',
 	keywords: [
 		'riddles',
-		'puzzles',
+		'riddles with answers',
+		'riddle',
 		'brain teasers',
+		'logic puzzles',
+		'word riddles',
+		'tricky riddles',
+		'fun riddles',
+		'hard riddles',
+		'daily riddles',
+		'wordplay',
+		'lateral thinking',
+		'guessing game',
+		'mind games',
+		'puzzle questions',
+		'trick questions',
 		'riddle solving',
 		'riddle creation',
 		'riddle community',
 		'riddonkulous',
-		'daily riddles',
 	],
 	authors: [{ name: 'Hammertime e.U.' }],
 	creator: 'Hammertime e.U.',
@@ -35,9 +47,9 @@ export const metadata: Metadata = {
 		locale: 'en_US',
 		url: 'https://riddonkulous.com',
 		siteName: 'Riddonkulous',
-		title: 'Riddonkulous | Create and Solve Riddles',
+		title: 'Riddles with Answers | Can You Solve These?',
 		description:
-			'Riddonkulous is a platform for creating and solving riddles. Join our community to create, share, and solve engaging riddles every day.',
+			'Got a riddle? We got answers. Daily brain teasers, logic puzzles, and tricky riddles. See if you can crack them.',
 		images: [
 			{
 				url: '/web-app-manifest-512x512.png',
@@ -49,9 +61,9 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'Riddonkulous | Create and Solve Riddles',
+		title: 'Riddles with Answers | Can You Solve These?',
 		description:
-			'Riddonkulous is a platform for creating and solving riddles. Join our community to create, share, and solve engaging riddles every day.',
+			'Got a riddle? We got answers. Daily brain teasers, logic puzzles, and tricky riddles. See if you can crack them.',
 		images: ['/web-app-manifest-512x512.png'],
 	},
 	robots: {

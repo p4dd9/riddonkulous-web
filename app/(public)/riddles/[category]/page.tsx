@@ -30,15 +30,15 @@ export const generateMetadata = async ({ params, searchParams }: RiddlesCategory
 	if (!tag || !riddlesResponse || riddlesResponse.riddles.length === 0) {
 		return {
 			title: 'Riddle Category | Riddonkulous',
-			description: 'Browse riddles by category on Riddonkulous.',
+			description: 'Browse riddles by category. All riddles come with answers.',
 		}
 	}
 
 	const pageSuffix = currentPage > 0 ? ` - Page ${currentPage + 1}` : ''
-	const title = `${tag.label} Riddles${pageSuffix} | Riddonkulous`
+	const title = `${tag.label} Riddles with Answers${pageSuffix}`
 	const description =
 		tag.description ||
-		`Explore ${tag.label.toLowerCase()} riddles on Riddonkulous. Challenge yourself with fun and engaging Riddles!`
+		`${tag.label} riddles with answers. Brain teasers, logic puzzles, and tricky riddles. See if you can solve them.`
 
 	const url = `https://riddonkulous.com/riddles/${category}${currentPage > 0 ? `?page=${currentPage}` : ''}`
 
@@ -46,8 +46,8 @@ export const generateMetadata = async ({ params, searchParams }: RiddlesCategory
 		title,
 		description,
 		openGraph: {
-			title,
-			description,
+			title: `${tag.label} Riddles with Answers`,
+			description: `${tag.label} riddles with answers. Brain teasers, logic puzzles, and tricky riddles. Can you crack them?`,
 			type: 'website',
 			url,
 			images: [
@@ -55,14 +55,14 @@ export const generateMetadata = async ({ params, searchParams }: RiddlesCategory
 					url: '/web-app-manifest-512x512.png',
 					width: 512,
 					height: 512,
-					alt: tag.label,
+					alt: `${tag.label} riddles`,
 				},
 			],
 		},
 		twitter: {
 			card: 'summary_large_image',
-			title,
-			description,
+			title: `${tag.label} Riddles with Answers`,
+			description: `${tag.label} riddles with answers. Brain teasers, logic puzzles, and tricky riddles. Can you crack them?`,
 			images: ['/web-app-manifest-512x512.png'],
 		},
 		alternates: {

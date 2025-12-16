@@ -17,8 +17,8 @@ export const generateMetadata = async ({ params }: RiddlePageProps): Promise<Met
 
 	const title = riddle.title || riddle.riddle?.substring(0, 60) || 'Riddle'
 	const description = riddle.title
-		? `Solve this riddle: ${riddle.riddle?.substring(0, 150) || ''}`
-		: riddle.riddle?.substring(0, 150) || 'Challenge yourself with this riddle on Riddonkulous!'
+		? `${riddle.riddle?.substring(0, 120) || ''} Think you know the answer?`
+		: `${riddle.riddle?.substring(0, 120) || 'Here\'s a tricky one'} Can you crack it?`
 
 	const url = `https://riddonkulous.com/riddle/${postId}`
 
@@ -26,8 +26,8 @@ export const generateMetadata = async ({ params }: RiddlePageProps): Promise<Met
 		title: `${title} | Riddonkulous`,
 		description,
 		openGraph: {
-			title: `${title} | Riddonkulous`,
-			description,
+			title: `${title} | Riddles with Answers`,
+			description: `${description} Riddle with answer included.`,
 			type: 'article',
 			url,
 			images: [
@@ -35,14 +35,14 @@ export const generateMetadata = async ({ params }: RiddlePageProps): Promise<Met
 					url: '/web-app-manifest-512x512.png',
 					width: 512,
 					height: 512,
-					alt: title,
+					alt: title || 'Riddle with answer',
 				},
 			],
 		},
 		twitter: {
 			card: 'summary_large_image',
-			title: `${title} | Riddonkulous`,
-			description,
+			title: `${title} | Riddles with Answers`,
+			description: `${description} Riddle with answer included.`,
 			images: ['/web-app-manifest-512x512.png'],
 		},
 		alternates: {
@@ -59,7 +59,7 @@ export default async function RiddlePage({ params }: RiddlePageProps) {
 	const structuredData = {
 		'@context': 'https://schema.org',
 		'@type': 'Article',
-		headline: riddle.title || riddle.riddle?.substring(0, 100) || 'Riddle',
+		headline: riddle.title || `Riddle: ${riddle.riddle?.substring(0, 60) || 'Brain Teaser'}`,
 		description: riddle.riddle || '',
 		author: {
 			'@type': 'Person',
@@ -70,6 +70,21 @@ export default async function RiddlePage({ params }: RiddlePageProps) {
 			'@type': 'WebPage',
 			'@id': `https://riddonkulous.com/riddle/${postId}`,
 		},
+		// Add FAQPage structured data for riddles with answers
+		...(riddle.word && {
+			mainEntity: {
+				'@type': 'FAQPage',
+				mainEntity: {
+					'@type': 'Question',
+					name: riddle.title || riddle.riddle?.substring(0, 100) || 'Riddle',
+					text: riddle.riddle || '',
+					acceptedAnswer: {
+						'@type': 'Answer',
+						text: riddle.word,
+					},
+				},
+			},
+		}),
 	}
 
 	return (
