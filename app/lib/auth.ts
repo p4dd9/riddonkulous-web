@@ -4,6 +4,9 @@ export interface User {
 	id: string
 	email: string
 	role: string
+	username?: string
+	createdAt?: string
+	updatedAt?: string
 }
 
 export interface LoginResponse {
