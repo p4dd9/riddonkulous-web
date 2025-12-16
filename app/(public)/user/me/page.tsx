@@ -215,7 +215,7 @@ export default function GeneralPage() {
 					{/* Account Created */}
 					{userData.createdAt && (
 						<div className="bg-[var(--color-bg)] rounded-lg ">
-							<label className="text-sm text-white/60 block mb-2">Account Created</label>
+							<label className="text-sm text-white/60 block mb-2">Joined Riddonkulous</label>
 							<p className="text-lg text-white">{new Date(userData.createdAt).toLocaleDateString()}</p>
 						</div>
 					)}

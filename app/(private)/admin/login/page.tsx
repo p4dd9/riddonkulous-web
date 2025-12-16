@@ -2,6 +2,7 @@
 
 import { LoginButton } from '@/app/components/buttons/LoginButton'
 import { useAuth } from '@/app/contexts/AuthContext'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
@@ -33,8 +34,17 @@ export default function AdminLoginPage() {
 		<div className="min-h-screen flex items-center justify-center px-4">
 			<div className="w-full max-w-md">
 				<div className="bg-gray-800 rounded-lg shadow-lg p-8 border border-gray-700">
+					<div className="flex justify-center mb-6">
+						<Image
+							src="/pals/PAL056.gif"
+							alt="Admin Login"
+							width={200}
+							height={200}
+							className="w-32 h-32 md:w-48 md:h-48"
+							unoptimized
+						/>
+					</div>
 					<h1 className="text-3xl mb-6 text-center">Admin Login</h1>
-					<p className="text-gray-400 mb-6 text-center">Please sign in with your Google account.</p>
 					<div className="flex justify-center">
 						<LoginButton variant="drawer" className="w-full" />
 					</div>
