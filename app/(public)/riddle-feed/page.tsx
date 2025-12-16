@@ -83,6 +83,7 @@ export default function RiddleFeedPage() {
 						<div className="flex items-center justify-start px-2">
 							<p className="text-sm opacity-90">{formatDate(riddle.date)}</p>
 						</div>
+						{/* RiddleCard automatically hides eye (guessCount) and star (popularity) icons for web-created riddles (postId starts with "r_") */}
 						<RiddleCard riddle={riddle} className="w-full" textClassName="line-clamp-5" />
 					</div>
 				))}

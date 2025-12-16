@@ -42,24 +42,27 @@ export const RiddleCard = ({
 			<div
 				className={`relative z-10 flex flex-col items-center justify-between w-full ${isCompact ? 'h-full' : 'flex-1'}`}
 			>
-				<div className={`flex items-center w-full ${isCompact ? 'justify-end' : 'justify-between'} gap-4`}>
-					{!isCompact && (
+				{/* Hide eye and star for web-created riddles (postId starts with "r_") */}
+				{!riddle.postId.startsWith('r_') && (
+					<div className={`flex items-center w-full ${isCompact ? 'justify-end' : 'justify-between'} gap-4`}>
+						{!isCompact && (
+							<div className="flex items-center justify-center gap-2">
+								<Image src="/icons/eye.png" alt="Eye" width={28} height={28} className="w-7 h-7" />{' '}
+								{riddle.guessCount}
+							</div>
+						)}
 						<div className="flex items-center justify-center gap-2">
-							<Image src="/icons/eye.png" alt="Eye" width={28} height={28} className="w-7 h-7" />{' '}
-							{riddle.guessCount}
+							<Image
+								src="/icons/star.png"
+								alt="Star"
+								width={isCompact ? 16 : 28}
+								height={isCompact ? 16 : 28}
+								className={isCompact ? 'w-4 h-4' : 'w-7 h-7'}
+							/>{' '}
+							<span className={isCompact ? 'text-xs' : ''}>{formatPopularity(riddle.popularity)}</span>
 						</div>
-					)}
-					<div className="flex items-center justify-center gap-2">
-						<Image
-							src="/icons/star.png"
-							alt="Star"
-							width={isCompact ? 16 : 28}
-							height={isCompact ? 16 : 28}
-							className={isCompact ? 'w-4 h-4' : 'w-7 h-7'}
-						/>{' '}
-						<span className={isCompact ? 'text-xs' : ''}>{formatPopularity(riddle.popularity)}</span>
 					</div>
-				</div>
+				)}
 				<div
 					className={`relative ${
 						isCompact
@@ -67,7 +70,11 @@ export const RiddleCard = ({
 							: 'text-xl w-[95%] md:w-[80%] lg:w-[70%] text-center flex-1 flex items-center justify-center py-4'
 					}`}
 				>
-					<p className={isCompact ? 'line-clamp-2' : textClassName || ''}>{riddle.riddle}</p>
+					<p
+						className={`whitespace-pre-line ${isCompact ? 'line-clamp-2' : textClassName || ''}`}
+					>
+						{riddle.riddle}
+					</p>
 				</div>
 				{!hideSolveButton && (
 					<div className={`flex items-center w-full pb-2 ${isCompact ? 'justify-end' : 'justify-center'}`}>

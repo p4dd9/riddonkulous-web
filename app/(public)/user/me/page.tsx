@@ -148,10 +148,10 @@ export default function GeneralPage() {
 
 				<div className="flex flex-col gap-4">
 					{/* Email */}
-					<div className="bg-[var(--color-bg)] rounded-lg ">
+					{/* <div className="bg-[var(--color-bg)] rounded-lg ">
 						<label className="text-sm text-white/60 block mb-2">Email</label>
 						<p className="text-lg text-white">{userData.email}</p>
-					</div>
+					</div> */}
 
 					{/* Username */}
 					<div className="bg-[var(--color-bg)] rounded-lg ">
@@ -207,10 +207,10 @@ export default function GeneralPage() {
 					</div>
 
 					{/* Role */}
-					<div className="bg-[var(--color-bg)] rounded-lg ">
+					{/* <div className="bg-[var(--color-bg)] rounded-lg ">
 						<label className="text-sm text-white/60 block mb-2">Role</label>
 						<p className="text-lg text-white capitalize">{userData.role}</p>
-					</div>
+					</div> */}
 
 					{/* Account Created */}
 					{userData.createdAt && (

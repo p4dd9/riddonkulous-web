@@ -58,7 +58,7 @@ export const createRiddle = async (formData: RiddleFormData): Promise<CreateRidd
  */
 export const validateWord = (word: string): string | null => {
 	if (!word.trim()) return 'Word is required'
-	if (word.length > 1000) return 'Word must be 1000 characters or less'
+	if (word.length > 20) return 'Word must be 20 characters or less'
 	return null
 }
 
@@ -67,7 +67,8 @@ export const validateWord = (word: string): string | null => {
  */
 export const validateRiddle = (riddle: string): string | null => {
 	if (!riddle.trim()) return 'Riddle is required'
-	if (riddle.length > 1000) return 'Riddle must be 1000 characters or less'
+	if (riddle.length < 50) return 'Riddle must be at least 50 characters'
+	if (riddle.length > 750) return 'Riddle must be 750 characters or less'
 	return null
 }
 

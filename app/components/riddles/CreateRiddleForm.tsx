@@ -31,16 +31,27 @@ const canvasCosmetics = (cosmetics as Cosmetic[]).filter((item) => item.type ===
 interface CharacterCounterProps {
 	current: number
 	max: number
+	min?: number
 }
 
-const CharacterCounter = ({ current, max }: CharacterCounterProps) => {
+const CharacterCounter = ({ current, max, min }: CharacterCounterProps) => {
 	const percentage = (current / max) * 100
 	const isWarning = percentage > 80
 	const isError = current > max
+	const isBelowMin = min !== undefined && current > 0 && current < min
+
+	let displayText = `${current}/${max} characters`
+	if (min !== undefined) {
+		displayText = `${current}/${max} characters (min: ${min})`
+	}
 
 	return (
-		<div className={`text-xs mt-1 ${isError ? 'text-red-400' : isWarning ? 'text-yellow-400' : 'text-gray-400'}`}>
-			{current}/{max} characters
+		<div
+			className={`text-xs mt-1 ${
+				isError || isBelowMin ? 'text-red-400' : isWarning ? 'text-yellow-400' : 'text-gray-400'
+			}`}
+		>
+			{displayText}
 		</div>
 	)
 }
@@ -262,9 +273,9 @@ export const CreateRiddleForm = () => {
 						aria-describedby={errors.word ? 'word-error' : 'word-help'}
 						aria-invalid={!!errors.word}
 						aria-required="true"
-						maxLength={1000}
+						maxLength={20}
 					/>
-					<CharacterCounter current={formData.word.length} max={1000} />
+					<CharacterCounter current={formData.word.length} max={20} />
 					{errors.word && (
 						<div id="word-error" role="alert" aria-live="polite" className="text-red-400 text-sm mt-1">
 							{errors.word}
@@ -278,7 +289,8 @@ export const CreateRiddleForm = () => {
 						Riddle Text{' '}
 						<span className="text-red-400" aria-label="required">
 							*
-						</span>
+						</span>{' '}
+						<span className="text-gray-500 text-xs">(50-750 characters)</span>
 					</label>
 					<textarea
 						id="riddle-input"
@@ -288,14 +300,15 @@ export const CreateRiddleForm = () => {
 						className={`w-full bg-gray-600 border rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary min-h-[120px] resize-y ${
 							errors.riddle ? 'border-red-500' : 'border-gray-500'
 						}`}
-						placeholder="Enter your riddle question or text"
+						placeholder="Enter your riddle question or text (minimum 50 characters)"
 						disabled={isFormDisabled}
 						aria-describedby={errors.riddle ? 'riddle-error' : 'riddle-help'}
 						aria-invalid={!!errors.riddle}
 						aria-required="true"
-						maxLength={1000}
+						minLength={50}
+						maxLength={750}
 					/>
-					<CharacterCounter current={formData.riddle.length} max={1000} />
+					<CharacterCounter current={formData.riddle.length} max={750} min={50} />
 					{errors.riddle && (
 						<div id="riddle-error" role="alert" aria-live="polite" className="text-red-400 text-sm mt-1">
 							{errors.riddle}
@@ -370,7 +383,7 @@ export const CreateRiddleForm = () => {
 				</div>
 
 				{/* Explanation Field */}
-				<div>
+				{/* <div>
 					<label htmlFor="explanation-input" className="block text-sm text-gray-400 mb-2">
 						Explanation <span className="text-gray-500 text-xs">(Optional)</span>
 					</label>
@@ -399,15 +412,22 @@ export const CreateRiddleForm = () => {
 							{errors.explanation}
 						</div>
 					)}
-				</div>
+				</div> */}
 
 				{/* Form Actions */}
 				<div className="flex flex-col sm:flex-row gap-3 pt-4">
 					<button
 						type="submit"
 						disabled={isFormDisabled}
-						className="flex-1 bg-primary hover:bg-secondary px-2 py-2 rounded-md text-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+						className="flex-1 bg-primary hover:bg-secondary px-2 py-2 rounded-md text-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
 					>
+						{isSubmitting && (
+							<img
+								src="/icons/hourglass.png"
+								alt=""
+								className="w-5 h-5 animate-spin"
+							/>
+						)}
 						{isSubmitting ? 'Creating Riddle...' : 'Create Riddle'}
 					</button>
 				</div>
