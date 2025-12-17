@@ -1,5 +1,6 @@
 import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { CategoryCard } from '@/app/components/categories/CategoryCard'
+import { RiddleAuthorHeader } from '@/app/components/riddles/RiddleAuthorHeader'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
@@ -34,14 +35,18 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-	const [riddleOfTheDay, trendingRiddles, tagsData] = await Promise.all([
+	const [riddleOfTheDay, trendingRiddles, tagsData, latestRiddles] = await Promise.all([
 		getRiddleOfTheDay(),
 		getTrendingRiddles(),
 		listTags(50, 0),
+		import('@/app/services/riddleService').then((m) => m.getLatestRiddles(20, 0, 365)),
 	])
 	const filteredTrendingRiddles = trendingRiddles
 		.filter((riddle) => riddle.postId !== riddleOfTheDay.postId)
 		.slice(0, 3)
+
+	// Get the newest web-created riddle
+	const newestWebRiddle = latestRiddles.riddles.find((riddle) => riddle.postId.startsWith('r_'))
 
 	const structuredData = {
 		'@context': 'https://schema.org',
@@ -139,28 +144,43 @@ export default async function Home() {
 					</div>
 
 					{/* Riddle Feed Section - Below existing content */}
-					<div className="w-full flex flex-col gap-4">
-						<div className="relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[200px] md:min-h-[250px]">
-							<div
-								className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
-								style={{
-									backgroundImage: 'url(/canvas/BG100.png)',
-									filter: 'brightness(0.5)',
-								}}
-							/>
-							<div className="relative z-10 flex flex-col items-center justify-center text-center px-4 gap-4">
-								<h3 className="text-2xl md:text-4xl ">Discover New Riddles</h3>
-								<p className="text-base md:text-lg opacity-90 max-w-2xl">
-									Explore our growing collection of riddles. New puzzles are added every day by our
-									awesome community.
-								</p>
-								<div className="mt-4">
-									<LinkAsButton
-										href="/riddle-feed"
-										text="View Riddle Feed"
-										textAlign="center"
-										customClass="px-8 py-2"
-									/>
+					<div className="w-full flex flex-col lg:flex-row gap-4">
+						{/* Left: Newest Community Riddle */}
+						{newestWebRiddle && (
+							<div className="lg:w-1/2 flex flex-col gap-3">
+								<RiddleAuthorHeader
+									username={newestWebRiddle.author || 'Anonymous'}
+									avatar={newestWebRiddle.authorAvatar}
+									createdAt={newestWebRiddle.date || undefined}
+								/>
+								<RiddleCard
+									riddle={newestWebRiddle}
+									className="h-[250px]"
+									textClassName="line-clamp-4"
+								/>
+							</div>
+						)}
+
+						{/* Right: Discover New Riddles CTA */}
+						<div className="lg:w-1/2 flex flex-col gap-4">
+							<div className="relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[200px] md:min-h-[250px] h-full">
+								<div
+									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
+									style={{
+										backgroundImage: 'url(/canvas/BG100.png)',
+										filter: 'brightness(0.5)',
+									}}
+								/>
+								<div className="relative z-10 flex flex-col items-center justify-center text-center px-4 gap-4">
+									<h3 className="text-2xl md:text-4xl ">Discover Community Riddles</h3>
+									<div className="mt-4">
+										<LinkAsButton
+											href="/riddle-feed"
+											text="Open Community Feed"
+											textAlign="center"
+											customClass="px-8 py-2"
+										/>
+									</div>
 								</div>
 							</div>
 						</div>
