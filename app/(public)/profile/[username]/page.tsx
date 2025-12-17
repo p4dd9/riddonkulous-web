@@ -22,7 +22,7 @@ export const generateMetadata = async ({ params }: UserProfilePageProps): Promis
 
 		const title = `${profile.username}'s Profile | Riddonkulous`
 		const description = `Check out ${profile.username}'s riddles on Riddonkulous. Joined ${new Date(profile.joinedDate).toLocaleDateString()} and created ${profile.riddles.length} riddle${profile.riddles.length !== 1 ? 's' : ''}.`
-		const url = `https://riddonkulous.com/user/profile/${username}`
+		const url = `https://riddonkulous.com/profile/${username}`
 
 		return {
 			title,

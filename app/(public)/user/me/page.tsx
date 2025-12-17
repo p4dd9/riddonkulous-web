@@ -190,14 +190,14 @@ export default function GeneralPage() {
 								text="View Profile"
 								customClass="text-sm py-2 px-3"
 								threeD={false}
-								onClick={() => router.push(`/user/profile/${userData.username}`)}
+								onClick={() => router.push(`/profile/${userData.username}`)}
 							/>
 							<BasicButton
 								text="Share Profile"
 								customClass="text-sm py-2 px-3"
 								threeD={false}
 								onClick={() => {
-									const profileUrl = `${window.location.origin}/user/profile/${userData.username}`
+									const profileUrl = `${window.location.origin}/profile/${userData.username}`
 									if (navigator.share) {
 										navigator.share({
 											title: `${userData.username}'s Profile`,
