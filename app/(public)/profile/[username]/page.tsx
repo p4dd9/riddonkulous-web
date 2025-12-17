@@ -20,7 +20,7 @@ export const generateMetadata = async ({ params }: UserProfilePageProps): Promis
 	try {
 		const profile = await getUserProfileByUsername(username)
 
-		const title = `${profile.username}'s Profile | Riddonkulous`
+		const title = `${profile.username} Riddle Profile | Riddonkulous`
 		const description = `Check out ${profile.username}'s riddles on Riddonkulous. Joined ${new Date(profile.joinedDate).toLocaleDateString()} and created ${profile.riddles.length} riddle${profile.riddles.length !== 1 ? 's' : ''}.`
 		const url = `https://riddonkulous.com/profile/${username}`
 
