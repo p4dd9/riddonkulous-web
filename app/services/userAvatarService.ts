@@ -63,4 +63,3 @@ export const getUserAvatars = async (usernames: string[]): Promise<Map<string, s
 
 	return avatarMap
 }
-
