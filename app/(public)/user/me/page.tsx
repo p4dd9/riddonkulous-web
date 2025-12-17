@@ -9,6 +9,7 @@ import {
 	validateUsername,
 	type UserData,
 } from '@/app/services/userService'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -25,6 +26,8 @@ export default function GeneralPage() {
 	const [showSettings, setShowSettings] = useState(false)
 	const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 	const [isDeleting, setIsDeleting] = useState(false)
+	const [isEditingAvatar, setIsEditingAvatar] = useState(false)
+	const [selectedAvatar, setSelectedAvatar] = useState('')
 
 	useEffect(() => {
 		if (!isLoading && user) {
@@ -41,6 +44,7 @@ export default function GeneralPage() {
 			if (data) {
 				setUserData(data)
 				setUsername(data.username || '')
+				setSelectedAvatar(data.avatar || 'avatar_02.png')
 			}
 		} catch (error) {
 			console.error('Error fetching user data:', error)
@@ -129,6 +133,40 @@ export default function GeneralPage() {
 		}
 	}
 
+	const handleSaveAvatar = async (avatar: string) => {
+		setIsSaving(true)
+		setSaveMessage(null)
+
+		try {
+			const response = await updateUserData({ avatar })
+			if (response.status === 'success') {
+				setUserData(response.data)
+				setSelectedAvatar(response.data.avatar || 'avatar_02.png')
+				setSaveMessage({ type: 'success', text: 'Avatar updated successfully!' })
+				setIsEditingAvatar(false)
+				// Refresh auth context
+				await refreshUser()
+				setTimeout(() => setSaveMessage(null), 3000)
+			}
+		} catch (error: any) {
+			setSaveMessage({ type: 'error', text: error.message || 'Failed to update avatar' })
+		} finally {
+			setIsSaving(false)
+		}
+	}
+
+	const handleCancelAvatarEdit = () => {
+		setSelectedAvatar(userData?.avatar || 'avatar_02.png')
+		setIsEditingAvatar(false)
+		setSaveMessage(null)
+	}
+
+	// Generate array of all 40 avatars
+	const avatarOptions = Array.from({ length: 40 }, (_, i) => {
+		const num = (i + 1).toString().padStart(2, '0')
+		return `avatar_${num}.png`
+	})
+
 	if (isLoading || isLoadingUserData) {
 		return (
 			<div className="flex items-center justify-center py-8">
@@ -144,9 +182,113 @@ export default function GeneralPage() {
 	return (
 		<div className="w-full">
 			<div className="bg-[var(--color-bg)] rounded-lg shadow-lg md:p-8">
-				<h1 className="text-2xl md:text-3xl mb-6">Profile</h1>
+				<div className="flex items-center justify-between mb-6">
+					<h1 className="text-2xl md:text-3xl">Profile</h1>
+					{userData.username && (
+						<div className="flex gap-2">
+							<BasicButton
+								text="View Profile"
+								customClass="text-sm py-2 px-3"
+								threeD={false}
+								onClick={() => router.push(`/user/profile/${userData.username}`)}
+							/>
+							<BasicButton
+								text="Share Profile"
+								customClass="text-sm py-2 px-3"
+								threeD={false}
+								onClick={() => {
+									const profileUrl = `${window.location.origin}/user/profile/${userData.username}`
+									if (navigator.share) {
+										navigator.share({
+											title: `${userData.username}'s Profile`,
+											url: profileUrl,
+										})
+									} else {
+										navigator.clipboard.writeText(profileUrl)
+										setSaveMessage({ type: 'success', text: 'Profile link copied to clipboard!' })
+										setTimeout(() => setSaveMessage(null), 3000)
+									}
+								}}
+							/>
+						</div>
+					)}
+				</div>
 
 				<div className="flex flex-col gap-4">
+					{/* Avatar */}
+					<div className="bg-[var(--color-bg)] rounded-lg">
+						<div className="flex items-center justify-between mb-2">
+							<label className="text-sm text-white/60 block">Avatar</label>
+							{!isEditingAvatar && (
+								<BasicButton
+									text="Edit"
+									customClass="text-xs py-1 px-2"
+									threeD={false}
+									onClick={() => setIsEditingAvatar(true)}
+								/>
+							)}
+						</div>
+						{isEditingAvatar ? (
+							<div className="space-y-3">
+								<div className="grid grid-cols-5 md:grid-cols-8 lg:grid-cols-10 gap-3 max-h-[400px] overflow-y-auto p-2 bg-[var(--color-bg)] rounded-lg">
+									{avatarOptions.map((avatar) => (
+										<button
+											key={avatar}
+											onClick={() => setSelectedAvatar(avatar)}
+											className={`relative w-full aspect-square rounded-lg overflow-hidden border-2 transition-all ${
+												selectedAvatar === avatar
+													? 'border-primary scale-110'
+													: 'border-transparent hover:border-white/30'
+											}`}
+											disabled={isSaving}
+										>
+											<Image
+												src={`/avatars/${avatar}`}
+												alt={avatar}
+												fill
+												className="object-cover"
+											/>
+										</button>
+									))}
+								</div>
+								{saveMessage && (
+									<p
+										className={`text-sm ${saveMessage.type === 'success' ? 'text-green-400' : 'text-red-400'}`}
+									>
+										{saveMessage.text}
+									</p>
+								)}
+								<div className="flex gap-2">
+									<BasicButton
+										text={isSaving ? 'Saving...' : 'Save'}
+										customClass="flex-1"
+										threeD={false}
+										onClick={() => handleSaveAvatar(selectedAvatar)}
+										disabled={isSaving || selectedAvatar === userData.avatar}
+									/>
+									<BasicButton
+										text="Cancel"
+										customClass="flex-1 bg-[var(--color-bg)] border-2 border-primary"
+										threeD={false}
+										onClick={handleCancelAvatarEdit}
+										disabled={isSaving}
+									/>
+								</div>
+							</div>
+						) : (
+							<div className="flex items-center gap-4">
+								<div className="relative w-20 h-20 rounded-full overflow-hidden border-4 border-primary">
+									<Image
+										src={`/avatars/${userData.avatar || 'avatar_02.png'}`}
+										alt="Your avatar"
+										fill
+										className="object-cover"
+									/>
+								</div>
+							</div>
+						)}
+					</div>
+
 					{/* Email */}
 					{/* <div className="bg-[var(--color-bg)] rounded-lg ">
 						<label className="text-sm text-white/60 block mb-2">Email</label>

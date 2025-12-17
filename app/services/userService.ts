@@ -5,6 +5,7 @@ export interface UserData {
 	email: string
 	role: string
 	username?: string
+	avatar?: string
 	createdAt?: string
 	updatedAt?: string
 }
@@ -12,6 +13,7 @@ export interface UserData {
 export interface UpdateUserData {
 	username?: string
 	email?: string
+	avatar?: string
 	role?: 'user' | 'moderator' | 'admin'
 }
 
