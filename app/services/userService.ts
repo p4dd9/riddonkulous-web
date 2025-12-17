@@ -1,5 +1,7 @@
 'use client'
 
+import { validateProfanity } from '../util/profanityFilter'
+
 export interface UserData {
 	id: string
 	email: string
@@ -105,6 +107,12 @@ export const validateUsername = (value: string): string | null => {
 	}
 	if (value.length > 30) {
 		return 'Username must be less than 30 characters'
+	}
+
+	// Check for profanity
+	const profanityError = validateProfanity(value, 'Username')
+	if (profanityError) {
+		return profanityError
 	}
 
 	return null

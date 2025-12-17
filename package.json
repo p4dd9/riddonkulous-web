@@ -10,6 +10,7 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
+		"bad-words": "^4.0.0",
 		"jose": "^6.1.3",
 		"next": "16.0.7",
 		"react": "19.2.0",
@@ -18,6 +19,7 @@
 	},
 	"devDependencies": {
 		"@tailwindcss/postcss": "^4",
+		"@types/bad-words": "^3.0.3",
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",

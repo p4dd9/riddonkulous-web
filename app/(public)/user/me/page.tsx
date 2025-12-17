@@ -298,7 +298,17 @@ export default function GeneralPage() {
 					{/* Username */}
 					<div className="bg-[var(--color-bg)] rounded-lg ">
 						<div className="flex items-center justify-between mb-2">
-							<label className="text-sm text-white/60 block">Username</label>
+							<div className="flex items-center gap-2">
+								<label className="text-sm text-white/60 block">Username</label>
+								<div className="relative group">
+									<span className="text-xs text-white/60 cursor-help border border-white/40 rounded-full w-4 h-4 flex items-center justify-center">
+										?
+									</span>
+									<div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-2 bg-gray-800 text-white text-xs rounded shadow-lg z-10">
+										Username can only be changed once every 180 days
+									</div>
+								</div>
+							</div>
 							{!isEditingUsername && (
 								<BasicButton
 									text="Edit"

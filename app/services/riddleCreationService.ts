@@ -1,5 +1,7 @@
 'use client'
 
+import { validateProfanity } from '../util/profanityFilter'
+
 export interface RiddleFormData {
 	word: string
 	riddle: string
@@ -59,6 +61,11 @@ export const createRiddle = async (formData: RiddleFormData): Promise<CreateRidd
 export const validateWord = (word: string): string | null => {
 	if (!word.trim()) return 'Word is required'
 	if (word.length > 20) return 'Word must be 20 characters or less'
+
+	// Check for profanity
+	const profanityError = validateProfanity(word, 'Word')
+	if (profanityError) return profanityError
+
 	return null
 }
 
@@ -69,6 +76,11 @@ export const validateRiddle = (riddle: string): string | null => {
 	if (!riddle.trim()) return 'Riddle is required'
 	if (riddle.length < 50) return 'Riddle must be at least 50 characters'
 	if (riddle.length > 750) return 'Riddle must be 750 characters or less'
+
+	// Check for profanity
+	const profanityError = validateProfanity(riddle, 'Riddle')
+	if (profanityError) return profanityError
+
 	return null
 }
 
@@ -85,5 +97,10 @@ export const validateBg = (bg: string): string | null => {
  */
 export const validateExplanation = (explanation: string): string | null => {
 	if (explanation.length > 1000) return 'Explanation must be 1000 characters or less'
+
+	// Check for profanity
+	const profanityError = validateProfanity(explanation, 'Explanation')
+	if (profanityError) return profanityError
+
 	return null
 }
