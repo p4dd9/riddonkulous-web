@@ -27,7 +27,7 @@ export const RiddleCard = ({
 
 	return (
 		<div
-			className={`relative py-1 px-2 rounded-lg ${
+			className={`relative py-2 px-2 rounded-lg ${
 				isCompact ? 'h-[120px]' : ''
 			} w-full flex flex-col items-stretch overflow-hidden  border-white transition-all duration-50 ${className}`}
 		>
@@ -70,9 +70,7 @@ export const RiddleCard = ({
 							: 'text-xl w-[95%] md:w-[80%] lg:w-[70%] text-center flex-1 flex items-center justify-center py-4'
 					}`}
 				>
-					<p
-						className={`whitespace-pre-line ${isCompact ? 'line-clamp-2' : textClassName || ''}`}
-					>
+					<p className={`whitespace-pre-line ${isCompact ? 'line-clamp-2' : textClassName || ''}`}>
 						{riddle.riddle}
 					</p>
 				</div>
@@ -88,6 +86,14 @@ export const RiddleCard = ({
 									: 'px-4 py-1'
 							}
 						/>
+					</div>
+				)}
+				{/* Show author username at bottom for web-created riddles */}
+				{riddle.postId.startsWith('r_') && riddle.author && (
+					<div
+						className={`flex items-center w-full pb-2 ${isCompact ? 'justify-end' : 'justify-center'} gap-2 my-2`}
+					>
+						<span className={`${isCompact ? 'text-xs' : 'text-sm'} opacity-90`}>by {riddle.author}</span>
 					</div>
 				)}
 			</div>

@@ -160,7 +160,7 @@ export const RiddleSingleView = ({
 	}
 
 	return (
-		<div className="w-full flex flex-col gap-6 max-w-4xl mx-auto px-4 py-8">
+		<div className="w-full flex flex-col gap-6 max-w-4xl mx-auto ">
 			{/* Header Section */}
 			{(title || showDate || showRedditButton || showShareButton) && (
 				<div className="w-full flex flex-col gap-4">
