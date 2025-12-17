@@ -5,6 +5,7 @@ import { RedditLinkButton } from '@/app/components/buttons/RedditLinkButton'
 import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
 import { HintModal } from '@/app/components/modals/HintModal'
 import { RevealModal } from '@/app/components/modals/RevealModal'
+import { RiddleAuthorHeader } from '@/app/components/riddles/RiddleAuthorHeader'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { ShareButton } from '@/app/components/ShareButton'
 import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
@@ -159,16 +160,31 @@ export const RiddleSingleView = ({
 		dispatch({ type: 'SET_FEEDBACK', payload: 'correct' })
 	}
 
+	const isWebCreated = riddle.postId.startsWith('r_')
+
 	return (
 		<div className="w-full flex flex-col gap-6 max-w-4xl mx-auto ">
 			{/* Header Section */}
-			{(title || showDate || showRedditButton || showShareButton) && (
+			{(title || showDate || showRedditButton || showShareButton || (isWebCreated && riddle.author)) && (
 				<div className="w-full flex flex-col gap-4">
 					{title && <h1 className="text-2xl md:text-4xl font-bold flex items-center gap-2">{title}</h1>}
-					{(showDate || showRedditButton || showShareButton) && (
-						<div className="w-full flex items-center justify-between gap-4">
-							{showDate && <p>{formatDate(riddle.date)}</p>}
-							<div className="flex items-center gap-2">
+					{/* Author Header + Action Buttons Row */}
+					<div className="w-full flex items-center justify-between gap-4">
+						{/* Left side: Author or Date */}
+						{isWebCreated && riddle.author ? (
+							<RiddleAuthorHeader
+								username={riddle.author}
+								avatar={riddle.authorAvatar}
+								createdAt={riddle.date || undefined}
+							/>
+						) : showDate ? (
+							<p>{formatDate(riddle.date)}</p>
+						) : (
+							<div />
+						)}
+						{/* Right side: Action Buttons */}
+						{(showRedditButton || showShareButton) && (
+							<div className="flex items-center gap-2 flex-shrink-0">
 								{showRedditButton && riddle.subreddit && riddle.postId && (
 									<RedditLinkButton
 										href={`https://www.reddit.com/r/${riddle.subreddit}/comments/${riddle.postId}/`}
@@ -176,8 +192,8 @@ export const RiddleSingleView = ({
 								)}
 								{showShareButton && <ShareButton title="Share this riddle" />}
 							</div>
-						</div>
-					)}
+						)}
+					</div>
 				</div>
 			)}
 

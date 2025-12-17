@@ -88,14 +88,6 @@ export const RiddleCard = ({
 						/>
 					</div>
 				)}
-				{/* Show author username at bottom for web-created riddles */}
-				{riddle.postId.startsWith('r_') && riddle.author && (
-					<div
-						className={`flex items-center w-full pb-2 ${isCompact ? 'justify-end' : 'justify-center'} gap-2 my-2`}
-					>
-						<span className={`${isCompact ? 'text-xs' : 'text-sm'} opacity-90`}>by {riddle.author}</span>
-					</div>
-				)}
 			</div>
 		</div>
 	)

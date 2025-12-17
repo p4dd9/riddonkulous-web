@@ -7,6 +7,7 @@ export const DailyRiddleSchema = z.object({
 	postId: z.string().min(0).max(1000),
 	type: z.string().min(0).max(1000).nullable(),
 	author: z.string().min(0).max(1000).nullable(),
+	authorAvatar: z.string().min(0).max(1000).nullable().optional(),
 	authorSnoo: z.string().min(0).max(1000).nullable(),
 	solverSnooAvatars: z.string().min(0).max(200000).nullable(),
 	userId: z.string().min(0).max(1000).nullable(),

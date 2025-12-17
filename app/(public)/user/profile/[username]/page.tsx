@@ -51,7 +51,7 @@ export const generateMetadata = async ({ params }: UserProfilePageProps): Promis
 				canonical: url,
 			},
 		}
-	} catch (error) {
+	} catch {
 		return {
 			title: 'User Not Found | Riddonkulous',
 			description: 'The requested user profile could not be found.',
@@ -65,8 +65,8 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
 	let profile
 	try {
 		profile = await getUserProfileByUsername(username)
-	} catch (error: any) {
-		if (error.status === 404) {
+	} catch (error) {
+		if (error && typeof error === 'object' && 'status' in error && error.status === 404) {
 			notFound()
 		}
 		throw error
@@ -102,15 +102,35 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
 
 	// Convert profile riddles to DailyRiddleType format for RiddleCard
 	const riddlesForDisplay: DailyRiddleType[] = profile.riddles.map((riddle) => ({
+		riddleNumber: 0,
+		featuredDate: new Date(),
 		postId: riddle.postId,
-		word: riddle.word,
-		riddle: riddle.riddle,
-		tags: riddle.tags,
+		type: null,
 		author: profile.username,
+		authorAvatar: profile.avatar,
+		authorSnoo: null,
+		solverSnooAvatars: null,
+		userId: null,
 		date: new Date(riddle.createdAt).getTime().toString(),
+		word: riddle.word,
+		altwords: null,
+		riddle: riddle.riddle,
 		bg: 'bg1.png',
+		workshopFont: null,
+		authorEnabledHints: null,
+		feedbackCommentEnabled: null,
+		subreddit: null,
+		postType: null,
+		score: null,
 		popularity: 0,
-		guessCount: 0,
+		solved: null,
+		guessCount: '0',
+		guessCorrectlyCount: null,
+		giveUpCount: null,
+		title: null,
+		context: null,
+		userid: null,
+		subredditId: null,
 	}))
 
 	const avatarUrl = profile.avatar ? `/avatars/${profile.avatar}` : '/avatars/avatar_02.png'
@@ -163,7 +183,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
 					</div>
 				) : (
 					<div className="w-full bg-[var(--color-bg)] rounded-lg shadow-lg p-8 text-center">
-						<p className="text-white/60 text-lg">This user hasn't created any riddles yet.</p>
+						<p className="text-white/60 text-lg">This user hasn&apos;t created any riddles yet.</p>
 					</div>
 				)}
 			</div>

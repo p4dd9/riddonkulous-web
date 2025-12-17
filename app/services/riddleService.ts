@@ -5,6 +5,7 @@ import { PaginatedRiddlesDataType } from '../schemas/PaginatedRiddlesResponse'
 import { ReddicoreResponseType } from '../schemas/ReddicoreResponse'
 import { getApiBaseUrl, getApiKey } from '../util/apiConfig'
 import { fetcher } from './fetcher'
+import { getUserAvatars } from './userAvatarService'
 
 export const getRiddleOfTheDay = async () => {
 	const apiBaseUrl = await getApiBaseUrl()
@@ -61,6 +62,13 @@ export const getRiddleByPostId = async (postId: string) => {
 		},
 		method: 'GET',
 	})
+
+	// Fetch current avatar for web-created riddles
+	if (data.postId.startsWith('r_') && data.author) {
+		const avatarMap = await getUserAvatars([data.author])
+		data.authorAvatar = avatarMap.get(data.author) || null
+	}
+
 	return data
 }
 
@@ -79,6 +87,20 @@ export const getRiddlesByTag = async (tagId: string, limit = 10, offset = 0): Pr
 			method: 'GET',
 		}
 	)
+
+	// Fetch avatars for all web-created riddles
+	const webRiddles = data.riddles.filter((r) => r.postId.startsWith('r_') && r.author)
+	const uniqueAuthors = [...new Set(webRiddles.map((r) => r.author).filter((a): a is string => a !== null))]
+
+	if (uniqueAuthors.length > 0) {
+		const avatarMap = await getUserAvatars(uniqueAuthors)
+		data.riddles.forEach((riddle) => {
+			if (riddle.postId.startsWith('r_') && riddle.author) {
+				riddle.authorAvatar = avatarMap.get(riddle.author) || null
+			}
+		})
+	}
+
 	return data
 }
 
@@ -115,6 +137,19 @@ export const getLatestRiddles = async (limit = 5, offset = 0, maxDays = 30): Pro
 	const hasPrev = offset > 0
 	const currentPage = Math.floor(offset / limit) + 1
 	const totalPages = Math.ceil(total / limit)
+
+	// Fetch avatars for all web-created riddles in this page
+	const webRiddles = paginatedRiddles.filter((r) => r.postId.startsWith('r_') && r.author)
+	const uniqueAuthors = [...new Set(webRiddles.map((r) => r.author).filter((a): a is string => a !== null))]
+
+	if (uniqueAuthors.length > 0) {
+		const avatarMap = await getUserAvatars(uniqueAuthors)
+		paginatedRiddles.forEach((riddle) => {
+			if (riddle.postId.startsWith('r_') && riddle.author) {
+				riddle.authorAvatar = avatarMap.get(riddle.author) || null
+			}
+		})
+	}
 
 	return {
 		riddles: paginatedRiddles,
