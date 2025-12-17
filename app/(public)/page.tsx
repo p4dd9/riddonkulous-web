@@ -111,8 +111,8 @@ export default async function Home() {
 						{/* Main Content - 2/3 width */}
 						<div className="flex flex-col gap-4 lg:w-2/3">
 							<h1 className="text-2xl md:text-4xl lg:h-12 flex items-center gap-2">
-								<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />#
-								{riddleOfTheDay.riddleNumber} Riddle of the Day
+								<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />
+								Riddle of the Day
 							</h1>
 
 							<RiddleCard
