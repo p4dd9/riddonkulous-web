@@ -104,15 +104,21 @@ export const getRiddlesByTag = async (tagId: string, limit = 10, offset = 0): Pr
 	return data
 }
 
-export const getLatestRiddles = async (limit = 5, offset = 0, maxDays = 30): Promise<PaginatedRiddlesDataType> => {
+export const getLatestRiddles = async (
+	limit = 5,
+	offset = 0,
+	maxDays = 30,
+	webOnly = false
+): Promise<PaginatedRiddlesDataType> => {
 	const apiBaseUrl = await getApiBaseUrl()
 	const apiKey = await getApiKey()
 	const urlObj = new URL(apiBaseUrl)
 	const baseUrl = `${urlObj.protocol}//${urlObj.host}`
 
 	const fetchLimit = Math.max(limit * 10, 100)
+	const webOnlyParam = webOnly ? '&webOnly=true' : ''
 	const { data } = await fetcher<ReddicoreResponseType<PaginatedRiddlesDataType>>(
-		`${baseUrl}/api/v1/riddonk/web/riddles?limit=${fetchLimit}&offset=0&sort=newest`,
+		`${baseUrl}/api/v1/riddonk/web/riddles?limit=${fetchLimit}&offset=0&sort=newest${webOnlyParam}`,
 		{
 			headers: {
 				'Content-Type': 'application/json',

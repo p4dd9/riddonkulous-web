@@ -3,7 +3,7 @@ import { CategoryCard } from '@/app/components/categories/CategoryCard'
 import { RiddleAuthorHeader } from '@/app/components/riddles/RiddleAuthorHeader'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { StructuredData } from '@/app/components/seo/StructuredData'
-import { getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
+import { getLatestRiddles, getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
 import { listTags } from '@/app/services/tagService'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -39,14 +39,14 @@ export default async function Home() {
 		getRiddleOfTheDay(),
 		getTrendingRiddles(),
 		listTags(50, 0),
-		import('@/app/services/riddleService').then((m) => m.getLatestRiddles(20, 0, 365)),
+		getLatestRiddles(1, 0, 365, true),
 	])
 	const filteredTrendingRiddles = trendingRiddles
 		.filter((riddle) => riddle.postId !== riddleOfTheDay.postId)
 		.slice(0, 3)
 
 	// Get the newest web-created riddle
-	const newestWebRiddle = latestRiddles.riddles.find((riddle) => riddle.postId.startsWith('r_'))
+	const newestWebRiddle = latestRiddles.riddles[0] || null
 
 	const structuredData = {
 		'@context': 'https://schema.org',
