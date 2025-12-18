@@ -2,7 +2,6 @@ import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
 import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getRiddleByNumber, getRiddleOfTheDay } from '@/app/services/riddleService'
 import type { Metadata } from 'next'
-import { cacheLife } from 'next/cache'
 import Image from 'next/image'
 import { notFound, redirect } from 'next/navigation'
 
@@ -69,10 +68,9 @@ export const generateMetadata = async ({ params }: DailyRiddlePageProps): Promis
 	}
 }
 
-export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) {
-	'use cache'
-	cacheLife('hours') // Cache for 1 hour
+export const revalidate = 3600 // Cache for 1 hour
 
+export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) {
 	const { number } = await params
 	const riddleNumber = parseInt(number, 10)
 

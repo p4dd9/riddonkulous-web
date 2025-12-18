@@ -2,12 +2,10 @@ import { FAQItem } from '@/app/components/faq/FAQItem'
 import { FAQHashHandler } from '@/app/components/faq/FAQHashHandler'
 import Image from 'next/image'
 import Link from 'next/link'
-import { cacheLife } from 'next/cache'
+
+export const revalidate = false // Static page
 
 export default async function FAQPage() {
-	'use cache'
-	cacheLife('max') // Cache for maximum duration (365 days)
-
 	return (
 		<div className="relative h-full w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
 			<FAQHashHandler />

@@ -4,7 +4,6 @@ import { AuthProvider } from '@/app/contexts/AuthContext'
 import { listTags } from '@/app/services/tagService'
 import type { Tag } from '@/app/services/tagService'
 import type { Metadata } from 'next'
-import { cacheLife } from 'next/cache'
 import '../globals.css'
 
 export const metadata: Metadata = {
@@ -91,9 +90,6 @@ export const metadata: Metadata = {
 }
 
 async function getCachedTags(): Promise<Tag[]> {
-	'use cache'
-	cacheLife('12hours') // Cache for 1 hour
-
 	const tagsData = await listTags(50, 0)
 	return tagsData.tags.sort((a, b) => {
 		const orderA = a.order ?? Number.MAX_SAFE_INTEGER

@@ -2,7 +2,6 @@ import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
 import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getRiddleByPostId } from '@/app/services/riddleService'
 import type { Metadata } from 'next'
-import { cacheLife } from 'next/cache'
 
 interface RiddlePageProps {
 	params: Promise<{
@@ -50,10 +49,9 @@ export const generateMetadata = async ({ params }: RiddlePageProps): Promise<Met
 	}
 }
 
-export default async function RiddlePage({ params }: RiddlePageProps) {
-	'use cache'
-	cacheLife('days') // Cache for 1 day (24 hours)
+export const revalidate = 86400 // Cache for 1 day (24 hours)
 
+export default async function RiddlePage({ params }: RiddlePageProps) {
 	const { postId } = await params
 
 	const riddle = await getRiddleByPostId(postId)

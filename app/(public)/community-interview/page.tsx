@@ -1,6 +1,5 @@
 import { RelatedResources } from '@/app/components/articles/RelatedResources'
 import type { Metadata } from 'next'
-import { cacheLife } from 'next/cache'
 
 export const metadata: Metadata = {
 	title: 'Community Interview | Riddonkulous',
@@ -8,10 +7,9 @@ export const metadata: Metadata = {
 		'Get to know the amazing members of our community through interviews and stories from fellow riddle enthusiasts.',
 }
 
-export default async function CommunityInterview() {
-	'use cache'
-	cacheLife('max') // Cache for maximum duration (365 days)
+export const revalidate = false // Static page
 
+export default async function CommunityInterview() {
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col max-w-4xl mx-auto px-4 py-8 gap-8">
 			<h1 className="text-3xl md:text-4xl text-center mb-2">Community Interview</h1>
