@@ -6,11 +6,8 @@ import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getLatestRiddles, getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
 import { listTags } from '@/app/services/tagService'
 import type { Metadata } from 'next'
+import { cacheLife } from 'next/cache'
 import Image from 'next/image'
-
-// Configure revalidation for this page (ISR - Incremental Static Regeneration)
-// The page will be regenerated at most once every 60 seconds
-export const revalidate = 60
 
 export const metadata: Metadata = {
 	title: 'Daily Riddles | Riddles with Answers',
@@ -35,6 +32,9 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
+	'use cache'
+	cacheLife({ revalidate: 60 }) // Cache for 60 seconds
+
 	const [riddleOfTheDay, trendingRiddles, tagsData, latestRiddles] = await Promise.all([
 		getRiddleOfTheDay(),
 		getTrendingRiddles(),

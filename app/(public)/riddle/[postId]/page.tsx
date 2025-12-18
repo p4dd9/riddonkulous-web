@@ -2,14 +2,13 @@ import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
 import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getRiddleByPostId } from '@/app/services/riddleService'
 import type { Metadata } from 'next'
+import { cacheLife } from 'next/cache'
 
 interface RiddlePageProps {
 	params: Promise<{
 		postId: string
 	}>
 }
-
-export const revalidate = 86400 // 24 hours
 
 export const generateMetadata = async ({ params }: RiddlePageProps): Promise<Metadata> => {
 	const { postId } = await params
@@ -18,7 +17,7 @@ export const generateMetadata = async ({ params }: RiddlePageProps): Promise<Met
 	const title = riddle.title || riddle.riddle?.substring(0, 60) || 'Riddle'
 	const description = riddle.title
 		? `${riddle.riddle?.substring(0, 120) || ''} Think you know the answer?`
-		: `${riddle.riddle?.substring(0, 120) || 'Here\'s a tricky one'} Can you crack it?`
+		: `${riddle.riddle?.substring(0, 120) || "Here's a tricky one"} Can you crack it?`
 
 	const url = `https://riddonkulous.com/riddle/${postId}`
 
@@ -52,6 +51,9 @@ export const generateMetadata = async ({ params }: RiddlePageProps): Promise<Met
 }
 
 export default async function RiddlePage({ params }: RiddlePageProps) {
+	'use cache'
+	cacheLife('days') // Cache for 1 day (24 hours)
+
 	const { postId } = await params
 
 	const riddle = await getRiddleByPostId(postId)

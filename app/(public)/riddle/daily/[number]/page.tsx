@@ -2,6 +2,7 @@ import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
 import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getRiddleByNumber, getRiddleOfTheDay } from '@/app/services/riddleService'
 import type { Metadata } from 'next'
+import { cacheLife } from 'next/cache'
 import Image from 'next/image'
 import { notFound, redirect } from 'next/navigation'
 
@@ -11,8 +12,6 @@ interface DailyRiddlePageProps {
 	}>
 }
 
-export const revalidate = 3600 // 1 hour
-
 export const generateMetadata = async ({ params }: DailyRiddlePageProps): Promise<Metadata> => {
 	const { number } = await params
 	const riddleNumber = parseInt(number, 10)
@@ -20,7 +19,8 @@ export const generateMetadata = async ({ params }: DailyRiddlePageProps): Promis
 	if (isNaN(riddleNumber) || riddleNumber < 1) {
 		return {
 			title: 'Daily Riddles | Riddles with Answers',
-			description: 'New riddle every day, with answers. Brain teasers, logic puzzles, and tricky riddles. Fresh daily.',
+			description:
+				'New riddle every day, with answers. Brain teasers, logic puzzles, and tricky riddles. Fresh daily.',
 		}
 	}
 
@@ -29,7 +29,7 @@ export const generateMetadata = async ({ params }: DailyRiddlePageProps): Promis
 		const title = riddle.title || riddle.riddle?.substring(0, 60) || `Daily Riddle #${riddleNumber}`
 		const description = riddle.title
 			? `${riddle.riddle?.substring(0, 120) || ''} Think you know the answer?`
-			: `Daily Riddle #${riddleNumber}: ${riddle.riddle?.substring(0, 120) || 'Here\'s today\'s brain teaser'} Can you crack it?`
+			: `Daily Riddle #${riddleNumber}: ${riddle.riddle?.substring(0, 120) || "Here's today's brain teaser"} Can you crack it?`
 
 		const url = `https://riddonkulous.com/riddle/daily/${riddleNumber}`
 
@@ -63,12 +63,16 @@ export const generateMetadata = async ({ params }: DailyRiddlePageProps): Promis
 	} catch {
 		return {
 			title: 'Daily Riddles | Riddles with Answers',
-			description: 'New riddle every day, with answers. Brain teasers, logic puzzles, and tricky riddles. Fresh daily.',
+			description:
+				'New riddle every day, with answers. Brain teasers, logic puzzles, and tricky riddles. Fresh daily.',
 		}
 	}
 }
 
 export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) {
+	'use cache'
+	cacheLife('hours') // Cache for 1 hour
+
 	const { number } = await params
 	const riddleNumber = parseInt(number, 10)
 
@@ -126,22 +130,22 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 		<>
 			<StructuredData data={structuredData} />
 			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8">
-			<RiddleSingleView
-				riddle={riddle}
-				hasNext={hasNext}
-				hasPrevious={hasPrevious}
-				nextUrl={hasNext ? `/riddle/daily/${riddleNumber + 1}` : undefined}
-				previousUrl={hasPrevious ? `/riddle/daily/${riddleNumber - 1}` : undefined}
-				title={
-					<div className="flex items-center gap-2">
-						<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />#
-						{riddle.riddleNumber} Riddle of the Day
-					</div>
-				}
-				showDate={true}
-				showRedditButton={true}
-				showShareButton={true}
-			/>
+				<RiddleSingleView
+					riddle={riddle}
+					hasNext={hasNext}
+					hasPrevious={hasPrevious}
+					nextUrl={hasNext ? `/riddle/daily/${riddleNumber + 1}` : undefined}
+					previousUrl={hasPrevious ? `/riddle/daily/${riddleNumber - 1}` : undefined}
+					title={
+						<div className="flex items-center gap-2">
+							<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />#
+							{riddle.riddleNumber} Riddle of the Day
+						</div>
+					}
+					showDate={true}
+					showRedditButton={true}
+					showShareButton={true}
+				/>
 			</div>
 		</>
 	)

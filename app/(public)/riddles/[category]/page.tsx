@@ -2,6 +2,7 @@ import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
 import { getRiddlesByTag } from '@/app/services/riddleService'
 import { getTagById } from '@/app/services/tagService'
 import type { Metadata } from 'next'
+import { cacheLife } from 'next/cache'
 import { notFound, redirect } from 'next/navigation'
 
 interface RiddlesCategoryPageProps {
@@ -12,8 +13,6 @@ interface RiddlesCategoryPageProps {
 		page?: string
 	}>
 }
-
-export const revalidate = 3600 // 1 hour
 
 const RIDDLES_PER_PAGE = 1
 
@@ -72,6 +71,9 @@ export const generateMetadata = async ({ params, searchParams }: RiddlesCategory
 }
 
 export default async function RiddlesCategoryPage({ params, searchParams }: RiddlesCategoryPageProps) {
+	'use cache'
+	cacheLife('hours') // Cache for 1 hour
+
 	const { category } = await params
 	const { page } = await searchParams
 

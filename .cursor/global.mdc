@@ -6,6 +6,7 @@ alwaysApply: true
 
 ## Styling and CSS
 
+- Uses Nextjs 16+
 - Never use font-semibold, bold or other related boldness the projects Fonts do not support this
 - Use the global.css file at all times for styling related questions (we exlusively use tailwind custom theming)
 - Prefer Arrow functions

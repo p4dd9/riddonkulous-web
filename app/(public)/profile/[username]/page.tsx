@@ -3,6 +3,7 @@ import { StructuredData } from '@/app/components/seo/StructuredData'
 import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import { getUserProfileByUsername } from '@/app/services/userProfileService'
 import type { Metadata } from 'next'
+import { cacheLife } from 'next/cache'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
@@ -11,8 +12,6 @@ interface UserProfilePageProps {
 		username: string
 	}>
 }
-
-export const revalidate = 120 // 2 minutes
 
 export const generateMetadata = async ({ params }: UserProfilePageProps): Promise<Metadata> => {
 	const { username } = await params
@@ -60,6 +59,9 @@ export const generateMetadata = async ({ params }: UserProfilePageProps): Promis
 }
 
 export default async function UserProfilePage({ params }: UserProfilePageProps) {
+	'use cache'
+	cacheLife({ revalidate: 120 }) // Cache for 2 minutes
+
 	const { username } = await params
 
 	let profile
