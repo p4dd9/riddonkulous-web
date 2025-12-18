@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 	},
 }
 
-export default function RiddlesInHistory() {
+export default async function RiddlesInHistory() {
 	'use cache'
 	cacheLife('max') // Cache for maximum duration (365 days)
 

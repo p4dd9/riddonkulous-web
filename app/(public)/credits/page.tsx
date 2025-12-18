@@ -1,7 +1,7 @@
 import { CreditsContent } from '@/app/components/credits/CreditsContent'
 import { cacheLife } from 'next/cache'
 
-export default function CreditsPage() {
+export default async function CreditsPage() {
 	'use cache'
 	cacheLife('max') // Cache for maximum duration (365 days)
 

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 	},
 }
 
-export default function WritingRiddles() {
+export default async function WritingRiddles() {
 	'use cache'
 	cacheLife('max') // Cache for maximum duration (365 days)
 

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 	},
 }
 
-export default function AboutUsPage() {
+export default async function AboutUsPage() {
 	'use cache'
 	cacheLife('max') // Cache for maximum duration (365 days)
 

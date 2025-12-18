@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 		'Get to know the amazing members of our community through interviews and stories from fellow riddle enthusiasts.',
 }
 
-export default function CommunityInterview() {
+export default async function CommunityInterview() {
 	'use cache'
 	cacheLife('max') // Cache for maximum duration (365 days)
 
