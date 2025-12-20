@@ -1,6 +1,8 @@
 import { Footer } from '@/app/components/layout/Footer'
 import { Header } from '@/app/components/layout/Header'
 import { AuthProvider } from '@/app/contexts/AuthContext'
+import { listTags } from '@/app/services/tagService'
+import type { Tag } from '@/app/services/tagService'
 import type { Metadata } from 'next'
 import '../globals.css'
 
@@ -87,11 +89,26 @@ export const metadata: Metadata = {
 	category: 'Entertainment',
 }
 
-export default function RootLayout({
+async function getCachedTags(): Promise<Tag[]> {
+	const tagsData = await listTags(50, 0)
+	return tagsData.tags.sort((a, b) => {
+		const orderA = a.order ?? Number.MAX_SAFE_INTEGER
+		const orderB = b.order ?? Number.MAX_SAFE_INTEGER
+		if (orderA !== orderB) {
+			return orderA - orderB
+		}
+		return a.label.localeCompare(b.label)
+	})
+}
+
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode
 }>) {
+	// Fetch tags server-side (cached for 1 hour) to avoid exposing /api/tags endpoint
+	const sortedTags = await getCachedTags()
+
 	return (
 		<html lang="en">
 			<head>
@@ -112,7 +129,7 @@ export default function RootLayout({
 			</head>
 			<body className="antialiased flex flex-col min-h-screen">
 				<AuthProvider>
-					<Header />
+					<Header tags={sortedTags} />
 					<main className="flex-1 h-full">{children}</main>
 					<Footer />
 				</AuthProvider>

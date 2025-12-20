@@ -12,8 +12,6 @@ interface UserProfilePageProps {
 	}>
 }
 
-export const revalidate = 120 // 2 minutes
-
 export const generateMetadata = async ({ params }: UserProfilePageProps): Promise<Metadata> => {
 	const { username } = await params
 
@@ -58,6 +56,8 @@ export const generateMetadata = async ({ params }: UserProfilePageProps): Promis
 		}
 	}
 }
+
+export const revalidate = 120 // Cache for 2 minutes
 
 export default async function UserProfilePage({ params }: UserProfilePageProps) {
 	const { username } = await params

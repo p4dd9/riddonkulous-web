@@ -3,8 +3,6 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export const dynamic = 'force-static'
-
 export const metadata: Metadata = {
 	title: 'Writing Riddles | Riddonkulous',
 	description:
@@ -26,7 +24,9 @@ export const metadata: Metadata = {
 	},
 }
 
-export default function WritingRiddles() {
+export const revalidate = false // Static page
+
+export default async function WritingRiddles() {
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col max-w-4xl mx-auto px-4 py-8 gap-8">
 			<div className="text-center mb-4">

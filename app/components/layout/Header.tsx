@@ -1,13 +1,18 @@
 'use client'
 
 import { CreateButton } from '@/app/components/buttons/CreateButton'
+import type { Tag } from '@/app/services/tagService'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { LoginButton } from '../buttons/LoginButton'
 import { Drawer } from './Drawer'
 
-export const Header = () => {
+interface HeaderProps {
+	tags: Tag[]
+}
+
+export const Header = ({ tags }: HeaderProps) => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 	const [isScrolled, setIsScrolled] = useState(false)
 	const headerRef = useRef<HTMLElement>(null)
@@ -110,7 +115,7 @@ export const Header = () => {
 				}}
 				aria-hidden="true"
 			/>
-			<Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
+			<Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} tags={tags} />
 		</>
 	)
 }

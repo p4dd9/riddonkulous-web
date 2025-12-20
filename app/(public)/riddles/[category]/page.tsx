@@ -13,8 +13,6 @@ interface RiddlesCategoryPageProps {
 	}>
 }
 
-export const revalidate = 3600 // 1 hour
-
 const RIDDLES_PER_PAGE = 1
 
 export const generateMetadata = async ({ params, searchParams }: RiddlesCategoryPageProps): Promise<Metadata> => {
@@ -70,6 +68,8 @@ export const generateMetadata = async ({ params, searchParams }: RiddlesCategory
 		},
 	}
 }
+
+export const revalidate = 3600 // Cache for 1 hour
 
 export default async function RiddlesCategoryPage({ params, searchParams }: RiddlesCategoryPageProps) {
 	const { category } = await params

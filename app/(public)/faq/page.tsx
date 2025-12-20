@@ -1,101 +1,14 @@
-'use client'
-
 import { FAQItem } from '@/app/components/faq/FAQItem'
+import { FAQHashHandler } from '@/app/components/faq/FAQHashHandler'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect } from 'react'
 
-export const dynamic = 'force-static'
+export const revalidate = false // Static page
 
-export default function FAQPage() {
-	useEffect(() => {
-		// Check hash and open corresponding FAQ item
-		const checkHash = () => {
-			const hash = window.location.hash.slice(1) // Remove the #
-			if (hash) {
-				// Close "What is Riddonkulous?" if it's open and a different hash is provided
-				if (hash !== 'what-is-riddonkulous') {
-					const defaultElement = document.getElementById('what-is-riddonkulous')
-					if (defaultElement) {
-						const button = defaultElement.querySelector('button') as HTMLButtonElement
-						if (button) {
-							const answerDiv = defaultElement.querySelector('div.mt-2')
-							if (answerDiv && answerDiv.getBoundingClientRect().height > 0) {
-								// Item is open, close it
-								button.click()
-							}
-						}
-					}
-				}
-
-				const element = document.getElementById(hash)
-				if (element) {
-					// Find the button inside the FAQ item and click it to open
-					const button = element.querySelector('button') as HTMLButtonElement
-					if (button) {
-						// Check if the FAQ item is closed by checking if the answer div is not visible
-						const answerDiv = element.querySelector('div.mt-2')
-						if (!answerDiv || answerDiv.getBoundingClientRect().height === 0) {
-							// Item is closed, click to open it
-							button.click()
-						}
-					}
-					// Scroll to the element after a delay to ensure it's opened
-					setTimeout(() => {
-						element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-					}, 150)
-				}
-			} else {
-				// No hash, open "What is Riddonkulous?" by default
-				const defaultElement = document.getElementById('what-is-riddonkulous')
-				if (defaultElement) {
-					const button = defaultElement.querySelector('button') as HTMLButtonElement
-					if (button) {
-						const answerDiv = defaultElement.querySelector('div.mt-2')
-						if (!answerDiv || answerDiv.getBoundingClientRect().height === 0) {
-							button.click()
-						}
-					}
-				}
-			}
-		}
-
-		// Check immediately on mount
-		setTimeout(checkHash, 100)
-
-		// Listen for hash changes
-		const handleHashChange = () => {
-			setTimeout(checkHash, 50)
-		}
-
-		// Listen for clicks on links (including Next.js Link components)
-		const handleClick = (e: MouseEvent) => {
-			const target = e.target as HTMLElement
-			const link = target.closest('a[href*="#"]') as HTMLAnchorElement
-			if (link) {
-				const href = link.getAttribute('href')
-				if (href && href.includes('#') && href.includes('/faq')) {
-					const hash = href.split('#')[1]
-					if (hash) {
-						setTimeout(() => {
-							checkHash()
-						}, 100)
-					}
-				}
-			}
-		}
-
-		window.addEventListener('hashchange', handleHashChange)
-		document.addEventListener('click', handleClick, true)
-
-		return () => {
-			window.removeEventListener('hashchange', handleHashChange)
-			document.removeEventListener('click', handleClick, true)
-		}
-	}, [])
-
+export default async function FAQPage() {
 	return (
 		<div className="relative h-full w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
+			<FAQHashHandler />
 			<div className="w-full max-w-2xl flex flex-col gap-6">
 				<h1 className="text-3xl md:text-4xl text-center mb-4">Frequently Asked Questions</h1>
 				<div className="flex justify-center mb-4">
@@ -130,7 +43,11 @@ export default function FAQPage() {
 						question="Why does the approval process take time?"
 						answer={
 							<p>
-								The approval process can take time if we detect malicious, poor, or NSFW (Not Safe For Work) content. Our moderation team reviews all submissions to ensure they meet our quality standards and content policies. This helps maintain a safe and enjoyable experience for all users. If your riddle is flagged for review, please be patient while we process it. Approval decisions are ultimately up to the moderation team.
+								The approval process can take time if we detect malicious, poor, or NSFW (Not Safe For
+								Work) content. Our moderation team reviews all submissions to ensure they meet our
+								quality standards and content policies. This helps maintain a safe and enjoyable
+								experience for all users. If your riddle is flagged for review, please be patient while
+								we process it. Approval decisions are ultimately up to the moderation team.
 							</p>
 						}
 					/>
@@ -158,7 +75,10 @@ export default function FAQPage() {
 						question="How do I login or create an account?"
 						answer={
 							<p>
-								You can login or create an account using Google login only. Simply click the login button in the header or drawer menu, and you&apos;ll be prompted to sign in with your Google account. If you don&apos;t have an account yet, the same process will create one for you automatically.
+								You can login or create an account using Google login only. Simply click the login
+								button in the header or drawer menu, and you&apos;ll be prompted to sign in with your
+								Google account. If you don&apos;t have an account yet, the same process will create one
+								for you automatically.
 							</p>
 						}
 					/>
@@ -221,7 +141,11 @@ export default function FAQPage() {
 						question="How do I delete my account?"
 						answer={
 							<p>
-								To delete your account, go to your Profile page and scroll down to the &quot;Advanced Settings&quot; section. Click on &quot;Advanced Settings&quot; to expand it, then click the &quot;Delete Account&quot; button in the Danger Zone. You&apos;ll be asked to confirm the deletion. Please note that this action is permanent and cannot be undone. All your data will be permanently deleted.
+								To delete your account, go to your Profile page and scroll down to the &quot;Advanced
+								Settings&quot; section. Click on &quot;Advanced Settings&quot; to expand it, then click
+								the &quot;Delete Account&quot; button in the Danger Zone. You&apos;ll be asked to
+								confirm the deletion. Please note that this action is permanent and cannot be undone.
+								All your data will be permanently deleted.
 							</p>
 						}
 					/>

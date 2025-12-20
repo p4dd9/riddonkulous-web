@@ -8,10 +8,6 @@ import { listTags } from '@/app/services/tagService'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 
-// Configure revalidation for this page (ISR - Incremental Static Regeneration)
-// The page will be regenerated at most once every 60 seconds
-export const revalidate = 60
-
 export const metadata: Metadata = {
 	title: 'Daily Riddles | Riddles with Answers',
 	description:
@@ -33,6 +29,8 @@ export const metadata: Metadata = {
 		canonical: 'https://riddonkulous.com',
 	},
 }
+
+export const revalidate = 60 // Cache for 60 seconds
 
 export default async function Home() {
 	const [riddleOfTheDay, trendingRiddles, tagsData, latestRiddles] = await Promise.all([

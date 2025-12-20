@@ -4,45 +4,16 @@ import { CreateButton } from '@/app/components/buttons/CreateButton'
 import type { Tag } from '@/app/services/tagService'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface DrawerProps {
 	isOpen: boolean
 	onClose: () => void
+	tags: Tag[]
 }
 
-export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
-	const [tags, setTags] = useState<Tag[]>([])
-	const [loading, setLoading] = useState(true)
+export const Drawer = ({ isOpen, onClose, tags }: DrawerProps) => {
 	const drawerRef = useRef<HTMLDivElement>(null)
-
-	useEffect(() => {
-		if (isOpen) {
-			const fetchTags = async () => {
-				try {
-					const response = await fetch('/api/tags')
-					if (!response.ok) {
-						throw new Error('Failed to fetch tags')
-					}
-					const data = await response.json()
-					const sortedTags = data.tags.sort((a: Tag, b: Tag) => {
-						const orderA = a.order ?? Number.MAX_SAFE_INTEGER
-						const orderB = b.order ?? Number.MAX_SAFE_INTEGER
-						if (orderA !== orderB) {
-							return orderA - orderB
-						}
-						return a.label.localeCompare(b.label)
-					})
-					setTags(sortedTags)
-				} catch (error) {
-					console.error('Failed to fetch tags:', error)
-				} finally {
-					setLoading(false)
-				}
-			}
-			fetchTags()
-		}
-	}, [isOpen])
 
 	useEffect(() => {
 		if (isOpen) {
@@ -129,9 +100,7 @@ export const Drawer = ({ isOpen, onClose }: DrawerProps) => {
 					{/* Categories */}
 					<div className="flex flex-col gap-2">
 						<h3 className="text-lg  px-4 mb-2">Categories</h3>
-						{loading ? (
-							<div className="px-4 py-2 text-gray-400">Loading...</div>
-						) : tags.length === 0 ? (
+						{tags.length === 0 ? (
 							<div className="px-4 py-2 text-gray-400">No categories found</div>
 						) : (
 							tags.map((tag) => (

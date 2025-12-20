@@ -9,8 +9,6 @@ interface RiddlePageProps {
 	}>
 }
 
-export const revalidate = 86400 // 24 hours
-
 export const generateMetadata = async ({ params }: RiddlePageProps): Promise<Metadata> => {
 	const { postId } = await params
 	const riddle = await getRiddleByPostId(postId)
@@ -18,7 +16,7 @@ export const generateMetadata = async ({ params }: RiddlePageProps): Promise<Met
 	const title = riddle.title || riddle.riddle?.substring(0, 60) || 'Riddle'
 	const description = riddle.title
 		? `${riddle.riddle?.substring(0, 120) || ''} Think you know the answer?`
-		: `${riddle.riddle?.substring(0, 120) || 'Here\'s a tricky one'} Can you crack it?`
+		: `${riddle.riddle?.substring(0, 120) || "Here's a tricky one"} Can you crack it?`
 
 	const url = `https://riddonkulous.com/riddle/${postId}`
 
@@ -50,6 +48,8 @@ export const generateMetadata = async ({ params }: RiddlePageProps): Promise<Met
 		},
 	}
 }
+
+export const revalidate = 86400 // Cache for 1 day (24 hours)
 
 export default async function RiddlePage({ params }: RiddlePageProps) {
 	const { postId } = await params
