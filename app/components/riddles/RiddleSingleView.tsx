@@ -162,6 +162,8 @@ export const RiddleSingleView = ({
 
 	const isWebCreated = riddle.postId.startsWith('r_')
 
+	console.log(`Tags: ${JSON.stringify(riddle)}`)
+
 	return (
 		<div className="w-full flex flex-col gap-6 max-w-4xl mx-auto ">
 			{/* Header Section */}
