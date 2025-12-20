@@ -12,14 +12,13 @@ export const revalidate = false // Static page
 export default async function CommunityInterview() {
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col max-w-4xl mx-auto px-4 py-8 gap-8">
-			<h1 className="text-3xl md:text-4xl text-center mb-2">Community Interview</h1>
+			<div className="text-center mb-4">
+				<h1 className="text-3xl md:text-4xl text-center mb-2">Community Interview</h1>
+				<p className="italic text-gray-400">With D.E.M.</p>
+			</div>
 
 			{/* Content Blocks */}
 			<article className="w-full flex flex-col gap-8 text-base md:text-lg leading-relaxed">
-				<div className="flex flex-col gap-2 text-center mb-6">
-					<p className="text-lg md:text-xl mt-2 opacity-80">With D.E.M.</p>
-				</div>
-
 				<div className="flex flex-col gap-6">
 					<div className="flex flex-col gap-4">
 						<h4 className="text-lg md:text-xl text-primary mt-4">
