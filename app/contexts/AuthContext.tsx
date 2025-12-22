@@ -13,25 +13,38 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-	const [user, setUser] = useState<User | null>(null)
-	const [isLoading, setIsLoading] = useState(true)
+interface AuthProviderProps {
+	children: ReactNode
+	initialUser?: User | null
+}
 
-	// Check if user is already logged in on mount
+export const AuthProvider = ({ children, initialUser = null }: AuthProviderProps) => {
+	const [user, setUser] = useState<User | null>(initialUser ?? null)
+	const [isLoading, setIsLoading] = useState(initialUser === undefined)
+
+	// Only check auth client-side if initialUser was not provided
+	// This prevents unnecessary 401 calls when user data is already available from server
 	useEffect(() => {
-		const checkAuth = async () => {
-			try {
-				const currentUser = await getCurrentUser()
-				setUser(currentUser)
-			} catch (error) {
-				console.error('Auth check error:', error)
-				setUser(null)
-			} finally {
-				setIsLoading(false)
+		// If initialUser is explicitly null (not undefined), user was checked server-side
+		// Only fetch client-side if initialUser is undefined (not provided)
+		if (initialUser === undefined) {
+			const checkAuth = async () => {
+				try {
+					const currentUser = await getCurrentUser()
+					setUser(currentUser)
+				} catch (error) {
+					console.error('Auth check error:', error)
+					setUser(null)
+				} finally {
+					setIsLoading(false)
+				}
 			}
+			checkAuth()
+		} else {
+			// Initial user was provided (either null or User object)
+			setIsLoading(false)
 		}
-		checkAuth()
-	}, [])
+	}, [initialUser])
 
 	const signIn = useCallback(async (idToken: string) => {
 		try {
