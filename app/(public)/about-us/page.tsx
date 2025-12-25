@@ -45,7 +45,7 @@ export default async function AboutUsPage() {
 
 				<div className="prose prose-invert max-w-none">
 					<section className="mb-8">
-						<h2 className="text-2xl mb-4 text-white">Welcome to Riddonkulous</h2>
+						<h2 className="text-2xl mb-4 text-white">About Hammertime e.U.</h2>
 						<p className="text-white/80 mb-4">
 							Riddonkulous is a platform dedicated to creating and solving riddles, bringing together
 							riddle enthusiasts from around the world. We believe that riddles are more than just
@@ -58,72 +58,6 @@ export default async function AboutUsPage() {
 							the history of riddles, or create your own brain teasers, Riddonkulous provides the tools
 							and community to support your journey.
 						</p>
-					</section>
-
-					<section className="mb-8">
-						<h2 className="text-2xl mb-4 text-white">About Hammertime e.U.</h2>
-						<p className="text-white/80 mb-4">
-							Riddonkulous is developed and operated by <strong>Hammertime e.U.</strong>, an Austrian
-							educational gaming studio focused on creating engaging, interactive experiences that combine
-							entertainment with learning.
-						</p>
-						<p className="text-white/80 mb-4">
-							Hammertime e.U. specializes in developing browser-based games and platforms that make
-							learning fun and accessible. We believe that the best educational experiences are those that
-							don&apos;t feel like traditional learning - they feel like play.
-						</p>
-						<p className="text-white/80 mb-4">
-							Our studio is committed to creating high-quality, original content that respects our
-							users&apos; privacy and provides genuine value. We focus on building platforms that are both
-							technically excellent and deeply engaging, ensuring that every interaction with our products
-							is meaningful and enjoyable.
-						</p>
-					</section>
-
-					<section className="mb-8">
-						<h2 className="text-2xl mb-4 text-white">Our Vision</h2>
-						<p className="text-white/80 mb-4">
-							We envision a world where learning and entertainment seamlessly blend together. Riddonkulous
-							represents our commitment to this vision - a platform where curiosity is rewarded,
-							creativity is celebrated, and knowledge is gained through play.
-						</p>
-						<p className="text-white/80 mb-4">Through Riddonkulous, we aim to:</p>
-						<ul className="list-disc list-inside space-y-2 text-white/80 mb-4">
-							<li>Promote cognitive development through engaging puzzle-solving experiences</li>
-							<li>Preserve and celebrate the rich cultural history of riddles</li>
-							<li>Foster a creative community where users can share and discover original riddles</li>
-							<li>Provide educational resources about riddles, their history, and their applications</li>
-							<li>Make riddle-solving accessible to people of all ages and backgrounds</li>
-						</ul>
-					</section>
-
-					<section className="mb-8">
-						<h2 className="text-2xl mb-4 text-white">Our Values</h2>
-						<p className="text-white/80 mb-4">
-							At Hammertime e.U., we are guided by core values that shape everything we create:
-						</p>
-						<ul className="list-disc list-inside space-y-2 text-white/80 mb-4">
-							<li>
-								<strong>Quality First:</strong> We prioritize high-quality, original content over
-								quantity
-							</li>
-							<li>
-								<strong>User Privacy:</strong> We respect our users&apos; privacy and are transparent
-								about how we handle data
-							</li>
-							<li>
-								<strong>Educational Value:</strong> Every feature we build aims to provide genuine
-								educational or cognitive benefits
-							</li>
-							<li>
-								<strong>Community Focus:</strong> We believe in the power of community and work to
-								foster positive, inclusive spaces
-							</li>
-							<li>
-								<strong>Innovation:</strong> We continuously explore new ways to make learning and
-								entertainment more engaging
-							</li>
-						</ul>
 					</section>
 
 					<section className="mb-8">
