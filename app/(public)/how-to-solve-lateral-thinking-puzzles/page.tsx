@@ -56,11 +56,11 @@ export default async function HowToSolveLateralThinkingPuzzles() {
 
 				<h2 className="text-2xl mt-6 mb-4 text-white">Understanding Lateral Thinking</h2>
 				<p>
-					Lateral thinking, a term coined by Edward de Bono, refers to solving problems through an indirect and
-					creative approach. Instead of following a step-by-step logical progression, lateral thinking
+					Lateral thinking, a term coined by Edward de Bono, refers to solving problems through an indirect
+					and creative approach. Instead of following a step-by-step logical progression, lateral thinking
 					encourages you to look at problems from different perspectives, challenge assumptions, and consider
-					unconventional solutions. Lateral thinking puzzles are designed to break you out of habitual thinking
-					patterns and force you to explore possibilities you might initially dismiss.
+					unconventional solutions. Lateral thinking puzzles are designed to break you out of habitual
+					thinking patterns and force you to explore possibilities you might initially dismiss.
 				</p>
 
 				<h2 className="text-2xl mt-6 mb-4 text-white">Question Everything</h2>
@@ -77,7 +77,7 @@ export default async function HowToSolveLateralThinkingPuzzles() {
 				<p>
 					Lateral thinking puzzles often play with words and their multiple meanings. A single word might have
 					different interpretations that completely change the puzzle&apos;s solution. Pay close attention to
-					words that could be nouns, verbs, or adjectives. Consider homophones—words that sound the same but
+					words that could be nouns, verbs, or adjectives. Consider homophones - words that sound the same but
 					have different meanings. The answer might lie in a pun, a play on words, or a double entendre that
 					you haven&apos;t considered yet.
 				</p>
@@ -85,7 +85,7 @@ export default async function HowToSolveLateralThinkingPuzzles() {
 				<h2 className="text-2xl mt-6 mb-4 text-white">Think in Scenarios</h2>
 				<p>
 					When stuck on a lateral thinking puzzle, try constructing different scenarios that could explain the
-					situation. Don&apos;t limit yourself to realistic scenarios—lateral thinking puzzles often involve
+					situation. Don&apos;t limit yourself to realistic scenarios - lateral thinking puzzles often involve
 					unusual or even fantastical situations. Ask yourself: &quot;What if this happened?&quot; or
 					&quot;What if that detail means something completely different?&quot; Generate multiple possible
 					explanations and evaluate which one best fits all the clues provided.
@@ -122,13 +122,13 @@ export default async function HowToSolveLateralThinkingPuzzles() {
 				<p>
 					Like any skill, solving lateral thinking puzzles improves with practice. The more puzzles you solve,
 					the better you become at recognizing patterns, questioning assumptions, and thinking creatively.
-					Don&apos;t get discouraged if a puzzle stumps you—sometimes the best approach is to step away and
+					Don&apos;t get discouraged if a puzzle stumps you - sometimes the best approach is to step away and
 					return with fresh eyes. The solution often comes when you least expect it, after your subconscious
 					has had time to process the problem.
 				</p>
 
 				<p className="mt-6">
-					Lateral thinking puzzles are more than just entertainment—they&apos;re exercises in creative
+					Lateral thinking puzzles are more than just entertainment - they&apos;re exercises in creative
 					problem-solving that can enhance your ability to think flexibly and find innovative solutions to
 					real-world challenges. Start practicing with the lateral thinking riddles on Riddonkulous, and watch
 					your problem-solving skills grow.
@@ -139,4 +139,3 @@ export default async function HowToSolveLateralThinkingPuzzles() {
 		</div>
 	)
 }
-

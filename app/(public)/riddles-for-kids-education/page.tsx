@@ -5,18 +5,18 @@ import Image from 'next/image'
 export const metadata: Metadata = {
 	title: 'Riddles for Kids: Educational Benefits | Riddonkulous',
 	description:
-		'Discover how riddles can enhance children\'s learning, develop critical thinking skills, and make education fun and engaging.',
+		"Discover how riddles can enhance children's learning, develop critical thinking skills, and make education fun and engaging.",
 	openGraph: {
 		title: 'Riddles for Kids: Educational Benefits | Riddonkulous',
 		description:
-			'Discover how riddles can enhance children\'s learning, develop critical thinking skills, and make education fun and engaging.',
+			"Discover how riddles can enhance children's learning, develop critical thinking skills, and make education fun and engaging.",
 		url: 'https://riddonkulous.com/riddles-for-kids-education',
 		type: 'article',
 	},
 	twitter: {
 		card: 'summary',
 		title: 'Riddles for Kids: Educational Benefits | Riddonkulous',
-		description: 'Learn how riddles benefit children\'s education and development.',
+		description: "Learn how riddles benefit children's education and development.",
 	},
 	alternates: {
 		canonical: 'https://riddonkulous.com/riddles-for-kids-education',
@@ -56,18 +56,18 @@ export default async function RiddlesForKidsEducation() {
 
 				<h2 className="text-2xl mt-6 mb-4 text-white">Language Development and Vocabulary</h2>
 				<p>
-					Riddles are excellent for building vocabulary and improving language skills. When children engage with
-					riddles, they encounter new words, phrases, and linguistic patterns in context. The playful nature
-					of riddles makes vocabulary learning more memorable and enjoyable than traditional methods. Children
-					learn to understand word meanings, recognize synonyms and antonyms, and appreciate the nuances of
-					language. Wordplay riddles, in particular, help children understand how words can have multiple
-					meanings and how context affects interpretation.
+					Riddles are excellent for building vocabulary and improving language skills. When children engage
+					with riddles, they encounter new words, phrases, and linguistic patterns in context. The playful
+					nature of riddles makes vocabulary learning more memorable and enjoyable than traditional methods.
+					Children learn to understand word meanings, recognize synonyms and antonyms, and appreciate the
+					nuances of language. Wordplay riddles, in particular, help children understand how words can have
+					multiple meanings and how context affects interpretation.
 				</p>
 
 				<h2 className="text-2xl mt-6 mb-4 text-white">Critical Thinking and Problem-Solving</h2>
 				<p>
 					Solving riddles requires children to think critically and develop problem-solving strategies. They
-					must analyze information, identify patterns, make connections, and test hypotheses—all essential
+					must analyze information, identify patterns, make connections, and test hypotheses - all essential
 					critical thinking skills. Riddles teach children that problems can have multiple approaches and that
 					persistence and creative thinking are valuable. This type of mental exercise helps children become
 					better problem-solvers in academic subjects and real-world situations.
@@ -75,11 +75,11 @@ export default async function RiddlesForKidsEducation() {
 
 				<h2 className="text-2xl mt-6 mb-4 text-white">Reading Comprehension</h2>
 				<p>
-					Riddles improve reading comprehension by requiring children to read carefully, understand context, and
-					interpret meaning beyond literal text. To solve a riddle, children must pay attention to every word,
-					understand how words relate to each other, and infer meaning from context clues. This careful reading
-					practice translates to better comprehension skills when reading textbooks, stories, and other
-					educational materials.
+					Riddles improve reading comprehension by requiring children to read carefully, understand context,
+					and interpret meaning beyond literal text. To solve a riddle, children must pay attention to every
+					word, understand how words relate to each other, and infer meaning from context clues. This careful
+					reading practice translates to better comprehension skills when reading textbooks, stories, and
+					other educational materials.
 				</p>
 
 				<h2 className="text-2xl mt-6 mb-4 text-white">Memory and Recall</h2>
@@ -87,7 +87,8 @@ export default async function RiddlesForKidsEducation() {
 					Working with riddles exercises children&apos;s memory in multiple ways. They must remember the
 					details of the riddle while thinking about possible solutions, recall relevant knowledge that might
 					help solve it, and remember patterns from previous riddles. This memory practice strengthens both
-					working memory and long-term memory, skills that are crucial for academic success across all subjects.
+					working memory and long-term memory, skills that are crucial for academic success across all
+					subjects.
 				</p>
 
 				<h2 className="text-2xl mt-6 mb-4 text-white">Confidence and Motivation</h2>
@@ -120,9 +121,9 @@ export default async function RiddlesForKidsEducation() {
 				<h2 className="text-2xl mt-6 mb-4 text-white">Making Learning Fun</h2>
 				<p>
 					Perhaps most importantly, riddles make learning fun. When children enjoy the learning process, they
-					are more engaged, retain information better, and develop a positive attitude toward education. Riddles
-					turn challenging mental exercises into games, helping children develop a love of learning that extends
-					far beyond the classroom.
+					are more engaged, retain information better, and develop a positive attitude toward education.
+					Riddles turn challenging mental exercises into games, helping children develop a love of learning
+					that extends far beyond the classroom.
 				</p>
 
 				<p className="mt-6">
@@ -138,4 +139,3 @@ export default async function RiddlesForKidsEducation() {
 		</div>
 	)
 }
-

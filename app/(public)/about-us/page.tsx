@@ -49,7 +49,7 @@ export default async function AboutUsPage() {
 						<p className="text-white/80 mb-4">
 							Riddonkulous is a platform dedicated to creating and solving riddles, bringing together
 							riddle enthusiasts from around the world. We believe that riddles are more than just
-							entertainment—they are powerful tools for education, cognitive development, and creative
+							entertainment - they are powerful tools for education, cognitive development, and creative
 							expression.
 						</p>
 						<p className="text-white/80 mb-4">
@@ -70,7 +70,7 @@ export default async function AboutUsPage() {
 						<p className="text-white/80 mb-4">
 							Hammertime e.U. specializes in developing browser-based games and platforms that make
 							learning fun and accessible. We believe that the best educational experiences are those that
-							don&apos;t feel like traditional learning—they feel like play.
+							don&apos;t feel like traditional learning - they feel like play.
 						</p>
 						<p className="text-white/80 mb-4">
 							Our studio is committed to creating high-quality, original content that respects our
@@ -84,8 +84,8 @@ export default async function AboutUsPage() {
 						<h2 className="text-2xl mb-4 text-white">Our Vision</h2>
 						<p className="text-white/80 mb-4">
 							We envision a world where learning and entertainment seamlessly blend together. Riddonkulous
-							represents our commitment to this vision—a platform where curiosity is rewarded, creativity
-							is celebrated, and knowledge is gained through play.
+							represents our commitment to this vision - a platform where curiosity is rewarded,
+							creativity is celebrated, and knowledge is gained through play.
 						</p>
 						<p className="text-white/80 mb-4">Through Riddonkulous, we aim to:</p>
 						<ul className="list-disc list-inside space-y-2 text-white/80 mb-4">

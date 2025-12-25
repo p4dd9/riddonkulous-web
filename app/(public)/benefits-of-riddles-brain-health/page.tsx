@@ -47,7 +47,7 @@ export default async function BenefitsOfRiddlesBrainHealth() {
 			{/* Content Blocks */}
 			<article className="w-full flex flex-col gap-6 text-base md:text-lg leading-relaxed">
 				<p>
-					Riddles are more than just entertaining puzzles—they are powerful tools for maintaining and
+					Riddles are more than just entertaining puzzles - they are powerful tools for maintaining and
 					improving brain health. Engaging with riddles regularly can provide numerous cognitive benefits that
 					extend far beyond the moment of solving. From enhancing memory to improving problem-solving skills,
 					riddles offer a fun and accessible way to exercise your mind.
@@ -77,16 +77,17 @@ export default async function BenefitsOfRiddlesBrainHealth() {
 					Riddles are essentially problems that need creative solutions. Regular practice with riddles helps
 					develop your problem-solving abilities by teaching you to approach challenges from different angles,
 					think outside the box, and persist when solutions aren&apos;t immediately obvious. These skills are
-					highly transferable to real-world situations, making you better equipped to handle complex
-					problems in your personal and professional life.
+					highly transferable to real-world situations, making you better equipped to handle complex problems
+					in your personal and professional life.
 				</p>
 
 				<h2 className="text-2xl mt-6 mb-4 text-white">Enhanced Focus and Concentration</h2>
 				<p>
 					Solving riddles requires sustained attention and concentration. When you work through a challenging
 					riddle, you practice maintaining focus on a single task, filtering out distractions, and engaging in
-					deep thinking. This mental discipline can improve your ability to concentrate in other areas of life,
-					helping you become more productive and better able to complete tasks that require extended focus.
+					deep thinking. This mental discipline can improve your ability to concentrate in other areas of
+					life, helping you become more productive and better able to complete tasks that require extended
+					focus.
 				</p>
 
 				<h2 className="text-2xl mt-6 mb-4 text-white">Stress Reduction and Mental Well-being</h2>
@@ -100,19 +101,19 @@ export default async function BenefitsOfRiddlesBrainHealth() {
 				<h2 className="text-2xl mt-6 mb-4 text-white">Neuroplasticity and Brain Training</h2>
 				<p>
 					Your brain has the remarkable ability to reorganize and form new neural connections throughout your
-					life—a quality known as neuroplasticity. Regular engagement with mentally challenging activities like
-					riddles can promote neuroplasticity, helping your brain adapt and grow. This means that the more you
-					challenge your mind with riddles, the better your brain becomes at learning, adapting, and solving
-					problems.
+					life - a quality known as neuroplasticity. Regular engagement with mentally challenging activities
+					like riddles can promote neuroplasticity, helping your brain adapt and grow. This means that the
+					more you challenge your mind with riddles, the better your brain becomes at learning, adapting, and
+					solving problems.
 				</p>
 
 				<h2 className="text-2xl mt-6 mb-4 text-white">Social and Communication Benefits</h2>
 				<p>
-					Riddles are often shared and solved in social settings, providing opportunities for social interaction
-					and communication. Discussing riddles with others can improve your verbal communication skills, help
-					you learn to articulate complex thoughts, and enhance your ability to explain reasoning. These social
-					aspects of riddle-solving contribute to overall mental well-being and can strengthen relationships
-					through shared intellectual engagement.
+					Riddles are often shared and solved in social settings, providing opportunities for social
+					interaction and communication. Discussing riddles with others can improve your verbal communication
+					skills, help you learn to articulate complex thoughts, and enhance your ability to explain
+					reasoning. These social aspects of riddle-solving contribute to overall mental well-being and can
+					strengthen relationships through shared intellectual engagement.
 				</p>
 
 				<p className="mt-6">
@@ -127,4 +128,3 @@ export default async function BenefitsOfRiddlesBrainHealth() {
 		</div>
 	)
 }
-
