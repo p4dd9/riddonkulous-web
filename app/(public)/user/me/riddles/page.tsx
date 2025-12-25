@@ -240,13 +240,14 @@ export default function RiddlesPage() {
 				{/* Pagination */}
 				{!loading && filteredRiddles.length > 0 && (
 					<div className="mt-6 flex justify-center items-center gap-4">
-						<BasicButton
-							onClick={handlePreviousPage}
-							disabled={currentPage === 0 || loading}
-							text="Previous"
-						/>
+						<BasicButton onClick={handlePreviousPage} disabled={currentPage === 0 || loading} text="Back" />
 						<span className="text-white/60">Page {currentPage + 1}</span>
-						<BasicButton onClick={handleNextPage} disabled={!hasMore || loading} text="Next" />
+						<BasicButton
+							onClick={handleNextPage}
+							disabled={!hasMore || loading}
+							text="Next"
+							customClass="flex"
+						/>
 					</div>
 				)}
 			</div>

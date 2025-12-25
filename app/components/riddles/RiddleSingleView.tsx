@@ -185,11 +185,11 @@ export const RiddleSingleView = ({
 						{/* Right side: Action Buttons */}
 						{(showRedditButton || showShareButton) && (
 							<div className="flex items-center gap-2 flex-shrink-0">
-								{showRedditButton && riddle.subreddit && riddle.postId && (
+								{/* {showRedditButton && riddle.subreddit && riddle.postId && (
 									<RedditLinkButton
 										href={`https://www.reddit.com/r/${riddle.subreddit}/comments/${riddle.postId}/`}
 									/>
-								)}
+								)} */}
 								{showShareButton && <ShareButton title="Share this riddle" />}
 							</div>
 						)}
@@ -306,7 +306,7 @@ export const RiddleSingleView = ({
 			{(hasNext || hasPrevious) && (
 				<div className="w-full flex justify-between gap-4">
 					<BasicButton
-						text="Previous"
+						text="Back"
 						onClick={handlePrevious}
 						customClass={!hasPrevious ? 'opacity-50 cursor-not-allowed' : ''}
 						disabled={!hasPrevious}

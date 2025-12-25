@@ -317,9 +317,8 @@ export default async function Home() {
 							</p>
 							<LinkAsButton
 								href="/community-interview"
-								text="Coming Soon"
+								text="Read More"
 								textAlign="center"
-								disabled={true}
 								customClass="px-8 py-1"
 							/>
 						</div>

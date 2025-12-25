@@ -141,7 +141,8 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 						</div>
 					}
 					showDate={true}
-					showRedditButton={true}
+					showRedditButton={false}
+					// showRedditButton={true}
 					showShareButton={true}
 				/>
 			</div>

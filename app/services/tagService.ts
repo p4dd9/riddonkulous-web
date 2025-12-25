@@ -63,9 +63,11 @@ export const listTags = async (limit = 50, offset = 0): Promise<TagListResponse>
 		headers,
 		method: 'GET',
 	})
+	// Filter out Politics category
+	const filteredTags = response.data.tags.filter((tag) => tag.label.toLowerCase() !== 'politics')
 	return {
-		tags: response.data.tags,
-		count: response.data.count,
+		tags: filteredTags,
+		count: filteredTags.length,
 		total: response.data.total,
 	}
 }
