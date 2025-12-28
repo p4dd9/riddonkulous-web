@@ -72,7 +72,7 @@ export const POST = async (request: NextRequest) => {
 				}
 			} catch (discordError) {
 				// Log but don't fail the request
-				serverLogger.error(`Error posting to Discord: ${discordError}`)
+				serverLogger.error(`Error posting to Discord: ${discordError instanceof Error ? discordError.message : String(discordError)}`)
 			}
 		}
 
@@ -81,7 +81,7 @@ export const POST = async (request: NextRequest) => {
 		if (error.message === 'Admin access required' || error.status === 401 || error.status === 403) {
 			return NextResponse.json({ error: 'Unauthorized - Admin access required' }, { status: 401 })
 		}
-		serverLogger.error('Create daily riddle error:', error)
+		serverLogger.error(`Create daily riddle error: ${error instanceof Error ? error.message : String(error)}`)
 		return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
 	}
 }
