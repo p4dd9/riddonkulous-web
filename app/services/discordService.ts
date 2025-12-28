@@ -56,18 +56,17 @@ const getDiscordConfig = (): DiscordConfig | null => {
  * Format daily riddle message for Discord
  */
 const formatDailyRiddleMessage = (dailyRiddle: DailyRiddleType, baseUrl: string): string => {
-	const riddleUrl = `${baseUrl}/riddle/daily/${dailyRiddle.riddleNumber}`
-	const authorText = dailyRiddle.author ? ` by ${dailyRiddle.author}` : ''
+	const webUrl = `${baseUrl}/riddle/daily/${dailyRiddle.riddleNumber}`
+	const redditUrl = `https://www.reddit.com/r/Riddonkulous/comments/${dailyRiddle.postId}`
 
-	return `🎯 **Daily Riddle #${dailyRiddle.riddleNumber}**${authorText}
-
-**${dailyRiddle.word}**
+	return `🎯 **Daily Riddle #${dailyRiddle.riddleNumber}**
 
 ${dailyRiddle.riddle}
 
-${dailyRiddle.context ? `*${dailyRiddle.context}*` : ''}
-
-🔗 [Solve it here](${riddleUrl})`
+Solve it here:
+🔗 [Solve on Reddit](${redditUrl})
+🔗 [Solve on riddonkulous.com](${webUrl})
+`
 }
 
 /**
@@ -296,6 +295,7 @@ export const startDiscordBotListener = async (): Promise<{ success: boolean; err
 		})
 
 		// Handle ready event
+		// Note: In Discord.js v14, use 'ready'. In v15+, use 'clientReady'
 		client.once('ready', () => {
 			serverLogger.info(`Discord bot logged in as ${client.user?.tag}`)
 			isListening = true
@@ -304,6 +304,7 @@ export const startDiscordBotListener = async (): Promise<{ success: boolean; err
 		// Handle message events
 		client.on('messageCreate', async (message: Message) => {
 			// Ignore bot messages
+			console.log('message', message)
 			if (message.author.bot) {
 				return
 			}
