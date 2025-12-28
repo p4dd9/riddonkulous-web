@@ -274,10 +274,14 @@ let isListening = false
  * This creates a persistent connection to listen for messages
  */
 export const startDiscordBotListener = async (): Promise<{ success: boolean; error?: string }> => {
+	// Always stop any existing listener first to ensure clean restart with updated code
 	if (isListening && discordClient) {
-		serverLogger.info('Discord bot listener is already running')
-		return { success: true }
+		serverLogger.info('Stopping existing Discord bot listener for restart...')
+		await stopDiscordBotListener()
 	}
+
+	// Ensure cleanup handlers are registered
+	registerCleanupHandlers()
 
 	const config = getDiscordConfig()
 	if (!config) {
@@ -302,15 +306,18 @@ export const startDiscordBotListener = async (): Promise<{ success: boolean; err
 		})
 
 		// Handle message events
+		// Register handlers fresh each time to ensure code updates are picked up
+		serverLogger.info('Registering Discord bot message handlers (latest code)')
 		client.on('messageCreate', async (message: Message) => {
 			// Ignore bot messages
-			console.log('message', message)
 			if (message.author.bot) {
 				return
 			}
 
+			const command = message.content.trim().toLowerCase()
+
 			// Check for !daily command
-			if (message.content.trim().toLowerCase() === '!daily') {
+			if (command === '!daily') {
 				await handleDailyCommand(message)
 			}
 		})
@@ -339,6 +346,7 @@ export const startDiscordBotListener = async (): Promise<{ success: boolean; err
 		// Login to Discord
 		await client.login(config.botToken)
 		discordClient = client
+		serverLogger.info('Discord bot logged in successfully')
 
 		return { success: true }
 	} catch (error) {
@@ -368,9 +376,105 @@ export const startDiscordBotListener = async (): Promise<{ success: boolean; err
  */
 export const stopDiscordBotListener = async (): Promise<void> => {
 	if (discordClient) {
-		await discordClient.destroy()
+		const client = discordClient
 		discordClient = null
 		isListening = false
-		serverLogger.info('Discord bot listener stopped')
+
+		try {
+			// Remove all event listeners to ensure clean shutdown
+			client.removeAllListeners()
+			// Destroy the client, which closes all connections
+			client.destroy()
+			serverLogger.info('Discord bot listener stopped and all listeners removed')
+		} catch (error) {
+			serverLogger.error(`Error stopping Discord bot listener: ${error}`)
+		}
 	}
+}
+
+// Track if cleanup has been registered
+let cleanupRegistered = false
+
+// Register cleanup handlers for graceful shutdown
+const registerCleanupHandlers = () => {
+	if (cleanupRegistered || typeof process === 'undefined') {
+		return
+	}
+
+	cleanupRegistered = true
+
+	const cleanup = async (signal?: string) => {
+		if (signal) {
+			serverLogger.info(`Received ${signal}, stopping Discord bot listener...`)
+		} else {
+			serverLogger.info('Server shutting down, stopping Discord bot listener...')
+		}
+
+		try {
+			await stopDiscordBotListener()
+		} catch (error) {
+			serverLogger.error(`Error during Discord bot cleanup: ${error}`)
+		}
+	}
+
+	// Handle SIGTERM (used by Docker, PM2, etc.)
+	process.once('SIGTERM', () => {
+		cleanup('SIGTERM').finally(() => {
+			process.exit(0)
+		})
+	})
+
+	// Handle SIGINT (Ctrl+C)
+	process.once('SIGINT', () => {
+		cleanup('SIGINT').finally(() => {
+			process.exit(0)
+		})
+	})
+
+	// Handle process exit
+	process.once('exit', () => {
+		// Synchronous cleanup on exit
+		if (discordClient) {
+			try {
+				discordClient.destroy()
+				discordClient = null
+				isListening = false
+			} catch {
+				// Ignore errors during exit
+			}
+		}
+	})
+
+	// Handle uncaught exceptions
+	process.once('uncaughtException', (error) => {
+		serverLogger.error(`Uncaught exception: ${error}`)
+		cleanup('uncaughtException').finally(() => {
+			process.exit(1)
+		})
+	})
+}
+
+// Register handlers when module loads
+registerCleanupHandlers()
+
+// Auto-start Discord bot listener when module loads (server-side only, runtime only)
+// This ensures the bot starts when the server starts, not during build
+if (
+	typeof window === 'undefined' &&
+	process.env.NODE_ENV !== 'test' &&
+	process.env.NEXT_PHASE !== 'phase-production-build'
+) {
+	// Use setImmediate to avoid blocking module loading
+	setImmediate(async () => {
+		try {
+			const result = await startDiscordBotListener()
+			if (result.success) {
+				serverLogger.info('Discord bot listener auto-started successfully')
+			} else {
+				serverLogger.warn(`Discord bot listener auto-start failed: ${result.error}`)
+			}
+		} catch (error) {
+			serverLogger.error(`Error auto-starting Discord bot listener: ${error}`)
+		}
+	})
 }

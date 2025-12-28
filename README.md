@@ -30,3 +30,7 @@ Third-Party Disclosure: While you mention Plausible and Google Sign-In, you must
 - Articles Count: Increase Article Count: While you have some great long-form articles, AdSense usually prefers 10–15 of these "High Value" blog posts. Try to add 5 more articles about the "Benefits of Riddles for Brain Health" or "How to Solve Lateral Thinking Puzzles."
 - Remove Politics: Your "Politics" category (88 riddles) is a potential red flag.
 - Category Explanation Riddle Categories: The Strategy: Ensure your homepage and category pages (Wordplay, Logic, etc.) have at least 200–300 words of introductory text explaining that category. Your "Riddles in History" and "Community Interview" posts should be featured prominently to prove the site has "high-value" editorial content.
+
+## Discord
+
+https://discord.com/api/oauth2/authorize?client_id=1454040384312184836&permissions=68608&scope=bot%20applications.commands
