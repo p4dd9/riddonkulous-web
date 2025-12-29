@@ -50,6 +50,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			priority: 0.8,
 		},
 		{
+			url: `${baseUrl}/community-interview`,
+			lastModified: new Date(),
+			changeFrequency: 'monthly',
+			priority: 0.8,
+		},
+		{
 			url: `${baseUrl}/credits`,
 			lastModified: new Date(),
 			changeFrequency: 'monthly',
@@ -74,7 +80,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	// Dynamic riddle pages (limit to recent riddles to avoid huge sitemap)
 	let riddlePages: MetadataRoute.Sitemap = []
 	try {
-		const recentRiddles = await getLatestRiddles(100, 0, 90) // Last 90 days
+		const recentRiddles = await getLatestRiddles(5, 0, 90) // Last 90 days
 		riddlePages = recentRiddles.riddles.map((riddle) => ({
 			url: `${baseUrl}/riddle/${riddle.postId}`,
 			lastModified: riddle.date ? new Date(Number(riddle.date)) : new Date(),

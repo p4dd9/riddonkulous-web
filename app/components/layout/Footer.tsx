@@ -17,6 +17,10 @@ export const Footer = () => {
 						Privacy Policy
 					</Link>
 					<span className="hidden md:inline">|</span>
+					<Link href="/about-us" className="hover:underline">
+						About Us
+					</Link>
+					<span className="hidden md:inline">|</span>
 					<Link href="/faq#contact" className="hover:underline">
 						Contact
 					</Link>

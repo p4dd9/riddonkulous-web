@@ -19,9 +19,9 @@ export default function CreatePage() {
 		return null
 	}
 
-	const handleCreateOnReddit = () => {
-		window.open('https://www.reddit.com/r/riddonkulous', '_blank', 'noopener,noreferrer')
-	}
+	// const handleCreateOnReddit = () => {
+	// 	window.open('https://www.reddit.com/r/riddonkulous', '_blank', 'noopener,noreferrer')
+	// }
 
 	return (
 		<div className="w-full">
@@ -35,7 +35,7 @@ export default function CreatePage() {
 					</div>
 
 					{/* Alternative: Create on Reddit */}
-					<div className="bg-[var(--color-bg)] rounded-lg ">
+					{/* <div className="bg-[var(--color-bg)] rounded-lg ">
 						<div className="flex items-start gap-4">
 							<div className="flex-1">
 								<h3 className="text-lg mb-2 text-white">Or Create Riddles on Reddit</h3>
@@ -50,7 +50,7 @@ export default function CreatePage() {
 								/>
 							</div>
 						</div>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</div>

@@ -331,7 +331,7 @@ export default function ModerationPage() {
 						disabled={currentPage === 0}
 						className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
 					>
-						Previous
+						Back
 					</button>
 					<span className="text-sm text-gray-400">
 						Page {currentPage + 1} of {Math.ceil(total / limit)} ({total} total)

@@ -265,7 +265,9 @@ export default function AdminDashboard() {
 	}
 
 	const handleGenerateDailyRiddle = async () => {
-		if (!confirm('Generate a new daily riddle? This will auto-select the most popular riddle from the last 7 days.')) {
+		if (
+			!confirm('Generate a new daily riddle? This will auto-select the most popular riddle from the last 7 days.')
+		) {
 			return
 		}
 
@@ -298,7 +300,11 @@ export default function AdminDashboard() {
 	}
 
 	const handleStopCronjob = async () => {
-		if (!confirm('Stop the daily riddle cronjob? This will disable automated daily riddle creation until restarted.')) {
+		if (
+			!confirm(
+				'Stop the daily riddle cronjob? This will disable automated daily riddle creation until restarted.'
+			)
+		) {
 			return
 		}
 
@@ -447,11 +453,15 @@ export default function AdminDashboard() {
 									className={`w-3 h-3 rounded-full ${cronjobStatus.running ? 'bg-green-500' : 'bg-red-500'}`}
 								/>
 								<span className="text-sm">
-									Status: <span className="font-semibold">{cronjobStatus.running ? 'Running' : 'Stopped'}</span>
+									Status:{' '}
+									<span className="font-semibold">
+										{cronjobStatus.running ? 'Running' : 'Stopped'}
+									</span>
 								</span>
 							</div>
 							<div className="text-sm text-gray-400">
-								Schedule: <span className="font-mono">{cronjobStatus.schedule}</span> (Daily at midnight UTC)
+								Schedule: <span className="font-mono">{cronjobStatus.schedule}</span> (Daily at midnight
+								UTC)
 							</div>
 						</div>
 						<div className="flex gap-2">
@@ -667,7 +677,7 @@ export default function AdminDashboard() {
 							disabled={offset === 0}
 							className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
 						>
-							Previous
+							Back
 						</button>
 						<span className="text-sm text-gray-400">
 							Showing {offset + 1}-{Math.min(offset + limit, total)} of {total}

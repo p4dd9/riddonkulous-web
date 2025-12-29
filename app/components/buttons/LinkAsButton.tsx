@@ -69,8 +69,15 @@ export const LinkAsButton = ({
 
 	const displayText = children || text
 
-	// Merge all classes: default display (inline-block), button classes, text align, and custom className (last so it can override)
-	const mergedClassName = `inline-block ${buttonClasses} ${textAlignClass} ${className}`.trim()
+	// Check if customClass or className contains display utilities (flex, grid, block, etc.)
+	const hasDisplayUtility =
+		/(^|\s)(flex|grid|block|inline|inline-block|inline-flex|table|contents|hidden)(\s|$)/.test(
+			`${customClass} ${className}`
+		)
+
+	// Merge all classes: default display (inline-block unless overridden), button classes, text align, and custom className (last so it can override)
+	const displayClass = hasDisplayUtility ? '' : 'inline-block'
+	const mergedClassName = `${displayClass} ${buttonClasses} ${textAlignClass} ${className}`.trim()
 
 	const content = (
 		<div className={icon ? 'flex items-center gap-2' : ''}>

@@ -1,9 +1,11 @@
 import { Footer } from '@/app/components/layout/Footer'
 import { Header } from '@/app/components/layout/Header'
 import { AuthProvider } from '@/app/contexts/AuthContext'
+import { getCurrentUserServer } from '@/app/lib/serverAuth'
 import { listTags } from '@/app/services/tagService'
 import type { Tag } from '@/app/services/tagService'
 import type { Metadata } from 'next'
+import { unstable_cache } from 'next/cache'
 import '../globals.css'
 
 export const metadata: Metadata = {
@@ -89,25 +91,34 @@ export const metadata: Metadata = {
 	category: 'Entertainment',
 }
 
-async function getCachedTags(): Promise<Tag[]> {
-	const tagsData = await listTags(50, 0)
-	return tagsData.tags.sort((a, b) => {
-		const orderA = a.order ?? Number.MAX_SAFE_INTEGER
-		const orderB = b.order ?? Number.MAX_SAFE_INTEGER
-		if (orderA !== orderB) {
-			return orderA - orderB
-		}
-		return a.label.localeCompare(b.label)
-	})
-}
+// Cache tags using Next.js unstable_cache for cross-request caching
+// Tags don't change frequently, so cache for 1 hour (3600 seconds)
+// This works even with dynamic layouts and reduces API calls
+const getCachedTags = unstable_cache(
+	async (): Promise<Tag[]> => {
+		const tagsData = await listTags(50, 0)
+		return tagsData.tags.sort((a, b) => {
+			const orderA = a.order ?? Number.MAX_SAFE_INTEGER
+			const orderB = b.order ?? Number.MAX_SAFE_INTEGER
+			if (orderA !== orderB) {
+				return orderA - orderB
+			}
+			return a.label.localeCompare(b.label)
+		})
+	},
+	['tags'], // Cache key
+	{
+		revalidate: 3600, // Revalidate every hour (3600 seconds)
+		tags: ['tags'], // Cache tag for manual invalidation if needed
+	}
+)
 
 export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	// Fetch tags server-side (cached for 1 hour) to avoid exposing /api/tags endpoint
-	const sortedTags = await getCachedTags()
+	const [sortedTags, initialUser] = await Promise.all([getCachedTags(), getCurrentUserServer()])
 
 	return (
 		<html lang="en">
@@ -128,7 +139,7 @@ export default async function RootLayout({
 				<script src="https://accounts.google.com/gsi/client" async></script>
 			</head>
 			<body className="antialiased flex flex-col min-h-screen">
-				<AuthProvider>
+				<AuthProvider initialUser={initialUser}>
 					<Header tags={sortedTags} />
 					<main className="flex-1 h-full">{children}</main>
 					<Footer />

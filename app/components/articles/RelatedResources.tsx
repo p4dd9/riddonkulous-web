@@ -2,7 +2,16 @@ import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import Image from 'next/image'
 
 interface RelatedResourcesProps {
-	excludePage?: 'riddles-in-history' | 'using-riddles' | 'writing-riddles' | 'community-interview'
+	excludePage?:
+		| 'riddles-in-history'
+		| 'using-riddles'
+		| 'writing-riddles'
+		| 'community-interview'
+		| 'benefits-of-riddles-brain-health'
+		| 'how-to-solve-lateral-thinking-puzzles'
+		| 'riddles-for-kids-education'
+		| 'history-of-riddles-cultures'
+		| 'riddle-solving-techniques'
 }
 
 export const RelatedResources = ({ excludePage }: RelatedResourcesProps) => {
@@ -43,6 +52,51 @@ export const RelatedResources = ({ excludePage }: RelatedResourcesProps) => {
 			description:
 				'Get to know one of the most active members of our community, what they love about riddles and what makes a great riddle.',
 		},
+		/*{
+			id: 'benefits-of-riddles-brain-health',
+			href: '/benefits-of-riddles-brain-health',
+			icon: '/icons/light.png',
+			iconAlt: 'Brain Health',
+			title: 'Benefits of Riddles for Brain Health',
+			description:
+				'Discover how solving riddles can improve cognitive function, enhance memory, and promote overall brain health through engaging mental exercise.',
+		},
+		{
+			id: 'how-to-solve-lateral-thinking-puzzles',
+			href: '/how-to-solve-lateral-thinking-puzzles',
+			icon: '/icons/script_lightning.png',
+			iconAlt: 'Lateral Thinking',
+			title: 'How to Solve Lateral Thinking Puzzles',
+			description:
+				'Learn effective strategies and techniques for solving lateral thinking puzzles and riddles that require creative, non-linear approaches.',
+		},
+		{
+			id: 'riddles-for-kids-education',
+			href: '/riddles-for-kids-education',
+			icon: '/icons/wizard.png',
+			iconAlt: 'Kids Education',
+			title: 'Riddles for Kids: Educational Benefits',
+			description:
+				"Discover how riddles can enhance children's learning, develop critical thinking skills, and make education fun and engaging.",
+		},
+		{
+			id: 'history-of-riddles-cultures',
+			href: '/history-of-riddles-cultures',
+			icon: '/icons/book.png',
+			iconAlt: 'Cultural Riddles',
+			title: 'Riddles Across Cultures',
+			description:
+				'Explore how riddles have been used across different cultures throughout history, from ancient civilizations to modern times.',
+		},
+		{
+			id: 'riddle-solving-techniques',
+			href: '/riddle-solving-techniques',
+			icon: '/icons/pencil.png',
+			iconAlt: 'Solving Techniques',
+			title: 'Mastering Riddle Solving Techniques',
+			description:
+				'Learn proven strategies and techniques for solving riddles effectively, from pattern recognition to creative thinking approaches.',
+		},*/
 	]
 
 	const filteredResources = resources.filter((resource) => resource.id !== excludePage)

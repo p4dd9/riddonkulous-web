@@ -152,6 +152,27 @@ export default function PrivacyPolicyPage() {
 							necessary to operate the platform:
 						</p>
 
+						<h3 className="text-xl mb-3 text-white mt-6">Third-Party Vendors, Including Google</h3>
+						<p className="text-white/80 mb-4">
+							We use third-party vendors, including Google, to serve ads on our website. These vendors may
+							use cookies and other tracking technologies to serve ads based on your prior visits to our
+							website or other websites. Google&apos;s use of advertising cookies enables it and its
+							partners to serve ads to our users based on their visit to our site and/or other sites on
+							the Internet.
+						</p>
+						<p className="text-white/80 mb-4">
+							You may opt out of personalized advertising by visiting{' '}
+							<a
+								href="https://www.aboutads.info/choices/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="underline text-primary"
+							>
+								www.aboutads.info/choices
+							</a>
+							.
+						</p>
+
 						<h3 className="text-xl mb-3 text-white mt-6">AI Service Providers</h3>
 						<p className="text-white/80 mb-4">
 							For content moderation and tag generation. Only riddle content is shared - no personal
@@ -207,8 +228,47 @@ export default function PrivacyPolicyPage() {
 							<li>Individual user behavior</li>
 							<li>Personal identifiers</li>
 							<li>Cross-site tracking</li>
-							<li>Cookie-based tracking</li>
 						</ul>
+					</section>
+
+					<section className="mb-8">
+						<h2 className="text-2xl mb-4 text-white">Advertising and Cookies</h2>
+						<p className="text-white/80 mb-4">
+							We use Google AdSense to serve advertisements on our website. Google, as a third-party
+							vendor, uses cookies to serve ads on our site. Google&apos;s use of the DART cookie enables
+							it to serve ads to our users based on their visit to our site and other sites on the
+							Internet.
+						</p>
+						<p className="text-white/80 mb-4">
+							Google uses cookies to serve ads based on a user&apos;s prior visits to our website or other
+							websites. Google&apos;s use of advertising cookies enables it and its partners to serve ads
+							to our users based on their visit to our site and/or other sites on the Internet.
+						</p>
+						<p className="text-white/80 mb-4">
+							Users may opt out of the use of the DART cookie by visiting the Google ad and content
+							network privacy policy. You may also opt out of personalized advertising by visiting{' '}
+							<a
+								href="https://www.aboutads.info/choices/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="underline text-primary"
+							>
+								www.aboutads.info/choices
+							</a>
+							.
+						</p>
+						<p className="text-white/80 mb-4">
+							Personalized Advertising: Users may opt out of personalized advertising by visiting{' '}
+							<a
+								href="https://www.google.com/settings/ads"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="underline text-primary"
+							>
+								Google Ads Settings
+							</a>
+							.
+						</p>
 					</section>
 
 					<section className="mb-8">

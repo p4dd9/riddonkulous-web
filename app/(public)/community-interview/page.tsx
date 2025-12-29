@@ -17,7 +17,6 @@ export default async function CommunityInterview() {
 				<p className="italic text-gray-400">With D.E.M.</p>
 			</div>
 
-			{/* Content Blocks */}
 			<article className="w-full flex flex-col gap-8 text-base md:text-lg leading-relaxed">
 				<div className="flex flex-col gap-6">
 					<div className="flex flex-col gap-4">
