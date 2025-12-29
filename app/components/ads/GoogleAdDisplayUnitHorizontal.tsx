@@ -31,23 +31,19 @@ export const GoogleAdDisplayUnitHorizontal = () => {
 
 	return (
 		<div className="w-full h-[75px] flex justify-center items-center mt-[-32px]">
-			<div
-				className="bg-[var(--color-bg)] flex items-center justify-center relative"
-				style={{ width: '728px', height: '75px' }}
-			>
+			<div className="bg-[var(--color-bg)] flex items-center justify-center relative w-full max-w-[728px] h-[75px]">
 				{!adLoaded && (
 					<div className="absolute inset-0 flex items-center justify-center">
 						<span className="text-xs text-gray-500">Advertisement</span>
 					</div>
 				)}
-				<span className="text-sm" style={{ color: '#0B1416' }}>
-					Advertisement
-				</span>
 				<ins
-					className="adsbygoogle absolute"
-					style={{ display: 'inline-block', width: '728px', height: '75px' }}
+					className="adsbygoogle absolute inset-0"
+					style={{ display: 'inline-block', width: '100%', height: '100%' }}
 					data-ad-client="ca-pub-6902354361648358"
 					data-ad-slot="4750207295"
+					data-ad-format="horizontal"
+					data-full-width-responsive="true"
 				/>
 			</div>
 		</div>
