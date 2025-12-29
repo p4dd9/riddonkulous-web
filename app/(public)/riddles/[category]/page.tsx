@@ -1,3 +1,4 @@
+import { GoogleAdDisplayUnitHorizontal } from '@/app/components/ads/GoogleAdDisplayUnitHorizontal'
 import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { getRiddlesByTag } from '@/app/services/riddleService'
@@ -141,18 +142,16 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8 gap-6">
-			{/* Header */}
+			<GoogleAdDisplayUnitHorizontal />
 			<div className="w-full max-w-4xl flex flex-col gap-4">
 				<h1 className="text-3xl md:text-4xl text-center mb-2">{tag.label} Riddles</h1>
 			</div>
-
 			{/* Category Description Section - At the top */}
 			<div className="w-full max-w-4xl flex flex-col gap-4">
 				<div className="prose prose-invert max-w-none">
 					<p className="text-white/80 text-base md:text-lg leading-relaxed">{categoryDescription}</p>
 				</div>
 			</div>
-
 			{/* Riddles List */}
 			<div className="w-full max-w-4xl flex flex-col gap-4">
 				{riddles.map((riddle) => {
@@ -178,7 +177,6 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 					)
 				})}
 			</div>
-
 			{/* Navigation Buttons */}
 			{(hasNext || hasPrevious) && (
 				<div className="w-full flex justify-between gap-4 max-w-4xl">
@@ -196,7 +194,6 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 					/>
 				</div>
 			)}
-
 			{/* Other Riddles You Might Like Section */}
 			{otherCategories.length > 0 && (
 				<div className="w-full max-w-4xl flex flex-col gap-4 mt-8">
