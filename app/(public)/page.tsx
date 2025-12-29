@@ -1,8 +1,10 @@
 import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
+import { PWAInstallButton } from '@/app/components/buttons/PWAInstallButton'
 import { CategoryCard } from '@/app/components/categories/CategoryCard'
 import { RiddleAuthorHeader } from '@/app/components/riddles/RiddleAuthorHeader'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { StructuredData } from '@/app/components/seo/StructuredData'
+import { getDeviceInfo } from '@/app/lib/pwaServerUtils'
 import { getLatestRiddles, getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
 import { listTags } from '@/app/services/tagService'
 import type { Metadata } from 'next'
@@ -33,11 +35,12 @@ export const metadata: Metadata = {
 export const revalidate = 60 // Cache for 60 seconds
 
 export default async function Home() {
-	const [riddleOfTheDay, trendingRiddles, tagsData, latestRiddles] = await Promise.all([
+	const [riddleOfTheDay, trendingRiddles, tagsData, latestRiddles, deviceInfo] = await Promise.all([
 		getRiddleOfTheDay(),
 		getTrendingRiddles(),
 		listTags(50, 0),
 		getLatestRiddles(1, 0, 365, true),
+		getDeviceInfo(),
 	])
 	const filteredTrendingRiddles = trendingRiddles
 		.filter((riddle) => riddle.postId !== riddleOfTheDay.postId)
@@ -184,6 +187,16 @@ export default async function Home() {
 						</div>
 					</div>
 				</div>
+
+				{/* PWA Install Button - Only render wrapper if compatible */}
+				{(deviceInfo.isIOS || deviceInfo.isDesktopChromeOrEdge) && (
+					<div className="w-full flex justify-center">
+						<PWAInstallButton
+							initialIsIOS={deviceInfo.isIOS}
+							initialIsDesktop={deviceInfo.isDesktopChromeOrEdge}
+						/>
+					</div>
+				)}
 
 				{/* Explore Riddles Section */}
 				<div className="w-full flex flex-col gap-4">
