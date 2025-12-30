@@ -8,6 +8,7 @@ import { listTags } from '@/app/services/tagService'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { GoogleAdMobileBanner } from '../components/ads/GoogleAdMobileBanner'
+import { GoogleAdVerticalFixed } from '../components/ads/GoogleAdVerticalFixed'
 
 export const metadata: Metadata = {
 	title: 'Daily Riddles | Riddles with Answers',
@@ -89,6 +90,7 @@ export default async function Home() {
 	return (
 		<>
 			<StructuredData data={structuredData} />
+			<GoogleAdVerticalFixed />
 			<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8 gap-8 md:gap-18">
 				{/* About Section 
 			<div className="w-full flex gap-4 md:gap-8 items-end justify-start">

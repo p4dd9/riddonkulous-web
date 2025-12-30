@@ -1,6 +1,7 @@
 import { GoogleAdDisplayUnitHorizontal } from '@/app/components/ads/GoogleAdDisplayUnitHorizontal'
 import { GoogleAdInFeedUnit } from '@/app/components/ads/GoogleAdInFeedUnit'
 import { GoogleAdMobileBanner } from '@/app/components/ads/GoogleAdMobileBanner'
+import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixed'
 import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { getRiddlesByTag } from '@/app/services/riddleService'
@@ -143,9 +144,11 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 	const categoryDescription = getCategoryDescription(tag.label, tag.description)
 
 	return (
-		<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8 gap-6">
-			<GoogleAdMobileBanner customClasses="mt-[-32px] mb-2" />
-			<GoogleAdDisplayUnitHorizontal />
+		<>
+			<GoogleAdVerticalFixed />
+			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8 gap-6">
+				<GoogleAdMobileBanner customClasses="mt-[-32px] mb-2" />
+				<GoogleAdDisplayUnitHorizontal />
 			<div className="w-full max-w-4xl flex flex-col gap-4">
 				<h1 className="text-3xl md:text-4xl text-center mb-2">{tag.label} Riddles</h1>
 			</div>
@@ -222,6 +225,7 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 					</ul>
 				</div>
 			)}
-		</div>
+			</div>
+		</>
 	)
 }

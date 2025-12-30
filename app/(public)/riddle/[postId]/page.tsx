@@ -1,5 +1,6 @@
 import { GoogleAdDisplayUnitHorizontal } from '@/app/components/ads/GoogleAdDisplayUnitHorizontal'
 import { GoogleAdMobileBanner } from '@/app/components/ads/GoogleAdMobileBanner'
+import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixed'
 import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
 import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getRiddleByPostId } from '@/app/services/riddleService'
@@ -92,6 +93,7 @@ export default async function RiddlePage({ params }: RiddlePageProps) {
 	return (
 		<>
 			<StructuredData data={structuredData} />
+			<GoogleAdVerticalFixed />
 			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8">
 				<GoogleAdDisplayUnitHorizontal />
 				<GoogleAdMobileBanner customClasses="mt-[-32px] mb-2" />

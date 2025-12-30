@@ -1,6 +1,7 @@
 'use client'
 
 import { GoogleAdInFeedUnit } from '@/app/components/ads/GoogleAdInFeedUnit'
+import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixed'
 import { NothingMoreToLoad } from '@/app/components/NothingMoreToLoad'
 import { RiddleAuthorHeader } from '@/app/components/riddles/RiddleAuthorHeader'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
@@ -54,7 +55,9 @@ export default function RiddleFeedPage() {
 	}, [])
 
 	return (
-		<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-4xl mx-auto px-4 py-8 gap-6">
+		<>
+			<GoogleAdVerticalFixed />
+			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-4xl mx-auto px-4 py-8 gap-6">
 			<div className="w-full flex items-center justify-between gap-4">
 				<h1 className="text-3xl md:text-4xl text-left">Riddle Feed</h1>
 				<p className="text-sm md:text-base text-gray-400 whitespace-nowrap"></p>
@@ -125,6 +128,7 @@ export default function RiddleFeedPage() {
 			)}
 
 			{!hasMore && riddles.length > 0 && <NothingMoreToLoad />}
-		</div>
+			</div>
+		</>
 	)
 }
