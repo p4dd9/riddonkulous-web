@@ -9,16 +9,19 @@ self.addEventListener('install', () => {
 self.addEventListener('activate', (event) => {
 	// Clear all caches
 	event.waitUntil(
-		caches.keys().then((cacheNames) => {
-			return Promise.all(
-				cacheNames.map((cacheName) => {
-					return caches.delete(cacheName)
-				})
-			)
-		}).then(() => {
-			// Unregister this service worker
-			return self.registration.unregister()
-		})
+		caches
+			.keys()
+			.then((cacheNames) => {
+				return Promise.all(
+					cacheNames.map((cacheName) => {
+						return caches.delete(cacheName)
+					})
+				)
+			})
+			.then(() => {
+				// Unregister this service worker
+				return self.registration.unregister()
+			})
 	)
 })
 
@@ -26,4 +29,3 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', () => {
 	// Do nothing - let requests go through normally
 })
-
