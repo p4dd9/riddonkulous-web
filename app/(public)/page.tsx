@@ -9,6 +9,7 @@ import { getLatestRiddles, getRiddleOfTheDay, getTrendingRiddles } from '@/app/s
 import { listTags } from '@/app/services/tagService'
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { GoogleAdMobileBanner } from '../components/ads/GoogleAdMobileBanner'
 
 export const metadata: Metadata = {
 	title: 'Daily Riddles | Riddles with Answers',
@@ -123,6 +124,8 @@ export default async function Home() {
 								textClassName="line-clamp-7"
 							/>
 						</div>
+
+						<GoogleAdMobileBanner />
 
 						{/* Trending Sidebar - 1/3 width */}
 						<div className="flex flex-col gap-4 lg:w-1/3">

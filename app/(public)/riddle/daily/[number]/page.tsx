@@ -129,7 +129,7 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 		<>
 			<StructuredData data={structuredData} />
 			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8">
-				<GoogleAdMobileBanner />
+				<GoogleAdMobileBanner customClasses="mt-[-32px] mb-2" />
 				<RiddleSingleView
 					riddle={riddle}
 					hasNext={hasNext}
