@@ -14,9 +14,7 @@ export const RedditConfirmModal = ({ onConfirm, onClose }: RedditConfirmModalPro
 	return (
 		<div className="reddit-confirm-modal overflow-hidden">
 			<div className="mb-6">
-				<p className="text-gray-300 text-center">
-					Do you want to continue to create a Riddle on reddit.com/r/riddonkulous?
-				</p>
+				<p className="text-gray-300 text-center">Do you want to continue to visit reddit.com/r/riddonkulous?</p>
 			</div>
 
 			<div className="flex gap-3 flex-col">

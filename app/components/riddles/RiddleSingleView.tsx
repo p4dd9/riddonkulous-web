@@ -1,6 +1,7 @@
 'use client'
 
 import { BasicButton } from '@/app/components/buttons/BasicButton'
+import { RedditLinkButton } from '@/app/components/buttons/RedditLinkButton'
 import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
 import { HintModal } from '@/app/components/modals/HintModal'
 import { RevealModal } from '@/app/components/modals/RevealModal'
@@ -184,11 +185,11 @@ export const RiddleSingleView = ({
 						{/* Right side: Action Buttons */}
 						{(showRedditButton || showShareButton) && (
 							<div className="flex items-center gap-2 flex-shrink-0">
-								{/* {showRedditButton && riddle.subreddit && riddle.postId && (
+								{showRedditButton && riddle.subreddit && riddle.postId && (
 									<RedditLinkButton
 										href={`https://www.reddit.com/r/${riddle.subreddit}/comments/${riddle.postId}/`}
 									/>
-								)} */}
+								)}
 								{showShareButton && <ShareButton title="Share this riddle" />}
 							</div>
 						)}

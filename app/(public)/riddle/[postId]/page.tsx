@@ -96,7 +96,7 @@ export default async function RiddlePage({ params }: RiddlePageProps) {
 				<GoogleAdDisplayUnitHorizontal />
 				<GoogleAdMobileBanner customClasses="mt-[-32px] mb-2" />
 
-				<RiddleSingleView riddle={riddle} showDate={true} showRedditButton={false} showShareButton={true} />
+				<RiddleSingleView riddle={riddle} showDate={true} showRedditButton={true} showShareButton={true} />
 				{/* <RiddleSingleView riddle={riddle} showDate={true} showRedditButton={true} showShareButton={true} /> */}
 			</div>
 		</>

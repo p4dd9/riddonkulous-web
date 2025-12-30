@@ -25,13 +25,13 @@ export const RedditLinkButton = ({ href, className = '' }: RedditLinkButtonProps
 				aria-label="Solve On Reddit"
 			>
 				<Image src="/icons/link.png" alt="Reddit" width={20} height={20} className="w-5 h-5" />
-				<span className="hidden md:inline">Solve On Reddit</span>
+				<span className="hidden md:inline">Reddit</span>
 			</button>
 
 			<BottomSheetModal
 				isOpen={isModalOpen}
 				onClose={() => setIsModalOpen(false)}
-				title="Go to Reddit"
+				title="Reddit"
 				icon="/icons/link.png"
 			>
 				<RedditConfirmModal onConfirm={handleConfirm} onClose={() => setIsModalOpen(false)} />
@@ -39,4 +39,3 @@ export const RedditLinkButton = ({ href, className = '' }: RedditLinkButtonProps
 		</>
 	)
 }
-
