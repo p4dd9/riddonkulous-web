@@ -7,6 +7,7 @@ import { getLatestRiddles, getRiddleOfTheDay, getTrendingRiddles } from '@/app/s
 import { listTags } from '@/app/services/tagService'
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { GoogleAdCategoryGrid } from '../components/ads/GoogleAdCategoryGrid'
 import { GoogleAdMobileBanner } from '../components/ads/GoogleAdMobileBanner'
 import { GoogleAdVerticalFixed } from '../components/ads/GoogleAdVerticalFixed'
 
@@ -215,6 +216,7 @@ export default async function Home() {
 									href={`/riddles/${tag.id}`}
 								/>
 							))}
+						<GoogleAdCategoryGrid />
 					</div>
 				</div>
 
