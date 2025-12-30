@@ -1,5 +1,6 @@
 'use client'
 
+import { GoogleAdInFeedUnit } from '@/app/components/ads/GoogleAdInFeedUnit'
 import { NothingMoreToLoad } from '@/app/components/NothingMoreToLoad'
 import { RiddleAuthorHeader } from '@/app/components/riddles/RiddleAuthorHeader'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
@@ -79,24 +80,28 @@ export default function RiddleFeedPage() {
 			</div>
 
 			<div className="w-full flex flex-col gap-6">
-				{riddles.map((riddle) => {
+				{riddles.map((riddle, index) => {
 					const isWebCreated = riddle.postId.startsWith('r_')
+					const showAd = (index + 1) % 5 === 0
 					return (
-						<div key={riddle.postId} className="w-full flex flex-col gap-3">
-							{isWebCreated && riddle.author ? (
-								<RiddleAuthorHeader
-									username={riddle.author}
-									avatar={riddle.authorAvatar}
-									createdAt={riddle.date || undefined}
-									className="px-2"
-								/>
-							) : (
-								<div className="flex items-center justify-start px-2">
-									<p className="text-sm opacity-90">{formatDate(riddle.date)}</p>
-								</div>
-							)}
-							{/* RiddleCard automatically hides eye (guessCount) and star (popularity) icons for web-created riddles (postId starts with "r_") */}
-							<RiddleCard riddle={riddle} className="w-full" textClassName="line-clamp-5" />
+						<div key={riddle.postId}>
+							<div className="w-full flex flex-col gap-3">
+								{isWebCreated && riddle.author ? (
+									<RiddleAuthorHeader
+										username={riddle.author}
+										avatar={riddle.authorAvatar}
+										createdAt={riddle.date || undefined}
+										className="px-2"
+									/>
+								) : (
+									<div className="flex items-center justify-start px-2">
+										<p className="text-sm opacity-90">{formatDate(riddle.date)}</p>
+									</div>
+								)}
+								{/* RiddleCard automatically hides eye (guessCount) and star (popularity) icons for web-created riddles (postId starts with "r_") */}
+								<RiddleCard riddle={riddle} className="w-full" textClassName="line-clamp-5" />
+							</div>
+							{showAd && <GoogleAdInFeedUnit key={`ad-${riddle.postId}`} customClasses="my-4" />}
 						</div>
 					)
 				})}

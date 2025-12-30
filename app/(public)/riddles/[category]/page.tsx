@@ -1,4 +1,5 @@
 import { GoogleAdDisplayUnitHorizontal } from '@/app/components/ads/GoogleAdDisplayUnitHorizontal'
+import { GoogleAdInFeedUnit } from '@/app/components/ads/GoogleAdInFeedUnit'
 import { GoogleAdMobileBanner } from '@/app/components/ads/GoogleAdMobileBanner'
 import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
@@ -156,26 +157,30 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 			</div>
 			{/* Riddles List */}
 			<div className="w-full max-w-4xl flex flex-col gap-4">
-				{riddles.map((riddle) => {
+				{riddles.map((riddle, index) => {
 					const isWebCreated = riddle.postId.startsWith('r_')
+					const showAd = (index + 1) % 4 === 0
 					return (
-						<div key={riddle.postId} className="w-full flex flex-col gap-3">
-							{isWebCreated && riddle.author ? (
-								<div className="flex items-center justify-start px-2">
-									<p className="text-sm opacity-90">{formatDate(riddle.date)}</p>
-								</div>
-							) : (
-								<div className="flex items-center justify-start px-2">
-									<p className="text-sm opacity-90">{formatDate(riddle.date)}</p>
-								</div>
-							)}
-							<RiddleCard
-								riddle={riddle}
-								className="w-full"
-								textClassName="line-clamp-5"
-								solveHref={`/riddle/${riddle.postId}`}
-							/>
-						</div>
+						<>
+							<div key={riddle.postId} className="w-full flex flex-col gap-3">
+								{isWebCreated && riddle.author ? (
+									<div className="flex items-center justify-start px-2">
+										<p className="text-sm opacity-90">{formatDate(riddle.date)}</p>
+									</div>
+								) : (
+									<div className="flex items-center justify-start px-2">
+										<p className="text-sm opacity-90">{formatDate(riddle.date)}</p>
+									</div>
+								)}
+								<RiddleCard
+									riddle={riddle}
+									className="w-full"
+									textClassName="line-clamp-5"
+									solveHref={`/riddle/${riddle.postId}`}
+								/>
+							</div>
+							{showAd && <GoogleAdInFeedUnit customClasses="my-4" />}
+						</>
 					)
 				})}
 			</div>

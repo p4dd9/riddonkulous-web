@@ -69,6 +69,9 @@ export const GoogleAdsenseUnit = ({
 	// Check if this is an in-article ad
 	const isInArticle =
 		dataAttributes['ad-layout'] === 'in-article' || dataAttributes['data-ad-layout'] === 'in-article'
+	
+	// Check if this is an in-feed ad
+	const isInFeed = !!dataAttributes['ad-layout-key'] || !!dataAttributes['data-ad-layout-key']
 
 	useEffect(() => {
 		let checkAdLoadTimer: NodeJS.Timeout
@@ -78,8 +81,8 @@ export const GoogleAdsenseUnit = ({
 
 		const initializeAd = () => {
 			try {
-				// For in-article ads, ensure container has width before initializing
-				if (isInArticle) {
+				// For in-article and in-feed ads, ensure container has width before initializing
+				if (isInArticle || isInFeed) {
 					const container = document.getElementById(containerId)
 					if (!container) {
 						// Container not in DOM yet, retry
@@ -116,8 +119,8 @@ export const GoogleAdsenseUnit = ({
 			}
 		}
 
-		// For in-article ads, wait a bit for layout to settle
-		if (isInArticle) {
+		// For in-article and in-feed ads, wait a bit for layout to settle
+		if (isInArticle || isInFeed) {
 			const initialTimer = setTimeout(initializeAd, 200)
 			return () => {
 				clearTimeout(initialTimer)
@@ -131,7 +134,7 @@ export const GoogleAdsenseUnit = ({
 				clearTimeout(checkAdLoadTimer)
 			}
 		}
-	}, [containerId, isInArticle])
+	}, [containerId, isInArticle, isInFeed])
 
 	// Build inline styles for the container
 	const containerStyle: React.CSSProperties = {
@@ -174,8 +177,9 @@ export const GoogleAdsenseUnit = ({
 					background-color: var(--color-bg, #0b1416);
 					${width ? `width: ${width}px !important; max-width: ${width}px !important;` : ''}
 					${height ? `height: ${height}px !important; max-height: ${height}px !important;` : ''}
-					${isInArticle && !width ? `min-width: 1px; width: 100%;` : ''}
+					${(isInArticle || isInFeed) && !width ? `min-width: 1px; width: 100%;` : ''}
 					${!height ? `min-height: 50px;` : ''}
+					${minHeight && !height ? `min-height: ${minHeight}px !important;` : ''}
 					overflow: hidden;
 				}
 				
