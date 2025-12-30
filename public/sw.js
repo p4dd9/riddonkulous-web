@@ -39,6 +39,27 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', (event) => {
+	const url = new URL(event.request.url)
+
+	// Skip caching for:
+	// - Cross-origin requests (external domains)
+	// - Google AdSense scripts
+	// - Analytics scripts
+	// - OAuth scripts
+	// - API requests
+	const isExternal = url.origin !== self.location.origin
+	const isAdScript = url.href.includes('adsbygoogle.js')
+	const isAnalytics = url.href.includes('plausible') || url.href.includes('analytics')
+	const isOAuth = url.href.includes('accounts.google.com')
+	const isAPI = url.pathname.startsWith('/api/')
+
+	if (isExternal || isAdScript || isAnalytics || isOAuth || isAPI) {
+		// For external requests, don't intercept - let browser handle normally
+		// This prevents service worker from trying to cache cross-origin requests
+		return
+	}
+
+	// Only intercept same-origin requests for caching
 	event.respondWith(
 		caches.match(event.request).then((response) => {
 			// Return cached version or fetch from network
