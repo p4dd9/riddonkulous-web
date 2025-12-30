@@ -1,10 +1,9 @@
 import { Footer } from '@/app/components/layout/Footer'
 import { Header } from '@/app/components/layout/Header'
-import { ServiceWorkerRegistration } from '@/app/components/ServiceWorkerRegistration'
 import { AuthProvider } from '@/app/contexts/AuthContext'
 import { getCurrentUserServer } from '@/app/lib/serverAuth'
-import { listTags } from '@/app/services/tagService'
 import type { Tag } from '@/app/services/tagService'
+import { listTags } from '@/app/services/tagService'
 import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import '../globals.css'
@@ -124,9 +123,7 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<head>
-				{/* PWA Manifest - Required for installation */}
-				<link rel="manifest" href="/manifest" />
-				{/* Apple Touch Icon - Required for iOS installation */}
+				{/* Apple Touch Icon */}
 				<link rel="apple-touch-icon" href="/web-app-manifest-192x192.png" />
 				{/* Theme Color */}
 				<meta name="theme-color" content="#ffffff" />
@@ -147,7 +144,6 @@ export default async function RootLayout({
 			</head>
 			<body className="antialiased flex flex-col min-h-screen">
 				<AuthProvider initialUser={initialUser}>
-					<ServiceWorkerRegistration />
 					<Header tags={sortedTags} />
 					<main className="flex-1 h-full">{children}</main>
 					<Footer />
