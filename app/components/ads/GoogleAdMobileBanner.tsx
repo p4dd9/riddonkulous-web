@@ -11,7 +11,6 @@ export const GoogleAdMobileBanner = () => {
 		<GoogleAdsenseUnit
 			adClient="ca-pub-6902354361648358"
 			adSlot="1848256874"
-			adFormat="horizontal"
 			width={300}
 			height={50}
 			fullWidthResponsive={false}

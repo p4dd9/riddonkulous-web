@@ -123,17 +123,41 @@ export const GoogleAdsenseUnit = ({
 				
 				#${containerId} {
 					background-color: var(--color-bg, #0b1416);
+					${width ? `width: ${width}px !important; max-width: ${width}px !important;` : ''}
+					${height ? `height: ${height}px !important; max-height: ${height}px !important;` : ''}
+					overflow: hidden;
 				}
 				
 				#${containerId} .adsbygoogle {
 					display: block;
+					${width ? `width: ${width}px !important; max-width: ${width}px !important; min-width: ${width}px !important;` : ''}
+					${height ? `height: ${height}px !important; max-height: ${height}px !important; min-height: ${height}px !important;` : ''}
+				}
+				
+				${
+					width && height && !fullWidthResponsive
+						? `
+					#${containerId} .adsbygoogle,
+					#${containerId} .adsbygoogle > div,
+					#${containerId} .adsbygoogle > div > div,
+					#${containerId} .adsbygoogle iframe,
+					#${containerId} .adsbygoogle [id^="aswift_"],
+					#${containerId} .adsbygoogle [id^="aswift_"] iframe {
+						width: ${width}px !important;
+						height: ${height}px !important;
+						max-width: ${width}px !important;
+						max-height: ${height}px !important;
+						min-width: ${width}px !important;
+						min-height: ${height}px !important;
+					}
+					#${containerId} {
+						overflow: hidden !important;
+					}
+				`
+						: ''
 				}
 			`}</style>
-			<div
-				id={wrapperId}
-				className={`w-full flex justify-center items-center ${className}`}
-				style={wrapperStyle}
-			>
+			<div id={wrapperId} className={`w-full flex justify-center items-center ${className}`} style={wrapperStyle}>
 				<div
 					id={containerId}
 					className={`flex items-center justify-center relative ${containerClassName}`}
@@ -149,7 +173,9 @@ export const GoogleAdsenseUnit = ({
 						style={adStyle}
 						data-ad-client={adClient}
 						data-ad-slot={adSlot}
-						{...(adFormat ? ({ 'data-ad-format': adFormat } as React.HTMLAttributes<HTMLElement>) : {})}
+						{...(adFormat && fullWidthResponsive
+							? ({ 'data-ad-format': adFormat } as React.HTMLAttributes<HTMLElement>)
+							: {})}
 						{...(fullWidthResponsive
 							? ({ 'data-full-width-responsive': 'true' } as React.HTMLAttributes<HTMLElement>)
 							: {})}
@@ -167,4 +193,3 @@ export const GoogleAdsenseUnit = ({
 		</>
 	)
 }
-
