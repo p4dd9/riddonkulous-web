@@ -1,5 +1,6 @@
 import { Footer } from '@/app/components/layout/Footer'
 import { Header } from '@/app/components/layout/Header'
+import { ServiceWorkerUnregister } from '@/app/components/ServiceWorkerUnregister'
 import { AuthProvider } from '@/app/contexts/AuthContext'
 import { getCurrentUserServer } from '@/app/lib/serverAuth'
 import type { Tag } from '@/app/services/tagService'
@@ -144,6 +145,7 @@ export default async function RootLayout({
 			</head>
 			<body className="antialiased flex flex-col min-h-screen">
 				<AuthProvider initialUser={initialUser}>
+					<ServiceWorkerUnregister />
 					<Header tags={sortedTags} />
 					<main className="flex-1 h-full">{children}</main>
 					<Footer />
