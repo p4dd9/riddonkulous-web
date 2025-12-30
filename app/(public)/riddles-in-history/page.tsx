@@ -1,4 +1,5 @@
 import { RelatedResources } from '@/app/components/articles/RelatedResources'
+import { GoogleAdArticleUnit } from '@/app/components/ads/GoogleAdArticleUnit'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -116,6 +117,8 @@ export default async function RiddlesInHistory() {
 					familiarity - using a riddle as a tool to create or provoke cultural familiarity by needing the
 					reader to know the text to find the answers.
 				</p>
+
+				<GoogleAdArticleUnit customClasses="my-8" />
 
 				<p>
 					It would be wrong to leave this section simply looking at western examples though. Riddles are a

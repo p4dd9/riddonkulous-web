@@ -1,3 +1,4 @@
+import { GoogleAdArticleUnit } from '@/app/components/ads/GoogleAdArticleUnit'
 import { RelatedResources } from '@/app/components/articles/RelatedResources'
 import type { Metadata } from 'next'
 
@@ -63,6 +64,8 @@ export default async function CommunityInterview() {
 							</p>
 						</div>
 					</div>
+
+					<GoogleAdArticleUnit customClasses="my-8" />
 
 					<div className="flex flex-col gap-4">
 						<h4 className="text-lg md:text-xl text-primary mt-4">

@@ -1,3 +1,4 @@
+import { GoogleAdArticleUnit } from '@/app/components/ads/GoogleAdArticleUnit'
 import { RelatedResources } from '@/app/components/articles/RelatedResources'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -103,6 +104,8 @@ export default async function WritingRiddles() {
 					you have it, a riddle! You could neaten it up into something more poetic, but it&apos;s functional
 					enough already.
 				</p>
+
+				<GoogleAdArticleUnit customClasses="my-8" />
 
 				<p>
 					Let&apos;s try one more, a trickier modern one - my microphone. Aspects: it hears things, it&apos;s

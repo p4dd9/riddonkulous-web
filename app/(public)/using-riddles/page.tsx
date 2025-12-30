@@ -1,3 +1,4 @@
+import { GoogleAdArticleUnit } from '@/app/components/ads/GoogleAdArticleUnit'
 import { RelatedResources } from '@/app/components/articles/RelatedResources'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -73,6 +74,8 @@ export default async function UsingRiddles() {
 					player. Riddles give you a wordplay puzzle that can be delivered in enough of a set-piece way that
 					they are less likely to cause such a problem.
 				</p>
+
+				<GoogleAdArticleUnit customClasses="my-8" />
 
 				<p>
 					The places to use riddles in a plot-relevant way vary, but they tend to be linked to either a

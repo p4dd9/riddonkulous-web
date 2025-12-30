@@ -1,3 +1,4 @@
+import { GoogleAdArticleUnit } from '@/app/components/ads/GoogleAdArticleUnit'
 import { RelatedResources } from '@/app/components/articles/RelatedResources'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -87,6 +88,8 @@ export default async function RiddleSolvingTechniques() {
 					meanings, homophones, and wordplay. The answer might depend on interpreting a word in an unexpected
 					way, so don&apos;t limit yourself to the first meaning that comes to mind.
 				</p>
+
+				<GoogleAdArticleUnit customClasses="my-8" />
 
 				<h2 className="text-2xl mt-6 mb-4 text-white">Break It Down</h2>
 				<p>
