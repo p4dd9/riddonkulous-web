@@ -239,9 +239,8 @@ export const GoogleAdsenseUnit = ({
 					${width ? `width: ${width}px !important; max-width: ${width}px !important;` : 'width: 100% !important;'}
 					${height ? `height: ${height}px !important; max-height: ${height}px !important;` : ''}
 					min-width: 250px !important;
-					${!height ? `min-height: 50px;` : ''}
-					${minHeight && !height ? `min-height: ${minHeight}px !important;` : ''}
-					overflow: hidden;
+					${minHeight && !height ? `min-height: ${minHeight}px !important;` : !height && !isInFeed ? `min-height: 50px;` : ''}
+					overflow: visible;
 				}
 				
 				#${containerId} .adsbygoogle {

@@ -18,7 +18,6 @@ export const GoogleAdInFeedUnit = ({ customClasses = '' }: GoogleAdInFeedUnitPro
 			adSlot="1031683434"
 			adFormat="fluid"
 			fullWidthResponsive={true}
-			minHeight={50}
 			className={`${customClasses}`}
 			dataAttributes={{
 				'ad-layout-key': '-eb+6l-2v-aq+u1',
