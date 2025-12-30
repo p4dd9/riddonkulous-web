@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId, useState } from 'react'
+import { useId, useLayoutEffect, useState } from 'react'
 
 declare global {
 	interface Window {
@@ -69,76 +69,137 @@ export const GoogleAdsenseUnit = ({
 	// Check if this is an in-article ad
 	const isInArticle =
 		dataAttributes['ad-layout'] === 'in-article' || dataAttributes['data-ad-layout'] === 'in-article'
-	
+
 	// Check if this is an in-feed ad
 	const isInFeed = !!dataAttributes['ad-layout-key'] || !!dataAttributes['data-ad-layout-key']
 
-	useEffect(() => {
-		let checkAdLoadTimer: NodeJS.Timeout
-		let retryTimer: NodeJS.Timeout
-		let retryCount = 0
-		const MAX_RETRIES = 20 // Max 2 seconds of retries (20 * 100ms)
+	useLayoutEffect(() => {
+		const container = document.getElementById(containerId)
+		if (!container) return
 
-		const initializeAd = () => {
-			try {
-				// For in-article and in-feed ads, ensure container has width before initializing
-				if (isInArticle || isInFeed) {
-					const container = document.getElementById(containerId)
-					if (!container) {
-						// Container not in DOM yet, retry
-						if (retryCount < MAX_RETRIES) {
-							retryCount++
-							retryTimer = setTimeout(initializeAd, 100)
-							return
-						}
-						// Max retries reached, initialize anyway
-					} else {
-						const containerWidth = container.offsetWidth || container.clientWidth
-						if (containerWidth === 0 && retryCount < MAX_RETRIES) {
-							// Container has no width yet, retry after a short delay
-							retryCount++
-							retryTimer = setTimeout(initializeAd, 100)
-							return
-						}
-					}
+		// Check if ad element already has content (already initialized)
+		const adElement = container.querySelector('.adsbygoogle')
+		if (adElement && (adElement as HTMLElement).dataset.adsbygoogleStatus) {
+			return // Already initialized
+		}
+
+		let resizeObserver: ResizeObserver | null = null
+		let intersectionObserver: IntersectionObserver | null = null
+		let adInitialized = false
+		let checkAdLoadTimer: NodeJS.Timeout | null = null
+
+		// Determine minimum required width for fluid ads
+		const minRequiredWidth = fullWidthResponsive && adFormat === 'fluid' ? 250 : 1
+		const needsWidthCheck = isInArticle || isInFeed || (fullWidthResponsive && adFormat === 'fluid')
+
+		// Track state
+		let hasRequiredWidth = false
+		let isVisible = false
+
+		const checkAndInitializeAd = () => {
+			// Don't initialize if already done
+			if (adInitialized) return
+
+			// Check if ad element already has been marked by AdSense
+			const adEl = container.querySelector('.adsbygoogle')
+			if (adEl && (adEl as HTMLElement).dataset.adsbygoogleStatus) {
+				return // Already processed by AdSense
+			}
+
+			// For ads that need width checking, both conditions must be met
+			if (needsWidthCheck) {
+				if (!hasRequiredWidth || !isVisible) {
+					return // Not ready yet
 				}
+			}
 
+			// Initialize the ad
+			try {
 				;(window.adsbygoogle = window.adsbygoogle || []).push({})
+				adInitialized = true
 
 				// Check if ad loads after a delay
 				checkAdLoadTimer = setTimeout(() => {
-					const adElement = document.querySelector(`#${containerId} .adsbygoogle`)
+					const adElement = container.querySelector('.adsbygoogle')
 					if (adElement && adElement.children.length > 0) {
 						setAdLoaded(true)
 					}
-					// If ad still hasn't loaded after timeout, keep placeholder visible
-					// (This handles localhost/development where ads won't load)
 				}, 2000)
 			} catch (err) {
 				console.error('Error loading ad:', err)
 			}
 		}
 
-		// For in-article and in-feed ads, wait a bit for layout to settle
-		if (isInArticle || isInFeed) {
-			const initialTimer = setTimeout(initializeAd, 200)
-			return () => {
-				clearTimeout(initialTimer)
-				clearTimeout(retryTimer)
-				clearTimeout(checkAdLoadTimer)
+		// For ads that need width checking, use ResizeObserver and IntersectionObserver
+		if (needsWidthCheck) {
+			// Check initial width
+			const initialWidth = container.getBoundingClientRect().width
+			hasRequiredWidth = initialWidth >= minRequiredWidth
+
+			// Use ResizeObserver to detect when container has proper width
+			resizeObserver = new ResizeObserver((entries) => {
+				for (const entry of entries) {
+					// Use borderBoxSize for more accurate width
+					const width = entry.borderBoxSize?.[0]?.inlineSize || entry.contentRect.width
+					const previousState = hasRequiredWidth
+					hasRequiredWidth = width >= minRequiredWidth
+
+					// Only check if state changed to true
+					if (hasRequiredWidth && !previousState) {
+						checkAndInitializeAd()
+					}
+				}
+			})
+
+			// Use IntersectionObserver to ensure container is visible
+			intersectionObserver = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries) {
+						const previousState = isVisible
+						isVisible = entry.isIntersecting && entry.intersectionRatio > 0
+
+						// Only check if state changed to true
+						if (isVisible && !previousState) {
+							checkAndInitializeAd()
+						}
+					}
+				},
+				{ threshold: 0.01 }
+			)
+
+			resizeObserver.observe(container)
+			intersectionObserver.observe(container)
+
+			// If already meets requirements, initialize
+			if (hasRequiredWidth) {
+				// Check visibility separately
+				const rect = container.getBoundingClientRect()
+				isVisible = rect.top < window.innerHeight && rect.bottom > 0
+				if (isVisible) {
+					checkAndInitializeAd()
+				}
 			}
 		} else {
-			initializeAd()
-			return () => {
-				clearTimeout(retryTimer)
+			// For ads that don't need width checking, initialize immediately
+			checkAndInitializeAd()
+		}
+
+		return () => {
+			if (resizeObserver) {
+				resizeObserver.disconnect()
+			}
+			if (intersectionObserver) {
+				intersectionObserver.disconnect()
+			}
+			if (checkAdLoadTimer) {
 				clearTimeout(checkAdLoadTimer)
 			}
 		}
-	}, [containerId, isInArticle, isInFeed])
+	}, [containerId, isInArticle, isInFeed, fullWidthResponsive, adFormat])
 
 	// Build inline styles for the container
 	const containerStyle: React.CSSProperties = {
-		...(width && { width: `${width}px` }),
+		...(width ? { width: `${width}px` } : { width: '100%' }), // Always set width
 		...(height && { height: `${height}px` }),
 		...(minWidth && { minWidth: `${minWidth}px` }),
 		...(maxWidth && { maxWidth: `${maxWidth}px` }),
@@ -175,9 +236,9 @@ export const GoogleAdsenseUnit = ({
 				
 				#${containerId} {
 					background-color: var(--color-bg, #0b1416);
-					${width ? `width: ${width}px !important; max-width: ${width}px !important;` : ''}
+					${width ? `width: ${width}px !important; max-width: ${width}px !important;` : 'width: 100% !important;'}
 					${height ? `height: ${height}px !important; max-height: ${height}px !important;` : ''}
-					${(isInArticle || isInFeed) && !width ? `min-width: 1px; width: 100%;` : ''}
+					min-width: 250px !important;
 					${!height ? `min-height: 50px;` : ''}
 					${minHeight && !height ? `min-height: ${minHeight}px !important;` : ''}
 					overflow: hidden;
@@ -185,7 +246,7 @@ export const GoogleAdsenseUnit = ({
 				
 				#${containerId} .adsbygoogle {
 					display: block;
-					${width ? `width: ${width}px !important; max-width: ${width}px !important; min-width: ${width}px !important;` : ''}
+					${width ? `width: ${width}px !important; max-width: ${width}px !important; min-width: ${width}px !important;` : 'width: 100% !important; min-width: 250px !important;'}
 					${height ? `height: ${height}px !important; max-height: ${height}px !important; min-height: ${height}px !important;` : ''}
 				}
 				
