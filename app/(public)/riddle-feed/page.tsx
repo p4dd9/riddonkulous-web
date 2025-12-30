@@ -7,23 +7,21 @@ import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import type { PaginatedRiddlesDataType } from '@/app/schemas/PaginatedRiddlesResponse'
 import { formatDate } from '@/app/util/format'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function RiddleFeedPage() {
 	const [riddles, setRiddles] = useState<DailyRiddleType[]>([])
-	const [isLoading, setIsLoading] = useState(true)
+	const [isLoading, setIsLoading] = useState(false)
 	const [hasMore, setHasMore] = useState(true)
 	const [offset, setOffset] = useState(0)
-	const observerTarget = useRef<HTMLDivElement>(null)
-	const isLoadingRef = useRef(false)
 
 	const LIMIT = 5
 
 	const fetchRiddles = useCallback(
 		async (currentOffset: number) => {
-			if (isLoadingRef.current) return
+			if (isLoading) return
 
-			isLoadingRef.current = true
 			setIsLoading(true)
 
 			try {
@@ -40,37 +38,20 @@ export default function RiddleFeedPage() {
 				console.error('Error fetching riddles:', error)
 			} finally {
 				setIsLoading(false)
-				isLoadingRef.current = false
 			}
 		},
-		[LIMIT]
+		[LIMIT, isLoading]
 	)
 
+	const handleLoadMore = () => {
+		fetchRiddles(offset)
+	}
+
+	// Initial load
 	useEffect(() => {
 		fetchRiddles(0)
-	}, [fetchRiddles])
-
-	useEffect(() => {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries[0].isIntersecting && hasMore && !isLoading) {
-					fetchRiddles(offset)
-				}
-			},
-			{ threshold: 0.1 }
-		)
-
-		const currentTarget = observerTarget.current
-		if (currentTarget) {
-			observer.observe(currentTarget)
-		}
-
-		return () => {
-			if (currentTarget) {
-				observer.unobserve(currentTarget)
-			}
-		}
-	}, [hasMore, isLoading, offset, fetchRiddles])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-4xl mx-auto px-4 py-8 gap-6">
@@ -107,10 +88,41 @@ export default function RiddleFeedPage() {
 				})}
 			</div>
 
-			{/* Intersection observer target */}
-			<div ref={observerTarget} className="w-full h-20 flex items-center justify-center">
-				{isLoading && <p className="text-gray-400">Loading more riddles...</p>}
-			</div>
+			{/* Load More Button */}
+			{hasMore && riddles.length > 0 && (
+				<div className="w-full flex justify-center mt-4">
+					<button
+						onClick={handleLoadMore}
+						disabled={isLoading}
+						className="relative group bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-white rounded-lg px-6 py-3 flex items-center gap-3 shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px] active:shadow-[0_1px_0_0_rgba(0,0,0,0.7)] active:translate-y-[4px] transition-all duration-150 disabled:translate-y-0 disabled:shadow-[0_5px_0_0_rgba(0,0,0,0.3)]"
+					>
+						{isLoading ? (
+							<>
+								<Image
+									src="/icons/button_xbox_x.png"
+									alt="Loading"
+									width={28}
+									height={28}
+									className="w-7 h-7 animate-spin"
+									unoptimized
+								/>
+								<span className="text-lg">Loading...</span>
+							</>
+						) : (
+							<>
+								<Image
+									src="/icons/button_xbox_x.png"
+									alt="Load More"
+									width={28}
+									height={28}
+									className="w-7 h-7"
+								/>
+								<span className="text-lg">Load More Riddles</span>
+							</>
+						)}
+					</button>
+				</div>
+			)}
 
 			{!hasMore && riddles.length > 0 && <NothingMoreToLoad />}
 		</div>
