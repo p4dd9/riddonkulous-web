@@ -1,3 +1,4 @@
+import { GoogleAdDisplayUnitHorizontal } from '@/app/components/ads/GoogleAdDisplayUnitHorizontal'
 import { GoogleAdMobileBanner } from '@/app/components/ads/GoogleAdMobileBanner'
 import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
 import { StructuredData } from '@/app/components/seo/StructuredData'
@@ -92,6 +93,7 @@ export default async function RiddlePage({ params }: RiddlePageProps) {
 		<>
 			<StructuredData data={structuredData} />
 			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8">
+				<GoogleAdDisplayUnitHorizontal />
 				<GoogleAdMobileBanner customClasses="mt-[-32px] mb-2" />
 
 				<RiddleSingleView riddle={riddle} showDate={true} showRedditButton={false} showShareButton={true} />
