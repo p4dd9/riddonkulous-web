@@ -112,3 +112,37 @@ The tag service uses the Reddicore API base URL to construct tag API endpoints. 
 - Reuses the `REDDICORE_API_BASE_URL` environment variable
 - Constructs tag API URLs as `/api/v1/tags` on the same server as the Reddicore API
 - Uses the `getTagApiUrl()` helper function to build the correct endpoint URLs
+
+## Google Ads
+
+https://support.google.com/adsense/answer/9185043?hl=en-GB
+
+- Only one dimension can be greater than 450 pixels
+- The minimum width is 120 pixels
+- The minimum height is 50 pixels
+- Neither height nor width can exceed 1200 pixels.
+
+https://support.google.com/google-ads/answer/7031480
+
+High End Mobile Devices
+
+- 300x200px
+- 300x50px
+- 300x100px
+- 250x250px
+- 200x200px
+
+Desktop
+
+- 300x250px
+- 336x280px
+- 728x90px
+- 970x90px
+- 468x60px
+- 250x250px
+- 200x200px
+
+Vertical
+
+- 300x600px
+- 160x600px

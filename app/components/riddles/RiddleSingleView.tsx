@@ -1,7 +1,6 @@
 'use client'
 
 import { BasicButton } from '@/app/components/buttons/BasicButton'
-import { RedditLinkButton } from '@/app/components/buttons/RedditLinkButton'
 import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
 import { HintModal } from '@/app/components/modals/HintModal'
 import { RevealModal } from '@/app/components/modals/RevealModal'

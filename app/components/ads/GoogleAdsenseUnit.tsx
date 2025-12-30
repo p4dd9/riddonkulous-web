@@ -1,0 +1,170 @@
+'use client'
+
+import { useEffect, useId, useState } from 'react'
+
+declare global {
+	interface Window {
+		adsbygoogle?: Array<Record<string, unknown>>
+	}
+}
+
+export interface GoogleAdsenseUnitProps {
+	/** Google AdSense publisher ID (e.g., "ca-pub-6902354361648358") */
+	adClient: string
+	/** Google AdSense ad slot ID */
+	adSlot: string
+	/** Ad format: "auto", "horizontal", "rectangle", "vertical", etc. */
+	adFormat?: string
+	/** Width of the ad unit in pixels */
+	width?: number
+	/** Height of the ad unit in pixels */
+	height?: number
+	/** Enable full-width responsive mode */
+	fullWidthResponsive?: boolean
+	/** Minimum width for responsive ads */
+	minWidth?: number
+	/** Maximum width for responsive ads */
+	maxWidth?: number
+	/** Minimum height for responsive ads */
+	minHeight?: number
+	/** Maximum height for responsive ads */
+	maxHeight?: number
+	/** Custom CSS class for the wrapper */
+	className?: string
+	/** Custom CSS class for the container */
+	containerClassName?: string
+	/** Show ad only above a certain breakpoint (in pixels) */
+	minBreakpoint?: number
+	/** Custom margin top */
+	marginTop?: string
+	/** Custom margin bottom */
+	marginBottom?: string
+	/** Additional data attributes */
+	dataAttributes?: Record<string, string>
+}
+
+export const GoogleAdsenseUnit = ({
+	adClient,
+	adSlot,
+	adFormat = 'auto',
+	width,
+	height,
+	fullWidthResponsive = true,
+	minWidth,
+	maxWidth,
+	minHeight,
+	maxHeight,
+	className = '',
+	containerClassName = '',
+	minBreakpoint,
+	marginTop,
+	marginBottom,
+	dataAttributes = {},
+}: GoogleAdsenseUnitProps) => {
+	const [adLoaded, setAdLoaded] = useState(false)
+	const uniqueId = useId().replace(/:/g, '-')
+	const wrapperId = `google-ad-wrapper-${uniqueId}`
+	const containerId = `google-ad-container-${uniqueId}`
+
+	useEffect(() => {
+		try {
+			;(window.adsbygoogle = window.adsbygoogle || []).push({})
+
+			// Check if ad loads after a delay
+			const checkAdLoad = setTimeout(() => {
+				const adElement = document.querySelector(`#${containerId} .adsbygoogle`)
+				if (adElement && adElement.children.length > 0) {
+					setAdLoaded(true)
+				}
+			}, 1000)
+
+			return () => clearTimeout(checkAdLoad)
+		} catch (err) {
+			console.error('Error loading ad:', err)
+		}
+	}, [containerId])
+
+	// Build inline styles for the container
+	const containerStyle: React.CSSProperties = {
+		...(width && { width: `${width}px` }),
+		...(height && { height: `${height}px` }),
+		...(minWidth && { minWidth: `${minWidth}px` }),
+		...(maxWidth && { maxWidth: `${maxWidth}px` }),
+		...(minHeight && { minHeight: `${minHeight}px` }),
+		...(maxHeight && { maxHeight: `${maxHeight}px` }),
+	}
+
+	// Build inline styles for the ad element
+	const adStyle: React.CSSProperties = {
+		display: 'block',
+		...(width && { width: `${width}px` }),
+		...(height && { height: `${height}px` }),
+		...(minWidth && { minWidth: `${minWidth}px` }),
+		...(maxWidth && { maxWidth: `${maxWidth}px` }),
+		...(minHeight && { minHeight: `${minHeight}px` }),
+		...(maxHeight && { maxHeight: `${maxHeight}px` }),
+	}
+
+	const wrapperStyle: React.CSSProperties = {
+		...(marginTop && { marginTop }),
+		...(marginBottom && { marginBottom }),
+	}
+
+	return (
+		<>
+			<style>{`
+				#${wrapperId} {
+					${minBreakpoint ? `display: none;` : ''}
+				}
+				
+				${minBreakpoint ? `@media (min-width: ${minBreakpoint}px) {` : ''}
+					${minBreakpoint ? `#${wrapperId} { display: flex; }` : ''}
+				${minBreakpoint ? `}` : ''}
+				
+				#${containerId} {
+					background-color: var(--color-bg, #0b1416);
+				}
+				
+				#${containerId} .adsbygoogle {
+					display: block;
+				}
+			`}</style>
+			<div
+				id={wrapperId}
+				className={`w-full flex justify-center items-center ${className}`}
+				style={wrapperStyle}
+			>
+				<div
+					id={containerId}
+					className={`flex items-center justify-center relative ${containerClassName}`}
+					style={containerStyle}
+				>
+					{!adLoaded && (
+						<div className="absolute inset-0 flex items-center justify-center">
+							<span className="text-xs text-gray-500">Advertisement</span>
+						</div>
+					)}
+					<ins
+						className="adsbygoogle"
+						style={adStyle}
+						data-ad-client={adClient}
+						data-ad-slot={adSlot}
+						{...(adFormat ? ({ 'data-ad-format': adFormat } as React.HTMLAttributes<HTMLElement>) : {})}
+						{...(fullWidthResponsive
+							? ({ 'data-full-width-responsive': 'true' } as React.HTMLAttributes<HTMLElement>)
+							: {})}
+						{...(Object.keys(dataAttributes).length > 0
+							? (Object.fromEntries(
+									Object.entries(dataAttributes).map(([key, value]) => [
+										key.startsWith('data-') ? key : `data-${key}`,
+										value,
+									])
+								) as React.HTMLAttributes<HTMLElement>)
+							: {})}
+					/>
+				</div>
+			</div>
+		</>
+	)
+}
+

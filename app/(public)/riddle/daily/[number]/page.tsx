@@ -1,3 +1,4 @@
+import { GoogleAdMobileBanner } from '@/app/components/ads/GoogleAdMobileBanner'
 import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
 import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getRiddleByNumber, getRiddleOfTheDay } from '@/app/services/riddleService'
@@ -128,6 +129,7 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 		<>
 			<StructuredData data={structuredData} />
 			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8">
+				<GoogleAdMobileBanner />
 				<RiddleSingleView
 					riddle={riddle}
 					hasNext={hasNext}
