@@ -17,6 +17,7 @@ export const GoogleAdDisplayUnitHorizontal = () => {
 			fullWidthResponsive={true}
 			minBreakpoint={728}
 			marginTop="-32px"
+			marginBottom="32px"
 		/>
 	)
 }
