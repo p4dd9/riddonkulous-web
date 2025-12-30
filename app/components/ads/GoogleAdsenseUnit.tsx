@@ -66,23 +66,72 @@ export const GoogleAdsenseUnit = ({
 	const wrapperId = `google-ad-wrapper-${uniqueId}`
 	const containerId = `google-ad-container-${uniqueId}`
 
+	// Check if this is an in-article ad
+	const isInArticle =
+		dataAttributes['ad-layout'] === 'in-article' || dataAttributes['data-ad-layout'] === 'in-article'
+
 	useEffect(() => {
-		try {
-			;(window.adsbygoogle = window.adsbygoogle || []).push({})
+		let checkAdLoadTimer: NodeJS.Timeout
+		let retryTimer: NodeJS.Timeout
+		let retryCount = 0
+		const MAX_RETRIES = 20 // Max 2 seconds of retries (20 * 100ms)
 
-			// Check if ad loads after a delay
-			const checkAdLoad = setTimeout(() => {
-				const adElement = document.querySelector(`#${containerId} .adsbygoogle`)
-				if (adElement && adElement.children.length > 0) {
-					setAdLoaded(true)
+		const initializeAd = () => {
+			try {
+				// For in-article ads, ensure container has width before initializing
+				if (isInArticle) {
+					const container = document.getElementById(containerId)
+					if (!container) {
+						// Container not in DOM yet, retry
+						if (retryCount < MAX_RETRIES) {
+							retryCount++
+							retryTimer = setTimeout(initializeAd, 100)
+							return
+						}
+						// Max retries reached, initialize anyway
+					} else {
+						const containerWidth = container.offsetWidth || container.clientWidth
+						if (containerWidth === 0 && retryCount < MAX_RETRIES) {
+							// Container has no width yet, retry after a short delay
+							retryCount++
+							retryTimer = setTimeout(initializeAd, 100)
+							return
+						}
+					}
 				}
-			}, 1000)
 
-			return () => clearTimeout(checkAdLoad)
-		} catch (err) {
-			console.error('Error loading ad:', err)
+				;(window.adsbygoogle = window.adsbygoogle || []).push({})
+
+				// Check if ad loads after a delay
+				checkAdLoadTimer = setTimeout(() => {
+					const adElement = document.querySelector(`#${containerId} .adsbygoogle`)
+					if (adElement && adElement.children.length > 0) {
+						setAdLoaded(true)
+					}
+					// If ad still hasn't loaded after timeout, keep placeholder visible
+					// (This handles localhost/development where ads won't load)
+				}, 2000)
+			} catch (err) {
+				console.error('Error loading ad:', err)
+			}
 		}
-	}, [containerId])
+
+		// For in-article ads, wait a bit for layout to settle
+		if (isInArticle) {
+			const initialTimer = setTimeout(initializeAd, 200)
+			return () => {
+				clearTimeout(initialTimer)
+				clearTimeout(retryTimer)
+				clearTimeout(checkAdLoadTimer)
+			}
+		} else {
+			initializeAd()
+			return () => {
+				clearTimeout(retryTimer)
+				clearTimeout(checkAdLoadTimer)
+			}
+		}
+	}, [containerId, isInArticle])
 
 	// Build inline styles for the container
 	const containerStyle: React.CSSProperties = {
@@ -125,6 +174,8 @@ export const GoogleAdsenseUnit = ({
 					background-color: var(--color-bg, #0b1416);
 					${width ? `width: ${width}px !important; max-width: ${width}px !important;` : ''}
 					${height ? `height: ${height}px !important; max-height: ${height}px !important;` : ''}
+					${isInArticle && !width ? `min-width: 1px; width: 100%;` : ''}
+					${!height ? `min-height: 50px;` : ''}
 					overflow: hidden;
 				}
 				
@@ -164,7 +215,7 @@ export const GoogleAdsenseUnit = ({
 					style={containerStyle}
 				>
 					{!adLoaded && (
-						<div className="absolute inset-0 flex items-center justify-center">
+						<div className="absolute inset-0 flex items-center justify-center min-h-[50px] w-full z-10">
 							<span className="text-xs text-gray-500">Advertisement</span>
 						</div>
 					)}
