@@ -5,6 +5,8 @@ import { useAuth } from '@/app/contexts/AuthContext'
 import {
 	deleteUserAccount,
 	getCurrentUserData,
+	subscribeToNewsletter,
+	unsubscribeFromNewsletter,
 	updateUserData,
 	validateUsername,
 	type UserData,
@@ -159,6 +161,26 @@ export default function GeneralPage() {
 		setSelectedAvatar(userData?.avatar || 'avatar_02.png')
 		setIsEditingAvatar(false)
 		setSaveMessage(null)
+	}
+
+	const handleToggleSubscription = async () => {
+		if (!userData) return
+
+		// Optimistically update UI
+		const isSubscribed = userData.emailSubscription || false
+		setUserData({ ...userData, emailSubscription: !isSubscribed })
+
+		try {
+			const response = isSubscribed ? await unsubscribeFromNewsletter() : await subscribeToNewsletter()
+			if (response.status === 'success') {
+				// Merge response data with existing userData to preserve all fields
+				setUserData({ ...userData, ...response.data })
+			}
+		} catch (error) {
+			// Revert on error
+			setUserData({ ...userData, emailSubscription: isSubscribed })
+			console.error('Failed to update subscription:', error)
+		}
 	}
 
 	// Generate array of all 40 avatars
@@ -367,10 +389,58 @@ export default function GeneralPage() {
 					{/* Account Created */}
 					{userData.createdAt && (
 						<div className="bg-[var(--color-bg)] rounded-lg ">
-							<label className="text-sm text-white/60 block mb-2">Joined Riddonkulous</label>
+							<div className="flex items-center gap-2 mb-2">
+								<label className="text-sm text-white/60 block">Riddle Day</label>
+								<div className="relative group">
+									<span className="text-xs text-white/60 cursor-help border border-white/40 rounded-full w-4 h-4 flex items-center justify-center">
+										?
+									</span>
+									<div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-2 bg-gray-800 text-white text-xs rounded shadow-lg z-10">
+										Day you created your Riddonkulous account
+									</div>
+								</div>
+							</div>
 							<p className="text-lg text-white">{new Date(userData.createdAt).toLocaleDateString()}</p>
 						</div>
 					)}
+
+					{/* Email */}
+					<div className="bg-[var(--color-bg)] rounded-lg">
+						<label className="text-sm text-white/60 block mb-2">Email</label>
+						<p className="text-lg text-white">{userData.email}</p>
+					</div>
+
+					{/* Email Newsletter Subscription */}
+					<div className="bg-[var(--color-bg)] rounded-lg">
+						<div className="flex items-center justify-between">
+							<div className="flex flex-col">
+								<label className="text-sm text-white/60 block mb-1">Weekly Newsletter</label>
+								<p className="text-xs text-white/40">
+									{userData.emailSubscription
+										? 'You are subscribed to our weekly newsletter. The newsletter uses the email you registered with Google.'
+										: 'Subscribe to receive our weekly newsletter. The newsletter uses the email you registered with Google.'}
+								</p>
+							</div>
+							<button
+								type="button"
+								onClick={handleToggleSubscription}
+								className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[var(--color-bg)] cursor-pointer ${
+									userData.emailSubscription ? 'bg-primary' : 'bg-gray-600'
+								}`}
+								aria-label={
+									userData.emailSubscription
+										? 'Unsubscribe from newsletter'
+										: 'Subscribe to newsletter'
+								}
+							>
+								<span
+									className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+										userData.emailSubscription ? 'translate-x-6' : 'translate-x-1'
+									}`}
+								/>
+							</button>
+						</div>
+					</div>
 
 					{/* Advanced Settings Section */}
 					<BasicButton

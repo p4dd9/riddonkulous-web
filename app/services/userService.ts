@@ -8,6 +8,7 @@ export interface UserData {
 	role: string
 	username?: string
 	avatar?: string
+	emailSubscription?: boolean
 	createdAt?: string
 	updatedAt?: string
 }
@@ -163,6 +164,52 @@ export const getMyRiddles = async (limit: number = 20, offset: number = 0): Prom
 		const error: ErrorResponse = await response.json().catch(() => ({
 			status: response.status,
 			message: 'Failed to fetch riddles',
+		}))
+		throw error
+	}
+
+	return response.json()
+}
+
+/**
+ * Subscribe to email newsletter
+ */
+export const subscribeToNewsletter = async (): Promise<UserResponse> => {
+	const response = await fetch('/api/user/me/subscribe', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		credentials: 'include',
+	})
+
+	if (!response.ok) {
+		const error: ErrorResponse = await response.json().catch(() => ({
+			status: response.status,
+			message: 'Failed to subscribe to email newsletter',
+		}))
+		throw error
+	}
+
+	return response.json()
+}
+
+/**
+ * Unsubscribe from email newsletter
+ */
+export const unsubscribeFromNewsletter = async (): Promise<UserResponse> => {
+	const response = await fetch('/api/user/me/unsubscribe', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		credentials: 'include',
+	})
+
+	if (!response.ok) {
+		const error: ErrorResponse = await response.json().catch(() => ({
+			status: response.status,
+			message: 'Failed to unsubscribe from email newsletter',
 		}))
 		throw error
 	}
