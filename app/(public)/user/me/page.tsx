@@ -412,8 +412,8 @@ export default function GeneralPage() {
 
 					{/* Email Newsletter Subscription */}
 					<div className="bg-[var(--color-bg)] rounded-lg">
-						<div className="flex items-center justify-between">
-							<div className="flex flex-col">
+						<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+							<div className="flex flex-col flex-1">
 								<label className="text-sm text-white/60 block mb-1">Weekly Newsletter</label>
 								<p className="text-xs text-white/40">
 									{userData.emailSubscription
@@ -424,7 +424,7 @@ export default function GeneralPage() {
 							<button
 								type="button"
 								onClick={handleToggleSubscription}
-								className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[var(--color-bg)] cursor-pointer ${
+								className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[var(--color-bg)] cursor-pointer flex-shrink-0 ${
 									userData.emailSubscription ? 'bg-primary' : 'bg-gray-600'
 								}`}
 								aria-label={
