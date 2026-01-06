@@ -6,6 +6,7 @@ interface BasicButtonProps {
 	text?: string
 	customClass?: string
 	threeD?: boolean
+	variant?: 'primary' | 'secondary'
 	icon?: string
 	iconClass?: string
 	textAlign?: 'left' | 'center' | 'right'
@@ -16,6 +17,8 @@ interface BasicButtonProps {
 
 const defaultClasses = 'bg-primary hover:bg-primary px-2 py-.5 rounded-md text-white transition-colors cursor-pointer'
 
+const secondaryClasses = 'bg-[var(--color-bg)] border-2 border-primary hover:bg-[var(--color-bg)] px-2 py-.5 rounded-md text-white transition-colors cursor-pointer'
+
 const threeDClasses =
 	'shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px] active:shadow-[0_1px_0_0_rgba(0,0,0,0.7)] active:translate-y-[4px] transition-all duration-150'
 
@@ -23,6 +26,7 @@ export const BasicButton = ({
 	text = '',
 	customClass = '',
 	threeD = true,
+	variant = 'primary',
 	icon,
 	iconClass = 'w-5 h-5',
 	textAlign,
@@ -31,12 +35,13 @@ export const BasicButton = ({
 	disabled = false,
 }: BasicButtonProps) => {
 	const buttonClasses = useMemo(() => {
-		const baseClasses = ` ${defaultClasses} ${customClass}`
-		if (threeD) {
-			return `${baseClasses} ${threeDClasses}`
+		const baseClasses = variant === 'secondary' ? secondaryClasses : defaultClasses
+		const classesWithCustom = `${baseClasses} ${customClass}`
+		if (threeD && variant === 'primary') {
+			return `${classesWithCustom} ${threeDClasses}`
 		}
-		return baseClasses
-	}, [customClass, threeD])
+		return classesWithCustom
+	}, [customClass, threeD, variant])
 
 	const textAlignClass = useMemo(() => {
 		if (textAlign === 'center') {

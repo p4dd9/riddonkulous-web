@@ -1,5 +1,6 @@
 import { Footer } from '@/app/components/layout/Footer'
 import { Header } from '@/app/components/layout/Header'
+import { SubscribeModalProvider } from '@/app/components/modals/SubscribeModalProvider'
 import { ServiceWorkerUnregister } from '@/app/components/ServiceWorkerUnregister'
 import { AuthProvider } from '@/app/contexts/AuthContext'
 import { getCurrentUserServer } from '@/app/lib/serverAuth'
@@ -149,6 +150,7 @@ export default async function RootLayout({
 					<Header tags={sortedTags} />
 					<main className="flex-1 h-full">{children}</main>
 					<Footer />
+					<SubscribeModalProvider />
 				</AuthProvider>
 			</body>
 		</html>

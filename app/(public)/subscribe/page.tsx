@@ -1,6 +1,8 @@
 'use client'
 
 import { BasicButton } from '@/app/components/buttons/BasicButton'
+import { LoginModal } from '@/app/components/modals/LoginModal'
+import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
 import { useAuth } from '@/app/contexts/AuthContext'
 import { subscribeToNewsletter } from '@/app/services/userService'
 import Link from 'next/link'
@@ -10,6 +12,7 @@ export default function SubscribePage() {
 	const { user, isLoading } = useAuth()
 	const [status, setStatus] = useState<'loading' | 'success' | 'error' | 'not-authenticated'>('loading')
 	const [message, setMessage] = useState('')
+	const [showLoginModal, setShowLoginModal] = useState(false)
 
 	useEffect(() => {
 		const handleSubscribe = async () => {
@@ -39,6 +42,12 @@ export default function SubscribePage() {
 		handleSubscribe()
 	}, [user, isLoading])
 
+	const handleLoginSuccess = () => {
+		setShowLoginModal(false)
+		// Refresh page to trigger subscription
+		window.location.reload()
+	}
+
 	return (
 		<div className="w-full max-w-2xl mx-auto px-4 py-8">
 			<div className="bg-[var(--color-bg)] rounded-lg shadow-lg p-8">
@@ -53,7 +62,17 @@ export default function SubscribePage() {
 				{status === 'not-authenticated' && (
 					<div className="space-y-4">
 						<p className="text-white/80">{message}</p>
+						<p className="text-white/60 text-sm">
+							Create an account or log in to subscribe to our weekly newsletter and get the best riddles
+							delivered to your inbox.
+						</p>
 						<div className="flex gap-4">
+							<BasicButton
+								text="Create Account / Login"
+								customClass="flex-1"
+								threeD={true}
+								onClick={() => setShowLoginModal(true)}
+							/>
 							<Link href="/" className="flex-1">
 								<BasicButton text="Go to Home" customClass="w-full" threeD={false} />
 							</Link>
@@ -69,11 +88,7 @@ export default function SubscribePage() {
 						</p>
 						<div className="flex gap-4">
 							<Link href="/" className="flex-1">
-								<BasicButton
-									text="Go to Home"
-									customClass="w-full bg-[var(--color-bg)] border-2 border-primary"
-									threeD={false}
-								/>
+								<BasicButton text="Go to Home" customClass="w-full" variant="secondary" threeD={false} />
 							</Link>
 						</div>
 					</div>
@@ -87,16 +102,23 @@ export default function SubscribePage() {
 								<BasicButton text="Go to Profile" customClass="w-full" threeD={false} />
 							</Link>
 							<Link href="/" className="flex-1">
-								<BasicButton
-									text="Go to Home"
-									customClass="w-full bg-[var(--color-bg)] border-2 border-primary"
-									threeD={false}
-								/>
+								<BasicButton text="Go to Home" customClass="w-full" variant="secondary" threeD={false} />
 							</Link>
 						</div>
 					</div>
 				)}
 			</div>
+
+			{showLoginModal && (
+				<BottomSheetModal
+					isOpen={showLoginModal}
+					onClose={() => setShowLoginModal(false)}
+					title="Login Required"
+					icon="/icons/heart.png"
+				>
+					<LoginModal onClose={handleLoginSuccess} />
+				</BottomSheetModal>
+			)}
 		</div>
 	)
 }

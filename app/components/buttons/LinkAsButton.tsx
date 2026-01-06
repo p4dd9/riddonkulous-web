@@ -9,6 +9,7 @@ interface LinkAsButtonProps {
 	customClass?: string
 	className?: string
 	threeD?: boolean
+	variant?: 'primary' | 'secondary'
 	icon?: string
 	iconClass?: string
 	textAlign?: 'left' | 'center' | 'right'
@@ -20,6 +21,8 @@ interface LinkAsButtonProps {
 
 const defaultClasses = 'bg-primary hover:bg-primary px-2 py-.5 rounded-md text-white transition-colors'
 
+const secondaryClasses = 'bg-[var(--color-bg)] border-2 border-primary hover:bg-[var(--color-bg)] px-2 py-.5 rounded-md text-white transition-colors'
+
 const threeDClasses =
 	'shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px] active:shadow-[0_1px_0_0_rgba(0,0,0,0.7)] active:translate-y-[4px] transition-all duration-150'
 
@@ -29,6 +32,7 @@ export const LinkAsButton = ({
 	customClass = '',
 	className = '',
 	threeD = true,
+	variant = 'primary',
 	icon,
 	iconClass = 'w-5 h-5',
 	textAlign,
@@ -38,18 +42,25 @@ export const LinkAsButton = ({
 	disabled = false,
 }: LinkAsButtonProps) => {
 	const buttonClasses = useMemo(() => {
-		// If customClass contains bg- or hover:bg-, remove default bg-primary and hover:bg-primary
-		let baseClasses = defaultClasses
+		// Choose base classes based on variant
+		let baseClasses = variant === 'secondary' ? secondaryClasses : defaultClasses
+		
+		// If customClass contains bg- or hover:bg-, remove default background classes
 		if (customClass.includes('bg-') || customClass.includes('hover:bg-')) {
-			baseClasses = baseClasses.replace('bg-primary', '').replace('hover:bg-primary', '').trim()
+			if (variant === 'primary') {
+				baseClasses = baseClasses.replace('bg-primary', '').replace('hover:bg-primary', '').trim()
+			} else {
+				baseClasses = baseClasses.replace('bg-[var(--color-bg)]', '').replace('hover:bg-[var(--color-bg)]', '').trim()
+			}
 		}
+		
 		baseClasses = `${baseClasses} ${customClass}`.trim()
-		// Only apply 3D effect if not disabled
-		const classesWith3D = threeD && !disabled ? `${baseClasses} ${threeDClasses}` : baseClasses
+		// Only apply 3D effect if not disabled and variant is primary
+		const classesWith3D = threeD && !disabled && variant === 'primary' ? `${baseClasses} ${threeDClasses}` : baseClasses
 		// Add disabled styles if disabled
 		const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''
 		return `${classesWith3D} ${disabledClasses}`.trim()
-	}, [customClass, threeD, disabled])
+	}, [customClass, threeD, disabled, variant])
 
 	const textAlignClass = useMemo(() => {
 		if (textAlign === 'center') {

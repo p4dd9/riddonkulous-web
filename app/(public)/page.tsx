@@ -176,11 +176,11 @@ export default async function Home() {
 									}}
 								/>
 								<div className="relative z-10 flex flex-col items-center justify-center text-center px-4 gap-4">
-									<h3 className="text-2xl md:text-4xl ">Discover Community Riddles</h3>
+									<h3 className="text-2xl md:text-4xl ">Discover Riddles</h3>
 									<div className="mt-4">
 										<LinkAsButton
 											href="/riddle-feed"
-											text="Open Community Feed"
+											text="Open Riddle Feed"
 											textAlign="center"
 											customClass="px-8 py-2"
 										/>

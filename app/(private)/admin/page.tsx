@@ -22,6 +22,13 @@ interface AdminStats {
 	totalRiddleCount: number
 }
 
+interface NewsletterSubscribersCountResponse {
+	status: 'success'
+	data: {
+		subscribedUsersCount: number
+	}
+}
+
 interface AdminStatsResponse {
 	status: 'success'
 	data: AdminStats
@@ -37,6 +44,8 @@ export default function AdminDashboard() {
 	const [offset, setOffset] = useState(0)
 	const [stats, setStats] = useState<AdminStats | null>(null)
 	const [statsLoading, setStatsLoading] = useState(true)
+	const [newsletterSubscribersCount, setNewsletterSubscribersCount] = useState<number | null>(null)
+	const [newsletterSubscribersLoading, setNewsletterSubscribersLoading] = useState(true)
 
 	// Form state
 	const [showCreateForm, setShowCreateForm] = useState(false)
@@ -74,6 +83,28 @@ export default function AdminDashboard() {
 			console.error('Failed to fetch admin stats:', err)
 		} finally {
 			setStatsLoading(false)
+		}
+	}
+
+	const fetchNewsletterSubscribersCount = async () => {
+		setNewsletterSubscribersLoading(true)
+		try {
+			const response = await fetch('/admin/api/newsletter-subscribers-count', {
+				credentials: 'include',
+			})
+			if (!response.ok) {
+				if (response.status === 401) {
+					router.push('/admin/login')
+					return
+				}
+				throw new Error('Failed to fetch newsletter subscribers count')
+			}
+			const data: NewsletterSubscribersCountResponse = await response.json()
+			setNewsletterSubscribersCount(data.data.subscribedUsersCount)
+		} catch (err: unknown) {
+			console.error('Failed to fetch newsletter subscribers count:', err)
+		} finally {
+			setNewsletterSubscribersLoading(false)
 		}
 	}
 
@@ -130,6 +161,7 @@ export default function AdminDashboard() {
 	useEffect(() => {
 		fetchStats()
 		fetchCronjobStatus()
+		fetchNewsletterSubscribersCount()
 	}, [])
 
 	useEffect(() => {
@@ -397,12 +429,12 @@ export default function AdminDashboard() {
 			</div>
 
 			{/* Statistics Section */}
-			{statsLoading ? (
+			{statsLoading || newsletterSubscribersLoading ? (
 				<div className="bg-gray-800 border border-gray-700 rounded-lg p-6 mb-6">
 					<div className="text-center text-gray-400">Loading statistics...</div>
 				</div>
 			) : stats ? (
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
 					<div className="bg-gray-800 border border-gray-700 rounded-lg p-6">
 						<div className="text-sm text-gray-400 mb-2">Total Users</div>
 						<div className="text-3xl font-bold">{stats.userCount.toLocaleString()}</div>
@@ -414,6 +446,14 @@ export default function AdminDashboard() {
 					<div className="bg-gray-800 border border-gray-700 rounded-lg p-6">
 						<div className="text-sm text-gray-400 mb-2">Reddit-Created Riddles</div>
 						<div className="text-3xl font-bold">{redditRiddleCount.toLocaleString()}</div>
+					</div>
+					<div className="bg-gray-800 border border-gray-700 rounded-lg p-6">
+						<div className="text-sm text-gray-400 mb-2">Newsletter Subscribers</div>
+						<div className="text-3xl font-bold">
+							{newsletterSubscribersCount !== null
+								? newsletterSubscribersCount.toLocaleString()
+								: '-'}
+						</div>
 					</div>
 				</div>
 			) : null}
