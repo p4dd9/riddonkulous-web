@@ -150,6 +150,26 @@ export default async function FAQPage() {
 						}
 					/>
 					<FAQItem
+						id="newsletter-subscription"
+						question="How do I subscribe or unsubscribe from the newsletter?"
+						answer={
+							<p>
+								You can subscribe to our weekly newsletter by visiting{' '}
+								<Link href="/subscribe" className="underline">
+									/subscribe
+								</Link>
+								. To unsubscribe, visit{' '}
+								<Link href="/unsubscribe" className="underline">
+									/unsubscribe
+								</Link>
+								. You can also manage your newsletter subscription preferences from your profile settings.
+								You must be logged in to subscribe or unsubscribe. The newsletter is sent from our
+								verified Gmail account and includes curated riddles, platform updates, and community
+								highlights.
+							</p>
+						}
+					/>
+					<FAQItem
 						id="contact"
 						question="How can I contact Riddonkulous?"
 						answer={

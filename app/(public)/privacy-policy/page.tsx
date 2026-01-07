@@ -146,6 +146,62 @@ export default function PrivacyPolicyPage() {
 					</section>
 
 					<section className="mb-8">
+						<h2 className="text-2xl mb-4 text-white">Email Communications and Newsletter</h2>
+						<p className="text-white/80 mb-4">
+							We offer an optional weekly newsletter to keep you informed about the latest riddles,
+							updates, and platform features. Newsletter subscriptions are entirely voluntary and can be
+							managed at any time.
+						</p>
+
+						<h3 className="text-xl mb-3 text-white mt-6">Newsletter Service Provider</h3>
+						<p className="text-white/80 mb-4">
+							We use Smt2go a third-party email service provider, to deliver our newsletter. Newsletters
+							are sent from our verified Gmail account to ensure deliverability and authenticity. Your
+							email address is shared with Smt2go solely for the purpose of sending newsletter emails.
+						</p>
+
+						<h3 className="text-xl mb-3 text-white mt-6">What We Send</h3>
+						<p className="text-white/80 mb-4">
+							Our weekly newsletter includes curated riddles, platform updates, and community highlights.
+							We do not send promotional emails from third parties or share your email address with
+							advertisers.
+						</p>
+
+						<h3 className="text-xl mb-3 text-white mt-6">Managing Your Subscription</h3>
+						<p className="text-white/80 mb-4">
+							You can subscribe or unsubscribe from our newsletter at any time:
+						</p>
+						<ul className="list-disc list-inside space-y-2 text-white/80 mb-4">
+							<li>
+								To subscribe: Visit{' '}
+								<a href="/subscribe" className="underline text-primary">
+									/subscribe
+								</a>{' '}
+								or manage your subscription preferences in your profile settings
+							</li>
+							<li>
+								To unsubscribe: Visit{' '}
+								<a href="/unsubscribe" className="underline text-primary">
+									/unsubscribe
+								</a>{' '}
+								or manage your subscription preferences in your profile settings
+							</li>
+						</ul>
+						<p className="text-white/80 mb-4">
+							You must be logged in to subscribe or unsubscribe. Unsubscribing is immediate and you will
+							not receive further newsletter emails unless you choose to resubscribe.
+						</p>
+
+						<h3 className="text-xl mb-3 text-white mt-6">Email Data</h3>
+						<p className="text-white/80 mb-4">
+							We use your verified Gmail address (from Google Sign-In) for newsletter delivery. Your email
+							subscription preference is stored in your account settings and can be changed at any time.
+							We do not use your email address for any purpose other than account-related communications
+							and the optional newsletter.
+						</p>
+					</section>
+
+					<section className="mb-8">
 						<h2 className="text-2xl mb-4 text-white">Data Sharing</h2>
 						<p className="text-white/80 mb-4">
 							We do not sell, rent, or trade your data. We only share data with third-party services
@@ -197,6 +253,27 @@ export default function PrivacyPolicyPage() {
 							>
 								Privacy Policy
 							</a>
+						</p>
+
+						<h3 className="text-xl mb-3 text-white mt-6">Smt2go (Email Service)</h3>
+						<p className="text-white/80 mb-4">
+							For delivering our weekly newsletter. Smt2go is{' '}
+							<a
+								href="https://www.smtp2go.com/blog/gdpr-compliant/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="underline text-primary"
+							>
+								GDPR/DSGVO-compliant
+							</a>
+							. We use Smt2go to send emails from our verified Gmail account. Only your email address is
+							shared with Smt2go for newsletter delivery purposes. We do not use personalized tracking,
+							email open tracking, click tracking, or any other analytics features. You can unsubscribe at
+							any time via{' '}
+							<a href="/unsubscribe" className="underline text-primary">
+								/unsubscribe
+							</a>
+							.
 						</p>
 
 						<h3 className="text-xl mb-3 text-white mt-6">Database Hosting</h3>
