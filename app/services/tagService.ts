@@ -109,6 +109,7 @@ export const createTag = async (
 	const response = await fetcher<TagApiSingleResponse>(url, {
 		method: 'POST',
 		headers,
+		credentials: 'include',
 		body: JSON.stringify(body),
 	})
 	return response.data
@@ -136,6 +137,7 @@ export const updateTag = async (
 	const response = await fetcher<TagApiSingleResponse>(url, {
 		method: 'PUT',
 		headers,
+		credentials: 'include',
 		body: JSON.stringify(body),
 	})
 	return response.data
@@ -147,5 +149,6 @@ export const deleteTag = async (id: string): Promise<{ message: string }> => {
 	return fetcher<{ message: string }>(url, {
 		method: 'DELETE',
 		headers,
+		credentials: 'include',
 	})
 }
