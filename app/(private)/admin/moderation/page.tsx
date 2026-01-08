@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/app/contexts/AuthContext'
 import {
+	deleteRiddle,
 	getModerationRiddles,
 	getModerationStats,
 	updateRiddleStatus,
@@ -114,6 +115,22 @@ export default function ModerationPage() {
 			await fetchStats()
 		} catch (err: any) {
 			alert(err.message || 'Failed to remove riddle')
+		} finally {
+			setUpdatingPostId(null)
+		}
+	}
+
+	const handleDelete = async (postId: string) => {
+		if (!confirm('Are you sure you want to permanently delete this riddle? This action cannot be undone.')) {
+			return
+		}
+		setUpdatingPostId(postId)
+		try {
+			await deleteRiddle(postId)
+			await fetchRiddles()
+			await fetchStats()
+		} catch (err: any) {
+			alert(err.message || 'Failed to delete riddle')
 		} finally {
 			setUpdatingPostId(null)
 		}
@@ -249,6 +266,8 @@ export default function ModerationPage() {
 										</span>
 									</div>
 									<div className="text-sm text-gray-400 mb-2">
+										<span>ID: {riddle.postId}</span>
+										<span className="mx-2">•</span>
 										<span>Author: {riddle.author || 'Unknown'}</span>
 										<span className="mx-2">•</span>
 										<span>Created: {new Date(riddle.createdAt).toLocaleDateString()}</span>
@@ -317,6 +336,13 @@ export default function ModerationPage() {
 										{updatingPostId === riddle.postId ? 'Updating...' : 'Remove'}
 									</button>
 								)}
+								<button
+									onClick={() => handleDelete(riddle.postId)}
+									disabled={updatingPostId === riddle.postId}
+									className="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+								>
+									{updatingPostId === riddle.postId ? 'Deleting...' : 'Delete'}
+								</button>
 							</div>
 						</div>
 					))

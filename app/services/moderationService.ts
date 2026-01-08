@@ -138,3 +138,27 @@ export const getModerationStats = async (): Promise<StatsResponse> => {
 	return response.json()
 }
 
+export interface DeleteRiddleResponse {
+	status: 'success'
+	message: string
+}
+
+/**
+ * Delete a riddle permanently
+ */
+export const deleteRiddle = async (postId: string): Promise<DeleteRiddleResponse> => {
+	const response = await fetch(`/api/moderation/riddles/${postId}`, {
+		method: 'DELETE',
+		credentials: 'include',
+	})
+
+	if (!response.ok) {
+		const error: ErrorResponse = await response.json().catch(() => ({
+			status: response.status,
+			message: 'Failed to delete riddle',
+		}))
+		throw error
+	}
+
+	return response.json()
+}
