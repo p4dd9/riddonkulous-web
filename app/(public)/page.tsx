@@ -1,9 +1,8 @@
 import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { CategoryCard } from '@/app/components/categories/CategoryCard'
-import { RiddleAuthorHeader } from '@/app/components/riddles/RiddleAuthorHeader'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { StructuredData } from '@/app/components/seo/StructuredData'
-import { getLatestRiddles, getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
+import { getCurrentAdventure, getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
 import { listTags } from '@/app/services/tagService'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -36,18 +35,15 @@ export const metadata: Metadata = {
 export const revalidate = 60 // Cache for 60 seconds
 
 export default async function Home() {
-	const [riddleOfTheDay, trendingRiddles, tagsData, latestRiddles] = await Promise.all([
+	const [riddleOfTheDay, trendingRiddles, tagsData, currentAdventureNumber] = await Promise.all([
 		getRiddleOfTheDay(),
 		getTrendingRiddles(),
 		listTags(50, 0),
-		getLatestRiddles(1, 0, 365, true),
+		getCurrentAdventure(),
 	])
 	const filteredTrendingRiddles = trendingRiddles
 		.filter((riddle) => riddle.postId !== riddleOfTheDay.postId)
 		.slice(0, 3)
-
-	// Get the newest web-created riddle
-	const newestWebRiddle = latestRiddles.riddles[0] || null
 
 	const structuredData = {
 		'@context': 'https://schema.org',
@@ -110,8 +106,8 @@ export default async function Home() {
 			</div>*/}
 				<div className="w-full flex flex-col gap-6">
 					<div className="w-full flex flex-col lg:flex-row lg:items-start gap-6">
-						{/* Main Content - 2/3 width */}
-						<div className="flex flex-col gap-4 lg:w-2/3">
+						{/* Main Content - 2/3 width - Left on desktop */}
+						<div className="flex flex-col gap-4 lg:w-2/3 order-1 lg:order-1">
 							<h1 className="text-2xl md:text-4xl lg:h-12 flex items-center gap-2">
 								<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />
 								Riddle of the Day
@@ -125,10 +121,48 @@ export default async function Home() {
 							/>
 						</div>
 
-						<GoogleAdMobileBanner />
+						<div className="order-2 lg:hidden">
+							<GoogleAdMobileBanner />
+						</div>
 
-						{/* Trending Sidebar - 1/3 width */}
-						<div className="flex flex-col gap-4 lg:w-1/3">
+						{/* Daily Adventure - Mobile: above Trending, Desktop: in feed section */}
+						<div className="flex flex-col gap-4 lg:hidden order-3">
+							<div className="relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[200px] md:min-h-[250px] h-full">
+								<div
+									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
+									style={{
+										backgroundImage: 'url(/canvas/BG12.png)',
+										filter: 'brightness(0.5)',
+									}}
+								/>
+								<div className="relative z-10 flex flex-col items-center justify-center text-center px-4 gap-4">
+									<Image
+										src="/icons/light.png"
+										alt="Adventure"
+										width={48}
+										height={48}
+										className="w-12 h-12"
+									/>
+									<h3 className="text-2xl md:text-4xl">
+										Daily Adventure{currentAdventureNumber ? ` #${currentAdventureNumber}` : ''}
+									</h3>
+									<p className="text-sm md:text-base opacity-90">
+										7 riddles. One journey. Your daily challenge.
+									</p>
+									<div className="mt-4">
+										<LinkAsButton
+											href="/riddle/adventure"
+											text="Start Adventure"
+											textAlign="center"
+											customClass="px-8 py-2"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						{/* Trending Sidebar - 1/3 width - Right on desktop */}
+						<div className="flex flex-col gap-4 lg:w-1/3 order-4 lg:order-2">
 							<h2 className="text-xl md:text-2xl lg:h-12 flex items-center gap-2">
 								<Image
 									src="/icons/script_lightning.png"
@@ -149,21 +183,41 @@ export default async function Home() {
 
 					{/* Riddle Feed Section - Below existing content */}
 					<div className="w-full flex flex-col lg:flex-row gap-4">
-						{/* Left: Newest Community Riddle */}
-						{newestWebRiddle && (
-							<div className="lg:w-1/2 flex flex-col gap-3">
-								<RiddleAuthorHeader
-									username={newestWebRiddle.author || 'Anonymous'}
-									avatar={newestWebRiddle.authorAvatar}
-									createdAt={newestWebRiddle.date || undefined}
+						{/* Left: Daily Adventure - Desktop only */}
+						<div className="hidden lg:flex lg:w-1/2 flex-col gap-4">
+							<div className="relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[200px] md:min-h-[250px] h-full">
+								<div
+									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
+									style={{
+										backgroundImage: 'url(/canvas/BG12.png)',
+										filter: 'brightness(0.5)',
+									}}
 								/>
-								<RiddleCard
-									riddle={newestWebRiddle}
-									className="h-[250px]"
-									textClassName="line-clamp-4"
-								/>
+								<div className="relative z-10 flex flex-col items-center justify-center text-center px-4 gap-4">
+									<Image
+										src="/icons/light.png"
+										alt="Adventure"
+										width={48}
+										height={48}
+										className="w-12 h-12"
+									/>
+									<h3 className="text-2xl md:text-4xl">
+										Daily Adventure{currentAdventureNumber ? ` #${currentAdventureNumber}` : ''}
+									</h3>
+									<p className="text-sm md:text-base opacity-90">
+										7 riddles. One journey. Your daily challenge.
+									</p>
+									<div className="mt-4">
+										<LinkAsButton
+											href="/riddle/adventure"
+											text="Start Adventure"
+											textAlign="center"
+											customClass="px-8 py-2"
+										/>
+									</div>
+								</div>
 							</div>
-						)}
+						</div>
 
 						{/* Right: Discover New Riddles CTA */}
 						<div className="lg:w-1/2 flex flex-col gap-4">
@@ -171,7 +225,7 @@ export default async function Home() {
 								<div
 									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
 									style={{
-										backgroundImage: 'url(/canvas/BG100.png)',
+										backgroundImage: 'url(/canvas/BG9.png)',
 										filter: 'brightness(0.5)',
 									}}
 								/>

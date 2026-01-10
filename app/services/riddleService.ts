@@ -171,3 +171,28 @@ export const getLatestRiddles = async (
 		filters: {},
 	}
 }
+
+export const getCurrentAdventure = async () => {
+	const apiBaseUrl = await getApiBaseUrl()
+	const apiKey = await getApiKey()
+	const urlObj = new URL(apiBaseUrl)
+	const baseUrl = `${urlObj.protocol}//${urlObj.host}`
+	const adventureApiUrl = `${baseUrl}/api/v1/riddonk/web/daily/adventure`
+
+	try {
+		const { data } = await fetcher<ReddicoreResponseType<{ adventure: { adventureNumber: number } }>>(
+			adventureApiUrl,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${apiKey}`,
+				},
+				method: 'GET',
+			}
+		)
+		return data?.adventure?.adventureNumber || null
+	} catch (error) {
+		console.error('Error fetching current adventure:', error)
+		return null
+	}
+}
