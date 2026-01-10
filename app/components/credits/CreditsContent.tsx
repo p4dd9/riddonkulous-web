@@ -51,6 +51,18 @@ export const CreditsContent = () => {
 							</Link>
 							<span className="text-gray-400 ml-2">- Characters &quot;Pals&quot;</span>
 						</li>
+
+						<li>
+							<Link
+								href="https://guttykreum.itch.io/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="hover:underline text-primary"
+							>
+								guttykreum
+							</Link>
+							<span className="text-gray-400 ml-2">- Animated Japan Collection Backgrounds</span>
+						</li>
 						<li>
 							<Link
 								href="https://chierit.itch.io/"
