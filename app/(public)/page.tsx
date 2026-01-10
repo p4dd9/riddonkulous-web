@@ -131,7 +131,7 @@ export default async function Home() {
 								<div
 									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
 									style={{
-										backgroundImage: 'url(/canvas/BG12.png)',
+										backgroundImage: 'url(/canvas/BG012.png)',
 										filter: 'brightness(0.5)',
 									}}
 								/>
@@ -189,7 +189,7 @@ export default async function Home() {
 								<div
 									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
 									style={{
-										backgroundImage: 'url(/canvas/BG12.png)',
+										backgroundImage: 'url(/canvas/BG012.png)',
 										filter: 'brightness(0.5)',
 									}}
 								/>
@@ -225,7 +225,7 @@ export default async function Home() {
 								<div
 									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
 									style={{
-										backgroundImage: 'url(/canvas/BG9.png)',
+										backgroundImage: 'url(/canvas/BG040.png)',
 										filter: 'brightness(0.5)',
 									}}
 								/>
