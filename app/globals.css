@@ -1,5 +1,20 @@
 @import 'tailwindcss';
 
+@keyframes slideBackAndFade {
+	0% {
+		transform: translateY(0) scale(1);
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(80px) scale(0.8);
+		opacity: 0;
+	}
+}
+
+.letter-slide-back {
+	animation: slideBackAndFade 1s ease-in-out forwards;
+}
+
 @font-face {
 	font-family: 'Font007';
 	src: url('/font/FONT007.ttf') format('truetype');

@@ -125,7 +125,7 @@ export default async function Home() {
 							<GoogleAdMobileBanner />
 						</div>
 
-						{/* Daily Adventure - Mobile: above Trending, Desktop: in feed section */}
+						{/* Daily Riddle Adventure - Mobile: above Trending, Desktop: in feed section */}
 						<div className="flex flex-col gap-4 lg:hidden order-3">
 							<div className="relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[200px] md:min-h-[250px] h-full">
 								<div
@@ -144,7 +144,8 @@ export default async function Home() {
 										className="w-12 h-12"
 									/>
 									<h3 className="text-2xl md:text-4xl">
-										Daily Adventure{currentAdventureNumber ? ` #${currentAdventureNumber}` : ''}
+										Daily Riddle Adventure
+										{currentAdventureNumber ? ` #${currentAdventureNumber}` : ''}
 									</h3>
 									<p className="text-sm md:text-base opacity-90">
 										7 riddles. One journey. Your daily challenge.
@@ -183,7 +184,7 @@ export default async function Home() {
 
 					{/* Riddle Feed Section - Below existing content */}
 					<div className="w-full flex flex-col lg:flex-row gap-4">
-						{/* Left: Daily Adventure - Desktop only */}
+						{/* Left: Daily Riddle Adventure - Desktop only */}
 						<div className="hidden lg:flex lg:w-1/2 flex-col gap-4">
 							<div className="relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[200px] md:min-h-[250px] h-full">
 								<div
@@ -202,7 +203,8 @@ export default async function Home() {
 										className="w-12 h-12"
 									/>
 									<h3 className="text-2xl md:text-4xl">
-										Daily Adventure{currentAdventureNumber ? ` #${currentAdventureNumber}` : ''}
+										Daily Riddle Adventure
+										{currentAdventureNumber ? ` #${currentAdventureNumber}` : ''}
 									</h3>
 									<p className="text-sm md:text-base opacity-90">
 										7 riddles. One journey. Your daily challenge.

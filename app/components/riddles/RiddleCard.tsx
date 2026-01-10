@@ -13,6 +13,7 @@ interface RiddleCardProps {
 	hideSolveButton?: boolean
 	solveHref?: string
 	textClassName?: string
+	hideStats?: boolean
 }
 
 export const RiddleCard = ({
@@ -22,6 +23,7 @@ export const RiddleCard = ({
 	hideSolveButton = false,
 	solveHref,
 	textClassName,
+	hideStats = false,
 }: RiddleCardProps) => {
 	const isCompact = variant === 'compact'
 
@@ -42,8 +44,8 @@ export const RiddleCard = ({
 			<div
 				className={`relative z-10 flex flex-col items-center justify-between w-full ${isCompact ? 'h-full' : 'flex-1'}`}
 			>
-				{/* Hide eye and star for web-created riddles (postId starts with "r_") */}
-				{!riddle.postId.startsWith('r_') && (
+				{/* Hide eye and star for web-created riddles (postId starts with "r_") or when hideStats is true */}
+				{!riddle.postId.startsWith('r_') && !hideStats && (
 					<div className={`flex items-center w-full ${isCompact ? 'justify-end' : 'justify-between'} gap-4`}>
 						{!isCompact && (
 							<div className="flex items-center justify-center gap-2">

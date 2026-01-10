@@ -1,5 +1,6 @@
 'use client'
 
+import { GoogleAdCategoryGrid } from '@/app/components/ads/GoogleAdCategoryGrid'
 import { GoogleAdDisplayUnitHorizontal } from '@/app/components/ads/GoogleAdDisplayUnitHorizontal'
 import { GoogleAdMobileBanner } from '@/app/components/ads/GoogleAdMobileBanner'
 import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixed'
@@ -79,6 +80,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 	const [showTransition, setShowTransition] = useState(false)
 	const [showEndScreen, setShowEndScreen] = useState(false)
 	const [isShareModalOpen, setIsShareModalOpen] = useState(false)
+	const [showWelcomeScreen, setShowWelcomeScreen] = useState(false)
 
 	// Load params and initialize
 	useEffect(() => {
@@ -111,19 +113,21 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 				// Load or create adventure run
 				let run = loadAdventureProgress(data.data.adventure.adventureNumber)
 				if (!run) {
+					// First time - show welcome screen
+					setShowWelcomeScreen(true)
+					// Create run but don't save yet (will save when they start)
 					run = {
 						adventureNumber: data.data.adventure.adventureNumber,
 						date: data.data.adventure.featuredDate,
 						seed: data.data.adventure.seed,
-						startTime: Date.now(),
+						startTime: 0, // Will be set when they start
 						riddles: data.data.riddles.map((riddle) => ({
 							riddleId: riddle.postId,
 							attempts: 0,
 							solved: false,
-							startTime: Date.now(),
+							startTime: 0,
 						})),
 					}
-					saveAdventureProgress(run)
 				} else {
 					// Find the first unsolved riddle
 					const firstUnsolvedIndex = run.riddles.findIndex((r) => !r.solved)
@@ -296,8 +300,60 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		)
 	}
 
+	const handleStartAdventure = () => {
+		if (!adventureRun) return
+		// Set start time and save
+		const run = {
+			...adventureRun,
+			startTime: Date.now(),
+			riddles: adventureRun.riddles.map((r) => ({
+				...r,
+				startTime: Date.now(),
+			})),
+		}
+		saveAdventureProgress(run)
+		setAdventureRun(run)
+		setShowWelcomeScreen(false)
+	}
+
 	const currentRiddle = adventure.riddles[currentRiddleIndex]
 	const shareData = getShareCardData()
+
+	// Welcome screen
+	if (showWelcomeScreen) {
+		return (
+			<>
+				<GoogleAdVerticalFixed />
+				<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
+					<div className="w-full max-w-2xl flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+						<Image
+							src="/pals/PAL055.gif"
+							alt="Adventure Pal"
+							width={256}
+							height={256}
+							className="w-32 h-32 md:w-48 md:h-48 shrink-0"
+							unoptimized
+						/>
+						<div className="flex flex-col items-center md:items-start gap-4 flex-1">
+							<h1 className="text-3xl md:text-4xl ">Daily Riddle Adventure</h1>
+							<div className="flex flex-col gap-4 text-lg">
+								<p>7 riddles. One journey. Your daily challenge.</p>
+								<p className="text-gray-400 text-base">
+									Rearrange letters to solve each riddle. Time is tracked, but there&apos;s no
+									pressure. Just you and the puzzle.
+								</p>
+							</div>
+							<BasicButton
+								text="Start Adventure"
+								onClick={handleStartAdventure}
+								customClass="px-8 py-3 text-lg"
+							/>
+						</div>
+					</div>
+				</div>
+			</>
+		)
+	}
 
 	// Transition screen
 	if (showTransition) {
@@ -310,12 +366,20 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		]
 		const message = transitionMessages[currentRiddleIndex % transitionMessages.length]
 
+		// Random pal image (PAL001.gif to PAL009.gif) based on riddle index for consistency
+		const palNumber = String((currentRiddleIndex % 9) + 1).padStart(3, '0')
+		const palImage = `/pals/PAL${palNumber}.gif`
+
 		return (
 			<>
 				<GoogleAdVerticalFixed />
 				<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
 					<div className="flex flex-col items-center gap-6">
+						<Image src={palImage} alt="Pal" width={128} height={128} className="w-32 h-32" unoptimized />
 						<p className="text-2xl md:text-3xl text-center">{message}</p>
+						<div className="w-full max-w-xs">
+							<GoogleAdCategoryGrid />
+						</div>
 						<BasicButton text="Continue" onClick={handleContinue} customClass="px-8 py-3" />
 					</div>
 				</div>
@@ -334,7 +398,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 
 						<div className="bg-gray-800 rounded-lg p-6 flex flex-col gap-4">
 							<div className="text-center">
-								<h2 className="text-xl mb-2">Riddonkulous — Daily Adventure</h2>
+								<h2 className="text-xl mb-2">Riddonkulous — Daily Riddle Adventure</h2>
 								<p className="text-2xl font-bold">#{shareData.adventureNumber}</p>
 							</div>
 
@@ -392,7 +456,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 					>
 						<AdventureShareModal
 							url={`${typeof window !== 'undefined' ? window.location.origin : ''}/riddle/adventure/${shareData.adventureNumber}`}
-							title={`Riddonkulous — Daily Adventure #${shareData.adventureNumber}`}
+							title={`Riddonkulous — Daily Riddle Adventure #${shareData.adventureNumber}`}
 							text={`🧠 Riddles: ${shareData.solvedCount}/${adventure.riddles.length}
 ⏱ Total Time: ${formatTime(shareData.totalTime)}
 🎯 Attempts: ${shareData.totalAttempts}
@@ -424,7 +488,9 @@ Try today's adventure at riddonkulous.com`}
 				<div className="w-full flex flex-col gap-4">
 					<div className="flex items-center gap-2">
 						<Image src="/icons/light.png" alt="Adventure" width={32} height={32} className="w-8 h-8" />
-						<h1 className="text-2xl md:text-4xl">Daily Adventure #{adventure.adventure.adventureNumber}</h1>
+						<h1 className="text-2xl md:text-4xl">
+							Daily Riddle Adventure #{adventure.adventure.adventureNumber}
+						</h1>
 					</div>
 					<div className="text-sm text-gray-400">
 						Riddle {currentRiddleIndex + 1} of {adventure.riddles.length}
@@ -432,8 +498,21 @@ Try today's adventure at riddonkulous.com`}
 				</div>
 
 				{/* Riddle Card */}
-				<div className="w-full">
-					<RiddleCard riddle={currentRiddle} className="lg:h-[400px]" hideSolveButton={true} />
+				<div className="w-full relative">
+					{/* Total guesses counter */}
+					<div className="absolute top-2 right-2 z-20 px-3 py-1.5">
+						<div className="flex items-center gap-2">
+							<span className="text-sm font-semibold">
+								{adventureRun.riddles.reduce((sum, r) => sum + r.attempts, 0)} guesses
+							</span>
+						</div>
+					</div>
+					<RiddleCard
+						riddle={currentRiddle}
+						className="lg:h-[400px]"
+						hideSolveButton={true}
+						hideStats={true}
+					/>
 				</div>
 
 				{/* Answer Input */}
@@ -442,6 +521,7 @@ Try today's adventure at riddonkulous.com`}
 						word={currentRiddle.word}
 						onAnswerChange={handleAnswerChange}
 						disabled={adventureRun.riddles[currentRiddleIndex].solved}
+						isIncorrect={feedback === 'incorrect'}
 					/>
 
 					<BasicButton
