@@ -14,6 +14,7 @@ interface RiddleCardProps {
 	solveHref?: string
 	textClassName?: string
 	hideStats?: boolean
+	extraTopPadding?: boolean
 }
 
 export const RiddleCard = ({
@@ -24,12 +25,13 @@ export const RiddleCard = ({
 	solveHref,
 	textClassName,
 	hideStats = false,
+	extraTopPadding = false,
 }: RiddleCardProps) => {
 	const isCompact = variant === 'compact'
 
 	return (
 		<div
-			className={`relative ${isCompact ? 'py-2' : 'pt-12 pb-2'} px-2 rounded-lg ${
+			className={`relative ${isCompact ? 'py-2' : extraTopPadding ? 'pt-12 pb-2' : 'py-2'} px-2 rounded-lg ${
 				isCompact ? 'h-[120px]' : ''
 			} w-full flex flex-col items-stretch overflow-hidden  border-white transition-all duration-50 ${className}`}
 		>

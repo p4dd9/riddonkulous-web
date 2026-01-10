@@ -682,6 +682,7 @@ Can you beat my score?`}
 						className="lg:h-[400px]"
 						hideSolveButton={true}
 						hideStats={true}
+						extraTopPadding={true}
 					/>
 				</div>
 
