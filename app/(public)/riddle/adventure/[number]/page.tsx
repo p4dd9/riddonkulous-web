@@ -240,13 +240,15 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		const solvedCount = adventureRun.riddles.filter((r) => r.solved).length
 
 		// Find fastest and slowest riddles
-		const solvedRiddles = adventureRun.riddles.filter((r) => r.solved && r.solveTime)
+		const solvedRiddles = adventureRun.riddles.filter(
+			(r): r is RiddleRun & { solveTime: number } => r.solved === true && r.solveTime !== undefined
+		)
 		const fastest = solvedRiddles.reduce(
-			(min, r) => (!min || (r.solveTime && r.solveTime < min.solveTime) ? r : min),
+			(min, r) => (!min || r.solveTime < min.solveTime ? r : min),
 			null as (RiddleRun & { solveTime: number }) | null
 		)
 		const slowest = solvedRiddles.reduce(
-			(max, r) => (!max || (r.solveTime && r.solveTime > max.solveTime) ? r : max),
+			(max, r) => (!max || r.solveTime > max.solveTime ? r : max),
 			null as (RiddleRun & { solveTime: number }) | null
 		)
 
