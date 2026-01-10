@@ -16,6 +16,24 @@ interface LetterRearrangeInputProps {
 	isIncorrect?: boolean
 }
 
+// Helper function to shuffle array and ensure it's not the original order
+const shuffleLetters = (originalWord: string): string[] => {
+	const letterArray = originalWord.toLowerCase().split('')
+	let shuffled: string[]
+	let attempts = 0
+	const maxAttempts = 100
+
+	do {
+		shuffled = [...letterArray].sort(() => Math.random() - 0.5)
+		attempts++
+		// Check if shuffled matches original
+		const isSame = shuffled.every((letter, index) => letter === letterArray[index])
+		if (!isSame) break
+	} while (attempts < maxAttempts)
+
+	return shuffled
+}
+
 export const LetterRearrangeInput = ({
 	word,
 	onAnswerChange,
@@ -27,9 +45,8 @@ export const LetterRearrangeInput = ({
 	const [isAnimating, setIsAnimating] = useState(false)
 
 	useEffect(() => {
-		// Shuffle the letters initially
-		const letterArray = word.toLowerCase().split('')
-		const shuffled = [...letterArray].sort(() => Math.random() - 0.5)
+		// Shuffle the letters initially, ensuring it's not the original word
+		const shuffled = shuffleLetters(word)
 		const letterItems: LetterItem[] = shuffled.map((letter, index) => ({
 			id: `${letter}-${index}-${Date.now()}`,
 			letter,
@@ -68,11 +85,18 @@ export const LetterRearrangeInput = ({
 	const handleShuffle = () => {
 		if (disabled) return
 
-		// Shuffle all letters (both selected and available)
-		const allLetters = [...letters].sort(() => Math.random() - 0.5)
-		// Reset selection when shuffling
-		const resetLetters = allLetters.map((item) => ({ ...item, isSelected: false }))
-		setLetters(resetLetters)
+		// Shuffle all letters, ensuring it's not the original word
+		const currentOrder = letters.map((item) => item.letter).join('')
+		const shuffled = shuffleLetters(word)
+		
+		// Create new letter items with shuffled order
+		const shuffledItems: LetterItem[] = shuffled.map((letter, index) => ({
+			id: `${letter}-${index}-${Date.now()}`,
+			letter,
+			isSelected: false,
+		}))
+		
+		setLetters(shuffledItems)
 		setSelectedLetters([])
 		onAnswerChange('')
 	}
@@ -80,8 +104,25 @@ export const LetterRearrangeInput = ({
 	const handleClear = () => {
 		if (disabled) return
 
-		const allLetters = letters.map((item) => ({ ...item, isSelected: false }))
-		setLetters(allLetters)
+		// Check if current order matches original word
+		const currentOrder = letters.map((item) => item.letter).join('')
+		const originalWord = word.toLowerCase()
+		
+		if (currentOrder === originalWord) {
+			// If it matches, shuffle to ensure it's different
+			const shuffled = shuffleLetters(word)
+			const shuffledItems: LetterItem[] = shuffled.map((letter, index) => ({
+				id: `${letter}-${index}-${Date.now()}`,
+				letter,
+				isSelected: false,
+			}))
+			setLetters(shuffledItems)
+		} else {
+			// Just reset selection without changing order
+			const allLetters = letters.map((item) => ({ ...item, isSelected: false }))
+			setLetters(allLetters)
+		}
+		
 		setSelectedLetters([])
 		onAnswerChange('')
 	}
@@ -90,10 +131,27 @@ export const LetterRearrangeInput = ({
 	useEffect(() => {
 		if (isIncorrect && selectedLetters.length > 0) {
 			setIsAnimating(true)
-			// After 1 second, reset letters and clear selection (without shuffling)
+			// After 1 second, reset letters and clear selection
 			const timer = setTimeout(() => {
-				const allLetters = letters.map((item) => ({ ...item, isSelected: false }))
-				setLetters(allLetters)
+				// Check if current order matches original word
+				const currentOrder = letters.map((item) => item.letter).join('')
+				const originalWord = word.toLowerCase()
+				
+				if (currentOrder === originalWord) {
+					// If it matches, shuffle to ensure it's different
+					const shuffled = shuffleLetters(word)
+					const shuffledItems: LetterItem[] = shuffled.map((letter, index) => ({
+						id: `${letter}-${index}-${Date.now()}`,
+						letter,
+						isSelected: false,
+					}))
+					setLetters(shuffledItems)
+				} else {
+					// Just reset selection without changing order
+					const allLetters = letters.map((item) => ({ ...item, isSelected: false }))
+					setLetters(allLetters)
+				}
+				
 				setSelectedLetters([])
 				onAnswerChange('')
 				setIsAnimating(false)

@@ -7,6 +7,7 @@ import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixe
 import { BasicButton } from '@/app/components/buttons/BasicButton'
 import { AdventureShareModal } from '@/app/components/modals/AdventureShareModal'
 import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
+import { ClassicTextInput } from '@/app/components/riddles/ClassicTextInput'
 import { LetterRearrangeInput } from '@/app/components/riddles/LetterRearrangeInput'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
@@ -45,8 +46,30 @@ interface AdventureResponse {
 }
 
 const STORAGE_KEY_PREFIX = 'riddonkulous-adventure-'
+const MODE_STORAGE_KEY = 'riddonkulous-adventure-mode'
 
 const getStorageKey = (adventureNumber: number) => `${STORAGE_KEY_PREFIX}${adventureNumber}`
+
+type RiddleMode = 'liddle' | 'riddle'
+
+const loadMode = (): RiddleMode => {
+	if (typeof window === 'undefined') return 'liddle'
+	try {
+		const stored = localStorage.getItem(MODE_STORAGE_KEY)
+		return (stored === 'riddle' ? 'riddle' : 'liddle') as RiddleMode
+	} catch {
+		return 'liddle'
+	}
+}
+
+const saveMode = (mode: RiddleMode) => {
+	if (typeof window === 'undefined') return
+	try {
+		localStorage.setItem(MODE_STORAGE_KEY, mode)
+	} catch (error) {
+		console.error('Failed to save mode:', error)
+	}
+}
 
 const loadAdventureProgress = (adventureNumber: number): AdventureRun | null => {
 	if (typeof window === 'undefined') return null
@@ -81,6 +104,13 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 	const [showEndScreen, setShowEndScreen] = useState(false)
 	const [isShareModalOpen, setIsShareModalOpen] = useState(false)
 	const [showWelcomeScreen, setShowWelcomeScreen] = useState(false)
+	const [riddleMode, setRiddleMode] = useState<RiddleMode>('liddle')
+	const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
+
+	// Load mode preference
+	useEffect(() => {
+		setRiddleMode(loadMode())
+	}, [])
 
 	// Load params and initialize
 	useEffect(() => {
@@ -256,7 +286,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 			null as (RiddleRun & { solveTime: number }) | null
 		)
 
-		// Generate visual trace
+		// Generate perfection score
 		const trace = adventureRun.riddles.map((r) => {
 			if (r.attempts === 1) return '🟩'
 			if (r.attempts >= 2 && r.attempts <= 3) return '🟨'
@@ -316,6 +346,37 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		setShowWelcomeScreen(false)
 	}
 
+	const handleModeChange = (mode: RiddleMode) => {
+		setRiddleMode(mode)
+		saveMode(mode)
+		setIsSettingsModalOpen(false)
+	}
+
+	const handleReplay = () => {
+		if (!adventure || !adventureNumber) return
+		// Clear progress
+		localStorage.removeItem(getStorageKey(adventureNumber))
+		// Reset state
+		const newRun: AdventureRun = {
+			adventureNumber: adventure.adventure.adventureNumber,
+			date: adventure.adventure.featuredDate,
+			seed: adventure.adventure.seed,
+			startTime: 0,
+			riddles: adventure.riddles.map((riddle) => ({
+				riddleId: riddle.postId,
+				attempts: 0,
+				solved: false,
+				startTime: 0,
+			})),
+		}
+		setAdventureRun(newRun)
+		setCurrentRiddleIndex(0)
+		setAnswer('')
+		setFeedback(null)
+		setShowEndScreen(false)
+		setShowWelcomeScreen(true)
+	}
+
 	const currentRiddle = adventure.riddles[currentRiddleIndex]
 	const shareData = getShareCardData()
 
@@ -339,8 +400,52 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 							<div className="flex flex-col gap-4 text-lg">
 								<p>7 riddles. One journey. Your daily challenge.</p>
 								<p className="text-gray-400 text-base">
-									Rearrange letters to solve each riddle. Time is tracked, but there&apos;s no
-									pressure. Just you and the puzzle.
+									Time is tracked, but there&apos;s no pressure. Just you and the puzzle.
+								</p>
+							</div>
+							{/* Mode Selection */}
+							<div className="w-full flex flex-col gap-3">
+								<p className="text-sm text-gray-400">Choose your solving mode:</p>
+								<div className="flex gap-3">
+									<button
+										onClick={() => handleModeChange('liddle')}
+										className={`flex-1 px-4 py-3 rounded-md border-2 transition-all flex flex-col items-center gap-2 ${
+											riddleMode === 'liddle'
+												? 'bg-primary border-primary text-white shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px]'
+												: 'bg-gray-800 border-gray-600 text-gray-300 hover:border-gray-500 opacity-60'
+										}`}
+									>
+										<Image
+											src="/icons/font.png"
+											alt=""
+											width={24}
+											height={24}
+											className="w-6 h-6"
+										/>
+										<div className="text-base">Liddle Mode</div>
+										<div className="text-xs opacity-80">Rearrange letters</div>
+									</button>
+									<button
+										onClick={() => handleModeChange('riddle')}
+										className={`flex-1 px-4 py-3 rounded-md border-2 transition-all flex flex-col items-center gap-2 ${
+											riddleMode === 'riddle'
+												? 'bg-primary border-primary text-white shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px]'
+												: 'bg-gray-800 border-gray-600 text-gray-300 hover:border-gray-500 opacity-60'
+										}`}
+									>
+										<Image
+											src="/icons/pencil.png"
+											alt=""
+											width={24}
+											height={24}
+											className="w-6 h-6"
+										/>
+										<div className="text-base">Riddle Mode</div>
+										<div className="text-xs opacity-80">Type your answer</div>
+									</button>
+								</div>
+								<p className="text-xs text-gray-500">
+									You can switch modes anytime during the adventure
 								</p>
 							</div>
 							<BasicButton
@@ -403,30 +508,63 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 
 						<div className="bg-gray-800 rounded-lg p-6 flex flex-col gap-4">
 							<div className="text-center">
-								<h2 className="text-xl mb-2">Riddonkulous — Daily Riddle Adventure</h2>
-								<p className="text-2xl font-bold">#{shareData.adventureNumber}</p>
+								<h2 className="text-xl mb-2">
+									Riddonkulous Daily Riddle Adventure #{shareData.adventureNumber}
+								</h2>
 							</div>
 
 							<div className="grid grid-cols-2 gap-4">
 								<div className="text-center">
-									<p className="text-3xl font-bold">🧠</p>
+									<div className="flex justify-center mb-2">
+										<Image
+											src="/icons/bulb.png"
+											alt="Riddles"
+											width={32}
+											height={32}
+											className="w-8 h-8"
+										/>
+									</div>
 									<p className="text-sm text-gray-400">Riddles</p>
 									<p className="text-xl font-semibold">
 										{shareData.solvedCount}/{adventure.riddles.length}
 									</p>
 								</div>
 								<div className="text-center">
-									<p className="text-3xl font-bold">⏱</p>
+									<div className="flex justify-center mb-2">
+										<Image
+											src="/icons/clock.png"
+											alt="Total Time"
+											width={32}
+											height={32}
+											className="w-8 h-8"
+										/>
+									</div>
 									<p className="text-sm text-gray-400">Total Time</p>
 									<p className="text-xl font-semibold">{formatTime(shareData.totalTime)}</p>
 								</div>
 								<div className="text-center">
-									<p className="text-3xl font-bold">🎯</p>
+									<div className="flex justify-center mb-2">
+										<Image
+											src="/icons/crosshair.png"
+											alt="Attempts"
+											width={32}
+											height={32}
+											className="w-8 h-8"
+										/>
+									</div>
 									<p className="text-sm text-gray-400">Attempts</p>
 									<p className="text-xl font-semibold">{shareData.totalAttempts}</p>
 								</div>
 								<div className="text-center">
-									<p className="text-3xl font-bold">⚡</p>
+									<div className="flex justify-center mb-2">
+										<Image
+											src="/icons/arrow_speed.png"
+											alt="Fastest"
+											width={32}
+											height={32}
+											className="w-8 h-8"
+										/>
+									</div>
 									<p className="text-sm text-gray-400">Fastest</p>
 									<p className="text-xl font-semibold">
 										{shareData.fastest ? `Riddle ${shareData.fastest}` : '—'}
@@ -435,7 +573,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 							</div>
 
 							<div className="text-center">
-								<p className="text-sm text-gray-400 mb-2">Visual Trace</p>
+								<p className="text-sm text-gray-400 mb-2">Perfection Score</p>
 								<p className="text-2xl">{shareData.trace.join(' ')}</p>
 							</div>
 
@@ -443,11 +581,17 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 								<p className="text-lg italic">{shareData.flavorLine}</p>
 							</div>
 
-							<div className="flex justify-center">
+							<div className="flex flex-col gap-3">
 								<BasicButton
 									text="Share Results"
 									onClick={() => setIsShareModalOpen(true)}
 									customClass="px-6 py-3"
+								/>
+								<BasicButton
+									text="Replay Adventure"
+									onClick={handleReplay}
+									customClass="px-6 py-3"
+									variant="secondary"
 								/>
 							</div>
 						</div>
@@ -461,14 +605,21 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 					>
 						<AdventureShareModal
 							url={`${typeof window !== 'undefined' ? window.location.origin : ''}/riddle/adventure/${shareData.adventureNumber}`}
-							title={`Riddonkulous — Daily Riddle Adventure #${shareData.adventureNumber}`}
-							text={`🧠 Riddles: ${shareData.solvedCount}/${adventure.riddles.length}
-⏱ Total Time: ${formatTime(shareData.totalTime)}
-🎯 Attempts: ${shareData.totalAttempts}
-⚡ Fastest: ${shareData.fastest ? `Riddle ${shareData.fastest}` : '—'}
+							title={`Riddonkulous Daily Riddle Adventure #${shareData.adventureNumber}`}
+							text={`Riddles: ${shareData.solvedCount}/${adventure.riddles.length}
+Total Time: ${formatTime(shareData.totalTime)}
+Attempts: ${shareData.totalAttempts}
+Fastest: ${shareData.fastest ? `Riddle ${shareData.fastest}` : '—'}
 
-Visual Trace:
-${shareData.trace.join(' ')}
+Perfection Score:
+${shareData.trace
+	.map((emoji) => {
+		if (emoji === '🟩') return '[1]'
+		if (emoji === '🟨') return '[2-3]'
+		if (emoji === '🟥') return '[4+]'
+		return emoji
+	})
+	.join(' ')}
 
 ${shareData.flavorLine}
 
@@ -504,14 +655,28 @@ Try today's adventure at riddonkulous.com`}
 
 				{/* Riddle Card */}
 				<div className="w-full relative">
-					{/* Total guesses counter */}
-					<div className="absolute top-2 right-2 z-20 px-3 py-1.5">
+					{/* Total guesses counter - moved to left */}
+					<div className="absolute top-2 left-2 z-20 px-3 py-1.5">
 						<div className="flex items-center gap-2">
 							<span className="text-sm font-semibold">
 								{adventureRun.riddles.reduce((sum, r) => sum + r.attempts, 0)} guesses
 							</span>
 						</div>
 					</div>
+					{/* Settings button - top right */}
+					<button
+						onClick={() => setIsSettingsModalOpen(true)}
+						className="absolute top-2 right-2 z-20 p-2 bg-gray-800/80 hover:bg-gray-700/80 rounded-md transition-colors"
+						aria-label="Settings"
+					>
+						<Image
+							src="/icons/settings_gear.png"
+							alt="Settings"
+							width={20}
+							height={20}
+							className="w-5 h-5"
+						/>
+					</button>
 					<RiddleCard
 						riddle={currentRiddle}
 						className="lg:h-[400px]"
@@ -522,12 +687,21 @@ Try today's adventure at riddonkulous.com`}
 
 				{/* Answer Input */}
 				<div className="w-full flex flex-col gap-4">
-					<LetterRearrangeInput
-						word={currentRiddle.word}
-						onAnswerChange={handleAnswerChange}
-						disabled={adventureRun.riddles[currentRiddleIndex].solved}
-						isIncorrect={feedback === 'incorrect'}
-					/>
+					{riddleMode === 'liddle' ? (
+						<LetterRearrangeInput
+							word={currentRiddle.word}
+							onAnswerChange={handleAnswerChange}
+							disabled={adventureRun.riddles[currentRiddleIndex].solved}
+							isIncorrect={feedback === 'incorrect'}
+						/>
+					) : (
+						<ClassicTextInput
+							value={answer}
+							onChange={handleAnswerChange}
+							disabled={adventureRun.riddles[currentRiddleIndex].solved}
+							isIncorrect={feedback === 'incorrect'}
+						/>
+					)}
 
 					<BasicButton
 						text={adventureRun.riddles[currentRiddleIndex].solved ? 'Solved!' : 'Check Answer'}
@@ -539,6 +713,48 @@ Try today's adventure at riddonkulous.com`}
 					{feedback === 'correct' && <p className="text-green-600 text-center">🎉 Correct! Well done!</p>}
 					{feedback === 'incorrect' && <p className="text-red-600 text-center">❌ Incorrect. Try again!</p>}
 				</div>
+
+				{/* Settings Modal */}
+				<BottomSheetModal
+					isOpen={isSettingsModalOpen}
+					onClose={() => setIsSettingsModalOpen(false)}
+					title="Riddle Mode"
+					icon="/icons/settings_gear.png"
+				>
+					<div className="flex flex-col gap-4">
+						<p className="text-sm text-gray-400">Choose how you want to solve riddles:</p>
+						<div className="flex flex-col gap-3">
+							<button
+								onClick={() => handleModeChange('liddle')}
+								className={`w-full px-4 py-3 rounded-md border-2 transition-all flex flex-col items-start gap-2 ${
+									riddleMode === 'liddle'
+										? 'bg-primary border-primary text-white shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px]'
+										: 'bg-gray-800 border-gray-600 text-gray-300 hover:border-gray-500 opacity-60'
+								}`}
+							>
+								<div className="flex items-center gap-2">
+									<Image src="/icons/font.png" alt="" width={20} height={20} className="w-5 h-5" />
+									<div className="text-base">Liddle Mode</div>
+								</div>
+								<div className="text-xs opacity-80">Rearrange letters to build your answer</div>
+							</button>
+							<button
+								onClick={() => handleModeChange('riddle')}
+								className={`w-full px-4 py-3 rounded-md border-2 transition-all flex flex-col items-start gap-2 ${
+									riddleMode === 'riddle'
+										? 'bg-primary border-primary text-white shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px]'
+										: 'bg-gray-800 border-gray-600 text-gray-300 hover:border-gray-500 opacity-60'
+								}`}
+							>
+								<div className="flex items-center gap-2">
+									<Image src="/icons/pencil.png" alt="" width={20} height={20} className="w-5 h-5" />
+									<div className="text-base">Riddle Mode</div>
+								</div>
+								<div className="text-xs opacity-80">Type your answer directly</div>
+							</button>
+						</div>
+					</div>
+				</BottomSheetModal>
 			</div>
 		</>
 	)

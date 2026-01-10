@@ -29,7 +29,7 @@ export const RiddleCard = ({
 
 	return (
 		<div
-			className={`relative py-2 px-2 rounded-lg ${
+			className={`relative ${isCompact ? 'py-2' : 'pt-12 pb-2'} px-2 rounded-lg ${
 				isCompact ? 'h-[120px]' : ''
 			} w-full flex flex-col items-stretch overflow-hidden  border-white transition-all duration-50 ${className}`}
 		>
