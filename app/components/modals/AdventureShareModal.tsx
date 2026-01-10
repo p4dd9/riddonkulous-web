@@ -60,13 +60,9 @@ export const AdventureShareModal = ({ url, title, text, onClose }: AdventureShar
 				{copied ? (
 					<div className="bg-green-900/30 border border-green-700 rounded-lg p-4">
 						<p className="text-green-400 text-sm text-center mb-2">
-							Your results have been copied! You can now paste them anywhere:
+							Your results have been copied! You can now paste them anywhere and share it with your
+							friends.
 						</p>
-						<ul className="text-green-300 text-xs space-y-1 text-center">
-							<li>• Social media (Twitter, Facebook, etc.)</li>
-							<li>• Messaging apps (WhatsApp, Discord, etc.)</li>
-							<li>• Email or any text field</li>
-						</ul>
 					</div>
 				) : (
 					<div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
@@ -87,7 +83,7 @@ export const AdventureShareModal = ({ url, title, text, onClose }: AdventureShar
 					}`}
 				>
 					<Image
-						src={copied ? '/icons/check.png' : '/icons/link.png'}
+						src={copied ? '/icons/checkmark.png' : '/icons/link.png'}
 						alt={copied ? 'Copied' : 'Copy'}
 						width={20}
 						height={20}

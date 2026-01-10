@@ -623,7 +623,7 @@ ${shareData.trace
 
 ${shareData.flavorLine}
 
-Try today's adventure at riddonkulous.com`}
+Can you beat my score?`}
 							onClose={() => setIsShareModalOpen(false)}
 						/>
 					</BottomSheetModal>
