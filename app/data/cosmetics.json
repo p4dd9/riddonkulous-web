@@ -157,7 +157,7 @@
 		"assetName": "FONT001.otf",
 		"description": "",
 		"type": "font",
-		"pack": "Pixel Friends"
+		"pack": "Cartoon"
 	},
 	{
 		"name": "Jupiteroid",
@@ -2558,5 +2558,155 @@
 		"description": "",
 		"type": "font",
 		"pack": "Handwriting"
+	},
+	{
+		"name": "Bamboo Default",
+		"sku": "BG120",
+		"priceCredits": 50,
+		"tag": "Common",
+		"assetName": "BG120.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Bamboo"
+	},
+	{
+		"name": "Bamboo Red",
+		"sku": "BG121",
+		"priceCredits": 50,
+		"tag": "Common",
+		"assetName": "BG121.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Bamboo"
+	},
+	{
+		"name": "Bamboo Yellow",
+		"sku": "BG122",
+		"priceCredits": 100,
+		"tag": "Mythic",
+		"assetName": "BG122.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Bamboo"
+	},
+	{
+		"name": "Bamboo Blue",
+		"sku": "BG123",
+		"priceCredits": 50,
+		"tag": "Common",
+		"assetName": "BG123.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Bamboo"
+	},
+	{
+		"name": "Bamboo Green",
+		"sku": "BG124",
+		"priceCredits": 50,
+		"tag": "Common",
+		"assetName": "BG124.png",
+		"description": "",
+		"type": "canvas",
+		"pack": "Bamboo"
+	},
+	{
+		"name": "Signal To Outer Space",
+		"sku": "BG125",
+		"priceCredits": 75,
+		"tag": "Rare",
+		"assetName": "BG125.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan (Night)"
+	},
+	{
+		"name": "Sunday Store",
+		"sku": "BG126",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG126.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan (Night)"
+	},
+	{
+		"name": "A Mild Ride Home",
+		"sku": "BG127",
+		"priceCredits": 125,
+		"tag": "Mythic",
+		"assetName": "BG127.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan (Night)"
+	},
+	{
+		"name": "Counting The Stars",
+		"sku": "BG128",
+		"priceCredits": 150,
+		"tag": "ShadowMythic",
+		"assetName": "BG128.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan (Night)"
+	},
+	{
+		"name": "Riverside View",
+		"sku": "BG129",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "BG129.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan (Night)"
+	},
+	{
+		"name": "Secret Street Around The Corner",
+		"sku": "BG130",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG130.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan (Night)"
+	},
+	{
+		"name": "Moon's Greetings",
+		"sku": "BG131",
+		"priceCredits": 125,
+		"tag": "Mythic",
+		"assetName": "BG131.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan (Night)"
+	},
+	{
+		"name": "Bridge of Dreams",
+		"sku": "BG132",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG132.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan (Night)"
+	},
+	{
+		"name": "Shooting Stars Crosswalk",
+		"sku": "BG133",
+		"priceCredits": 50,
+		"tag": "Uncommon",
+		"assetName": "BG133.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan (Night)"
+	},
+	{
+		"name": "Off the Grid",
+		"sku": "BG134",
+		"priceCredits": 25,
+		"tag": "Common",
+		"assetName": "BG134.gif",
+		"description": "",
+		"type": "canvas",
+		"pack": "Inside Japan (Night)"
 	}
 ]
