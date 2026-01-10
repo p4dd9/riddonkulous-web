@@ -377,8 +377,13 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 					<div className="flex flex-col items-center gap-6">
 						<Image src={palImage} alt="Pal" width={128} height={128} className="w-32 h-32" unoptimized />
 						<p className="text-2xl md:text-3xl text-center">{message}</p>
-						<div className="w-full max-w-xs">
+						{/* Category grid for screens >= 330px */}
+						<div className="w-full max-w-xs hidden min-[330px]:block">
 							<GoogleAdCategoryGrid />
+						</div>
+						{/* Mobile banner for screens < 330px */}
+						<div className="w-full max-w-xs block min-[330px]:hidden">
+							<GoogleAdMobileBanner />
 						</div>
 						<BasicButton text="Continue" onClick={handleContinue} customClass="px-8 py-3" />
 					</div>
