@@ -236,12 +236,12 @@ export const RiddleSingleView = ({
 								className="flex items-center justify-center gap-2 px-3 py-3 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors w-full md:w-auto"
 								aria-label="Show hint"
 							>
-								<Image src="/icons/light.png" alt="Hint" width={20} height={20} className="w-5 h-5" />
+								<Image src="/icons/item.png" alt="Hint" width={20} height={20} className="w-5 h-5" />
 								<span className="text-sm">Show Hint</span>
 							</button>
 						) : !state.hasGuessed ? (
 							<div className="flex items-center justify-center gap-2 px-3 py-3 rounded-md w-full md:w-auto invisible pointer-events-none">
-								<Image src="/icons/light.png" alt="" width={20} height={20} className="w-5 h-5" />
+								<Image src="/icons/item.png" alt="" width={20} height={20} className="w-5 h-5" />
 								<span className="text-sm">Show Hint</span>
 							</div>
 						) : null}
@@ -281,7 +281,7 @@ export const RiddleSingleView = ({
 				isOpen={state.isHintModalOpen}
 				onClose={() => dispatch({ type: 'SET_IS_HINT_MODAL_OPEN', payload: false })}
 				title="Hint"
-				icon="/icons/light.png"
+				icon="/icons/item.png"
 			>
 				<HintModal
 					wordLength={riddle.word.length}
@@ -308,13 +308,13 @@ export const RiddleSingleView = ({
 					<BasicButton
 						text="Back"
 						onClick={handlePrevious}
-						customClass={!hasPrevious ? 'opacity-50 cursor-not-allowed' : ''}
+						customClass={`px-4 py-2 md:px-8 md:py-4 md:min-w-[120px] ${!hasPrevious ? 'opacity-50 cursor-not-allowed' : ''}`}
 						disabled={!hasPrevious}
 					/>
 					<BasicButton
 						text="Next"
 						onClick={handleNext}
-						customClass={!hasNext ? 'opacity-50 cursor-not-allowed' : ''}
+						customClass={`px-4 py-2 md:px-8 md:py-4 md:min-w-[120px] ${!hasNext ? 'opacity-50 cursor-not-allowed' : ''}`}
 						disabled={!hasNext}
 					/>
 				</div>

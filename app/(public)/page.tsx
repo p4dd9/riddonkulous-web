@@ -105,9 +105,10 @@ export default async function Home() {
 				</div>
 			</div>*/}
 				<div className="w-full flex flex-col gap-6">
+					{/* Top Section: Riddle of the Day and Adventure - Equal Prominence */}
 					<div className="w-full flex flex-col lg:flex-row lg:items-start gap-6">
-						{/* Main Content - 2/3 width - Left on desktop */}
-						<div className="flex flex-col gap-4 lg:w-2/3 order-1 lg:order-1">
+						{/* Riddle of the Day - Left */}
+						<div className="flex flex-col gap-4 lg:w-1/2 order-1">
 							<h1 className="text-2xl md:text-4xl lg:h-12 flex items-center gap-2">
 								<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />
 								Riddle of the Day
@@ -125,46 +126,58 @@ export default async function Home() {
 							<GoogleAdMobileBanner />
 						</div>
 
-						{/* Daily Riddle Adventure - Mobile: above Trending, Desktop: in feed section */}
-						<div className="flex flex-col gap-4 lg:hidden order-3">
-							<div className="relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[200px] md:min-h-[250px] h-full">
+						{/* Daily Riddle Adventure - Right, Equal Prominence */}
+						<div className="flex flex-col gap-4 lg:w-1/2 order-3 lg:order-2">
+							<h2 className="text-2xl md:text-4xl lg:h-12 flex items-center gap-2 flex-wrap">
+								<Image
+									src="/icons/item.png"
+									alt="Adventure"
+									width={32}
+									height={32}
+									className="w-8 h-8"
+								/>
+								<span className="flex items-center gap-2">Daily Adventure</span>
+							</h2>
+							<div className="relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[384px] h-full border-2 border-primary">
 								<div
 									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
 									style={{
 										backgroundImage: 'url(/canvas/BG055.png)',
-										filter: 'brightness(0.5)',
+										filter: 'brightness(0.4)',
 									}}
 								/>
+								<span className="absolute top-2 right-1 px-2 py-1 text-lg bg-primary text-white rounded-full whitespace-nowrap z-20 rotate-12">
+									NEW
+								</span>
 								<div className="relative z-10 flex flex-col items-center justify-center text-center px-4 gap-4">
 									<Image
-										src="/icons/light.png"
+										src="/icons/item.png"
 										alt="Adventure"
-										width={48}
-										height={48}
-										className="w-12 h-12"
+										width={64}
+										height={64}
+										className="w-16 h-16"
 									/>
-									<h3 className="text-2xl md:text-4xl">
-										Daily Riddle Adventure
-										{currentAdventureNumber ? ` #${currentAdventureNumber}` : ''}
-									</h3>
-									<p className="text-sm md:text-base opacity-90">
-										7 riddles. One journey. Your daily challenge.
+									<h3 className="text-2xl md:text-3xl font-bold">Daily Riddle Adventure</h3>
+									<p className="text-base md:text-lg opacity-90 max-w-md">
+										Solve 7 riddles in sequence. Your daily challenge.
 									</p>
 									<div className="mt-4">
 										<LinkAsButton
 											href="/riddle/adventure"
 											text="Start Adventure"
 											textAlign="center"
-											customClass="px-8 py-2"
+											customClass="px-8 py-3 text-lg"
 										/>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
 
-						{/* Trending Sidebar - 1/3 width - Right on desktop */}
-						<div className="flex flex-col gap-4 lg:w-1/3 order-4 lg:order-2">
-							<h2 className="text-xl md:text-2xl lg:h-12 flex items-center gap-2">
+					{/* Trending Section - Below Riddle of Day and Adventure */}
+					<div className="w-full flex flex-col gap-4">
+						<div className="flex items-center justify-between gap-4">
+							<h2 className="text-xl md:text-2xl flex items-center gap-2">
 								<Image
 									src="/icons/script_lightning.png"
 									alt="Trending"
@@ -174,81 +187,27 @@ export default async function Home() {
 								/>
 								Trending
 							</h2>
-							<div className="flex flex-col gap-3">
-								{filteredTrendingRiddles.map((riddle) => (
-									<RiddleCard riddle={riddle} variant="compact" key={riddle.postId} />
-								))}
-							</div>
+							<LinkAsButton
+								href="/riddle-feed"
+								text="New Riddles"
+								textAlign="center"
+								customClass="text-sm py-1 px-2 rounded-md whitespace-nowrap"
+								threeD={true}
+							/>
+						</div>
+						<div className="flex flex-col lg:flex-row gap-3">
+							{filteredTrendingRiddles.map((riddle) => (
+								<RiddleCard
+									riddle={riddle}
+									variant="compact"
+									key={riddle.postId}
+									className="lg:flex-1"
+									hideBackground={true}
+								/>
+							))}
 						</div>
 					</div>
 
-					{/* Riddle Feed Section - Below existing content */}
-					<div className="w-full flex flex-col lg:flex-row gap-4">
-						{/* Left: Daily Riddle Adventure - Desktop only */}
-						<div className="hidden lg:flex lg:w-1/2 flex-col gap-4">
-							<div className="relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[200px] md:min-h-[250px] h-full">
-								<div
-									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
-									style={{
-										backgroundImage: 'url(/canvas/BG055.png)',
-										filter: 'brightness(0.5)',
-									}}
-								/>
-								<div className="relative z-10 flex flex-col items-center justify-center text-center px-4 gap-4">
-									<Image
-										src="/icons/light.png"
-										alt="Adventure"
-										width={48}
-										height={48}
-										className="w-12 h-12"
-									/>
-									<h3 className="text-2xl md:text-4xl">
-										Daily Riddle Adventure
-										{currentAdventureNumber ? ` #${currentAdventureNumber}` : ''}
-									</h3>
-									<p className="text-sm md:text-base opacity-90">
-										7 riddles. One journey. Your daily challenge.
-									</p>
-									<div className="mt-4">
-										<LinkAsButton
-											href="/riddle/adventure"
-											text="Start Adventure"
-											textAlign="center"
-											customClass="px-8 py-2"
-										/>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						{/* Right: Discover New Riddles CTA */}
-						<div className="lg:w-1/2 flex flex-col gap-4">
-							<div className="relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[200px] md:min-h-[250px] h-full">
-								<div
-									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
-									style={{
-										backgroundImage: 'url(/canvas/BG040.png)',
-										filter: 'brightness(0.5)',
-									}}
-								/>
-								<div className="relative z-10 flex flex-col items-center justify-center text-center px-4 gap-4">
-									<h3 className="text-2xl md:text-4xl ">Discover Riddles</h3>
-									<div className="mt-4">
-										<LinkAsButton
-											href="/riddle-feed"
-											text="Open Riddle Feed"
-											textAlign="center"
-											customClass="px-8 py-2"
-										/>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				{/* Explore Riddles Section */}
-				<div className="w-full flex flex-col gap-4">
 					<h2 className="text-2xl md:text-3xl">Explore Riddles</h2>
 					<div className="w-full grid grid-cols-2 md:grid-cols-3 gap-4">
 						{tagsData.tags

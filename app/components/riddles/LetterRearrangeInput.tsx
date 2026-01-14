@@ -173,11 +173,11 @@ export const LetterRearrangeInput = ({
 							key={item.id}
 							onClick={() => handleSelectedLetterClick(item.id)}
 							disabled={disabled || isAnimating}
-							className={`px-4 py-2 bg-primary hover:bg-primary/80 text-white rounded-md text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+							className={`min-w-[40px] min-h-[40px] w-[40px] h-[40px] bg-primary hover:bg-primary/80 text-white rounded-md text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center ${
 								isAnimating ? 'letter-slide-back' : ''
 							}`}
 						>
-							{item.letter.toUpperCase()}
+							{item.letter === ' ' ? '' : item.letter.toUpperCase()}
 						</button>
 					))
 				)}
@@ -190,13 +190,13 @@ export const LetterRearrangeInput = ({
 						key={item.id}
 						onClick={() => handleLetterClick(item.id)}
 						disabled={disabled || item.isSelected}
-						className={`px-4 py-2 text-white rounded-md text-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+						className={`min-w-[40px] min-h-[40px] w-[40px] h-[40px] text-white rounded-md text-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center ${
 							item.isSelected
 								? 'bg-transparent cursor-default invisible'
 								: 'bg-gray-700 hover:bg-gray-600'
 						}`}
 					>
-						{item.letter.toUpperCase()}
+						{item.letter === ' ' ? '' : item.letter.toUpperCase()}
 					</button>
 				))}
 			</div>

@@ -55,7 +55,7 @@ export const RelatedResources = ({ excludePage }: RelatedResourcesProps) => {
 		/*{
 			id: 'benefits-of-riddles-brain-health',
 			href: '/benefits-of-riddles-brain-health',
-			icon: '/icons/light.png',
+			icon: '/icons/item.png',
 			iconAlt: 'Brain Health',
 			title: 'Benefits of Riddles for Brain Health',
 			description:

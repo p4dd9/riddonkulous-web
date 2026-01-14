@@ -141,9 +141,9 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 					nextUrl={hasNext ? `/riddle/daily/${riddleNumber + 1}` : undefined}
 					previousUrl={hasPrevious ? `/riddle/daily/${riddleNumber - 1}` : undefined}
 					title={
-						<div className="flex items-center gap-2">
-							<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />#
-							{riddle.riddleNumber} Riddle of the Day
+					<div className="flex items-center gap-2">
+						<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />#
+						{riddle.riddleNumber} Riddle of the Day
 						</div>
 					}
 					showDate={true}

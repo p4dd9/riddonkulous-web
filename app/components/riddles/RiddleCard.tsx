@@ -15,6 +15,7 @@ interface RiddleCardProps {
 	textClassName?: string
 	hideStats?: boolean
 	extraTopPadding?: boolean
+	hideBackground?: boolean
 }
 
 export const RiddleCard = ({
@@ -26,6 +27,7 @@ export const RiddleCard = ({
 	textClassName,
 	hideStats = false,
 	extraTopPadding = false,
+	hideBackground = false,
 }: RiddleCardProps) => {
 	const isCompact = variant === 'compact'
 
@@ -33,15 +35,19 @@ export const RiddleCard = ({
 		<div
 			className={`relative ${isCompact ? 'py-2' : extraTopPadding ? 'pt-12 pb-2' : 'py-2'} px-2 rounded-lg ${
 				isCompact ? 'h-[120px]' : ''
-			} w-full flex flex-col items-stretch overflow-hidden  border-white transition-all duration-50 ${className}`}
+			} w-full flex flex-col items-stretch overflow-hidden transition-all duration-50 ${
+				hideBackground ? 'border-2 border-primary/50' : 'border-white'
+			} ${className}`}
 		>
-			<div
-				className="absolute inset-0 bg-position-[center_bottom] bg-no-repeat bg-cover rounded-lg"
-				style={{
-					backgroundImage: `url(${getCanvasBackground(riddle.bg || 'bg1.png')})`,
-					filter: 'brightness(0.6)',
-				}}
-			/>
+			{!hideBackground && (
+				<div
+					className="absolute inset-0 bg-position-[center_bottom] bg-no-repeat bg-cover rounded-lg"
+					style={{
+						backgroundImage: `url(${getCanvasBackground(riddle.bg || 'bg1.png')})`,
+						filter: 'brightness(0.6)',
+					}}
+				/>
+			)}
 
 			<div
 				className={`relative z-10 flex flex-col items-center justify-between w-full ${isCompact ? 'h-full' : 'flex-1'}`}

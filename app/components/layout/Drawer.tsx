@@ -82,6 +82,23 @@ export const Drawer = ({ isOpen, onClose, tags }: DrawerProps) => {
 							<span className="text-lg">Riddle of the Day</span>
 						</Link>
 						<Link
+							href="/riddle/adventure"
+							onClick={onClose}
+							className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors relative"
+						>
+							<Image
+								src="/icons/item.png"
+								alt="Daily Riddle Adventure"
+								width={24}
+								height={24}
+								className="w-6 h-6"
+							/>
+							<span className="text-lg">Daily Riddle Adventure</span>
+							<span className="ml-auto px-2 py-0.5 text-xs bg-primary text-white rounded-full">
+								NEW
+							</span>
+						</Link>
+						<Link
 							href="/#about-riddles"
 							onClick={onClose}
 							className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors"

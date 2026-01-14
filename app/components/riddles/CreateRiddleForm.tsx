@@ -436,7 +436,7 @@ export const CreateRiddleForm = () => {
 				isOpen={isApprovedModalOpen}
 				onClose={handleModalClose}
 				title="Riddle Approved"
-				icon="/icons/light.png"
+				icon="/icons/item.png"
 			>
 				{createdPostId && <RiddleApprovedModal postId={createdPostId} onContinue={handleModalClose} />}
 			</BottomSheetModal>

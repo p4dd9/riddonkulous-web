@@ -655,7 +655,7 @@ Can you beat my score?`}
 				{/* Header */}
 				<div className="w-full flex flex-col gap-4">
 					<div className="flex items-center gap-2">
-						<Image src="/icons/light.png" alt="Adventure" width={32} height={32} className="w-8 h-8" />
+						<Image src="/icons/item.png" alt="Adventure" width={32} height={32} className="w-8 h-8" />
 						<h1 className="text-2xl md:text-4xl">
 							Daily Riddle Adventure #{adventure.adventure.adventureNumber}
 						</h1>
