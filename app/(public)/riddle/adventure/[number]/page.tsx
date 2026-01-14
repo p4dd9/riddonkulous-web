@@ -191,16 +191,23 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		if (
 			adventureRun &&
 			adventureRun.riddles[currentRiddleIndex] &&
-			!adventureRun.riddles[currentRiddleIndex].solved
+			!adventureRun.riddles[currentRiddleIndex].solved &&
+			adventureRun.startTime > 0 // Only set if adventure has started
 		) {
-			const updatedRun = { ...adventureRun }
-			if (!updatedRun.riddles[currentRiddleIndex].startTime) {
-				updatedRun.riddles[currentRiddleIndex].startTime = Date.now()
+			const currentRiddle = adventureRun.riddles[currentRiddleIndex]
+			// Only set startTime if it's 0 (not yet started) or undefined
+			if (currentRiddle.startTime === 0 || currentRiddle.startTime === undefined) {
+				const updatedRun = { ...adventureRun }
+				updatedRun.riddles[currentRiddleIndex] = {
+					...currentRiddle,
+					startTime: Date.now(),
+				}
 				setAdventureRun(updatedRun)
 				saveAdventureProgress(updatedRun)
 			}
 		}
-	}, [currentRiddleIndex, adventureRun])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentRiddleIndex]) // Only depend on currentRiddleIndex, not adventureRun
 
 	const checkAnswer = () => {
 		if (!answer.trim() || !adventure || !adventureRun) return
@@ -220,7 +227,9 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 
 		if (isCorrect) {
 			riddleRun.solved = true
-			riddleRun.solveTime = Date.now() - riddleRun.startTime
+			// Ensure startTime is valid before calculating solveTime
+			const validStartTime = riddleRun.startTime > 0 ? riddleRun.startTime : Date.now()
+			riddleRun.solveTime = Date.now() - validStartTime
 			setFeedback('correct')
 			setAdventureRun(updatedRun)
 			saveAdventureProgress(updatedRun)
@@ -267,9 +276,9 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 	const getShareCardData = () => {
 		if (!adventureRun || !adventure) return null
 
-		const totalTime = adventureRun.endTime
-			? adventureRun.endTime - adventureRun.startTime
-			: Date.now() - adventureRun.startTime
+		// Ensure startTime is valid before calculating total time
+		const validStartTime = adventureRun.startTime > 0 ? adventureRun.startTime : Date.now()
+		const totalTime = adventureRun.endTime ? adventureRun.endTime - validStartTime : Date.now() - validStartTime
 		const totalAttempts = adventureRun.riddles.reduce((sum, r) => sum + r.attempts, 0)
 		const solvedCount = adventureRun.riddles.filter((r) => r.solved).length
 
@@ -332,13 +341,15 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 
 	const handleStartAdventure = () => {
 		if (!adventureRun) return
-		// Set start time and save
+		// Set adventure start time and first riddle start time
+		const now = Date.now()
 		const run = {
 			...adventureRun,
-			startTime: Date.now(),
-			riddles: adventureRun.riddles.map((r) => ({
+			startTime: now,
+			riddles: adventureRun.riddles.map((r, index) => ({
 				...r,
-				startTime: Date.now(),
+				// Only set startTime for the first riddle, others will be set when user reaches them
+				startTime: index === 0 ? now : 0,
 			})),
 		}
 		saveAdventureProgress(run)
