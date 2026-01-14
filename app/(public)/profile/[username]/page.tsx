@@ -182,7 +182,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
 						</div>
 					</div>
 				) : (
-					<div className="w-full bg-[var(--color-bg)] rounded-lg shadow-lg p-8 text-center">
+					<div className="w-full  p-8 text-center">
 						<p className="text-white/60 text-lg">This user hasn&apos;t created any riddles yet.</p>
 					</div>
 				)}

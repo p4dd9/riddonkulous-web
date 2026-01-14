@@ -15,17 +15,17 @@
 	animation: slideBackAndFade 1s ease-in-out forwards;
 }
 
-@font-face {
+/*@font-face {
 	font-family: 'Font007';
 	src: url('/font/FONT007.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
-}
+}*/
 
 @font-face {
-	font-family: 'FONT001';
-	src: url('/font/FONT001.otf') format('opentype');
+	font-family: 'Font001';
+	src: url('/font/Sweet Pancakes.otf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
@@ -45,7 +45,7 @@
 body {
 	background: var(--color-bg);
 	color: white;
-	font-family: 'Font007', Arial, Helvetica, sans-serif;
+	font-family: 'Font001', Arial, Helvetica, sans-serif;
 }
 
 /* Safe area insets for iOS devices */

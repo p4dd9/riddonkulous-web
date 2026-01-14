@@ -352,6 +352,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 				startTime: index === 0 ? now : 0,
 			})),
 		}
+
 		saveAdventureProgress(run)
 		setAdventureRun(run)
 		setShowWelcomeScreen(false)

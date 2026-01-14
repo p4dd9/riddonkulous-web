@@ -1,6 +1,7 @@
 'use client'
 
 import { BasicButton } from '@/app/components/buttons/BasicButton'
+import { HintIcon } from '@/app/components/HintIcon'
 import { useAuth } from '@/app/contexts/AuthContext'
 import {
 	deleteUserAccount,
@@ -204,36 +205,50 @@ export default function GeneralPage() {
 	return (
 		<div className="w-full">
 			<div className="bg-[var(--color-bg)] rounded-lg shadow-lg md:p-8">
-				<div className="flex items-center justify-between mb-6">
+				<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
 					<h1 className="text-2xl md:text-3xl">Profile</h1>
 					{userData.username && (
-						<div className="flex gap-2">
-							<BasicButton
-								text="View Profile"
-								customClass="text-sm py-2 px-3"
-								threeD={false}
-								onClick={() => router.push(`/profile/${userData.username}`)}
-							/>
-							<BasicButton
-								text="Share Profile"
-								customClass="text-sm py-2 px-3"
-								threeD={false}
-								onClick={() => {
-									const profileUrl = `${window.location.origin}/profile/${userData.username}`
-									if (navigator.share) {
-										navigator.share({
-											title: `${userData.username}'s Profile`,
-											url: profileUrl,
-										})
-									} else {
-										navigator.clipboard.writeText(profileUrl)
-										setSaveMessage({ type: 'success', text: 'Profile link copied to clipboard!' })
-										setTimeout(() => setSaveMessage(null), 3000)
-									}
-								}}
-							/>
-						</div>
+						<BasicButton
+							text="Share Profile"
+							icon="/icons/world.png"
+							customClass="text-sm py-2 px-4 whitespace-nowrap"
+							threeD={false}
+							onClick={() => {
+								const profileUrl = `${window.location.origin}/profile/${userData.username}`
+								if (navigator.share) {
+									navigator.share({
+										title: `${userData.username}'s Profile`,
+										url: profileUrl,
+									})
+								} else {
+									navigator.clipboard.writeText(profileUrl)
+									setSaveMessage({ type: 'success', text: 'Profile link copied to clipboard!' })
+									setTimeout(() => setSaveMessage(null), 3000)
+								}
+							}}
+						/>
 					)}
+				</div>
+
+				{/* Intro Text */}
+				<div className="mb-6">
+					<p className="text-sm text-white/70 leading-relaxed">
+						Your public data is displayed in your public profile. Users with a username inspire more trust
+						among other users.{' '}
+						{userData.username && (
+							<>
+								Here&apos;s{' '}
+								<button
+									type="button"
+									onClick={() => router.push(`/profile/${userData.username}`)}
+									className="text-primary hover:text-secondary underline transition-colors"
+								>
+									your public profile
+								</button>
+								.
+							</>
+						)}
+					</p>
 				</div>
 
 				<div className="flex flex-col gap-4">
@@ -322,14 +337,7 @@ export default function GeneralPage() {
 						<div className="flex items-center justify-between mb-2">
 							<div className="flex items-center gap-2">
 								<label className="text-sm text-white/60 block">Username</label>
-								<div className="relative group">
-									<span className="text-xs text-white/60 cursor-help border border-white/40 rounded-full w-4 h-4 flex items-center justify-center">
-										?
-									</span>
-									<div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-2 bg-gray-800 text-white text-xs rounded shadow-lg z-10">
-										Username can only be changed once every 180 days
-									</div>
-								</div>
+								<HintIcon hint="Username can only be changed once every 180 days" />
 							</div>
 							{!isEditingUsername && (
 								<BasicButton
@@ -391,14 +399,7 @@ export default function GeneralPage() {
 						<div className="bg-[var(--color-bg)] rounded-lg ">
 							<div className="flex items-center gap-2 mb-2">
 								<label className="text-sm text-white/60 block">Riddle Day</label>
-								<div className="relative group">
-									<span className="text-xs text-white/60 cursor-help border border-white/40 rounded-full w-4 h-4 flex items-center justify-center">
-										?
-									</span>
-									<div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-2 bg-gray-800 text-white text-xs rounded shadow-lg z-10">
-										Day you created your Riddonkulous account
-									</div>
-								</div>
+								<HintIcon hint="Day you created your Riddonkulous account" />
 							</div>
 							<p className="text-lg text-white">{new Date(userData.createdAt).toLocaleDateString()}</p>
 						</div>
@@ -414,7 +415,10 @@ export default function GeneralPage() {
 					<div className="bg-[var(--color-bg)] rounded-lg">
 						<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
 							<div className="flex flex-col flex-1">
-								<label className="text-sm text-white/60 block mb-1">Weekly Newsletter</label>
+								<label className="text-sm text-white/60 block mb-1 flex items-center gap-2">
+									<img src="/icons/script.png" alt="" className="w-4 h-4" />
+									Weekly Newsletter
+								</label>
 								<p className="text-xs text-white/40">
 									{userData.emailSubscription
 										? 'You are subscribed to our weekly newsletter. The newsletter uses the email you registered with Google.'
@@ -456,7 +460,10 @@ export default function GeneralPage() {
 
 					{showSettings && (
 						<div className="bg-[var(--color-bg)] rounded-lg p-6 border-2 border-red-500">
-							<h3 className="text-xl mb-4 text-red-500">Danger Zone</h3>
+							<h3 className="text-xl mb-4 text-red-500 flex items-center gap-2">
+								<img src="/icons/skull.png" alt="" className="w-6 h-6" />
+								Danger Zone
+							</h3>
 							{showDeleteConfirm ? (
 								<div className="bg-red-500/20 border border-red-700 rounded-lg p-4 space-y-4">
 									<p className="text-red-300">
@@ -466,6 +473,7 @@ export default function GeneralPage() {
 									<div className="flex flex-col sm:flex-row gap-3">
 										<BasicButton
 											text={isDeleting ? 'Deleting...' : 'Yes, Delete My Account'}
+											icon="/icons/skull.png"
 											customClass="flex-1 bg-red-600 hover:bg-red-700"
 											threeD={false}
 											onClick={handleDeleteAccount}

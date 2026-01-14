@@ -1,5 +1,6 @@
 'use client'
 
+import { HintIcon } from '@/app/components/HintIcon'
 import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
 import { RiddleApprovedModal } from '@/app/components/modals/RiddleApprovedModal'
 import { RiddleReviewModal } from '@/app/components/modals/RiddleReviewModal'
@@ -253,8 +254,9 @@ export const CreateRiddleForm = () => {
 			<form onSubmit={handleSubmit} className="space-y-6">
 				{/* Word Field */}
 				<div>
-					<label htmlFor="word-input" className="block text-sm text-gray-400 mb-2">
-						Solution Word{' '}
+					<label htmlFor="word-input" className="text-sm text-gray-400 mb-2 flex items-center gap-2">
+						Riddle Word{' '}
+						<HintIcon hint="The answer to your riddle. This is what users will try to guess. Maximum 20 characters." />
 						<span className="text-red-400" aria-label="required">
 							*
 						</span>
@@ -268,7 +270,7 @@ export const CreateRiddleForm = () => {
 						className={`w-full bg-gray-600 border rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary ${
 							errors.word ? 'border-red-500' : 'border-gray-500'
 						}`}
-						placeholder="Enter the solution word"
+						placeholder="Enter the riddle word"
 						disabled={isFormDisabled}
 						aria-describedby={errors.word ? 'word-error' : 'word-help'}
 						aria-invalid={!!errors.word}
@@ -285,8 +287,9 @@ export const CreateRiddleForm = () => {
 
 				{/* Riddle Field */}
 				<div>
-					<label htmlFor="riddle-input" className="block text-sm text-gray-400 mb-2">
+					<label htmlFor="riddle-input" className="text-sm text-gray-400 mb-2 flex items-center gap-2">
 						Riddle Text{' '}
+						<HintIcon hint="The riddle question or puzzle that users will solve. Write a creative, engaging riddle that hints at the answer without giving it away. Must be between 50-750 characters." />
 						<span className="text-red-400" aria-label="required">
 							*
 						</span>{' '}
@@ -318,8 +321,9 @@ export const CreateRiddleForm = () => {
 
 				{/* Background Field */}
 				<div>
-					<label htmlFor="bg-input" className="block text-sm text-gray-400 mb-2">
+					<label htmlFor="bg-input" className="text-sm text-gray-400 mb-2 flex items-center gap-2">
 						Background{' '}
+						<HintIcon hint="Choose a background image for your riddle. The background sets the mood and theme of your riddle. You can preview it before submitting." />
 						<span className="text-red-400" aria-label="required">
 							*
 						</span>
@@ -421,13 +425,7 @@ export const CreateRiddleForm = () => {
 						disabled={isFormDisabled}
 						className="flex-1 bg-primary hover:bg-secondary px-2 py-2 rounded-md text-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
 					>
-						{isSubmitting && (
-							<img
-								src="/icons/hourglass.png"
-								alt=""
-								className="w-5 h-5 animate-spin"
-							/>
-						)}
+						{isSubmitting && <img src="/icons/hourglass.png" alt="" className="w-5 h-5 animate-spin" />}
 						{isSubmitting ? 'Creating Riddle...' : 'Create Riddle'}
 					</button>
 				</div>
