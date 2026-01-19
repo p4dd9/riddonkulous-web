@@ -12,8 +12,9 @@ import { LetterRearrangeInput } from '@/app/components/riddles/LetterRearrangeIn
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 interface AdventureRun {
 	adventureNumber: number
@@ -49,6 +50,8 @@ const STORAGE_KEY_PREFIX = 'riddonkulous-adventure-'
 const MODE_STORAGE_KEY = 'riddonkulous-adventure-mode'
 
 const getStorageKey = (adventureNumber: number) => `${STORAGE_KEY_PREFIX}${adventureNumber}`
+
+const isDevelopment = process.env.NODE_ENV === 'development'
 
 type RiddleMode = 'liddle' | 'riddle'
 
@@ -106,6 +109,14 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 	const [showWelcomeScreen, setShowWelcomeScreen] = useState(false)
 	const [riddleMode, setRiddleMode] = useState<RiddleMode>('liddle')
 	const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
+	const [suggestedAdventures, setSuggestedAdventures] = useState<{
+		adventureNumber: number
+		featuredDate: string
+		seed: string
+		postIds: string[]
+	}[]>([])
+	const [loadingSuggestions, setLoadingSuggestions] = useState(false)
+	const [error, setError] = useState<string | null>(null)
 
 	// Load mode preference
 	useEffect(() => {
@@ -132,10 +143,17 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 
 		const fetchAdventure = async () => {
 			setIsLoading(true)
+			setError(null)
 			try {
 				const response = await fetch(`/api/adventure/${adventureNumber}`)
 				if (!response.ok) {
-					throw new Error('Failed to fetch adventure')
+					if (response.status === 404) {
+						setError('notFound')
+					} else {
+						setError('failed')
+					}
+					setIsLoading(false)
+					return
 				}
 				const data: AdventureResponse = await response.json()
 				setAdventure(data.data)
@@ -178,6 +196,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 				setAdventureRun(run)
 			} catch (error) {
 				console.error('Error fetching adventure:', error)
+				setError('failed')
 			} finally {
 				setIsLoading(false)
 			}
@@ -209,11 +228,92 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentRiddleIndex]) // Only depend on currentRiddleIndex, not adventureRun
 
-	const checkAnswer = () => {
-		if (!answer.trim() || !adventure || !adventureRun) return
+	// Collect all solved postIds from completed adventures
+	const getAllSolvedPostIds = useCallback((): string[] => {
+		if (typeof window === 'undefined') return []
+		
+		const solvedPostIds = new Set<string>()
+		
+		// Check all stored adventures (go back up to 50 to find completed ones)
+		const currentAdventureNumber = adventureRun?.adventureNumber || 0
+		for (let i = 0; i <= 50; i++) {
+			const adventureNum = currentAdventureNumber - i
+			if (adventureNum <= 0) break
+			
+			const run = loadAdventureProgress(adventureNum)
+			if (run?.endTime && run.endTime > 0) {
+				// Adventure is completed, add all its riddle postIds
+				run.riddles.forEach((riddle) => {
+					if (riddle.solved && riddle.riddleId) {
+						solvedPostIds.add(riddle.riddleId)
+					}
+				})
+			}
+		}
+		
+		return Array.from(solvedPostIds)
+	}, [adventureRun])
+
+	// Fetch suggested adventures when end screen is shown
+	useEffect(() => {
+		if (!showEndScreen || !adventure || !adventureRun) return
+
+		const fetchSuggestedAdventures = async () => {
+			setLoadingSuggestions(true)
+			
+			try {
+				// Collect all solved postIds from completed adventures
+				const solvedPostIds = getAllSolvedPostIds()
+				
+				if (solvedPostIds.length === 0) {
+					setSuggestedAdventures([])
+					setLoadingSuggestions(false)
+					return
+				}
+
+				// Call the recommendations API
+				const response = await fetch('/api/adventure/recommendations', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						solvedPostIds,
+						limit: 3,
+					}),
+				})
+
+				if (!response.ok) {
+					throw new Error('Failed to fetch recommendations')
+				}
+
+				const data = await response.json()
+				if (data.status === 'success' && data.data?.recommendations) {
+					// Filter out the current adventure from recommendations
+					const filtered = data.data.recommendations.filter(
+						(rec: { adventureNumber: number }) => rec.adventureNumber !== adventureRun.adventureNumber
+					)
+					setSuggestedAdventures(filtered.slice(0, 3))
+				} else {
+					setSuggestedAdventures([])
+				}
+			} catch (error) {
+				console.error('Error fetching recommendations:', error)
+				setSuggestedAdventures([])
+			} finally {
+				setLoadingSuggestions(false)
+			}
+		}
+
+		fetchSuggestedAdventures()
+	}, [showEndScreen, adventure, adventureRun, getAllSolvedPostIds])
+
+	const checkAnswer = (answerToCheck?: string) => {
+		const answerValue = answerToCheck ?? answer
+		if (!answerValue.trim() || !adventure || !adventureRun) return
 
 		const currentRiddle = adventure.riddles[currentRiddleIndex]
-		const normalizedAnswer = answer.trim().toLowerCase()
+		const normalizedAnswer = answerValue.trim().toLowerCase()
 		const correctAnswer = currentRiddle.word.toLowerCase()
 		const altAnswers = currentRiddle.altwords
 			? currentRiddle.altwords.split(',').map((w) => w.trim().toLowerCase())
@@ -264,6 +364,23 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		if (feedback === 'incorrect') {
 			setFeedback(null)
 		}
+	}
+
+	const handleAutoSolve = () => {
+		if (!adventure || !adventureRun || adventureRun.riddles[currentRiddleIndex].solved) return
+		
+		const currentRiddle = adventure.riddles[currentRiddleIndex]
+		const correctAnswer = currentRiddle.word
+		
+		// Set the answer state - this works for both riddle and liddle modes
+		// For liddle mode, the visual component might not update, but the answer state will be correct
+		setAnswer(correctAnswer)
+		handleAnswerChange(correctAnswer)
+		
+		// Check answer directly with the correct answer to avoid state timing issues
+		setTimeout(() => {
+			checkAnswer(correctAnswer)
+		}, 50)
 	}
 
 	const formatTime = (ms: number): string => {
@@ -328,12 +445,59 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		}
 	}
 
-	if (isLoading || !adventure || !adventureRun) {
+	if (isLoading || !adventure || !adventureRun || error) {
 		return (
 			<>
 				<GoogleAdVerticalFixed />
 				<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
-					<p className="text-xl">Loading adventure...</p>
+					{error === 'notFound' ? (
+						<div className="flex flex-col items-center gap-4 text-center">
+							<h1 className="text-3xl md:text-4xl font-bold">Adventure Not Found</h1>
+							<p className="text-lg text-gray-400">
+								Adventure #{adventureNumber} doesn&apos;t exist yet.
+							</p>
+							<div className="flex flex-col gap-3 mt-4">
+								<BasicButton
+									text="Go to Current Adventure"
+									onClick={() => router.push('/riddle/adventure')}
+									customClass="px-6 py-3"
+								/>
+								<BasicButton
+									text="Go Home"
+									onClick={() => router.push('/')}
+									customClass="px-6 py-3"
+									variant="secondary"
+								/>
+							</div>
+						</div>
+					) : error === 'failed' ? (
+						<div className="flex flex-col items-center gap-4 text-center">
+							<h1 className="text-3xl md:text-4xl font-bold">Failed to Load Adventure</h1>
+							<p className="text-lg text-gray-400">
+								Something went wrong while loading the adventure.
+							</p>
+							<div className="flex flex-col gap-3 mt-4">
+								<BasicButton
+									text="Try Again"
+									onClick={() => {
+										setError(null)
+										setIsLoading(true)
+										// Reload the page to retry fetching
+										window.location.reload()
+									}}
+									customClass="px-6 py-3"
+								/>
+								<BasicButton
+									text="Go Home"
+									onClick={() => router.push('/')}
+									customClass="px-6 py-3"
+									variant="secondary"
+								/>
+							</div>
+						</div>
+					) : (
+						<p className="text-xl">Loading adventure...</p>
+					)}
 				</div>
 			</>
 		)
@@ -607,6 +771,49 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 								/>
 							</div>
 						</div>
+
+						{/* Discovery Section */}
+						{loadingSuggestions ? (
+							<div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+								<p className="text-sm text-gray-400 text-center">Finding adventures for you...</p>
+							</div>
+						) : suggestedAdventures.length > 0 ? (
+							<div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+								<div className="flex items-center gap-2 mb-3">
+									<Image
+										src="/icons/item.png"
+										alt="Discover"
+										width={24}
+										height={24}
+										className="w-6 h-6"
+									/>
+									<h3 className="text-xl font-semibold text-white">Discover More Adventures</h3>
+								</div>
+								<p className="text-sm text-gray-400 mb-4">
+									Try these adventures you haven&apos;t completed yet:
+								</p>
+								<div className="flex flex-col gap-2">
+									{suggestedAdventures.map((recommendedAdventure) => (
+										<Link
+											key={recommendedAdventure.adventureNumber}
+											href={`/riddle/adventure/${recommendedAdventure.adventureNumber}`}
+											className="flex items-center justify-between px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors"
+										>
+											<span className="text-white font-medium">
+												Adventure #{recommendedAdventure.adventureNumber}
+											</span>
+											<Image
+												src="/icons/arrow_right.png"
+												alt="Go"
+												width={16}
+												height={16}
+												className="w-4 h-4 opacity-60"
+											/>
+										</Link>
+									))}
+								</div>
+							</div>
+						) : null}
 					</div>
 
 					<BottomSheetModal
@@ -660,8 +867,17 @@ Can you beat my score?`}
 							Daily Riddle Adventure #{adventure.adventure.adventureNumber}
 						</h1>
 					</div>
-					<div className="text-sm text-gray-400">
-						Riddle {currentRiddleIndex + 1} of {adventure.riddles.length}
+					<div className="flex items-center justify-between flex-wrap gap-2">
+						<div className="text-sm text-gray-400">
+							Riddle {currentRiddleIndex + 1} of {adventure.riddles.length}
+						</div>
+						{isDevelopment && (
+							<div className="flex items-center gap-2">
+								<span className="text-xs text-yellow-400 bg-yellow-900/30 px-2 py-1 rounded border border-yellow-700">
+									DEV: Answer = &quot;{currentRiddle.word}&quot;
+								</span>
+							</div>
+						)}
 					</div>
 				</div>
 
@@ -716,12 +932,25 @@ Can you beat my score?`}
 						/>
 					)}
 
-					<BasicButton
-						text={adventureRun.riddles[currentRiddleIndex].solved ? 'Solved!' : 'Check Answer'}
-						onClick={checkAnswer}
-						customClass={`w-full py-3 ${adventureRun.riddles[currentRiddleIndex].solved ? 'opacity-60 cursor-not-allowed' : ''}`}
-						disabled={adventureRun.riddles[currentRiddleIndex].solved || !answer.trim()}
-					/>
+					<div className="flex gap-3">
+						<BasicButton
+							text={adventureRun.riddles[currentRiddleIndex].solved ? 'Solved!' : 'Check Answer'}
+							onClick={(e) => {
+								e.preventDefault()
+								checkAnswer()
+							}}
+							customClass={`flex-1 py-3 ${adventureRun.riddles[currentRiddleIndex].solved ? 'opacity-60 cursor-not-allowed' : ''}`}
+							disabled={adventureRun.riddles[currentRiddleIndex].solved || !answer.trim()}
+						/>
+						{isDevelopment && !adventureRun.riddles[currentRiddleIndex].solved && (
+							<BasicButton
+								text="Auto-Solve"
+								onClick={handleAutoSolve}
+								customClass="px-4 py-3 bg-yellow-600 hover:bg-yellow-700 text-white"
+								variant="secondary"
+							/>
+						)}
+					</div>
 
 					{feedback === 'correct' && <p className="text-green-600 text-center">🎉 Correct! Well done!</p>}
 					{feedback === 'incorrect' && <p className="text-red-600 text-center">❌ Incorrect. Try again!</p>}
