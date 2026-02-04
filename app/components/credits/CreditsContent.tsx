@@ -65,6 +65,17 @@ export const CreditsContent = () => {
 						</li>
 						<li>
 							<Link
+								href="https://v3x3d.itch.io/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="hover:underline text-primary"
+							>
+								V3X3D
+							</Link>
+							<span className="text-gray-400 ml-2">- Fonts</span>
+						</li>
+						<li>
+							<Link
 								href="https://chierit.itch.io/"
 								target="_blank"
 								rel="noopener noreferrer"
