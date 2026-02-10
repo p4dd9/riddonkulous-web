@@ -874,7 +874,7 @@ Can you beat my score?`}
 						<div className="text-sm text-gray-400">
 							Riddle {currentRiddleIndex + 1} of {adventure.riddles.length}
 						</div>
-						{isDevelopment && riddleMode === 'liddle' && (
+						{isDevelopment && (
 							<div className="flex items-center gap-2">
 								<span className="text-xs text-yellow-400 bg-yellow-900/30 px-2 py-1 rounded border border-yellow-700">
 									DEV: Answer = &quot;{currentRiddle.word}&quot;
@@ -970,7 +970,13 @@ Can you beat my score?`}
 									className="flex items-center justify-center gap-2 px-3 py-3 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors w-full md:w-auto"
 									aria-label="Show hint"
 								>
-									<Image src="/icons/item.png" alt="Hint" width={20} height={20} className="w-5 h-5" />
+									<Image
+										src="/icons/item.png"
+										alt="Hint"
+										width={20}
+										height={20}
+										className="w-5 h-5"
+									/>
 									<span className="text-sm">Show Hint</span>
 								</button>
 								{adventureNumber && (
