@@ -6,13 +6,15 @@ import { useState } from 'react'
 interface ShareModalProps {
 	url?: string
 	title?: string
+	description?: string
 	onClose: () => void
 }
 
-export const ShareModal = ({ url, title, onClose }: ShareModalProps) => {
+export const ShareModal = ({ url, title, description, onClose }: ShareModalProps) => {
 	const [copied, setCopied] = useState(false)
 	const currentUrl = url || (typeof window !== 'undefined' ? window.location.href : '')
 	const shareTitle = title || 'Check this out!'
+	const shareDescription = description || 'Share this Riddle with the World.'
 	const canShare = typeof navigator !== 'undefined' && 'share' in navigator
 
 	const copyToClipboard = async () => {
@@ -69,7 +71,7 @@ export const ShareModal = ({ url, title, onClose }: ShareModalProps) => {
 	return (
 		<div className="share-modal overflow-hidden">
 			<div className="mb-6">
-				<p className="text-gray-300 text-center">Share this Riddle with the World.</p>
+				<p className="text-gray-300 text-center">{shareDescription}</p>
 			</div>
 
 			<div className="flex gap-3 flex-col">

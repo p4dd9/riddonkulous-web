@@ -7,13 +7,15 @@ import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixe
 import { BasicButton } from '@/app/components/buttons/BasicButton'
 import { AdventureShareModal } from '@/app/components/modals/AdventureShareModal'
 import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
+import { HintModal } from '@/app/components/modals/HintModal'
 import { ClassicTextInput } from '@/app/components/riddles/ClassicTextInput'
 import { LetterRearrangeInput } from '@/app/components/riddles/LetterRearrangeInput'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
+import { ShareButton } from '@/app/components/ShareButton'
 import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 
 interface AdventureRun {
@@ -50,8 +52,6 @@ const STORAGE_KEY_PREFIX = 'riddonkulous-adventure-'
 const MODE_STORAGE_KEY = 'riddonkulous-adventure-mode'
 
 const getStorageKey = (adventureNumber: number) => `${STORAGE_KEY_PREFIX}${adventureNumber}`
-
-const isDevelopment = process.env.NODE_ENV === 'development'
 
 type RiddleMode = 'liddle' | 'riddle'
 
@@ -96,6 +96,8 @@ const saveAdventureProgress = (run: AdventureRun) => {
 
 export default function AdventurePage({ params }: { params: Promise<{ number: string }> }) {
 	const router = useRouter()
+	const searchParams = useSearchParams()
+	const isDevelopment = searchParams.get('debug') === 'true'
 	const [adventureNumber, setAdventureNumber] = useState<number | null>(null)
 	const [adventure, setAdventure] = useState<AdventureResponse['data'] | null>(null)
 	const [currentRiddleIndex, setCurrentRiddleIndex] = useState(0)
@@ -109,12 +111,15 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 	const [showWelcomeScreen, setShowWelcomeScreen] = useState(false)
 	const [riddleMode, setRiddleMode] = useState<RiddleMode>('liddle')
 	const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
-	const [suggestedAdventures, setSuggestedAdventures] = useState<{
-		adventureNumber: number
-		featuredDate: string
-		seed: string
-		postIds: string[]
-	}[]>([])
+	const [isHintModalOpen, setIsHintModalOpen] = useState(false)
+	const [suggestedAdventures, setSuggestedAdventures] = useState<
+		{
+			adventureNumber: number
+			featuredDate: string
+			seed: string
+			postIds: string[]
+		}[]
+	>([])
 	const [loadingSuggestions, setLoadingSuggestions] = useState(false)
 	const [error, setError] = useState<string | null>(null)
 
@@ -231,15 +236,15 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 	// Collect all solved postIds from completed adventures
 	const getAllSolvedPostIds = useCallback((): string[] => {
 		if (typeof window === 'undefined') return []
-		
+
 		const solvedPostIds = new Set<string>()
-		
+
 		// Check all stored adventures (go back up to 50 to find completed ones)
 		const currentAdventureNumber = adventureRun?.adventureNumber || 0
 		for (let i = 0; i <= 50; i++) {
 			const adventureNum = currentAdventureNumber - i
 			if (adventureNum <= 0) break
-			
+
 			const run = loadAdventureProgress(adventureNum)
 			if (run?.endTime && run.endTime > 0) {
 				// Adventure is completed, add all its riddle postIds
@@ -250,7 +255,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 				})
 			}
 		}
-		
+
 		return Array.from(solvedPostIds)
 	}, [adventureRun])
 
@@ -260,11 +265,11 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 
 		const fetchSuggestedAdventures = async () => {
 			setLoadingSuggestions(true)
-			
+
 			try {
 				// Collect all solved postIds from completed adventures
 				const solvedPostIds = getAllSolvedPostIds()
-				
+
 				if (solvedPostIds.length === 0) {
 					setSuggestedAdventures([])
 					setLoadingSuggestions(false)
@@ -368,15 +373,15 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 
 	const handleAutoSolve = () => {
 		if (!adventure || !adventureRun || adventureRun.riddles[currentRiddleIndex].solved) return
-		
+
 		const currentRiddle = adventure.riddles[currentRiddleIndex]
 		const correctAnswer = currentRiddle.word
-		
+
 		// Set the answer state - this works for both riddle and liddle modes
 		// For liddle mode, the visual component might not update, but the answer state will be correct
 		setAnswer(correctAnswer)
 		handleAnswerChange(correctAnswer)
-		
+
 		// Check answer directly with the correct answer to avoid state timing issues
 		setTimeout(() => {
 			checkAnswer(correctAnswer)
@@ -473,9 +478,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 					) : error === 'failed' ? (
 						<div className="flex flex-col items-center gap-4 text-center">
 							<h1 className="text-3xl md:text-4xl font-bold">Failed to Load Adventure</h1>
-							<p className="text-lg text-gray-400">
-								Something went wrong while loading the adventure.
-							</p>
+							<p className="text-lg text-gray-400">Something went wrong while loading the adventure.</p>
 							<div className="flex flex-col gap-3 mt-4">
 								<BasicButton
 									text="Try Again"
@@ -871,12 +874,19 @@ Can you beat my score?`}
 						<div className="text-sm text-gray-400">
 							Riddle {currentRiddleIndex + 1} of {adventure.riddles.length}
 						</div>
-						{isDevelopment && (
+						{isDevelopment && riddleMode === 'liddle' && (
 							<div className="flex items-center gap-2">
 								<span className="text-xs text-yellow-400 bg-yellow-900/30 px-2 py-1 rounded border border-yellow-700">
 									DEV: Answer = &quot;{currentRiddle.word}&quot;
 								</span>
 							</div>
+						)}
+						{adventureNumber && (
+							<ShareButton
+								url={`${typeof window !== 'undefined' ? window.location.origin : ''}/riddle/adventure/${adventureNumber}`}
+								title={`Riddonkulous Daily Riddle Adventure #${adventureNumber}`}
+								iconOnly
+							/>
 						)}
 					</div>
 				</div>
@@ -951,6 +961,32 @@ Can you beat my score?`}
 							/>
 						)}
 					</div>
+					{riddleMode === 'riddle' &&
+						adventureRun.riddles[currentRiddleIndex].attempts > 0 &&
+						!adventureRun.riddles[currentRiddleIndex].solved && (
+							<div className="w-full flex flex-col md:flex-row gap-2">
+								<button
+									onClick={() => setIsHintModalOpen(true)}
+									className="flex items-center justify-center gap-2 px-3 py-3 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors w-full md:w-auto"
+									aria-label="Show hint"
+								>
+									<Image src="/icons/item.png" alt="Hint" width={20} height={20} className="w-5 h-5" />
+									<span className="text-sm">Show Hint</span>
+								</button>
+								{adventureNumber && (
+									<ShareButton
+										url={`${typeof window !== 'undefined' ? window.location.origin : ''}/riddle/adventure/${adventureNumber}`}
+										title={`Riddonkulous Daily Riddle Adventure #${adventureNumber}`}
+										buttonText="Ask Friend"
+										modalTitle="Ask a friend for help"
+										modalDescription="Ask a friend for help"
+										icon="/icons/party.png"
+										iconAlt="Ask Friend"
+										className="w-full md:w-auto px-3 py-3"
+									/>
+								)}
+							</div>
+						)}
 
 					{feedback === 'correct' && <p className="text-green-600 text-center">🎉 Correct! Well done!</p>}
 					{feedback === 'incorrect' && <p className="text-red-600 text-center">❌ Incorrect. Try again!</p>}
@@ -997,6 +1033,21 @@ Can you beat my score?`}
 						</div>
 					</div>
 				</BottomSheetModal>
+
+				{/* Hint Modal */}
+				{adventure && (
+					<BottomSheetModal
+						isOpen={isHintModalOpen}
+						onClose={() => setIsHintModalOpen(false)}
+						title="Hint"
+						icon="/icons/item.png"
+					>
+						<HintModal
+							wordLength={adventure.riddles[currentRiddleIndex].word.length}
+							onClose={() => setIsHintModalOpen(false)}
+						/>
+					</BottomSheetModal>
+				)}
 			</div>
 		</>
 	)
