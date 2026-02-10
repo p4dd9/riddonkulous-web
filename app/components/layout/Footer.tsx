@@ -29,7 +29,7 @@ export const Footer = () => {
 						Credits
 					</Link>
 				</div>
-				<p className="text-xs">© 2025 Hammertime e.U.</p>
+				<p className="text-xs">© 2025-Present Hammertime e.U.</p>
 			</div>
 		</footer>
 	)
