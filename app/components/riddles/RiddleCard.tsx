@@ -4,6 +4,7 @@ import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import { getCanvasBackground } from '@/app/util/cosmetics'
 import { formatPopularity } from '@/app/util/format'
 import Image from 'next/image'
+import Link from 'next/link'
 import { LinkAsButton } from '../buttons/LinkAsButton'
 
 interface RiddleCardProps {
@@ -52,27 +53,40 @@ export const RiddleCard = ({
 			<div
 				className={`relative z-10 flex flex-col items-center justify-between w-full ${isCompact ? 'h-full' : 'flex-1'}`}
 			>
-				{/* Hide eye and star for web-created riddles (postId starts with "r_") or when hideStats is true */}
-				{!riddle.postId.startsWith('r_') && !hideStats && (
+				{/* Top row: stats for non-web riddles; author (top right) only for web-created riddles */}
+				{(!riddle.postId.startsWith('r_') && !hideStats) || (riddle.postId.startsWith('r_') && riddle.author) ? (
 					<div className={`flex items-center w-full ${isCompact ? 'justify-end' : 'justify-between'} gap-4`}>
-						{!isCompact && (
+						{!riddle.postId.startsWith('r_') && !hideStats && !isCompact && (
 							<div className="flex items-center justify-center gap-2">
 								<Image src="/icons/eye.png" alt="Eye" width={28} height={28} className="w-7 h-7" />{' '}
 								{riddle.guessCount}
 							</div>
 						)}
-						<div className="flex items-center justify-center gap-2">
-							<Image
-								src="/icons/star.png"
-								alt="Star"
-								width={isCompact ? 16 : 28}
-								height={isCompact ? 16 : 28}
-								className={isCompact ? 'w-4 h-4' : 'w-7 h-7'}
-							/>{' '}
-							<span className={isCompact ? 'text-xs' : ''}>{formatPopularity(riddle.popularity)}</span>
+						<div className="flex items-center justify-center gap-2 ml-auto">
+							{!riddle.postId.startsWith('r_') && !hideStats && (
+								<>
+									<Image
+										src="/icons/star.png"
+										alt="Star"
+										width={isCompact ? 16 : 28}
+										height={isCompact ? 16 : 28}
+										className={isCompact ? 'w-4 h-4' : 'w-7 h-7'}
+									/>
+									<span className={isCompact ? 'text-xs' : ''}>{formatPopularity(riddle.popularity)}</span>
+								</>
+							)}
+							{riddle.postId.startsWith('r_') && riddle.author && (
+								<Link
+									href={`/profile/${encodeURIComponent(riddle.author)}`}
+									className={`text-primary font-medium hover:underline ${isCompact ? 'text-xs' : ''}`}
+									title={riddle.author}
+								>
+									{riddle.author}
+								</Link>
+							)}
 						</div>
 					</div>
-				)}
+				) : null}
 				<div
 					className={`relative ${
 						isCompact
