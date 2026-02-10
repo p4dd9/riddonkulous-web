@@ -38,7 +38,7 @@ export const ShareButton = ({
 				aria-label={iconAlt}
 			>
 				<Image src={icon} alt={iconAlt} width={20} height={20} className="w-5 h-5" />
-				{!iconOnly && <span className="text-sm hidden md:inline">{buttonText}</span>}
+				{!iconOnly && <span className="text-sm">{buttonText}</span>}
 			</button>
 
 			<BottomSheetModal
