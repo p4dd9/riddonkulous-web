@@ -97,7 +97,7 @@ export const Header = ({ tags }: HeaderProps) => {
 						>
 							<Image src="/icons/folder.png" alt="Menu" width={28} height={28} className="w-7 h-7" />
 						</button>
-						<Link href="/" className="hover:opacity-80 transition-opacity">
+						<Link href="/" className="hover:opacity-80 transition-opacity text-2xl">
 							<h1>Riddonkulous</h1>
 						</Link>
 					</div>

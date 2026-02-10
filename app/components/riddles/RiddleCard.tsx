@@ -44,7 +44,7 @@ export const RiddleCard = ({
 					className="absolute inset-0 bg-position-[center_bottom] bg-no-repeat bg-cover rounded-lg"
 					style={{
 						backgroundImage: `url(${getCanvasBackground(riddle.bg || 'bg1.png')})`,
-						filter: 'brightness(0.6)',
+						filter: 'brightness(0.4)',
 					}}
 				/>
 			)}
@@ -76,11 +76,11 @@ export const RiddleCard = ({
 				<div
 					className={`relative ${
 						isCompact
-							? 'text-sm w-full text-center flex-1 flex items-center justify-center py-2 px-1'
-							: 'text-xl w-[95%] md:w-[80%] lg:w-[70%] text-center flex-1 flex items-center justify-center py-4'
+							? 'text-lg w-full text-center flex-1 flex items-center justify-center pt-1 px-1'
+							: 'text-2xl w-[95%] md:w-[80%] lg:w-[70%] text-center flex-1 flex items-center justify-center py-4'
 					}`}
 				>
-					<p className={`whitespace-pre-line ${isCompact ? 'line-clamp-2' : textClassName || ''}`}>
+					<p className={`whitespace-pre-line [text-shadow:2px_2px_0px_black] ${isCompact ? 'line-clamp-2' : textClassName || ''}`}>
 						{riddle.riddle}
 					</p>
 				</div>

@@ -25,7 +25,8 @@
 
 @font-face {
 	font-family: 'Font001';
-	src: url('/font/Sweet Pancakes.otf') format('truetype');
+	/* src: url('/font/Sweet Pancakes.otf') format('truetype'); */
+	src: url('/font/Jersey25-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
@@ -46,6 +47,10 @@ body {
 	background: var(--color-bg);
 	color: white;
 	font-family: 'Font001', Arial, Helvetica, sans-serif;
+}
+
+.font-bold {
+	font-weight: 400 !important;
 }
 
 /* Safe area insets for iOS devices */
