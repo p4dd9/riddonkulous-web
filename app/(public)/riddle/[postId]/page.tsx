@@ -4,6 +4,7 @@ import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixe
 import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
 import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getRiddleByPostId } from '@/app/services/riddleService'
+import { stripSolution } from '@/app/util/stripSolution'
 import type { Metadata } from 'next'
 
 interface RiddlePageProps {
@@ -59,6 +60,8 @@ export default async function RiddlePage({ params }: RiddlePageProps) {
 
 	const riddle = await getRiddleByPostId(postId)
 
+	const safeRiddle = stripSolution(riddle)
+
 	const structuredData = {
 		'@context': 'https://schema.org',
 		'@type': 'Article',
@@ -73,21 +76,6 @@ export default async function RiddlePage({ params }: RiddlePageProps) {
 			'@type': 'WebPage',
 			'@id': `https://riddonkulous.com/riddle/${postId}`,
 		},
-		// Add FAQPage structured data for riddles with answers
-		...(riddle.word && {
-			mainEntity: {
-				'@type': 'FAQPage',
-				mainEntity: {
-					'@type': 'Question',
-					name: riddle.title || riddle.riddle?.substring(0, 100) || 'Riddle',
-					text: riddle.riddle || '',
-					acceptedAnswer: {
-						'@type': 'Answer',
-						text: riddle.word,
-					},
-				},
-			},
-		}),
 	}
 
 	return (
@@ -98,7 +86,7 @@ export default async function RiddlePage({ params }: RiddlePageProps) {
 				<GoogleAdDisplayUnitHorizontal />
 				<GoogleAdMobileBanner customClasses="mt-[-32px] mb-2" />
 
-				<RiddleSingleView riddle={riddle} showDate={true} showRedditButton={true} showShareButton={true} />
+				<RiddleSingleView riddle={safeRiddle} showDate={true} showRedditButton={true} showShareButton={true} />
 				{/* <RiddleSingleView riddle={riddle} showDate={true} showRedditButton={true} showShareButton={true} /> */}
 			</div>
 		</>

@@ -1,6 +1,6 @@
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { StructuredData } from '@/app/components/seo/StructuredData'
-import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
+import type { SafeRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import { getUserProfileByUsername } from '@/app/services/userProfileService'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -91,17 +91,13 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
 					'@type': 'Question',
 					name: riddle.riddle.substring(0, 100),
 					text: riddle.riddle,
-					acceptedAnswer: {
-						'@type': 'Answer',
-						text: riddle.word,
-					},
 				},
 			})),
 		},
 	}
 
-	// Convert profile riddles to DailyRiddleType format for RiddleCard
-	const riddlesForDisplay: DailyRiddleType[] = profile.riddles.map((riddle) => ({
+	// Convert profile riddles to SafeRiddleType format for RiddleCard
+	const riddlesForDisplay: SafeRiddleType[] = profile.riddles.map((riddle) => ({
 		riddleNumber: 0,
 		featuredDate: new Date(),
 		postId: riddle.postId,
@@ -112,8 +108,6 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
 		solverSnooAvatars: null,
 		userId: null,
 		date: new Date(riddle.createdAt).getTime().toString(),
-		word: riddle.word,
-		altwords: null,
 		riddle: riddle.riddle,
 		bg: 'bg1.png',
 		workshopFont: null,
@@ -131,6 +125,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
 		context: null,
 		userid: null,
 		subredditId: null,
+		wordLength: riddle.word.length,
 	}))
 
 	const avatarUrl = profile.avatar ? `/avatars/${profile.avatar}` : '/avatars/avatar_02.png'

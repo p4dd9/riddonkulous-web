@@ -5,6 +5,7 @@ import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixe
 import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { getRiddlesByTag } from '@/app/services/riddleService'
+import { stripSolutions } from '@/app/util/stripSolution'
 import { getTagById, listTags } from '@/app/services/tagService'
 import { formatDate } from '@/app/util/format'
 import type { Metadata } from 'next'
@@ -98,7 +99,7 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 		notFound()
 	}
 
-	const riddles = riddlesResponse.riddles
+	const riddles = stripSolutions(riddlesResponse.riddles)
 	const hasNext = riddlesResponse.pagination.hasNext
 	const hasPrevious = riddlesResponse.pagination.hasPrev
 

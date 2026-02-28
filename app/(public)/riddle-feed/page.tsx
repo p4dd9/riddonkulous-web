@@ -5,14 +5,14 @@ import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixe
 import { NothingMoreToLoad } from '@/app/components/NothingMoreToLoad'
 import { RiddleAuthorHeader } from '@/app/components/riddles/RiddleAuthorHeader'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
-import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
-import type { PaginatedRiddlesDataType } from '@/app/schemas/PaginatedRiddlesResponse'
+import type { SafeRiddleType } from '@/app/schemas/DailyRiddleSchema'
+import type { PaginationType } from '@/app/schemas/PaginatedRiddlesResponse'
 import { formatDate } from '@/app/util/format'
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 
 export default function RiddleFeedPage() {
-	const [riddles, setRiddles] = useState<DailyRiddleType[]>([])
+	const [riddles, setRiddles] = useState<SafeRiddleType[]>([])
 	const [isLoading, setIsLoading] = useState(false)
 	const [hasMore, setHasMore] = useState(true)
 	const [offset, setOffset] = useState(0)
@@ -31,7 +31,7 @@ export default function RiddleFeedPage() {
 					throw new Error('Failed to fetch riddles')
 				}
 
-				const data: PaginatedRiddlesDataType = await response.json()
+				const data: { riddles: SafeRiddleType[]; pagination: PaginationType } = await response.json()
 				setRiddles((prev) => [...prev, ...data.riddles])
 				setHasMore(data.pagination.hasNext)
 				setOffset(currentOffset + LIMIT)

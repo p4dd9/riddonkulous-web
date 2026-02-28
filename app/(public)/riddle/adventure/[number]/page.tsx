@@ -12,7 +12,8 @@ import { ClassicTextInput } from '@/app/components/riddles/ClassicTextInput'
 import { LetterRearrangeInput } from '@/app/components/riddles/LetterRearrangeInput'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { ShareButton } from '@/app/components/ShareButton'
-import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
+import type { SafeRiddleType } from '@/app/schemas/DailyRiddleSchema'
+import { checkAnswer as checkAnswerAction } from '@/app/services/riddleService'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -44,7 +45,7 @@ interface AdventureResponse {
 			seed: string
 			postIds: string[]
 		}
-		riddles: DailyRiddleType[]
+		riddles: SafeRiddleType[]
 	}
 }
 
@@ -313,33 +314,25 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		fetchSuggestedAdventures()
 	}, [showEndScreen, adventure, adventureRun, getAllSolvedPostIds])
 
-	const checkAnswer = (answerToCheck?: string) => {
+	const checkAnswer = async (answerToCheck?: string) => {
 		const answerValue = answerToCheck ?? answer
 		if (!answerValue.trim() || !adventure || !adventureRun) return
 
 		const currentRiddle = adventure.riddles[currentRiddleIndex]
-		const normalizedAnswer = answerValue.trim().toLowerCase()
-		const correctAnswer = currentRiddle.word.toLowerCase()
-		const altAnswers = currentRiddle.altwords
-			? currentRiddle.altwords.split(',').map((w) => w.trim().toLowerCase())
-			: []
-
-		const isCorrect = normalizedAnswer === correctAnswer || altAnswers.some((alt) => normalizedAnswer === alt)
+		const result = await checkAnswerAction(currentRiddle.postId, answerValue)
 
 		const updatedRun = { ...adventureRun }
 		const riddleRun = updatedRun.riddles[currentRiddleIndex]
 		riddleRun.attempts += 1
 
-		if (isCorrect) {
+		if (result.correct) {
 			riddleRun.solved = true
-			// Ensure startTime is valid before calculating solveTime
 			const validStartTime = riddleRun.startTime > 0 ? riddleRun.startTime : Date.now()
 			riddleRun.solveTime = Date.now() - validStartTime
 			setFeedback('correct')
 			setAdventureRun(updatedRun)
 			saveAdventureProgress(updatedRun)
 
-			// Check if this is the last riddle
 			if (currentRiddleIndex === adventure.riddles.length - 1) {
 				updatedRun.endTime = Date.now()
 				saveAdventureProgress(updatedRun)
@@ -347,7 +340,6 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 					setShowEndScreen(true)
 				}, 1500)
 			} else {
-				// Show transition screen
 				setTimeout(() => {
 					setShowTransition(true)
 				}, 1500)
@@ -371,18 +363,16 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		}
 	}
 
-	const handleAutoSolve = () => {
+	const handleAutoSolve = async () => {
 		if (!adventure || !adventureRun || adventureRun.riddles[currentRiddleIndex].solved) return
 
 		const currentRiddle = adventure.riddles[currentRiddleIndex]
-		const correctAnswer = currentRiddle.word
+		const { revealAnswer } = await import('@/app/services/riddleService')
+		const { word: correctAnswer } = await revealAnswer(currentRiddle.postId)
 
-		// Set the answer state - this works for both riddle and liddle modes
-		// For liddle mode, the visual component might not update, but the answer state will be correct
 		setAnswer(correctAnswer)
 		handleAnswerChange(correctAnswer)
 
-		// Check answer directly with the correct answer to avoid state timing issues
 		setTimeout(() => {
 			checkAnswer(correctAnswer)
 		}, 50)
@@ -874,14 +864,7 @@ Can you beat my score?`}
 						<div className="text-sm text-gray-400">
 							Riddle {currentRiddleIndex + 1} of {adventure.riddles.length}
 						</div>
-						{isDevelopment && (
-							<div className="flex items-center gap-2">
-								<span className="text-xs text-yellow-400 bg-yellow-900/30 px-2 py-1 rounded border border-yellow-700">
-									DEV: Answer = &quot;{currentRiddle.word}&quot;
-								</span>
-							</div>
-						)}
-						{adventureNumber && (
+							{adventureNumber && (
 							<ShareButton
 								url={`${typeof window !== 'undefined' ? window.location.origin : ''}/riddle/adventure/${adventureNumber}`}
 								title={`Riddonkulous Daily Riddle Adventure #${adventureNumber}`}
@@ -928,7 +911,7 @@ Can you beat my score?`}
 				<div className="w-full flex flex-col gap-4">
 					{riddleMode === 'liddle' ? (
 						<LetterRearrangeInput
-							word={currentRiddle.word}
+							scrambledLetters={currentRiddle.scrambledLetters || ''}
 							onAnswerChange={handleAnswerChange}
 							disabled={adventureRun.riddles[currentRiddleIndex].solved}
 							isIncorrect={feedback === 'incorrect'}
@@ -1049,7 +1032,7 @@ Can you beat my score?`}
 						icon="/icons/item.png"
 					>
 						<HintModal
-							wordLength={adventure.riddles[currentRiddleIndex].word.length}
+							wordLength={adventure.riddles[currentRiddleIndex].wordLength}
 							onClose={() => setIsHintModalOpen(false)}
 						/>
 					</BottomSheetModal>

@@ -1,6 +1,6 @@
 'use client'
 
-import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
+import type { SafeRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import { getCanvasBackground } from '@/app/util/cosmetics'
 import { formatPopularity } from '@/app/util/format'
 import Image from 'next/image'
@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { LinkAsButton } from '../buttons/LinkAsButton'
 
 interface RiddleCardProps {
-	riddle: DailyRiddleType
+	riddle: SafeRiddleType
 	className?: string
 	variant?: 'default' | 'compact'
 	hideSolveButton?: boolean

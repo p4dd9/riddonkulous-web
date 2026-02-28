@@ -4,6 +4,7 @@ import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixe
 import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
 import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getRiddleByNumber, getRiddleOfTheDay } from '@/app/services/riddleService'
+import { stripSolution } from '@/app/util/stripSolution'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound, redirect } from 'next/navigation'
@@ -96,6 +97,8 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 	const hasNext = riddleNumber < currentNumber
 	const hasPrevious = riddleNumber > 1
 
+	const safeRiddle = stripSolution(riddle)
+
 	const structuredData = {
 		'@context': 'https://schema.org',
 		'@type': 'Article',
@@ -110,21 +113,6 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 			'@type': 'WebPage',
 			'@id': `https://riddonkulous.com/riddle/daily/${riddleNumber}`,
 		},
-		// Add FAQPage structured data for riddles with answers
-		...(riddle.word && {
-			mainEntity: {
-				'@type': 'FAQPage',
-				mainEntity: {
-					'@type': 'Question',
-					name: riddle.title || `Daily Riddle #${riddleNumber}` || 'Riddle',
-					text: riddle.riddle || '',
-					acceptedAnswer: {
-						'@type': 'Answer',
-						text: riddle.word,
-					},
-				},
-			},
-		}),
 	}
 
 	return (
@@ -135,7 +123,7 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 				<GoogleAdDisplayUnitHorizontal />
 				<GoogleAdMobileBanner customClasses="mt-[-32px] mb-2" />
 				<RiddleSingleView
-					riddle={riddle}
+					riddle={safeRiddle}
 					hasNext={hasNext}
 					hasPrevious={hasPrevious}
 					nextUrl={hasNext ? `/riddle/daily/${riddleNumber + 1}` : undefined}

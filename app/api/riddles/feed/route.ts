@@ -1,4 +1,5 @@
 import { getLatestRiddles } from '@/app/services/riddleService'
+import { stripSolutions } from '@/app/util/stripSolution'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
@@ -9,7 +10,10 @@ export async function GET(request: NextRequest) {
 
 		const data = await getLatestRiddles(limit, offset)
 
-		return NextResponse.json(data)
+		// Strip solution data from riddles before sending to client
+		const safeData = { ...data, riddles: stripSolutions(data.riddles) }
+
+		return NextResponse.json(safeData)
 	} catch (error) {
 		console.error('Error fetching riddle feed:', error)
 		return NextResponse.json({ error: 'Failed to fetch riddles' }, { status: 500 })

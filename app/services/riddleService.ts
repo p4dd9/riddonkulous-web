@@ -172,6 +172,30 @@ export const getLatestRiddles = async (
 	}
 }
 
+export const checkAnswer = async (postId: string, answer: string): Promise<{ correct: boolean; word?: string }> => {
+	const riddle = await getRiddleByPostId(postId)
+	const normalizedAnswer = answer.trim().toLowerCase()
+	const correctAnswer = riddle.word.toLowerCase()
+	const altAnswers = riddle.altwords ? riddle.altwords.split(',').map((w) => w.trim().toLowerCase()) : []
+
+	const isCorrect = normalizedAnswer === correctAnswer || altAnswers.some((alt) => normalizedAnswer === alt)
+
+	if (isCorrect) {
+		return { correct: true, word: riddle.word }
+	}
+	return { correct: false }
+}
+
+export const revealAnswer = async (postId: string): Promise<{ word: string }> => {
+	const riddle = await getRiddleByPostId(postId)
+	return { word: riddle.word }
+}
+
+export const getWordLength = async (postId: string): Promise<number> => {
+	const riddle = await getRiddleByPostId(postId)
+	return riddle.word.length
+}
+
 export const getCurrentAdventure = async () => {
 	const apiBaseUrl = await getApiBaseUrl()
 	const apiKey = await getApiKey()

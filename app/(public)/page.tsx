@@ -9,6 +9,7 @@ import {
 		getTrendingRiddles,
 	} from '@/app/services/riddleService'
 import { listTags } from '@/app/services/tagService'
+import { stripSolution, stripSolutions } from '@/app/util/stripSolution'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { GoogleAdCategoryGrid } from '../components/ads/GoogleAdCategoryGrid'
@@ -48,9 +49,11 @@ export default async function Home() {
 			getCurrentAdventure(),
 			getLatestRiddles(3, 0, 30, true),
 		])
-	const filteredTrendingRiddles = trendingRiddles
-		.filter((riddle) => riddle.postId !== riddleOfTheDay.postId)
-		.slice(0, 3)
+	const safeRiddleOfTheDay = stripSolution(riddleOfTheDay)
+	const filteredTrendingRiddles = stripSolutions(
+		trendingRiddles.filter((riddle) => riddle.postId !== riddleOfTheDay.postId).slice(0, 3)
+	)
+	const safeFeaturedRiddles = stripSolutions(featuredRiddlesData.riddles)
 
 	const structuredData = {
 		'@context': 'https://schema.org',
@@ -122,7 +125,7 @@ export default async function Home() {
 							</h1>
 
 							<RiddleCard
-								riddle={riddleOfTheDay}
+								riddle={safeRiddleOfTheDay}
 								className="lg:h-[384px]"
 								solveHref={`/riddle/daily/${riddleOfTheDay.riddleNumber}`}
 								textClassName="line-clamp-7"
@@ -229,7 +232,7 @@ export default async function Home() {
 							Featured
 						</h2>
 						<div className="flex flex-col lg:flex-row gap-3">
-							{featuredRiddlesData.riddles.map((riddle) => (
+							{safeFeaturedRiddles.map((riddle) => (
 								<RiddleCard
 									riddle={riddle}
 									variant="compact"

@@ -4,7 +4,7 @@ import { BasicButton } from '@/app/components/buttons/BasicButton'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { ShareButton } from '@/app/components/ShareButton'
 import { useAuth } from '@/app/contexts/AuthContext'
-import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
+import type { SafeRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import { getMyRiddles, type UserRiddle } from '@/app/services/userService'
 import Link from 'next/link'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -41,7 +41,7 @@ const getStatusLabel = (status: string) => {
 	}
 }
 
-const convertToDailyRiddleType = (riddle: UserRiddle): DailyRiddleType => {
+const convertToSafeRiddleType = (riddle: UserRiddle): SafeRiddleType => {
 	return {
 		riddleNumber: 0,
 		featuredDate: new Date(riddle.createdAt),
@@ -52,8 +52,6 @@ const convertToDailyRiddleType = (riddle: UserRiddle): DailyRiddleType => {
 		solverSnooAvatars: null,
 		userId: riddle.userid,
 		date: new Date(riddle.createdAt).getTime().toString(),
-		word: riddle.word,
-		altwords: null,
 		riddle: riddle.riddle,
 		bg: riddle.bg || null,
 		workshopFont: null,
@@ -71,6 +69,7 @@ const convertToDailyRiddleType = (riddle: UserRiddle): DailyRiddleType => {
 		context: null,
 		userid: riddle.userid,
 		subredditId: null,
+		wordLength: riddle.word.length,
 	}
 }
 
@@ -187,7 +186,7 @@ export default function RiddlesPage() {
 				{!loading && filteredRiddles.length > 0 && (
 					<div className="space-y-6">
 						{filteredRiddles.map((riddle) => {
-							const dailyRiddle = convertToDailyRiddleType(riddle)
+							const dailyRiddle = convertToSafeRiddleType(riddle)
 							return (
 								<div key={riddle.postId} className="bg-[var(--color-bg)] rounded-lg">
 									<div className="mb-4">

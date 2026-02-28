@@ -8,14 +8,15 @@ import { RevealModal } from '@/app/components/modals/RevealModal'
 import { RiddleAuthorHeader } from '@/app/components/riddles/RiddleAuthorHeader'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { ShareButton } from '@/app/components/ShareButton'
-import type { DailyRiddleType } from '@/app/schemas/DailyRiddleSchema'
+import type { SafeRiddleType } from '@/app/schemas/DailyRiddleSchema'
+import { checkAnswer as checkAnswerAction, revealAnswer as revealAnswerAction } from '@/app/services/riddleService'
 import { formatDate } from '@/app/util/format'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useReducer, type ReactNode } from 'react'
 
 interface RiddleSingleViewProps {
-	riddle: DailyRiddleType
+	riddle: SafeRiddleType
 	onNext?: () => void
 	onPrevious?: () => void
 	hasNext?: boolean
@@ -119,18 +120,14 @@ export const RiddleSingleView = ({
 		}
 	}
 
-	const checkAnswer = () => {
+	const checkAnswer = async () => {
 		if (!state.answer.trim()) return
 
 		dispatch({ type: 'SET_HAS_GUESSED', payload: true })
 
-		const normalizedAnswer = state.answer.trim().toLowerCase()
-		const correctAnswer = riddle.word.toLowerCase()
-		const altAnswers = riddle.altwords ? riddle.altwords.split(',').map((w) => w.trim().toLowerCase()) : []
+		const result = await checkAnswerAction(riddle.postId, state.answer)
 
-		const isCorrect = normalizedAnswer === correctAnswer || altAnswers.some((alt) => normalizedAnswer === alt)
-
-		if (isCorrect) {
+		if (result.correct) {
 			dispatch({ type: 'SET_FEEDBACK', payload: 'correct' })
 			dispatch({ type: 'SET_IS_SOLVED', payload: true })
 		} else {
@@ -153,10 +150,11 @@ export const RiddleSingleView = ({
 		}
 	}
 
-	const handleReveal = () => {
+	const handleReveal = async () => {
+		const result = await revealAnswerAction(riddle.postId)
 		dispatch({ type: 'SET_IS_REVEALED', payload: true })
 		dispatch({ type: 'SET_IS_SOLVED', payload: true })
-		dispatch({ type: 'SET_ANSWER', payload: riddle.word })
+		dispatch({ type: 'SET_ANSWER', payload: result.word })
 		dispatch({ type: 'SET_FEEDBACK', payload: 'correct' })
 	}
 
@@ -284,7 +282,7 @@ export const RiddleSingleView = ({
 				icon="/icons/item.png"
 			>
 				<HintModal
-					wordLength={riddle.word.length}
+					wordLength={riddle.wordLength}
 					onClose={() => dispatch({ type: 'SET_IS_HINT_MODAL_OPEN', payload: false })}
 				/>
 			</BottomSheetModal>

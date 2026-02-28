@@ -1,4 +1,5 @@
 import { getApiBaseUrl, getApiKey } from '@/app/util/apiConfig'
+import { stripSolutions } from '@/app/util/stripSolution'
 import { NextRequest, NextResponse } from 'next/server'
 
 const getAdventureApiUrl = async (number: number): Promise<string> => {
@@ -37,6 +38,12 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 		}
 
 		const data = await response.json()
+
+		// Strip solution data from riddles before sending to client
+		if (data?.data?.riddles) {
+			data.data.riddles = stripSolutions(data.data.riddles, true)
+		}
+
 		return NextResponse.json(data)
 	} catch (error) {
 		console.error('Adventure fetch error:', error)

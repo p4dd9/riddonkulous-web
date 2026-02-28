@@ -34,3 +34,8 @@ export const DailyRiddleSchema = z.object({
 })
 
 export type DailyRiddleType = z.infer<typeof DailyRiddleSchema>
+
+export type SafeRiddleType = Omit<DailyRiddleType, 'word' | 'altwords'> & {
+	wordLength: number
+	scrambledLetters?: string
+}
