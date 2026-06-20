@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
+import { useBackDismiss } from '@/app/lib/useBackDismiss'
 
 interface BottomSheetModalProps {
 	isOpen: boolean
@@ -12,6 +13,8 @@ interface BottomSheetModalProps {
 }
 
 export const BottomSheetModal = ({ isOpen, onClose, title, icon, children }: BottomSheetModalProps) => {
+	useBackDismiss(onClose, isOpen)
+
 	useEffect(() => {
 		if (isOpen) {
 			document.body.style.overflow = 'hidden'

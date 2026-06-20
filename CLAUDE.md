@@ -39,6 +39,13 @@ Riddonkulous is a riddle platform built with **Next.js 16** (React 19, TypeScrip
 ### Schemas
 Zod schemas live in `app/schemas/` for response validation.
 
+### Native app bridge (Capacitor WebView)
+
+This site is also loaded inside a Capacitor shell (`riddonkulous-mobile`) as a remote WebView. The native layer talks to the site **one-directionally** via `window` CustomEvents — there is no `Capacitor.Plugins.*` exposed to the page, and you should not add a postMessage RPC. Two events exist:
+
+- **`riddonkulous:backButton`** — dispatched (cancelable) when the user presses the Android hardware/gesture back button, *before* native navigates WebView history or exits. Any open dismissible layer should close itself and call `preventDefault()` so native does nothing; if nothing calls `preventDefault()`, native falls back to WebView history (`goBack()`, i.e. client-side route back) and then to minimise/exit. This is wired centrally: `app/lib/useBackDismiss.ts` keeps a LIFO stack of dismiss handlers and is consumed by the two overlay primitives — **`BottomSheetModal`** and **`Drawer`**. Every modal renders inside `BottomSheetModal`, so adding back-to-dismiss to a new modal is automatic; only a brand-new overlay primitive (its own portal/full-screen layer) needs to call `useBackDismiss(onClose, isOpen)` itself. The event never fires in a plain browser, so the hook is inert on web.
+- **`riddonkulous:networkChange`** — dispatched on connectivity changes with `detail: { connected: boolean, type: string }`. Currently **not consumed** by the site; listen for it if you want an offline banner.
+
 ## Styling Rules
 
 - **Tailwind CSS v4** with custom theme defined in `app/globals.css`

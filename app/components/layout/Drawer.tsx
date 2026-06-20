@@ -5,6 +5,7 @@ import type { Tag } from '@/app/services/tagService'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
+import { useBackDismiss } from '@/app/lib/useBackDismiss'
 
 interface DrawerProps {
 	isOpen: boolean
@@ -14,6 +15,8 @@ interface DrawerProps {
 
 export const Drawer = ({ isOpen, onClose, tags }: DrawerProps) => {
 	const drawerRef = useRef<HTMLDivElement>(null)
+
+	useBackDismiss(onClose, isOpen)
 
 	useEffect(() => {
 		if (isOpen) {
