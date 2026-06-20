@@ -16,13 +16,16 @@ export default function AdventureRedirectPage() {
 				}
 				const data = await response.json()
 				if (data.status === 'success' && data.data?.adventure?.adventureNumber) {
-					router.push(`/riddle/adventure/${data.data.adventure.adventureNumber}`)
+					// replace, not push — this is a redirect page. Pushing leaves
+					// /riddle/adventure in history, so a native back lands here and
+					// this effect immediately re-pushes the view (the "reload/bounce").
+					router.replace(`/riddle/adventure/${data.data.adventure.adventureNumber}`)
 				} else {
-					router.push('/')
+					router.replace('/')
 				}
 			} catch (error) {
 				console.error('Error fetching current adventure:', error)
-				router.push('/')
+				router.replace('/')
 			} finally {
 				setIsLoading(false)
 			}

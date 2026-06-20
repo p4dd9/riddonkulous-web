@@ -135,7 +135,9 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 			const resolvedParams = await params
 			const number = parseInt(resolvedParams.number, 10)
 			if (isNaN(number) || number < 1) {
-				router.push('/')
+				// replace, not push — redirect guard; pushing would leave the
+				// invalid URL in history and bounce on the next back press.
+				router.replace('/')
 				return
 			}
 			setAdventureNumber(number)
