@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(ls:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 40)",
+      "PowerShell(npx eslint app/lib/useBackDismiss.ts app/lib/useRouteBackBridge.ts app/components/NativeBridge.tsx 2>&1 | Select-Object -First 40)"
     ]
   }
 }

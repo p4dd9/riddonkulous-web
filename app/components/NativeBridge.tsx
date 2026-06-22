@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { useRouteBackBridge } from '@/app/lib/useRouteBackBridge'
 
 /**
  * Native (Capacitor) bridge — runs only inside the riddonkulous-mobile shell.
@@ -20,6 +21,10 @@ const PUSH_REGISTER_URL = 'https://reddicore.hammertime.studio/api/v1/push/regis
 
 export const NativeBridge = () => {
 	const router = useRouter()
+
+	// Own route-back for the native back button (see hook docs). Mounted here so
+	// it registers once, at the layout root, underneath any overlay handler.
+	useRouteBackBridge()
 
 	useEffect(() => {
 		let active = true
