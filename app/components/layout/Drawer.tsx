@@ -102,6 +102,20 @@ export const Drawer = ({ isOpen, onClose, tags }: DrawerProps) => {
 							</span>
 						</Link>
 						<Link
+							href="/riddle-feed"
+							onClick={onClose}
+							className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors"
+						>
+							<Image
+								src="/icons/script_lightning.png"
+								alt="Newest Riddles"
+								width={24}
+								height={24}
+								className="w-6 h-6"
+							/>
+							<span className="text-lg">Newest Riddles</span>
+						</Link>
+						<Link
 							href="/#about-riddles"
 							onClick={onClose}
 							className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors"
@@ -149,7 +163,7 @@ export const Drawer = ({ isOpen, onClose, tags }: DrawerProps) => {
 					>
 						<span className="text-xs">Frequently Asked Questions</span>
 					</Link>
-					<CreateButton variant="drawer" className="w-full cursor-pointer" />
+					<CreateButton variant="drawer" className="w-full cursor-pointer" onClick={onClose} />
 				</div>
 			</div>
 		</div>

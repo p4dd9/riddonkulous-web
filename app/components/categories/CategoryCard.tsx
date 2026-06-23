@@ -20,10 +20,10 @@ export const CategoryCard = ({
 }: CategoryCardProps) => {
 	const cardContent = (
 		<div
-			className={`relative py-6 px-4 rounded-lg aspect-square w-full flex flex-col hover:border-primary border-2 border-transparent transition-all duration-50 items-center justify-center overflow-hidden  cursor-pointer ${className}`}
+			className={`group relative py-6 px-4 rounded-lg aspect-square w-full flex flex-col border-2 border-primary/40 hover:border-primary hover:-translate-y-1 active:translate-y-0 active:scale-[0.985] transition-all duration-200 ease-out items-center justify-center overflow-hidden cursor-pointer ${className}`}
 		>
 			<div
-				className="absolute inset-0 bg-position-center bg-no-repeat bg-cover rounded-lg"
+				className="absolute inset-0 bg-position-center bg-no-repeat bg-cover rounded-lg transition-transform duration-300 ease-out group-hover:scale-105"
 				style={{
 					backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
 					filter: backgroundImage ? 'brightness(0.5)' : 'none',

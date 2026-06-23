@@ -7,6 +7,7 @@ import { listTags } from '@/app/services/tagService'
 import { stripSolution, stripSolutions } from '@/app/util/stripSolution'
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 import { GoogleAdCategoryGrid } from '../components/ads/GoogleAdCategoryGrid'
 import { GoogleAdMobileBanner } from '../components/ads/GoogleAdMobileBanner'
 import { GoogleAdVerticalFixed } from '../components/ads/GoogleAdVerticalFixed'
@@ -140,18 +141,24 @@ export default async function Home() {
 								/>
 								<span className="flex items-center gap-2">Daily Adventure</span>
 							</h2>
-							<div className="relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[384px] h-full border-2 border-primary">
+							<div className="group relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[384px] h-full border-2 border-primary/60 cursor-pointer transition-all duration-200 ease-out hover:border-primary hover:-translate-y-1 active:translate-y-0 active:scale-[0.985]">
 								<div
-									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg"
+									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg transition-transform duration-300 ease-out group-hover:scale-105"
 									style={{
 										backgroundImage: 'url(/canvas/BG055.png)',
 										filter: 'brightness(0.4)',
 									}}
 								/>
+								{/* Whole-box tap target */}
+								<Link
+									href="/riddle/adventure"
+									aria-label="Start the Daily Riddle Adventure"
+									className="absolute inset-0 z-10 rounded-lg"
+								/>
 								<span className="absolute top-2 right-1 px-2 py-1 text-lg bg-primary text-white rounded-full whitespace-nowrap z-20 rotate-12">
 									NEW
 								</span>
-								<div className="relative z-10 flex flex-col items-center justify-center text-center px-4 gap-4">
+								<div className="relative z-20 pointer-events-none flex flex-col items-center justify-center text-center px-4 gap-4">
 									<Image
 										src="/icons/item.png"
 										alt="Adventure"
@@ -163,7 +170,7 @@ export default async function Home() {
 									<p className="text-base md:text-lg opacity-90 max-w-md">
 										Solve 7 riddles in sequence. Your daily challenge.
 									</p>
-									<div className="mt-4">
+									<div className="mt-4 pointer-events-auto">
 										<LinkAsButton
 											href="/riddle/adventure"
 											text="Start Adventure"

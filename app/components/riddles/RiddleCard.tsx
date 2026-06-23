@@ -34,17 +34,23 @@ export const RiddleCard = ({
 	const isClickable = !hideSolveButton
 	const solveLink = solveHref || `/riddle/${riddle.postId}`
 
+	const interactionClasses = isClickable
+		? 'group cursor-pointer border-2 border-primary/40 hover:border-primary hover:-translate-y-1 active:translate-y-0 active:scale-[0.985]'
+		: hideBackground
+			? 'border-2 border-primary/50'
+			: 'border-white'
+
 	return (
 		<div
 			className={`relative ${isCompact ? 'py-2' : extraTopPadding ? 'pt-12 pb-2' : 'py-2'} px-2 rounded-lg ${
 				isCompact ? 'h-[120px]' : ''
-			} w-full flex flex-col items-stretch overflow-hidden transition-all duration-50 ${
-				isClickable ? 'cursor-pointer' : ''
-			} ${hideBackground ? 'border-2 border-primary/50' : 'border-white'} ${className}`}
+			} w-full flex flex-col items-stretch overflow-hidden transition-all duration-200 ease-out ${interactionClasses} ${className}`}
 		>
 			{!hideBackground && (
 				<div
-					className="absolute inset-0 bg-position-[center_bottom] bg-no-repeat bg-cover rounded-lg"
+					className={`absolute inset-0 bg-position-[center_bottom] bg-no-repeat bg-cover rounded-lg ${
+						isClickable ? 'transition-transform duration-300 ease-out group-hover:scale-105' : ''
+					}`}
 					style={{
 						backgroundImage: `url(${getCanvasBackground(riddle.bg || 'bg1.png')})`,
 						filter: 'brightness(0.4)',

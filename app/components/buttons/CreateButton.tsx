@@ -7,13 +7,15 @@ import { useAuth } from '@/app/contexts/AuthContext'
 interface CreateButtonProps {
 	variant?: 'header' | 'drawer'
 	className?: string
+	onClick?: () => void
 }
 
-export const CreateButton = ({ variant = 'header', className = '' }: CreateButtonProps) => {
+export const CreateButton = ({ variant = 'header', className = '', onClick }: CreateButtonProps) => {
 	const router = useRouter()
 	const { user } = useAuth()
 
 	const handleCreate = () => {
+		onClick?.()
 		if (user) {
 			router.push('/user/me/create')
 		} else {
