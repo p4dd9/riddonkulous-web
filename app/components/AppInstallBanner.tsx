@@ -8,7 +8,7 @@ export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com
 
 const DISMISS_KEY = 'riddonkulous:appBannerDismissedUntil'
 // How long to keep the banner hidden after a dismissal.
-const DISMISS_DURATION_MS = 30 * 24 * 60 * 60 * 1000 // 30 days
+const DISMISS_DURATION_MS = 14 * 24 * 60 * 60 * 1000 // 14 days
 
 const isDismissed = (): boolean => {
 	try {
@@ -20,14 +20,21 @@ const isDismissed = (): boolean => {
 }
 
 export const AppInstallBanner = () => {
-	const [visible, setVisible] = useState(false)
-	const [leaving, setLeaving] = useState(false)
+	const [mounted, setMounted] = useState(false)
+	const [open, setOpen] = useState(false)
 
 	useEffect(() => {
 		if (isDismissed()) return
+		let raf = 0
 		void isInNativeApp().then((inApp) => {
-			if (!inApp) setVisible(true)
+			if (inApp) return
+			setMounted(true)
+			// Mount collapsed, then expand on the next frame so the transition runs.
+			raf = window.requestAnimationFrame(() => {
+				raf = window.requestAnimationFrame(() => setOpen(true))
+			})
 		})
+		return () => window.cancelAnimationFrame(raf)
 	}, [])
 
 	const dismiss = () => {
@@ -36,22 +43,26 @@ export const AppInstallBanner = () => {
 		} catch {
 			// localStorage unavailable (private mode / blocked) — just hide for this session.
 		}
-		setLeaving(true)
+		setOpen(false)
 		// Let the collapse animation play out before unmounting.
-		window.setTimeout(() => setVisible(false), 250)
+		window.setTimeout(() => setMounted(false), 300)
 	}
 
-	if (!visible) return null
+	if (!mounted) return null
 
 	return (
 		<div
-			className={`grid overflow-hidden transition-all duration-200 ease-out ${
-				leaving ? 'grid-rows-[0fr] opacity-0' : 'grid-rows-[1fr] opacity-100'
+			className={`grid overflow-hidden transition-all duration-300 ease-out motion-reduce:transition-none ${
+				open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
 			}`}
 		>
 			<div className="min-h-0">
-				<div className="relative w-full border-b border-primary/40 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent">
-					<div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-3 pr-12">
+				<div
+					className={`relative w-full border-b border-primary/40 bg-bg transition-transform duration-300 ease-out motion-reduce:transition-none ${
+						open ? 'translate-y-0' : '-translate-y-1'
+					}`}
+				>
+					<div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-3 sm:pr-12">
 						<Image
 							src="/web-app-manifest-192x192.png"
 							alt=""
@@ -62,7 +73,16 @@ export const AppInstallBanner = () => {
 						/>
 						<div className="min-w-0 flex-1">
 							<p className="text-base leading-tight text-white">Riddonkulous for Android</p>
-							<p className="text-sm leading-tight text-white/60">Daily riddles on the go</p>
+							<p className="flex items-center gap-2 text-sm leading-tight text-white/60">
+								<span>Daily riddles on the go</span>
+								<button
+									type="button"
+									onClick={dismiss}
+									className="text-white/50 underline transition-colors hover:text-white/80 sm:hidden"
+								>
+									Dismiss
+								</button>
+							</p>
 						</div>
 						<a
 							href={PLAY_STORE_URL}
@@ -70,7 +90,8 @@ export const AppInstallBanner = () => {
 							rel="noopener noreferrer"
 							className="shrink-0 rounded-full bg-primary px-4 py-2 text-sm text-bg shadow-md transition-colors hover:bg-secondary"
 						>
-							Install
+							<span className="sm:hidden">Install</span>
+							<span className="hidden sm:inline">Install App</span>
 						</a>
 					</div>
 
@@ -78,7 +99,7 @@ export const AppInstallBanner = () => {
 						type="button"
 						onClick={dismiss}
 						aria-label="Dismiss"
-						className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full text-white/50 transition-colors hover:bg-white/10 hover:text-white"
+						className="absolute right-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-white/50 transition-colors hover:bg-white/10 hover:text-white sm:flex"
 					>
 						<svg
 							width="16"
