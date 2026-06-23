@@ -5,7 +5,6 @@ import { getCanvasBackground } from '@/app/util/cosmetics'
 import { formatPopularity } from '@/app/util/format'
 import Image from 'next/image'
 import Link from 'next/link'
-import { LinkAsButton } from '../buttons/LinkAsButton'
 
 interface RiddleCardProps {
 	riddle: SafeRiddleType
@@ -35,7 +34,7 @@ export const RiddleCard = ({
 	const solveLink = solveHref || `/riddle/${riddle.postId}`
 
 	const interactionClasses = isClickable
-		? 'group cursor-pointer border-2 border-primary/40 hover:border-primary hover:-translate-y-1 active:translate-y-0 active:scale-[0.985]'
+		? 'group cursor-pointer border-2 border-primary/40 hover:border-primary active:scale-[0.985]'
 		: hideBackground
 			? 'border-2 border-primary/50'
 			: 'border-white'
@@ -116,8 +115,9 @@ export const RiddleCard = ({
 					</p>
 				</div>
 				{!hideSolveButton && !isCompact && (
-					<div className="flex items-center w-full pb-2 justify-center pointer-events-auto">
-						<LinkAsButton href={solveLink} text="Solve" textAlign="center" customClass="px-4 py-1" />
+					<div className="mt-auto flex items-center justify-center gap-1.5 w-full pb-2 text-primary/90 group-hover:text-primary transition-colors duration-200 [text-shadow:2px_2px_0px_black]">
+						<span>Tap to solve</span>
+						<span aria-hidden="true">→</span>
 					</div>
 				)}
 			</div>

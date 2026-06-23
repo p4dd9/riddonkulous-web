@@ -20,7 +20,7 @@ export const CategoryCard = ({
 }: CategoryCardProps) => {
 	const cardContent = (
 		<div
-			className={`group relative py-6 px-4 rounded-lg aspect-square w-full flex flex-col border-2 border-primary/40 hover:border-primary hover:-translate-y-1 active:translate-y-0 active:scale-[0.985] transition-all duration-200 ease-out items-center justify-center overflow-hidden cursor-pointer ${className}`}
+			className={`group relative py-6 px-4 rounded-lg aspect-square w-full flex flex-col border-2 border-primary/40 hover:border-primary active:scale-[0.985] transition-all duration-200 ease-out items-center justify-center overflow-hidden cursor-pointer ${className}`}
 		>
 			<div
 				className="absolute inset-0 bg-position-center bg-no-repeat bg-cover rounded-lg transition-transform duration-300 ease-out group-hover:scale-105"

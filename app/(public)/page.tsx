@@ -141,7 +141,7 @@ export default async function Home() {
 								/>
 								<span className="flex items-center gap-2">Daily Adventure</span>
 							</h2>
-							<div className="group relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[384px] h-full border-2 border-primary/60 cursor-pointer transition-all duration-200 ease-out hover:border-primary hover:-translate-y-1 active:translate-y-0 active:scale-[0.985]">
+							<div className="group relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[384px] h-full border-2 border-primary/40 cursor-pointer transition-all duration-200 ease-out hover:border-primary active:scale-[0.985]">
 								<div
 									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg transition-transform duration-300 ease-out group-hover:scale-105"
 									style={{
@@ -170,14 +170,10 @@ export default async function Home() {
 									<p className="text-base md:text-lg opacity-90 max-w-md">
 										Solve 7 riddles in sequence. Your daily challenge.
 									</p>
-									<div className="mt-4 pointer-events-auto">
-										<LinkAsButton
-											href="/riddle/adventure"
-											text="Start Adventure"
-											textAlign="center"
-											customClass="px-8 py-3 text-lg"
-										/>
-									</div>
+								</div>
+								<div className="absolute inset-x-0 bottom-4 z-20 pointer-events-none flex items-center justify-center gap-1.5 text-lg text-primary/90 group-hover:text-primary transition-colors duration-200 [text-shadow:2px_2px_0px_black]">
+									<span>Tap to start</span>
+									<span aria-hidden="true">→</span>
 								</div>
 							</div>
 						</div>
