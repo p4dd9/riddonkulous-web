@@ -15,6 +15,26 @@
 	animation: slideBackAndFade 1s ease-in-out forwards;
 }
 
+@keyframes gentleFloat {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-8px);
+	}
+}
+
+.animate-gentle-float {
+	animation: gentleFloat 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.animate-gentle-float {
+		animation: none;
+	}
+}
+
 /*@font-face {
 	font-family: 'Font007';
 	src: url('/font/FONT007.ttf') format('truetype');

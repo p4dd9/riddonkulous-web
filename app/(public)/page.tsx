@@ -164,7 +164,7 @@ export default async function Home() {
 										alt="Adventure"
 										width={64}
 										height={64}
-										className="w-16 h-16"
+										className="w-16 h-16 animate-gentle-float"
 									/>
 									<h3 className="text-2xl md:text-3xl font-bold">Daily Riddle Adventure</h3>
 									<p className="text-base md:text-lg opacity-90 max-w-md">
