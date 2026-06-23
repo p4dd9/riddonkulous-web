@@ -31,14 +31,16 @@ export const RiddleCard = ({
 	hideBackground = false,
 }: RiddleCardProps) => {
 	const isCompact = variant === 'compact'
+	const isClickable = !hideSolveButton
+	const solveLink = solveHref || `/riddle/${riddle.postId}`
 
 	return (
 		<div
 			className={`relative ${isCompact ? 'py-2' : extraTopPadding ? 'pt-12 pb-2' : 'py-2'} px-2 rounded-lg ${
 				isCompact ? 'h-[120px]' : ''
 			} w-full flex flex-col items-stretch overflow-hidden transition-all duration-50 ${
-				hideBackground ? 'border-2 border-primary/50' : 'border-white'
-			} ${className}`}
+				isClickable ? 'cursor-pointer' : ''
+			} ${hideBackground ? 'border-2 border-primary/50' : 'border-white'} ${className}`}
 		>
 			{!hideBackground && (
 				<div
@@ -50,8 +52,15 @@ export const RiddleCard = ({
 				/>
 			)}
 
+			{/* Whole-card tap target: stretched link covering the card */}
+			{isClickable && (
+				<Link href={solveLink} aria-label="Solve this riddle" className="absolute inset-0 z-10 rounded-lg" />
+			)}
+
 			<div
-				className={`relative z-10 flex flex-col items-center justify-between w-full ${isCompact ? 'h-full' : 'flex-1'}`}
+				className={`relative z-20 ${isClickable ? 'pointer-events-none' : ''} flex flex-col items-center justify-between w-full ${
+					isCompact ? 'h-full' : 'flex-1'
+				}`}
 			>
 				{/* Top row: stats for non-web riddles; author (top right) only for web-created riddles */}
 				{(!riddle.postId.startsWith('r_') && !hideStats) || (riddle.postId.startsWith('r_') && riddle.author) ? (
@@ -78,7 +87,9 @@ export const RiddleCard = ({
 							{riddle.postId.startsWith('r_') && riddle.author && (
 								<Link
 									href={`/profile/${encodeURIComponent(riddle.author)}`}
-									className={`text-primary font-medium hover:underline ${isCompact ? 'text-xs' : ''}`}
+									className={`relative pointer-events-auto text-primary font-medium hover:underline ${
+										isCompact ? 'text-xs' : ''
+									}`}
 									title={riddle.author}
 								>
 									{riddle.author}
@@ -98,18 +109,9 @@ export const RiddleCard = ({
 						{riddle.riddle}
 					</p>
 				</div>
-				{!hideSolveButton && (
-					<div className={`flex items-center w-full pb-2 ${isCompact ? 'justify-end' : 'justify-center'}`}>
-						<LinkAsButton
-							href={solveHref || `/riddle/${riddle.postId}`}
-							text="Solve"
-							textAlign="center"
-							customClass={
-								isCompact
-									? 'bg-primary hover:bg-primary px-1.5 py-0.5 rounded-md text-white text-xs transition-colors'
-									: 'px-4 py-1'
-							}
-						/>
+				{!hideSolveButton && !isCompact && (
+					<div className="flex items-center w-full pb-2 justify-center pointer-events-auto">
+						<LinkAsButton href={solveLink} text="Solve" textAlign="center" customClass="px-4 py-1" />
 					</div>
 				)}
 			</div>

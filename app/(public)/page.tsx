@@ -2,12 +2,7 @@ import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { CategoryCard } from '@/app/components/categories/CategoryCard'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { StructuredData } from '@/app/components/seo/StructuredData'
-import {
-		getCurrentAdventure,
-		getLatestRiddles,
-		getRiddleOfTheDay,
-		getTrendingRiddles,
-	} from '@/app/services/riddleService'
+import { getCurrentAdventure, getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
 import { listTags } from '@/app/services/tagService'
 import { stripSolution, stripSolutions } from '@/app/util/stripSolution'
 import type { Metadata } from 'next'
@@ -41,19 +36,16 @@ export const metadata: Metadata = {
 export const revalidate = 60 // Cache for 60 seconds
 
 export default async function Home() {
-	const [riddleOfTheDay, trendingRiddles, tagsData, currentAdventureNumber, featuredRiddlesData] =
-		await Promise.all([
-			getRiddleOfTheDay(),
-			getTrendingRiddles(),
-			listTags(50, 0),
-			getCurrentAdventure(),
-			getLatestRiddles(3, 0, 30, true),
-		])
+	const [riddleOfTheDay, trendingRiddles, tagsData, currentAdventureNumber] = await Promise.all([
+		getRiddleOfTheDay(),
+		getTrendingRiddles(),
+		listTags(50, 0),
+		getCurrentAdventure(),
+	])
 	const safeRiddleOfTheDay = stripSolution(riddleOfTheDay)
 	const filteredTrendingRiddles = stripSolutions(
 		trendingRiddles.filter((riddle) => riddle.postId !== riddleOfTheDay.postId).slice(0, 3)
 	)
-	const safeFeaturedRiddles = stripSolutions(featuredRiddlesData.riddles)
 
 	const structuredData = {
 		'@context': 'https://schema.org',
@@ -209,30 +201,6 @@ export default async function Home() {
 						</div>
 						<div className="flex flex-col lg:flex-row gap-3">
 							{filteredTrendingRiddles.map((riddle) => (
-								<RiddleCard
-									riddle={riddle}
-									variant="compact"
-									key={riddle.postId}
-									className="lg:flex-1"
-									hideBackground={true}
-								/>
-							))}
-						</div>
-					</div>
-
-					<div className="w-full flex flex-col gap-4">
-						<h2 className="text-xl md:text-2xl flex items-center gap-2">
-							<Image
-								src="/icons/party.png"
-								alt="Featured"
-								width={24}
-								height={24}
-								className="w-6 h-6"
-							/>
-							Featured
-						</h2>
-						<div className="flex flex-col lg:flex-row gap-3">
-							{safeFeaturedRiddles.map((riddle) => (
 								<RiddleCard
 									riddle={riddle}
 									variant="compact"
