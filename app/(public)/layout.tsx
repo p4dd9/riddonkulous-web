@@ -1,3 +1,4 @@
+import { AppInstallBanner } from '@/app/components/AppInstallBanner'
 import { Footer } from '@/app/components/layout/Footer'
 import { Header } from '@/app/components/layout/Header'
 import { SubscribeModalProvider } from '@/app/components/modals/SubscribeModalProvider'
@@ -149,6 +150,7 @@ export default async function RootLayout({
 				<AuthProvider initialUser={initialUser}>
 					<ServiceWorkerUnregister />
 					<NativeBridge />
+					<AppInstallBanner />
 					<Header tags={sortedTags} />
 					<main className="flex-1 h-full">{children}</main>
 					<Footer />
