@@ -117,7 +117,14 @@ export const RiddleCard = ({
 				{!hideSolveButton && !isCompact && (
 					<div className="mt-auto flex items-center justify-center gap-1.5 w-full pb-2 text-primary/90 group-hover:text-primary transition-colors duration-200 [text-shadow:2px_2px_0px_black]">
 						<span>Tap to solve</span>
-						<span aria-hidden="true">→</span>
+						<Image
+							src="/icons/arrow_right.png"
+							alt=""
+							width={16}
+							height={16}
+							className="w-4 h-4 shrink-0"
+							aria-hidden
+						/>
 					</div>
 				)}
 			</div>

@@ -2,7 +2,7 @@ import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { CategoryCard } from '@/app/components/categories/CategoryCard'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { StructuredData } from '@/app/components/seo/StructuredData'
-import { getCurrentAdventure, getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
+import { getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
 import { listTags } from '@/app/services/tagService'
 import { stripSolution, stripSolutions } from '@/app/util/stripSolution'
 import type { Metadata } from 'next'
@@ -36,14 +36,61 @@ export const metadata: Metadata = {
 
 export const revalidate = 60 // Cache for 60 seconds
 
+const sortTags = (tags: Awaited<ReturnType<typeof listTags>>['tags']) =>
+	[...tags].sort((a, b) => {
+		const orderA = a.order ?? Number.MAX_SAFE_INTEGER
+		const orderB = b.order ?? Number.MAX_SAFE_INTEGER
+
+		if (orderA !== orderB) {
+			return orderA - orderB
+		}
+
+		return a.label.localeCompare(b.label)
+	})
+
+const formatRiddleDate = (date: Date | string) => {
+	const parsed = typeof date === 'string' ? new Date(date) : date
+	if (Number.isNaN(parsed.getTime())) return ''
+
+	return parsed.toLocaleDateString('en-US', {
+		weekday: 'long',
+		month: 'long',
+		day: 'numeric',
+	})
+}
+
+const playPaths = [
+	{
+		href: '/riddle/adventure',
+		icon: '/icons/item.png',
+		iconClassName: 'animate-gentle-float',
+		title: 'Daily Adventure',
+		description: '7 riddles in a row — your daily streak challenge',
+	},
+	{
+		href: '/riddle-feed',
+		icon: '/icons/dialogue.png',
+		iconClassName: '',
+		title: 'Browse the feed',
+		description: 'Community riddles, newest first',
+	},
+] as const
+
+const playPathLinkClassName = (stretch = false) =>
+	`group flex items-center gap-4 p-4 rounded-lg border-2 border-primary/30 hover:border-primary active:scale-[0.985] transition-all duration-200${
+		stretch ? ' flex-1 min-h-0' : ''
+	}`
+
 export default async function Home() {
-	const [riddleOfTheDay, trendingRiddles, tagsData, currentAdventureNumber] = await Promise.all([
+	const [riddleOfTheDay, trendingRiddles, tagsData] = await Promise.all([
 		getRiddleOfTheDay(),
 		getTrendingRiddles(),
-		listTags(50, 0),
-		getCurrentAdventure(),
+		listTags(20, 0),
 	])
 	const safeRiddleOfTheDay = stripSolution(riddleOfTheDay)
+	const dailySolveHref = `/riddle/daily/${riddleOfTheDay.riddleNumber}`
+	const riddleDateLabel = formatRiddleDate(riddleOfTheDay.featuredDate)
+	const popularTags = sortTags(tagsData.tags).slice(0, 6)
 	const filteredTrendingRiddles = stripSolutions(
 		trendingRiddles.filter((riddle) => riddle.postId !== riddleOfTheDay.postId).slice(0, 3)
 	)
@@ -77,7 +124,7 @@ export default async function Home() {
 					name: 'Riddle Feed',
 					url: 'https://riddonkulous.com/riddle-feed',
 				},
-				...tagsData.tags.slice(0, 10).map((tag, index) => ({
+				...popularTags.map((tag, index) => ({
 					'@type': 'ListItem' as const,
 					position: index + 3,
 					name: `${tag.label} Riddles`,
@@ -91,113 +138,132 @@ export default async function Home() {
 		<>
 			<StructuredData data={structuredData} />
 			<GoogleAdVerticalFixed />
-			<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8 gap-8 md:gap-18">
-				{/* About Section 
-			<div className="w-full flex gap-4 md:gap-8 items-end justify-start">
-				<Image
-					src="/pals/frog_magician.gif"
-					alt="Frog Magician"
-					width={64}
-					height={64}
-					className="w-18 h-18 sm:w-24 sm:h-24 md:w-32 md:h-32 "
-				/>
-				<div className="flex flex-col gap-3 text-xs md:text-3xl">
-					<p className="text-left">
-						Riddonkulous is a Platform <br className="hidden md:block" /> for Creating and Solving Riddles.
-					</p>
-				</div>
-			</div>*/}
-				<div className="w-full flex flex-col gap-6">
-					{/* Top Section: Riddle of the Day and Adventure - Equal Prominence */}
-					<div className="w-full flex flex-col lg:flex-row lg:items-start gap-6">
-						{/* Riddle of the Day - Left */}
-						<div className="flex flex-col gap-4 lg:w-1/2 order-1">
-							<h1 className="text-2xl md:text-4xl lg:h-12 flex items-center gap-2">
-								<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />
-								Riddle of the Day
-							</h1>
+			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-6 md:py-10 gap-10 md:gap-14">
+				<div className="w-full flex flex-col gap-5 md:gap-7">
+					<section className="w-full flex flex-col gap-5">
+						<div className="flex items-start gap-3 md:gap-5">
+							<Image
+								src="/pals/frog_magician.gif"
+								alt=""
+								width={112}
+								height={112}
+								className="hidden md:block w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 shrink-0"
+								aria-hidden
+								unoptimized
+							/>
+							<div className="flex flex-col gap-2 min-w-0 flex-1">
+								<p className="text-sm md:text-base text-primary/90">
+									Riddle #{riddleOfTheDay.riddleNumber} · {riddleDateLabel}
+								</p>
+								<h1 className="text-2xl md:text-4xl flex items-center gap-2">
+									<Image
+										src="/icons/light.png"
+										alt=""
+										width={32}
+										height={32}
+										className="w-7 h-7 md:w-8 md:h-8"
+									/>
+									Riddle of The Day
+								</h1>
+								<p className="text-sm md:text-lg opacity-80 max-w-xl">
+									A fresh brain teaser every day. Tap the card below to guess — a new puzzle drops daily.
+								</p>
+							</div>
+						</div>
+
+						<div className="w-full flex flex-col gap-3 lg:grid lg:grid-cols-[1fr_min(100%,22rem)] lg:gap-x-6 lg:gap-y-3">
+							<div className="hidden lg:block lg:col-start-2">
+								<h2 className="text-lg md:text-xl opacity-80">More ways to play</h2>
+							</div>
 
 							<RiddleCard
 								riddle={safeRiddleOfTheDay}
-								className="lg:h-[384px]"
-								solveHref={`/riddle/daily/${riddleOfTheDay.riddleNumber}`}
-								textClassName="line-clamp-7"
+								className="min-h-[260px] md:min-h-[300px] lg:col-start-1 lg:row-start-2 lg:min-w-0"
+								solveHref={dailySolveHref}
+								textClassName="line-clamp-6 md:line-clamp-7"
 							/>
-						</div>
 
-						<div className="order-2 lg:hidden">
-							<GoogleAdMobileBanner />
+							{/* More ways to play — desktop sidebar, height matches riddle card only */}
+							<aside className="hidden lg:flex lg:col-start-2 lg:row-start-2 flex-col gap-3 shrink-0 min-h-0">
+								<div className="flex flex-col gap-3 flex-1 min-h-0 h-full">
+									{playPaths.map((path) => (
+										<Link key={path.href} href={path.href} className={playPathLinkClassName(true)}>
+											<Image
+												src={path.icon}
+												alt=""
+												width={40}
+												height={40}
+												className={`w-10 h-10 shrink-0 ${path.iconClassName}`}
+												aria-hidden
+											/>
+											<div className="flex flex-col gap-0.5 min-w-0">
+												<span className="text-lg md:text-xl">{path.title}</span>
+												<span className="text-sm opacity-75">{path.description}</span>
+											</div>
+											<Image
+												src="/icons/arrow_right.png"
+												alt=""
+												width={16}
+												height={16}
+												className="ml-auto w-4 h-4 shrink-0 opacity-80 group-hover:opacity-100 transition-opacity"
+												aria-hidden
+											/>
+										</Link>
+									))}
+								</div>
+							</aside>
 						</div>
+					</section>
 
-						{/* Daily Riddle Adventure - Right, Equal Prominence */}
-						<div className="flex flex-col gap-4 lg:w-1/2 order-3 lg:order-2">
-							<h2 className="text-2xl md:text-4xl lg:h-12 flex items-center gap-2 flex-wrap">
-								<Image
-									src="/icons/item.png"
-									alt="Adventure"
-									width={32}
-									height={32}
-									className="w-8 h-8"
-								/>
-								<span className="flex items-center gap-2">Daily Adventure</span>
-							</h2>
-							<div className="group relative py-8 px-6 rounded-lg w-full flex flex-col items-center justify-center overflow-hidden min-h-[384px] h-full border-2 border-primary/40 cursor-pointer transition-all duration-200 ease-out hover:border-primary active:scale-[0.985]">
-								<div
-									className="absolute inset-0 bg-position-bottom bg-no-repeat bg-cover rounded-lg transition-transform duration-300 ease-out group-hover:scale-105"
-									style={{
-										backgroundImage: 'url(/canvas/BG055.png)',
-										filter: 'brightness(0.4)',
-									}}
-								/>
-								{/* Whole-box tap target */}
-								<Link
-									href="/riddle/adventure"
-									aria-label="Start the Daily Riddle Adventure"
-									className="absolute inset-0 z-10 rounded-lg"
-								/>
-								<div className="relative z-20 pointer-events-none flex flex-col items-center justify-center text-center px-4 gap-4">
+					<GoogleAdMobileBanner />
+
+					{/* More ways to play — mobile & tablet */}
+					<section className="w-full flex flex-col gap-3 lg:hidden">
+						<h2 className="text-lg md:text-xl opacity-80">More ways to play</h2>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+							{playPaths.map((path) => (
+								<Link key={path.href} href={path.href} className={playPathLinkClassName()}>
 									<Image
-										src="/icons/item.png"
-										alt="Adventure"
-										width={64}
-										height={64}
-										className="w-16 h-16 animate-gentle-float"
+										src={path.icon}
+										alt=""
+										width={40}
+										height={40}
+										className={`w-10 h-10 shrink-0 ${path.iconClassName}`}
+										aria-hidden
 									/>
-									<h3 className="text-2xl md:text-3xl font-bold">Daily Riddle Adventure</h3>
-									<p className="text-base md:text-lg opacity-90 max-w-md">
-										Solve 7 riddles in sequence. Your daily challenge.
-									</p>
-								</div>
-								<div className="absolute inset-x-0 bottom-4 z-20 pointer-events-none flex items-center justify-center gap-1.5 text-lg text-primary/90 group-hover:text-primary transition-colors duration-200 [text-shadow:2px_2px_0px_black]">
-									<span>Tap to start</span>
-									<span aria-hidden="true">→</span>
-								</div>
-							</div>
+									<div className="flex flex-col gap-0.5 min-w-0">
+										<span className="text-lg md:text-xl">{path.title}</span>
+										<span className="text-sm opacity-75">{path.description}</span>
+									</div>
+									<Image
+										src="/icons/arrow_right.png"
+										alt=""
+										width={16}
+										height={16}
+										className="ml-auto w-4 h-4 shrink-0 opacity-80 group-hover:opacity-100 transition-opacity"
+										aria-hidden
+									/>
+								</Link>
+							))}
 						</div>
-					</div>
+					</section>
+				</div>
 
-					{/* Trending Section - Below Riddle of Day and Adventure */}
-					<div className="w-full flex flex-col gap-4">
+				{/* Trending — lighter section */}
+				{filteredTrendingRiddles.length > 0 && (
+					<section className="w-full flex flex-col gap-4">
 						<div className="flex items-center justify-between gap-4">
 							<h2 className="text-xl md:text-2xl flex items-center gap-2">
 								<Image
 									src="/icons/script_lightning.png"
-									alt="Trending"
+									alt=""
 									width={24}
 									height={24}
 									className="w-6 h-6"
+									aria-hidden
 								/>
-								Trending
+								Trending now
 							</h2>
-							<LinkAsButton
-								href="/riddle-feed"
-								text="Newest Riddles"
-								textAlign="center"
-								customClass="text-sm py-1 px-2 rounded-md whitespace-nowrap"
-								threeD={true}
-								icon="/icons/dialogue.png"
-								iconClass="w-4 h-4 shrink-0"
-							/>
 						</div>
 						<div className="flex flex-col lg:flex-row gap-3">
 							{filteredTrendingRiddles.map((riddle) => (
@@ -210,34 +276,29 @@ export default async function Home() {
 								/>
 							))}
 						</div>
+					</section>
+				)}
+
+				{/* Popular categories — curated slice, not the full catalog */}
+				<section className="w-full flex flex-col gap-4">
+					<div className="flex flex-col gap-1">
+						<h2 className="text-xl md:text-2xl">Popular categories</h2>
+						<p className="text-sm md:text-base opacity-75">Open the menu for every topic</p>
 					</div>
-
-					<h2 className="text-2xl md:text-3xl">Explore Riddles</h2>
 					<div className="w-full grid grid-cols-2 md:grid-cols-3 gap-4">
-						{tagsData.tags
-							.sort((a, b) => {
-								const orderA = a.order ?? Number.MAX_SAFE_INTEGER
-								const orderB = b.order ?? Number.MAX_SAFE_INTEGER
-
-								if (orderA !== orderB) {
-									return orderA - orderB
-								}
-
-								return a.label.localeCompare(b.label)
-							})
-							.map((tag) => (
-								<CategoryCard
-									key={tag.id}
-									title={tag.label}
-									riddleCount={tag.count || 0}
-									description={tag.description || ''}
-									backgroundImage={tag.asset_name_path}
-									href={`/riddles/${tag.id}`}
-								/>
-							))}
+						{popularTags.map((tag) => (
+							<CategoryCard
+								key={tag.id}
+								title={tag.label}
+								riddleCount={tag.count || 0}
+								description={tag.description || ''}
+								backgroundImage={tag.asset_name_path}
+								href={`/riddles/${tag.id}`}
+							/>
+						))}
 						<GoogleAdCategoryGrid />
 					</div>
-				</div>
+				</section>
 
 				{/* About Riddles Section */}
 				<div id="about-riddles" className="w-full flex flex-col gap-4">
