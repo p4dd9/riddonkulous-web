@@ -923,7 +923,9 @@ Can you beat my score?`}
 							value={answer}
 							onChange={handleAnswerChange}
 							disabled={adventureRun.riddles[currentRiddleIndex].solved}
-							isIncorrect={feedback === 'incorrect'}
+							feedback={feedback}
+							resetKey={currentRiddle.postId}
+							onEnter={() => checkAnswer()}
 						/>
 					)}
 

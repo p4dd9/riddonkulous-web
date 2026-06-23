@@ -52,6 +52,22 @@ export const getTrendingRiddles = async () => {
 	return data
 }
 
+export const getRandomRiddle = async (excludePostId: string): Promise<DailyRiddleType> => {
+	const [trending, latest] = await Promise.all([
+		getTrendingRiddles().catch(() => [] as DailyRiddleType[]),
+		getLatestRiddles(50, 0).then((data) => data.riddles).catch(() => [] as DailyRiddleType[]),
+	])
+
+	const pool = [...trending, ...latest].filter((riddle) => riddle.postId !== excludePostId)
+	const uniqueRiddles = [...new Map(pool.map((riddle) => [riddle.postId, riddle])).values()]
+
+	if (uniqueRiddles.length === 0) {
+		throw new Error('No riddles available')
+	}
+
+	return uniqueRiddles[Math.floor(Math.random() * uniqueRiddles.length)]
+}
+
 export const getRiddleByPostId = async (postId: string) => {
 	const apiBaseUrl = await getApiBaseUrl()
 	const apiKey = await getApiKey()

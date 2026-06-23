@@ -6,23 +6,30 @@ import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
 import { HintModal } from '@/app/components/modals/HintModal'
 import { RevealModal } from '@/app/components/modals/RevealModal'
 import { RiddleAuthorHeader } from '@/app/components/riddles/RiddleAuthorHeader'
+import { ClassicTextInput } from '@/app/components/riddles/ClassicTextInput'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { ShareButton } from '@/app/components/ShareButton'
 import type { SafeRiddleType } from '@/app/schemas/DailyRiddleSchema'
-import { checkAnswer as checkAnswerAction, revealAnswer as revealAnswerAction } from '@/app/services/riddleService'
+import {
+	checkAnswer as checkAnswerAction,
+	getRandomRiddle,
+	revealAnswer as revealAnswerAction,
+} from '@/app/services/riddleService'
 import { formatDate } from '@/app/util/format'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useEffect, useReducer, type ReactNode } from 'react'
+import { useEffect, useReducer, useState, type ReactNode } from 'react'
 
 interface RiddleSingleViewProps {
 	riddle: SafeRiddleType
-	onNext?: () => void
+	onContinueNext?: () => void
 	onPrevious?: () => void
 	hasNext?: boolean
 	hasPrevious?: boolean
-	nextUrl?: string
+	continueUrl?: string
 	previousUrl?: string
+	onRandomContinue?: () => void
+	showContinue?: boolean
 	title?: string | ReactNode
 	showDate?: boolean
 	showRedditButton?: boolean
@@ -31,18 +38,21 @@ interface RiddleSingleViewProps {
 
 export const RiddleSingleView = ({
 	riddle,
-	onNext,
+	onContinueNext,
 	onPrevious,
 	hasNext = false,
 	hasPrevious = false,
-	nextUrl,
+	continueUrl,
 	previousUrl,
+	onRandomContinue,
+	showContinue = true,
 	title,
 	showDate = false,
 	showRedditButton = false,
 	showShareButton = false,
 }: RiddleSingleViewProps) => {
 	const router = useRouter()
+	const [isContinuing, setIsContinuing] = useState(false)
 
 	type RiddleState = {
 		answer: string
@@ -104,11 +114,32 @@ export const RiddleSingleView = ({
 		dispatch({ type: 'RESET' })
 	}, [riddle.postId])
 
-	const handleNext = () => {
-		if (onNext) {
-			onNext()
-		} else if (nextUrl) {
-			router.push(nextUrl)
+	const handleContinue = async () => {
+		if (isContinuing) return
+
+		if (hasNext) {
+			if (onContinueNext) {
+				onContinueNext()
+				return
+			}
+			if (continueUrl) {
+				router.push(continueUrl)
+				return
+			}
+		}
+
+		if (onRandomContinue) {
+			onRandomContinue()
+			return
+		}
+
+		setIsContinuing(true)
+		try {
+			const randomRiddle = await getRandomRiddle(riddle.postId)
+			router.push(`/riddle/${randomRiddle.postId}`)
+		} catch (error) {
+			console.error('Failed to load random riddle:', error)
+			setIsContinuing(false)
 		}
 	}
 
@@ -117,6 +148,8 @@ export const RiddleSingleView = ({
 			onPrevious()
 		} else if (previousUrl) {
 			router.push(previousUrl)
+		} else {
+			router.back()
 		}
 	}
 
@@ -135,19 +168,11 @@ export const RiddleSingleView = ({
 		}
 	}
 
-	const handleAnswerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const newAnswer = e.target.value
-		// Clear incorrect feedback when user starts typing again (but keep correct feedback if solved)
+	const handleAnswerChange = (newAnswer: string) => {
 		if (state.feedback === 'incorrect' && !state.isSolved) {
 			dispatch({ type: 'SET_FEEDBACK', payload: null })
 		}
 		dispatch({ type: 'SET_ANSWER', payload: newAnswer })
-	}
-
-	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Enter' && !state.isSolved) {
-			checkAnswer()
-		}
 	}
 
 	const handleReveal = async () => {
@@ -203,27 +228,22 @@ export const RiddleSingleView = ({
 			{/* Answer Input Section */}
 			<div className="w-full flex flex-col gap-4">
 				<div className="flex flex-col gap-2">
-					<div className="flex flex-col md:flex-row gap-2">
-						<input
-							id="riddle-answer"
-							type="text"
+					<div className="flex flex-col md:flex-row gap-2 md:items-stretch">
+						<ClassicTextInput
+							className="md:flex-1"
 							value={state.answer}
 							onChange={handleAnswerChange}
-							onKeyPress={handleKeyPress}
 							disabled={state.isSolved}
-							className={`w-full md:flex-1 px-4 py-2 rounded-md border-2 outline-none focus:outline-none focus:ring-0 ${
-								state.feedback === 'correct'
-									? 'border-green-500'
-									: state.feedback === 'incorrect'
-										? 'border-red-500'
-										: 'border-gray-300'
-							} ${state.isSolved ? 'opacity-60 cursor-not-allowed' : ''}`}
-							placeholder="Type your answer here..."
+							feedback={state.feedback}
+							resetKey={riddle.postId}
+							onEnter={() => {
+								if (!state.isSolved) checkAnswer()
+							}}
 						/>
 						<BasicButton
 							text={state.isSolved ? 'Solved!' : 'Check Answer'}
 							onClick={checkAnswer}
-							customClass={`w-full md:w-auto py-3 ${state.isSolved ? 'opacity-60 cursor-not-allowed' : ''}`}
+							customClass={`w-full md:w-auto shrink-0 px-4 py-3 ${state.isSolved ? 'opacity-60 cursor-not-allowed' : ''}`}
 							disabled={state.isSolved || !state.answer.trim()}
 						/>
 					</div>
@@ -300,21 +320,22 @@ export const RiddleSingleView = ({
 				/>
 			</BottomSheetModal>
 
-			{/* Navigation Buttons (for category playlists) */}
-			{(hasNext || hasPrevious) && (
+			{/* Navigation Buttons */}
+			{(showContinue || hasPrevious) && (
 				<div className="w-full flex justify-between gap-4">
 					<BasicButton
 						text="Back"
 						onClick={handlePrevious}
-						customClass={`px-4 py-2 md:px-8 md:py-4 md:min-w-[120px] ${!hasPrevious ? 'opacity-50 cursor-not-allowed' : ''}`}
-						disabled={!hasPrevious}
+						customClass="px-4 py-2 md:px-8 md:py-4 md:min-w-[120px]"
 					/>
-					<BasicButton
-						text="Next"
-						onClick={handleNext}
-						customClass={`px-4 py-2 md:px-8 md:py-4 md:min-w-[120px] ${!hasNext ? 'opacity-50 cursor-not-allowed' : ''}`}
-						disabled={!hasNext}
-					/>
+					{showContinue && (
+						<BasicButton
+							text={isContinuing ? 'Loading...' : 'Continue'}
+							onClick={handleContinue}
+							customClass="px-4 py-2 md:px-8 md:py-4 md:min-w-[120px]"
+							disabled={isContinuing}
+						/>
+					)}
 				</div>
 			)}
 		</div>

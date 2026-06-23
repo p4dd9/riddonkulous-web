@@ -155,9 +155,6 @@ export default async function Home() {
 									aria-label="Start the Daily Riddle Adventure"
 									className="absolute inset-0 z-10 rounded-lg"
 								/>
-								<span className="absolute top-2 right-1 px-2 py-1 text-lg bg-primary text-white rounded-full whitespace-nowrap z-20 rotate-12">
-									NEW
-								</span>
 								<div className="relative z-20 pointer-events-none flex flex-col items-center justify-center text-center px-4 gap-4">
 									<Image
 										src="/icons/item.png"

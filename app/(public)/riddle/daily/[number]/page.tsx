@@ -126,7 +126,7 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 					riddle={safeRiddle}
 					hasNext={hasNext}
 					hasPrevious={hasPrevious}
-					nextUrl={hasNext ? `/riddle/daily/${riddleNumber + 1}` : undefined}
+					continueUrl={hasNext ? `/riddle/daily/${riddleNumber + 1}` : undefined}
 					previousUrl={hasPrevious ? `/riddle/daily/${riddleNumber - 1}` : undefined}
 					title={
 					<div className="flex items-center gap-2">
