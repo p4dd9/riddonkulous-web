@@ -16,7 +16,6 @@ docker-compose up -d -p 1233:1233
 # Enable access logs with client IP, path, status, UA on the Traefik host.
 # After a Plausible traffic spike, inspect burstable crawl IPs, e.g.:
 #   grep -E '/riddles|/riddle/' /var/log/traefik/access.log | awk '{print $1}' | sort | uniq -c | sort -rn | head
-# Confirm rate-limit 429s from the riddonkulous-ratelimit middleware.
 
 ### Google Adsense Review To-Do's
 

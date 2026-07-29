@@ -1,6 +1,3 @@
-import { getClientIp } from '@/app/lib/clientIp'
-import { checkRateLimit } from '@/app/lib/rateLimit'
-import { serverLogger } from '@/app/util/logger'
 import { jwtVerify } from 'jose'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
@@ -16,27 +13,6 @@ export const config = {
 		 */
 		'/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|otf|ttf|woff|woff2|json|webmanifest)).*)',
 	],
-}
-
-const DEFAULT_CRAWL_RATE_LIMIT_MAX = 30
-const DEFAULT_CRAWL_RATE_LIMIT_WINDOW_MS = 60_000
-
-const isCrawlPath = (pathname: string) =>
-	pathname === '/riddles' ||
-	pathname.startsWith('/riddles/') ||
-	pathname === '/riddle' ||
-	pathname.startsWith('/riddle/')
-
-const getCrawlRateLimitMax = () => {
-	const raw = process.env.CRAWL_RATE_LIMIT_MAX
-	const parsed = raw ? Number.parseInt(raw, 10) : NaN
-	return Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_CRAWL_RATE_LIMIT_MAX
-}
-
-const getCrawlRateLimitWindowMs = () => {
-	const raw = process.env.CRAWL_RATE_LIMIT_WINDOW_MS
-	const parsed = raw ? Number.parseInt(raw, 10) : NaN
-	return Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_CRAWL_RATE_LIMIT_WINDOW_MS
 }
 
 const getAdminSecretKey = () => {
@@ -57,34 +33,6 @@ const getPublicSecretKey = () => {
 
 export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl
-
-	// Crawl-path throttle: blunt burst scrapers on riddle listing/detail pages
-	if (isCrawlPath(pathname)) {
-		const ip = getClientIp(request)
-		if (ip) {
-			const max = getCrawlRateLimitMax()
-			const windowMs = getCrawlRateLimitWindowMs()
-			const result = checkRateLimit(`${ip}:crawl`, max, windowMs)
-
-			if (!result.allowed) {
-				serverLogger.warn(
-					JSON.stringify({
-						type: 'crawl_rate_limit',
-						ip,
-						path: pathname,
-						ua: request.headers.get('user-agent') || '',
-						count: result.count,
-					})
-				)
-				return new NextResponse('Too Many Requests', {
-					status: 429,
-					headers: {
-						'Retry-After': String(result.retryAfterSec),
-					},
-				})
-			}
-		}
-	}
 
 	// Handle moderation routes - Requires moderator or admin role
 	if (pathname.startsWith('/api/moderation') || pathname.startsWith('/admin/moderation')) {

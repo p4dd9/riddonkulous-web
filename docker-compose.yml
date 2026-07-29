@@ -9,11 +9,6 @@ services:
       - "traefik.http.routers.riddonkulous-web.rule=Host(`riddonkulous.com`) || Host(`www.riddonkulous.com`)"
       - "traefik.http.routers.riddonkulous-web.entrypoints=websecure"
       - "traefik.http.routers.riddonkulous-web.tls.certresolver=myresolver"
-      # Rate limit: 60 req/min average, burst 120 per IP (blunts scrapers before Next)
-      - "traefik.http.middlewares.riddonkulous-ratelimit.ratelimit.average=60"
-      - "traefik.http.middlewares.riddonkulous-ratelimit.ratelimit.period=1m"
-      - "traefik.http.middlewares.riddonkulous-ratelimit.ratelimit.burst=120"
-      - "traefik.http.routers.riddonkulous-web.middlewares=riddonkulous-ratelimit"
       # Ops: enable Traefik access logs on the host, then after a Plausible spike:
       #   grep -E '/riddles|/riddle/' /var/log/traefik/access.log | awk '{print $1}' | sort | uniq -c | sort -rn | head
     networks:
