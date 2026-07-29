@@ -12,6 +12,12 @@ docker run -p 1233:1233 riddonkulous-web
 docker-compose up --build
 docker-compose up -d -p 1233:1233
 
+# Traefik access logs (host Traefik, not this compose file)
+# Enable access logs with client IP, path, status, UA on the Traefik host.
+# After a Plausible traffic spike, inspect burstable crawl IPs, e.g.:
+#   grep -E '/riddles|/riddle/' /var/log/traefik/access.log | awk '{print $1}' | sort | uniq -c | sort -rn | head
+# Confirm rate-limit 429s from the riddonkulous-ratelimit middleware.
+
 ### Google Adsense Review To-Do's
 
 - Opt-Out in Privacy Policy (Update Privacy Policy immediately: Add the "Google AdSense Cookie" and "Personalized Advertising" clauses. (Google provides a template for this).)
