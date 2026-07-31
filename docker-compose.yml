@@ -9,8 +9,16 @@ services:
       - "traefik.http.routers.riddonkulous-web.rule=Host(`riddonkulous.com`) || Host(`www.riddonkulous.com`)"
       - "traefik.http.routers.riddonkulous-web.entrypoints=websecure"
       - "traefik.http.routers.riddonkulous-web.tls.certresolver=myresolver"
-      # Ops: enable Traefik access logs on the host, then after a Plausible spike:
+      # Geo-block + request debug run in Next (proxy.ts). Country header must come from
+      # Traefik GeoIP or Cloudflare — see README "Geo block + access logs".
+      # Ops: Traefik access logs on the host, then e.g.:
       #   grep -E '/riddles|/riddle/' /var/log/traefik/access.log | awk '{print $1}' | sort | uniq -c | sort -rn | head
+    # Cap container stdout/stderr (console.log) — 10MB × 3 files ≈ 30MB max
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       internal:
     restart: always

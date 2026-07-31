@@ -1,3 +1,10 @@
+import {
+	collectRequestDebug,
+	isCrawlPath,
+	isRequestDebugLogEnabled,
+} from '@/app/lib/requestDebug'
+import { getBlockedCountries, getRequestCountry, isGeoBlockEnabled } from '@/app/lib/requestGeo'
+import { serverLogger } from '@/app/util/logger'
 import { jwtVerify } from 'jose'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
@@ -33,6 +40,29 @@ const getPublicSecretKey = () => {
 
 export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl
+	const isRsc = request.nextUrl.searchParams.has('_rsc')
+	const onCrawlPath = isCrawlPath(pathname)
+
+	// Debug log for crawl paths (skip RSC prefetches — too noisy for real users)
+	if (onCrawlPath && isRequestDebugLogEnabled() && !isRsc) {
+		serverLogger.info(JSON.stringify(collectRequestDebug(request, pathname)))
+	}
+
+	// Geo-block SG/CN (and any GEO_BLOCK_COUNTRIES). Requires a country header from
+	// Traefik GeoIP or Cloudflare — fails open when the header is missing.
+	if (isGeoBlockEnabled()) {
+		const country = getRequestCountry(request)
+		if (country && getBlockedCountries().has(country)) {
+			serverLogger.warn(
+				JSON.stringify({
+					...collectRequestDebug(request, pathname),
+					type: 'geo_block',
+					blockedCountry: country,
+				})
+			)
+			return new NextResponse('Forbidden', { status: 403 })
+		}
+	}
 
 	// Handle moderation routes - Requires moderator or admin role
 	if (pathname.startsWith('/api/moderation') || pathname.startsWith('/admin/moderation')) {

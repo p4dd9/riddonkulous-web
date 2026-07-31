@@ -12,10 +12,57 @@ docker run -p 1233:1233 riddonkulous-web
 docker-compose up --build
 docker-compose up -d -p 1233:1233
 
-# Traefik access logs (host Traefik, not this compose file)
-# Enable access logs with client IP, path, status, UA on the Traefik host.
-# After a Plausible traffic spike, inspect burstable crawl IPs, e.g.:
-#   grep -E '/riddles|/riddle/' /var/log/traefik/access.log | awk '{print $1}' | sort | uniq -c | sort -rn | head
+## Geo block + access logs
+
+App geo-block (`GEO_BLOCK_ENABLED`, default on) returns **403** for `GEO_BLOCK_COUNTRIES` (default `SG,CN`) when a country header is present (`cf-ipcountry`, `x-geo-country`, `x-country-code`, or `cloudfront-viewer-country`). Without that header it **fails open** (no ban).
+
+Crawl-path debug lines (`request_debug` / `geo_block`) go to the **Next container logs** (RSC prefetches skipped).
+
+### Read Next app logs (request_debug / geo_block)
+
+```bash
+docker compose logs -f riddonkulous-web
+# or, if the container name differs:
+docker logs -f riddonkulous-web
+
+# filter:
+docker logs riddonkulous-web 2>&1 | grep -E 'request_debug|geo_block'
+```
+
+### Read Traefik access logs (host Traefik)
+
+Access logs are on the **Traefik host**, not this compose file. Enable them in Traefik static config, e.g.:
+
+```yaml
+accessLog:
+  filePath: "/var/log/traefik/access.log"
+  bufferingSize: 100
+```
+
+Then on the Traefik host:
+
+```bash
+# follow live
+tail -f /var/log/traefik/access.log
+
+# if Traefik runs in Docker and logs to stdout:
+docker logs -f <traefik-container-name>
+
+# top IPs hitting riddle routes
+grep -E '/riddles|/riddle/' /var/log/traefik/access.log | awk '{print $1}' | sort | uniq -c | sort -rn | head
+
+# recent 403s
+grep ' 403 ' /var/log/traefik/access.log | tail -50
+```
+
+JSON access logs (if configured) are easier to query with `jq`.
+
+### Set country header (required for geo-block to actually ban)
+
+Pick one:
+
+1. **Cloudflare** in front of Traefik — sends `CF-IPCountry` automatically; optional WAF rule to block SG/CN at the edge too.
+2. **Traefik GeoIP plugin** on the Traefik host — install a geo plugin, deny `SG`/`CN` (and/or forward `X-Geo-Country` to the app). Plugin install is Traefik static config; this repo’s compose alone cannot geo-locate.
 
 ### Google Adsense Review To-Do's
 

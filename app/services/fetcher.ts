@@ -35,11 +35,19 @@ export const fetcher = async <T = any>(url: string, options: FetchOptions = {}):
 		} catch {
 			// If response is not JSON, use default error
 		}
-		serverLogger.error(
-			`Error fetching ${url}: ${response.status} - ${response.statusText} - ${JSON.stringify(errorData)}`
-		)
+
+		// Expected misses (deleted/missing riddles, bot probes) — one short line, no Response dump
+		if (response.status === 404) {
+			serverLogger.info(`Not found: ${url}`)
+		} else {
+			serverLogger.error(
+				`Error fetching ${url}: ${response.status} - ${response.statusText} - ${JSON.stringify(errorData)}`
+			)
+		}
+
 		const defaultMessage = `HTTP error! status: ${response.status}`
-		throw new FetcherError(response.status, defaultMessage, errorData, response)
+		// Omit Response from the error — Next.js prints the whole object when digests uncaught errors
+		throw new FetcherError(response.status, defaultMessage, errorData)
 	}
 
 	const data = await response.json()
