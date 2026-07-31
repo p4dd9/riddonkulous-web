@@ -6,11 +6,14 @@ services:
     image: riddonkulous-web
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.riddonkulous-web.rule=Host(`riddonkulous.com`) || Host(`www.riddonkulous.com`)"
+      # Traefik v3: drop Aceville/Tencent proxy CIDRs at the edge (remote IP, not XFF).
+      # Parentheses matter — without them, OR would skip the ClientIP checks for one host.
+      - "traefik.http.routers.riddonkulous-web.rule=(Host(`riddonkulous.com`) || Host(`www.riddonkulous.com`)) && !ClientIP(`43.172.0.0/16`) && !ClientIP(`43.173.0.0/16`)"
       - "traefik.http.routers.riddonkulous-web.entrypoints=websecure"
       - "traefik.http.routers.riddonkulous-web.tls.certresolver=myresolver"
-      # Geo-block + request debug run in Next (proxy.ts). Country header must come from
-      # Traefik GeoIP or Cloudflare — see README "Geo block + access logs".
+      # App-layer IP CIDR block + geo-block + request debug still run in Next (proxy.ts)
+      # as defense in depth (and for X-Forwarded-For when ClientIP alone isn't enough).
+      # See README "Geo / IP block + access logs".
       # Ops: Traefik access logs on the host, then e.g.:
       #   grep -E '/riddles|/riddle/' /var/log/traefik/access.log | awk '{print $1}' | sort | uniq -c | sort -rn | head
     # Cap container stdout/stderr (console.log) — 10MB × 3 files ≈ 30MB max

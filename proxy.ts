@@ -1,3 +1,4 @@
+import { getBlockedIpMatch } from '@/app/lib/ipBlock'
 import {
 	collectRequestDebug,
 	isCrawlPath,
@@ -46,6 +47,20 @@ export async function proxy(request: NextRequest) {
 	// Debug log for crawl paths (skip RSC prefetches — too noisy for real users)
 	if (onCrawlPath && isRequestDebugLogEnabled() && !isRsc) {
 		serverLogger.info(JSON.stringify(collectRequestDebug(request, pathname)))
+	}
+
+	// CIDR block (default Aceville/Tencent proxy ranges). Uses X-Forwarded-For /
+	// X-Real-IP — works even when geo country headers are missing.
+	const blockedCidr = getBlockedIpMatch(request)
+	if (blockedCidr) {
+		serverLogger.warn(
+			JSON.stringify({
+				...collectRequestDebug(request, pathname),
+				type: 'ip_block',
+				blockedCidr,
+			})
+		)
+		return new NextResponse('Forbidden', { status: 403 })
 	}
 
 	// Geo-block SG/CN (and any GEO_BLOCK_COUNTRIES). Requires a country header from

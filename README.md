@@ -12,13 +12,23 @@ docker run -p 1233:1233 riddonkulous-web
 docker-compose up --build
 docker-compose up -d -p 1233:1233
 
-## Geo block + access logs
+## Geo / IP block + access logs
 
-App geo-block (`GEO_BLOCK_ENABLED`, default on) returns **403** for `GEO_BLOCK_COUNTRIES` (default `SG,CN`) when a country header is present (`cf-ipcountry`, `x-geo-country`, `x-country-code`, or `cloudfront-viewer-country`). Without that header it **fails open** (no ban).
+### Edge (Traefik) + app (Next) IP blocks
 
-Crawl-path debug lines (`request_debug` / `geo_block`) go to the **Next container logs** (RSC prefetches skipped).
+**Traefik** (compose router rule) excludes `43.172.0.0/16` and `43.173.0.0/16` with `!ClientIP(...)`. Those requests never reach the Next container. Caveats:
 
-### Read Next app logs (request_debug / geo_block)
+- `ClientIP` uses the **TCP remote address**, not `X-Forwarded-For`. Fine when Traefik sees the real client (your current logs). If you put Cloudflare (or another proxy) in front later, Traefik will see the proxy’s IP and this rule won’t match the scraper — keep the app block below.
+- No matching router usually surfaces as Traefik **404**, not 403.
+- Needs **Traefik v3** rule syntax (`ClientIP` + `!`).
+
+**Next app** IP CIDR block (`BLOCKED_CIDRS` in `app/lib/ipBlock.ts`) returns **403** when the client IP (from `X-Forwarded-For` / `X-Real-IP`) matches those ranges (Aceville/Tencent proxy egress seen scraping `/riddles/objects`). This does **not** need a country header. Keep it as defense in depth / XFF-aware backup.
+
+App **geo-block** (`GEO_BLOCK_ENABLED`, default on) returns **403** for `GEO_BLOCK_COUNTRIES` (default `SG,CN`) when a country header is present (`cf-ipcountry`, `x-geo-country`, `x-country-code`, or `cloudfront-viewer-country`). Without that header it **fails open** (no ban).
+
+Crawl-path debug lines (`request_debug` / `ip_block` / `geo_block`) go to the **Next container logs** (RSC prefetches skipped).
+
+### Read Next app logs (request_debug / ip_block / geo_block)
 
 ```bash
 docker compose logs -f riddonkulous-web
@@ -26,7 +36,7 @@ docker compose logs -f riddonkulous-web
 docker logs -f riddonkulous-web
 
 # filter:
-docker logs riddonkulous-web 2>&1 | grep -E 'request_debug|geo_block'
+docker logs riddonkulous-web 2>&1 | grep -E 'request_debug|ip_block|geo_block'
 ```
 
 ### Read Traefik access logs (host Traefik)
