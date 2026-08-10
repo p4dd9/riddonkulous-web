@@ -1,3 +1,4 @@
+import { RateAppFooterLink } from '@/app/components/layout/RateAppFooterLink'
 import Link from 'next/link'
 
 export const Footer = () => {
@@ -28,6 +29,7 @@ export const Footer = () => {
 					<Link href="/credits" className="hover:underline">
 						Credits
 					</Link>
+					<RateAppFooterLink />
 				</div>
 				<p className="text-xs">© 2025-Present Hammertime e.U.</p>
 			</div>
