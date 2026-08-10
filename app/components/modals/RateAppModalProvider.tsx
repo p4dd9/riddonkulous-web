@@ -1,14 +1,19 @@
 'use client'
 
 import { RateAppModal } from '@/app/components/modals/RateAppModal'
-import { canRateApp } from '@/app/lib/requestAppReview'
+import { canRateApp, requestAppReview } from '@/app/lib/requestAppReview'
 import { SOLVE_THRESHOLD, SOLVE_THRESHOLD_EVENT, getSolveCount } from '@/app/lib/solveCounter'
 import { useCallback, useEffect, useState } from 'react'
 
 /**
- * Asks for a Play Store rating once, after the visitor has locally solved
+ * Asks for a rating once, after the visitor has locally solved
  * SOLVE_THRESHOLD riddles. Android app only — on the web this renders nothing
  * (AppInstallBanner handles the web-side pitch instead).
+ *
+ * Preferred path is Play's In-App Review card, which we trigger directly with
+ * no prompt of our own in front of it — Play's guidance is not to precede or
+ * accompany the card with questions. RateAppModal is only shown when that card
+ * is unavailable, since sending someone to the store does need their consent.
  *
  * Mounted at the layout root so it survives client-side navigation: the solve
  * that trips the threshold happens on a riddle page, but the prompt outlives
@@ -18,7 +23,7 @@ import { useCallback, useEffect, useState } from 'react'
 const PROMPTED_KEY = 'riddonkulous:rateAppPrompted'
 
 // Let the "correct!" feedback land (and the adventure transition start) before
-// covering the screen with a modal.
+// covering the screen.
 const SHOW_DELAY_MS = 2000
 
 const hasBeenPrompted = (): boolean => {
@@ -41,11 +46,12 @@ const markPrompted = (): void => {
 export const RateAppModalProvider = () => {
 	const [isOpen, setIsOpen] = useState(false)
 
-	// Marked as prompted on open, not on choice: declining is an answer, and
-	// "once per user" means once regardless of what they picked.
-	const open = useCallback(() => {
+	// Marked as prompted before asking, not after: Play reports nothing about
+	// what the user did with the card, and declining the fallback is an answer
+	// too. "Once per user" means once either way.
+	const prompt = useCallback(async () => {
 		markPrompted()
-		setIsOpen(true)
+		if ((await requestAppReview()) === 'store') setIsOpen(true)
 	}, [])
 
 	useEffect(() => {
@@ -57,7 +63,7 @@ export const RateAppModalProvider = () => {
 		const schedule = () => {
 			if (!active || timer) return
 			timer = window.setTimeout(() => {
-				if (active) open()
+				if (active) void prompt()
 			}, SHOW_DELAY_MS)
 		}
 
@@ -79,7 +85,7 @@ export const RateAppModalProvider = () => {
 			window.clearTimeout(timer)
 			window.removeEventListener(SOLVE_THRESHOLD_EVENT, schedule)
 		}
-	}, [open])
+	}, [prompt])
 
 	return <RateAppModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
 }

@@ -1,26 +1,40 @@
 /**
- * Sends the user to the Play Store listing so they can rate the app.
+ * Asks the user to rate the app.
  *
- * Why `market://` and not the https listing URL: the native shell
- * (riddonkulous-mobile) allow-lists `*.google.com` in `capacitor.config.ts`
- * to keep Google sign-in inside the WebView. `play.google.com` matches that
- * mask, so Capacitor treats an https store link as in-app navigation and
- * renders the store as a web page *inside* the app instead of handing it to
- * the Play Store. `market://` has no allow-listed host, so Capacitor fires an
- * ACTION_VIEW intent and Android opens the Play Store app on our listing.
+ * Preferred path is Google Play's In-App Review API, which renders the rating
+ * card over the app without navigating away. It requires the native plugin to
+ * be present in the riddonkulous-mobile build; when it isn't (older installs
+ * that predate the plugin, or any non-Android platform) `requestReview()`
+ * rejects with `unimplemented` and we fall back to the store listing.
  *
- * For the same reason this must be a `location.href` assignment and not an
- * `<a target="_blank">` — MainActivity overrides `onCreateWindow` to trap
- * `window.open()` in a chromeless fullscreen dialog (built for the OAuth
+ * The fallback uses `market://` rather than the https listing URL: the native
+ * shell allow-lists `*.google.com` in `capacitor.config.ts` to keep Google
+ * sign-in inside the WebView, and `play.google.com` matches that mask. An
+ * https store link is therefore treated as in-app navigation
+ * (`Bridge.launchIntent` → `appAllowNavigationMask.matches`) and renders the
+ * store as a web page *inside* the app. `market://` matches no allow-listed
+ * host, so Capacitor fires an ACTION_VIEW intent and Android opens the Play
+ * Store app on our listing.
+ *
+ * For the same reason the fallback must be a `location.href` assignment and
+ * not an `<a target="_blank">` — MainActivity overrides `onCreateWindow` to
+ * trap `window.open()` in a chromeless fullscreen dialog (built for the OAuth
  * popup), which a store page would never close.
  */
 
 const MARKET_URL = 'market://details?id=com.riddonkulous.app'
 
 /**
- * True only inside the Android app. The rating prompt is Android-only: the web
- * already pitches installation via AppInstallBanner, and `market://` is
- * meaningless on iOS (there is no App Store listing yet).
+ * - `in-app`  the Play rating card was requested; nothing further to show
+ * - `store`   In-App Review is unavailable; caller should offer the store link
+ * - `unavailable` not an Android app install; ask for nothing
+ */
+export type ReviewOutcome = 'in-app' | 'store' | 'unavailable'
+
+/**
+ * True only inside the Android app. Rating prompts are Android-only: the web
+ * already pitches installation via AppInstallBanner, and there is no iOS
+ * listing to rate.
  */
 export const canRateApp = async (): Promise<boolean> => {
 	if (typeof window === 'undefined') return false
@@ -32,9 +46,35 @@ export const canRateApp = async (): Promise<boolean> => {
 	}
 }
 
-export const openAppRating = async (): Promise<void> => {
-	if (!(await canRateApp())) return
-	// If the Play Store is missing (bare emulator) Capacitor swallows the
-	// ActivityNotFoundException and the page simply stays put.
+/**
+ * Send the user to the Play Store listing. Only used as the In-App Review
+ * fallback — see the module comment for why it's `market://` + `location.href`.
+ *
+ * If the Play Store is missing (bare emulator) Capacitor swallows the
+ * ActivityNotFoundException and the page simply stays put.
+ */
+export const openStoreListing = (): void => {
 	window.location.href = MARKET_URL
+}
+
+/**
+ * Request a review, preferring the in-app card.
+ *
+ * Note that Play gives no signal about what the user did — `requestReview()`
+ * resolves identically whether the card was shown, dismissed, or silently
+ * suppressed because the account is over its (undocumented, roughly a handful
+ * per year) quota. So a resolved promise means "we asked", never "they rated",
+ * and callers must not treat it as confirmation.
+ */
+export const requestAppReview = async (): Promise<ReviewOutcome> => {
+	if (!(await canRateApp())) return 'unavailable'
+
+	try {
+		const { InAppReview } = await import('@capacitor-community/in-app-review')
+		await InAppReview.requestReview()
+		return 'in-app'
+	} catch {
+		// Plugin absent from this build, or the Play flow failed outright.
+		return 'store'
+	}
 }

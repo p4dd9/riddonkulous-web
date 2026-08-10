@@ -2,17 +2,22 @@
 
 import { BasicButton } from '@/app/components/buttons/BasicButton'
 import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
-import { openAppRating } from '@/app/lib/requestAppReview'
+import { openStoreListing } from '@/app/lib/requestAppReview'
 
 interface RateAppModalProps {
 	isOpen: boolean
 	onClose: () => void
 }
 
+/**
+ * Fallback prompt, shown only when the Play In-App Review card is unavailable
+ * (see RateAppModalProvider). When the card is available it is shown on its
+ * own — Play's guidance is not to put a prompt of our own in front of it.
+ */
 export const RateAppModal = ({ isOpen, onClose }: RateAppModalProps) => {
 	const handleRate = () => {
 		onClose()
-		void openAppRating()
+		openStoreListing()
 	}
 
 	return (
