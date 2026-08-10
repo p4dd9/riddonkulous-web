@@ -8,7 +8,10 @@
       "Bash(git rm *)",
       "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 30)",
       "Skill(run)",
-      "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --no-sandbox --hide-scrollbars --ignore-certificate-errors --window-size=1400,1600 --screenshot=C:/Users/patob/AppData/Local/Temp/claude/C--Users-patob-Desktop-Projects-riddonkulous-web/02b5699a-af5a-4465-b4cc-b47f00b57ef2/scratchpad/home.png https://localhost:1233/)"
+      "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --no-sandbox --hide-scrollbars --ignore-certificate-errors --window-size=1400,1600 --screenshot=C:/Users/patob/AppData/Local/Temp/claude/C--Users-patob-Desktop-Projects-riddonkulous-web/02b5699a-af5a-4465-b4cc-b47f00b57ef2/scratchpad/home.png https://localhost:1233/)",
+      "Bash(curl -s https://registry.npmjs.org/@capacitor-community/in-app-review)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(v, d['versions'][v].get\\('peerDependencies'\\)\\) for v in list\\(d['versions']\\)[-6:]]\")",
+      "Bash(grep -rn \"shouldOverrideUrlLoading\\\\|WebViewClient\\\\|launchIntent\\\\|market://\\\\|play.google\" android/app/src src/)"
     ]
   }
 }

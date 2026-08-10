@@ -9,6 +9,7 @@ import { RiddleAuthorHeader } from '@/app/components/riddles/RiddleAuthorHeader'
 import { ClassicTextInput } from '@/app/components/riddles/ClassicTextInput'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { ShareButton } from '@/app/components/ShareButton'
+import { recordSolve } from '@/app/lib/solveCounter'
 import type { SafeRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import {
 	checkAnswer as checkAnswerAction,
@@ -163,6 +164,8 @@ export const RiddleSingleView = ({
 		if (result.correct) {
 			dispatch({ type: 'SET_FEEDBACK', payload: 'correct' })
 			dispatch({ type: 'SET_IS_SOLVED', payload: true })
+			// Guessed, not revealed — handleReveal deliberately does not count.
+			recordSolve(riddle.postId)
 		} else {
 			dispatch({ type: 'SET_FEEDBACK', payload: 'incorrect' })
 		}

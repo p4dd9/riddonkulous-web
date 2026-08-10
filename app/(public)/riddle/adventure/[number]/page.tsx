@@ -12,6 +12,7 @@ import { ClassicTextInput } from '@/app/components/riddles/ClassicTextInput'
 import { LetterRearrangeInput } from '@/app/components/riddles/LetterRearrangeInput'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { ShareButton } from '@/app/components/ShareButton'
+import { recordSolve } from '@/app/lib/solveCounter'
 import type { SafeRiddleType } from '@/app/schemas/DailyRiddleSchema'
 import { checkAnswer as checkAnswerAction } from '@/app/services/riddleService'
 import Image from 'next/image'
@@ -316,7 +317,9 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		fetchSuggestedAdventures()
 	}, [showEndScreen, adventure, adventureRun, getAllSolvedPostIds])
 
-	const checkAnswer = async (answerToCheck?: string) => {
+	// `isReveal` marks the call coming from handleAutoSolve — the riddle still
+	// counts as solved for the run, but not towards the local solve count.
+	const checkAnswer = async (answerToCheck?: string, isReveal = false) => {
 		const answerValue = answerToCheck ?? answer
 		if (!answerValue.trim() || !adventure || !adventureRun) return
 
@@ -334,6 +337,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 			setFeedback('correct')
 			setAdventureRun(updatedRun)
 			saveAdventureProgress(updatedRun)
+			if (!isReveal) recordSolve(currentRiddle.postId)
 
 			if (currentRiddleIndex === adventure.riddles.length - 1) {
 				updatedRun.endTime = Date.now()
@@ -376,7 +380,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		handleAnswerChange(correctAnswer)
 
 		setTimeout(() => {
-			checkAnswer(correctAnswer)
+			checkAnswer(correctAnswer, true)
 		}, 50)
 	}
 
