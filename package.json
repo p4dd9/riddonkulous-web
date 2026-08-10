@@ -20,6 +20,14 @@
 		"react-dom": "^19.2.8",
 		"zod": "^4.1.13"
 	},
+	"browserslist": [
+		"> 0.3%",
+		"last 2 versions",
+		"Firefox ESR",
+		"not dead",
+		"iOS >= 15",
+		"Safari >= 15"
+	],
 	"devDependencies": {
 		"@tailwindcss/postcss": "^4",
 		"@types/bad-words": "^3.0.3",
