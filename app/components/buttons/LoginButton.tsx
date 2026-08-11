@@ -5,6 +5,7 @@ import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
 import { LoginModal } from '@/app/components/modals/LoginModal'
 import { UserMenuModal } from '@/app/components/modals/UserMenuModal'
 import { useAuth } from '@/app/contexts/AuthContext'
+import { isInNativeApp } from '@/app/lib/isInNativeApp'
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -39,16 +40,19 @@ export const LoginButton = ({ variant = 'header', className = '' }: LoginButtonP
 			return
 		}
 
-		const initGoogleSignIn = () => {
+		const initGoogleSignIn = async () => {
 			if (window.google) {
+				// FedCM isn't reliably available in the riddonkulous-mobile app's
+				// WebViews — initialize() failing there left isInitialized stuck
+				// false and made every login tap hit the "not available" alert
+				// below. Plain web keeps FedCM; the native app's Google button
+				// click is intercepted by MainViewController.swift / MainActivity.java
+				// and handled by a native sign-in SDK instead, so it doesn't need it.
+				const useFedCm = !(await isInNativeApp())
 				window.google.accounts.id.initialize({
 					client_id: clientId,
 					callback: handleCredentialResponse,
-					// FedCM isn't supported in Safari/WebKit (incl. the iOS app's WKWebView) —
-					// initialize() fails there when this is true, which left isInitialized stuck
-					// false and made every login tap hit the "not available" alert below.
-					// Matches LoginModal.tsx, which already disabled this for the same reason.
-					use_fedcm_for_prompt: false,
+					use_fedcm_for_prompt: useFedCm,
 				})
 				setIsInitialized(true)
 			}
