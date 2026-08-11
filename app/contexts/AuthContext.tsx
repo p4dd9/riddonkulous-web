@@ -6,6 +6,7 @@ import { createContext, ReactNode, useCallback, useContext, useEffect, useState 
 interface AuthContextType {
 	user: User | null
 	isLoading: boolean
+	isNativeApp: boolean
 	signIn: (idToken: string) => Promise<void>
 	signOut: () => Promise<void>
 	refreshUser: () => Promise<void>
@@ -16,9 +17,10 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 interface AuthProviderProps {
 	children: ReactNode
 	initialUser?: User | null
+	isNativeApp?: boolean
 }
 
-export const AuthProvider = ({ children, initialUser = null }: AuthProviderProps) => {
+export const AuthProvider = ({ children, initialUser = null, isNativeApp = false }: AuthProviderProps) => {
 	const [user, setUser] = useState<User | null>(initialUser ?? null)
 	const [isLoading, setIsLoading] = useState(initialUser === undefined)
 
@@ -57,23 +59,6 @@ export const AuthProvider = ({ children, initialUser = null }: AuthProviderProps
 		}
 	}, [])
 
-	// iOS can't complete Google Sign-In inside the embedded WebView (Google's
-	// OAuth policy forbids it), so the native shell runs it via the
-	// GoogleSignIn-iOS SDK instead and hands the resulting ID token back here.
-	// See riddonkulous-mobile's MainViewController.swift.
-	useEffect(() => {
-		const handleNativeCredential = (event: Event) => {
-			const detail = (event as CustomEvent<{ credential?: string }>).detail
-			if (!detail?.credential) return
-			void signIn(detail.credential).catch(() => {
-				// signIn() already logs; nothing else listens for this event.
-			})
-		}
-
-		window.addEventListener('riddonkulous:googleCredential', handleNativeCredential)
-		return () => window.removeEventListener('riddonkulous:googleCredential', handleNativeCredential)
-	}, [signIn])
-
 	const signOut = useCallback(async () => {
 		try {
 			await logout()
@@ -91,7 +76,7 @@ export const AuthProvider = ({ children, initialUser = null }: AuthProviderProps
 	}, [])
 
 	return (
-		<AuthContext.Provider value={{ user, isLoading, signIn, signOut, refreshUser }}>
+		<AuthContext.Provider value={{ user, isLoading, isNativeApp, signIn, signOut, refreshUser }}>
 			{children}
 		</AuthContext.Provider>
 	)

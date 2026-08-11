@@ -7,19 +7,10 @@
  * that predate the plugin, or any non-Android platform) `requestReview()`
  * rejects with `unimplemented` and we fall back to the store listing.
  *
- * The fallback uses `market://` rather than the https listing URL: the native
- * shell allow-lists `*.google.com` in `capacitor.config.ts` to keep Google
- * sign-in inside the WebView, and `play.google.com` matches that mask. An
- * https store link is therefore treated as in-app navigation
- * (`Bridge.launchIntent` → `appAllowNavigationMask.matches`) and renders the
- * store as a web page *inside* the app. `market://` matches no allow-listed
- * host, so Capacitor fires an ACTION_VIEW intent and Android opens the Play
- * Store app on our listing.
- *
- * For the same reason the fallback must be a `location.href` assignment and
- * not an `<a target="_blank">` — MainActivity overrides `onCreateWindow` to
- * trap `window.open()` in a chromeless fullscreen dialog (built for the OAuth
- * popup), which a store page would never close.
+ * The fallback uses `market://` + a `location.href` assignment: the scheme
+ * matches no in-app navigation mask, so Capacitor fires an ACTION_VIEW intent
+ * and Android opens the Play Store app directly on our listing instead of
+ * rendering the store as a web page inside the WebView.
  */
 
 const MARKET_URL = 'market://details?id=com.riddonkulous.app'

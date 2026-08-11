@@ -1,4 +1,5 @@
 import { getBlockedIpMatch } from '@/app/lib/ipBlock'
+import { isNativeAppUserAgent } from '@/app/lib/nativeApp'
 import {
 	collectRequestDebug,
 	isCrawlPath,
@@ -77,6 +78,14 @@ export async function proxy(request: NextRequest) {
 			)
 			return new NextResponse('Forbidden', { status: 403 })
 		}
+	}
+
+	// The native app is guest-only: auth-gated pages redirect home.
+	if (
+		isNativeAppUserAgent(request.headers.get('user-agent')) &&
+		/^\/(user\/me|subscribe|unsubscribe)(\/|$)/.test(pathname)
+	) {
+		return NextResponse.redirect(new URL('/', request.url))
 	}
 
 	// Handle moderation routes - Requires moderator or admin role

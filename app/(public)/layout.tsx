@@ -6,6 +6,7 @@ import { SubscribeModalProvider } from '@/app/components/modals/SubscribeModalPr
 import { NativeBridge } from '@/app/components/NativeBridge'
 import { ServiceWorkerUnregister } from '@/app/components/ServiceWorkerUnregister'
 import { AuthProvider } from '@/app/contexts/AuthContext'
+import { isNativeAppRequest } from '@/app/lib/nativeApp'
 import { getCurrentUserServer } from '@/app/lib/serverAuth'
 import type { Tag } from '@/app/services/tagService'
 import { listTags } from '@/app/services/tagService'
@@ -123,7 +124,13 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	const [sortedTags, initialUser] = await Promise.all([getCachedTags(), getCurrentUserServer()])
+	// The native app is guest-only: skip the session lookup entirely (cookies
+	// are ignored) and render without any auth UI.
+	const isNativeApp = await isNativeAppRequest()
+	const [sortedTags, initialUser] = await Promise.all([
+		getCachedTags(),
+		isNativeApp ? Promise.resolve(null) : getCurrentUserServer(),
+	])
 
 	return (
 		<html lang="en">
@@ -144,18 +151,18 @@ export default async function RootLayout({
 						__html: `window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()`,
 					}}
 				/>
-				{/* Google OAuth */}
-				<script src="https://accounts.google.com/gsi/client" async></script>
+				{/* Google OAuth — login doesn't exist in the native app */}
+				{!isNativeApp && <script src="https://accounts.google.com/gsi/client" async></script>}
 			</head>
 			<body className="antialiased flex flex-col min-h-screen">
-				<AuthProvider initialUser={initialUser}>
+				<AuthProvider initialUser={initialUser} isNativeApp={isNativeApp}>
 					<ServiceWorkerUnregister />
 					<NativeBridge />
 					<AppInstallBanner />
 					<Header tags={sortedTags} />
 					<main className="flex-1 h-full">{children}</main>
 					<Footer />
-					<SubscribeModalProvider />
+					{!isNativeApp && <SubscribeModalProvider />}
 					<RateAppModalProvider />
 				</AuthProvider>
 			</body>

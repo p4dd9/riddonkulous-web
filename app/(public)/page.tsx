@@ -67,13 +67,6 @@ const playPaths = [
 		title: 'Daily Adventure',
 		description: '7 riddles in a row — your daily streak challenge',
 	},
-	{
-		href: '/riddle-feed',
-		icon: '/icons/dialogue.png',
-		iconClassName: '',
-		title: 'Browse the feed',
-		description: 'Community riddles, newest first',
-	},
 ] as const
 
 const playPathLinkClassName = (stretch = false) =>
@@ -118,15 +111,9 @@ export default async function Home() {
 					name: 'Daily Riddles',
 					url: 'https://riddonkulous.com',
 				},
-				{
-					'@type': 'ListItem',
-					position: 2,
-					name: 'Riddle Feed',
-					url: 'https://riddonkulous.com/riddle-feed',
-				},
 				...popularTags.map((tag, index) => ({
 					'@type': 'ListItem' as const,
-					position: index + 3,
+					position: index + 2,
 					name: `${tag.label} Riddles`,
 					url: `https://riddonkulous.com/riddles/${tag.id}`,
 				})),

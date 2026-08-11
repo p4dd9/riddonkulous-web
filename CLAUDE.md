@@ -27,7 +27,6 @@ Riddonkulous is a riddle platform built with **Next.js 16** (React 19, TypeScrip
 - `/riddle/daily/[number]` — Daily riddle solver
 - `/riddle/adventure/[number]` — Adventure mode
 - `/riddles/[category]` — Category browsing
-- `/riddle-feed` — Latest riddles feed
 
 ### Data Flow
 - **Services** (`app/services/`) are server actions (`'use server'`) that call the Reddicore API
@@ -45,7 +44,8 @@ This site is also loaded inside a Capacitor shell (`riddonkulous-mobile`) as a r
 
 - **`riddonkulous:backButton`** — dispatched (cancelable) when the user presses the Android hardware/gesture back button, *before* native navigates WebView history or exits. Any open dismissible layer should close itself and call `preventDefault()` so native does nothing; if nothing calls `preventDefault()`, native falls back to WebView history (`goBack()`, i.e. client-side route back) and then to minimise/exit. This is wired centrally: `app/lib/useBackDismiss.ts` keeps a LIFO stack of dismiss handlers and is consumed by the two overlay primitives — **`BottomSheetModal`** and **`Drawer`**. Every modal renders inside `BottomSheetModal`, so adding back-to-dismiss to a new modal is automatic; only a brand-new overlay primitive (its own portal/full-screen layer) needs to call `useBackDismiss(onClose, isOpen)` itself. The event never fires in a plain browser, so the hook is inert on web.
 - **`riddonkulous:networkChange`** — dispatched on connectivity changes with `detail: { connected: boolean, type: string }`. Currently **not consumed** by the site; listen for it if you want an offline banner.
-- **`riddonkulous:googleCredential`** — iOS only. Google's OAuth policy forbids completing sign-in inside an embedded WebView, so on iOS the native shell intercepts the GIS popup and runs Google Sign-In natively (`GoogleSignIn-iOS` SDK) instead, then dispatches the resulting ID token as `detail: { credential: string }`. `AuthContext` listens for this and calls the same `signIn()` used by the web-based GIS flow — no other changes needed on this side. Android still uses the in-WebView popup approach (see `riddonkulous-mobile`'s `MainActivity.java`).
+
+The native app is **guest-only**: it appends a `RiddonkulousApp` token to its User-Agent, and `app/lib/nativeApp.ts` detects it server-side. The `(public)` layout then skips the session lookup and hides all login/create UI (`AuthProvider`'s `isNativeApp` flag, read via `useAuth()`), and `proxy.ts` redirects auth-gated routes (`/user/me`, `/subscribe`, `/unsubscribe`) to `/`. Login and create exist only on the regular web. Don't rename the UA token without coordinating with `riddonkulous-mobile`'s `capacitor.config.ts` (`appendUserAgent`).
 
 ## Styling Rules
 

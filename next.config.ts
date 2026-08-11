@@ -1,6 +1,17 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+	async redirects() {
+		return [
+			// The riddle feed was removed; the URL is still indexed (was in the
+			// sitemap at priority 0.9) and linked from old shares.
+			{
+				source: '/riddle-feed',
+				destination: '/',
+				permanent: true,
+			},
+		]
+	},
 	async headers() {
 		return [
 			{

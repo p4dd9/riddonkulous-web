@@ -1,6 +1,7 @@
 'use client'
 
 import { CreateButton } from '@/app/components/buttons/CreateButton'
+import { useAuth } from '@/app/contexts/AuthContext'
 import type { Tag } from '@/app/services/tagService'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -13,6 +14,7 @@ interface HeaderProps {
 }
 
 export const Header = ({ tags }: HeaderProps) => {
+	const { isNativeApp } = useAuth()
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 	const [isScrolled, setIsScrolled] = useState(false)
 	const headerRef = useRef<HTMLElement>(null)
@@ -102,10 +104,12 @@ export const Header = ({ tags }: HeaderProps) => {
 						</Link>
 					</div>
 
-					<div className="flex items-center justify-center gap-2 mr-2">
-						<CreateButton variant="header" />
-						<LoginButton variant="header" />
-					</div>
+					{!isNativeApp && (
+						<div className="flex items-center justify-center gap-2 mr-2">
+							<CreateButton variant="header" />
+							<LoginButton variant="header" />
+						</div>
+					)}
 				</header>
 			</div>
 			{/* Spacer to maintain layout when header becomes fixed - always rendered to prevent layout shift */}

@@ -5,7 +5,6 @@ import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
 import { LoginModal } from '@/app/components/modals/LoginModal'
 import { UserMenuModal } from '@/app/components/modals/UserMenuModal'
 import { useAuth } from '@/app/contexts/AuthContext'
-import { isInNativeApp } from '@/app/lib/isInNativeApp'
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -20,14 +19,12 @@ export const LoginButton = ({ variant = 'header', className = '' }: LoginButtonP
 	const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
 	const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
 
-	// In the native app, a successful sign-in arrives via the
-	// riddonkulous:googleCredential event (see AuthContext), which calls
-	// signIn() directly and never goes through LoginModal's own credential
-	// callback — so LoginModal's onClose() never fires. Reset the flag here,
-	// during render rather than in an effect (React's recommended pattern for
-	// adjusting state when a value changes — see
-	// https://react.dev/learn/you-might-not-need-an-effect), so it can't
-	// linger true across a later sign-out/sign-in and reopen the modal.
+	// A successful one-tap prompt() sign-in calls signIn() directly and never
+	// goes through LoginModal's own credential callback — so LoginModal's
+	// onClose() never fires. Reset the flag here, during render rather than in
+	// an effect (React's recommended pattern for adjusting state when a value
+	// changes — see https://react.dev/learn/you-might-not-need-an-effect), so
+	// it can't linger true across a later sign-out/sign-in and reopen the modal.
 	const [prevUser, setPrevUser] = useState(user)
 	if (user !== prevUser) {
 		setPrevUser(user)
@@ -56,19 +53,12 @@ export const LoginButton = ({ variant = 'header', className = '' }: LoginButtonP
 			return
 		}
 
-		const initGoogleSignIn = async () => {
+		const initGoogleSignIn = () => {
 			if (window.google) {
-				// FedCM isn't reliably available in the riddonkulous-mobile app's
-				// WebViews — initialize() failing there left isInitialized stuck
-				// false and made every login tap hit the "not available" alert
-				// below. Plain web keeps FedCM; the native app's Google button
-				// click is intercepted by MainViewController.swift / MainActivity.java
-				// and handled by a native sign-in SDK instead, so it doesn't need it.
-				const useFedCm = !(await isInNativeApp())
 				window.google.accounts.id.initialize({
 					client_id: clientId,
 					callback: handleCredentialResponse,
-					use_fedcm_for_prompt: useFedCm,
+					use_fedcm_for_prompt: true,
 				})
 				setIsInitialized(true)
 			}
