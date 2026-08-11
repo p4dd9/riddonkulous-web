@@ -44,7 +44,11 @@ export const LoginButton = ({ variant = 'header', className = '' }: LoginButtonP
 				window.google.accounts.id.initialize({
 					client_id: clientId,
 					callback: handleCredentialResponse,
-					use_fedcm_for_prompt: true, // Keep FedCM enabled for best UX when available
+					// FedCM isn't supported in Safari/WebKit (incl. the iOS app's WKWebView) —
+					// initialize() fails there when this is true, which left isInitialized stuck
+					// false and made every login tap hit the "not available" alert below.
+					// Matches LoginModal.tsx, which already disabled this for the same reason.
+					use_fedcm_for_prompt: false,
 				})
 				setIsInitialized(true)
 			}

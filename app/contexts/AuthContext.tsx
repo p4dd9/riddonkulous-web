@@ -57,6 +57,23 @@ export const AuthProvider = ({ children, initialUser = null }: AuthProviderProps
 		}
 	}, [])
 
+	// iOS can't complete Google Sign-In inside the embedded WebView (Google's
+	// OAuth policy forbids it), so the native shell runs it via the
+	// GoogleSignIn-iOS SDK instead and hands the resulting ID token back here.
+	// See riddonkulous-mobile's MainViewController.swift.
+	useEffect(() => {
+		const handleNativeCredential = (event: Event) => {
+			const detail = (event as CustomEvent<{ credential?: string }>).detail
+			if (!detail?.credential) return
+			void signIn(detail.credential).catch(() => {
+				// signIn() already logs; nothing else listens for this event.
+			})
+		}
+
+		window.addEventListener('riddonkulous:googleCredential', handleNativeCredential)
+		return () => window.removeEventListener('riddonkulous:googleCredential', handleNativeCredential)
+	}, [signIn])
+
 	const signOut = useCallback(async () => {
 		try {
 			await logout()
