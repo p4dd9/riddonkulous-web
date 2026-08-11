@@ -20,6 +20,22 @@ export const LoginButton = ({ variant = 'header', className = '' }: LoginButtonP
 	const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
 	const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
 
+	// In the native app, a successful sign-in arrives via the
+	// riddonkulous:googleCredential event (see AuthContext), which calls
+	// signIn() directly and never goes through LoginModal's own credential
+	// callback — so LoginModal's onClose() never fires. Reset the flag here,
+	// during render rather than in an effect (React's recommended pattern for
+	// adjusting state when a value changes — see
+	// https://react.dev/learn/you-might-not-need-an-effect), so it can't
+	// linger true across a later sign-out/sign-in and reopen the modal.
+	const [prevUser, setPrevUser] = useState(user)
+	if (user !== prevUser) {
+		setPrevUser(user)
+		if (user) {
+			setIsLoginModalOpen(false)
+		}
+	}
+
 	const handleCredentialResponse = useCallback(
 		async (response: { credential: string }) => {
 			try {
