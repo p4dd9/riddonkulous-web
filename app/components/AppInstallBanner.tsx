@@ -1,10 +1,9 @@
 'use client'
 
+import { PLAY_STORE_URL } from '@/app/lib/appLinks'
 import { isInNativeApp } from '@/app/lib/isInNativeApp'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-
-export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.riddonkulous.app'
 
 const DISMISS_KEY = 'riddonkulous:appBannerDismissedUntil'
 // How long to keep the banner hidden after a dismissal.

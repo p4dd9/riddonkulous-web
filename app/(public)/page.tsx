@@ -1,7 +1,9 @@
 import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { CategoryCard } from '@/app/components/categories/CategoryCard'
+import { PlatformsSection } from '@/app/components/PlatformsSection'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { StructuredData } from '@/app/components/seo/StructuredData'
+import { isNativeAppRequest } from '@/app/lib/nativeApp'
 import { getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
 import { listTags } from '@/app/services/tagService'
 import { stripSolution, stripSolutions } from '@/app/util/stripSolution'
@@ -75,10 +77,11 @@ const playPathLinkClassName = (stretch = false) =>
 	}`
 
 export default async function Home() {
-	const [riddleOfTheDay, trendingRiddles, tagsData] = await Promise.all([
+	const [riddleOfTheDay, trendingRiddles, tagsData, isNativeApp] = await Promise.all([
 		getRiddleOfTheDay(),
 		getTrendingRiddles(),
 		listTags(20, 0),
+		isNativeAppRequest(),
 	])
 	const safeRiddleOfTheDay = stripSolution(riddleOfTheDay)
 	const dailySolveHref = `/riddle/daily/${riddleOfTheDay.riddleNumber}`
@@ -265,6 +268,9 @@ export default async function Home() {
 						</div>
 					</section>
 				)}
+
+				{/* Platforms — hidden inside the native app itself */}
+				{!isNativeApp && <PlatformsSection />}
 
 				{/* Popular categories — curated slice, not the full catalog */}
 				<section className="w-full flex flex-col gap-4">
