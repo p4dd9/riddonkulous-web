@@ -1,4 +1,5 @@
 import { AppInstallBanner } from '@/app/components/AppInstallBanner'
+import { AppInstallBannerIOS } from '@/app/components/AppInstallBannerIOS'
 import { Footer } from '@/app/components/layout/Footer'
 import { Header } from '@/app/components/layout/Header'
 import { RateAppModalProvider } from '@/app/components/modals/RateAppModalProvider'
@@ -159,6 +160,7 @@ export default async function RootLayout({
 					<ServiceWorkerUnregister />
 					<NativeBridge />
 					<AppInstallBanner />
+					<AppInstallBannerIOS />
 					<Header tags={sortedTags} />
 					<main className="flex-1 h-full">{children}</main>
 					<Footer />

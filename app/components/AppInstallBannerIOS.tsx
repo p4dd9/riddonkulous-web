@@ -1,11 +1,12 @@
 'use client'
 
 import { isInNativeApp } from '@/app/lib/isInNativeApp'
-import { isAndroidUserAgent } from '@/app/lib/userAgent'
+import { isSafariUserAgent } from '@/app/lib/userAgent'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.riddonkulous.app'
+// TODO: replace with the real App Store listing once the iOS app is live.
+export const APP_STORE_URL = '#'
 
 const DISMISS_KEY = 'riddonkulous:appBannerDismissedUntil'
 // How long to keep the banner hidden after a dismissal.
@@ -20,13 +21,13 @@ const isDismissed = (): boolean => {
 	}
 }
 
-export const AppInstallBanner = () => {
+export const AppInstallBannerIOS = () => {
 	const [mounted, setMounted] = useState(false)
 	const [open, setOpen] = useState(false)
 
 	useEffect(() => {
 		if (isDismissed()) return
-		if (!isAndroidUserAgent(navigator.userAgent)) return
+		if (!isSafariUserAgent(navigator.userAgent)) return
 		let raf = 0
 		void isInNativeApp().then((inApp) => {
 			if (inApp) return
@@ -74,7 +75,7 @@ export const AppInstallBanner = () => {
 							aria-hidden
 						/>
 						<div className="min-w-0 flex-1">
-							<p className="text-base leading-tight text-white">Riddonkulous for Android</p>
+							<p className="text-base leading-tight text-white">Riddonkulous for iOS</p>
 							<p className="flex items-center gap-2 text-sm leading-tight text-white/60">
 								<span>Daily riddles on the go</span>
 								<button
@@ -87,7 +88,7 @@ export const AppInstallBanner = () => {
 							</p>
 						</div>
 						<a
-							href={PLAY_STORE_URL}
+							href={APP_STORE_URL}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="shrink-0 rounded-full bg-primary px-4 py-2 text-sm text-bg shadow-md transition-colors hover:bg-secondary"
