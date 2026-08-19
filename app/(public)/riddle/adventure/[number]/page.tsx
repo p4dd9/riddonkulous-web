@@ -665,7 +665,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 						<div className="w-full max-w-xs block min-[330px]:hidden">
 							<GoogleAdMobileBanner />
 						</div>
-						<BasicButton text="Continue" onClick={handleContinue} customClass="px-8 py-3" />
+						<BasicButton text="Next" onClick={handleContinue} customClass="px-8 py-3" />
 					</div>
 				</div>
 			</>
@@ -870,7 +870,7 @@ Can you beat my score?`}
 						<div className="text-sm text-gray-400">
 							Riddle {currentRiddleIndex + 1} of {adventure.riddles.length}
 						</div>
-							{adventureNumber && (
+						{adventureNumber && (
 							<ShareButton
 								url={`${typeof window !== 'undefined' ? window.location.origin : ''}/riddle/adventure/${adventureNumber}`}
 								title={`Riddonkulous Daily Riddle Adventure #${adventureNumber}`}
@@ -935,7 +935,7 @@ Can you beat my score?`}
 
 					<div className="flex gap-3">
 						<BasicButton
-							text={adventureRun.riddles[currentRiddleIndex].solved ? 'Solved!' : 'Check Answer'}
+							text={adventureRun.riddles[currentRiddleIndex].solved ? 'Solved!' : 'Submit'}
 							onClick={(e) => {
 								e.preventDefault()
 								checkAnswer()

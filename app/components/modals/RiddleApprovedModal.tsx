@@ -10,15 +10,12 @@ interface RiddleApprovedModalProps {
 
 export const RiddleApprovedModal = ({ postId, onContinue }: RiddleApprovedModalProps) => {
 	const riddleUrl = `/riddle/${postId}`
-	const fullRiddleUrl =
-		typeof window !== 'undefined' ? `${window.location.origin}${riddleUrl}` : riddleUrl
+	const fullRiddleUrl = typeof window !== 'undefined' ? `${window.location.origin}${riddleUrl}` : riddleUrl
 
 	return (
 		<div className="riddle-approved-modal overflow-hidden">
 			<div className="mb-6">
-				<p className="text-gray-300 text-center mb-4">
-					🎉 Your riddle has been approved and is now live!
-				</p>
+				<p className="text-gray-300 text-center mb-4">🎉 Your riddle has been approved and is now live!</p>
 				<p className="text-gray-400 text-sm text-center">
 					Would you like to view your riddle or continue creating?
 				</p>
@@ -42,10 +39,9 @@ export const RiddleApprovedModal = ({ postId, onContinue }: RiddleApprovedModalP
 					onClick={onContinue}
 					className="flex-1 bg-gray-700 hover:bg-gray-600 px-5 py-3 rounded-lg transition-colors"
 				>
-					Continue
+					Next
 				</button>
 			</div>
 		</div>
 	)
 }
-
