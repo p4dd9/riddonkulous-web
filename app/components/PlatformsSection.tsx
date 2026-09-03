@@ -1,5 +1,5 @@
 import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
-import { PLAY_STORE_URL, TWITCH_EXTENSION_URL } from '@/app/lib/appLinks'
+import { APP_STORE_URL, PLAY_STORE_URL, TWITCH_EXTENSION_URL } from '@/app/lib/appLinks'
 import type { ReactNode } from 'react'
 
 const AndroidIcon = () => (
@@ -43,10 +43,10 @@ const platforms: {
 	{
 		key: 'ios',
 		title: 'iOS',
-		description: 'iPhone & iPad app — coming soon.',
-		href: '',
-		cta: 'TBD',
-		disabled: true,
+		description: 'Solve on the go with the iPhone & iPad app.',
+		href: APP_STORE_URL,
+		cta: 'Get App',
+		disabled: false,
 		icon: <AppleIcon />,
 		iconClassName: 'text-white',
 	},
