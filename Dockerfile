@@ -1,5 +1,5 @@
 # Define Node.js base image
-FROM node:24.11.0
+FROM node:24.22.1
 
 # Expose port 1233
 EXPOSE 1233
