@@ -1,9 +1,5 @@
 'use client'
 
-import { GoogleAdCategoryGrid } from '@/app/components/ads/GoogleAdCategoryGrid'
-import { GoogleAdDisplayUnitHorizontal } from '@/app/components/ads/GoogleAdDisplayUnitHorizontal'
-import { GoogleAdMobileBanner } from '@/app/components/ads/GoogleAdMobileBanner'
-import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixed'
 import { BasicButton } from '@/app/components/buttons/BasicButton'
 import { AdventureShareModal } from '@/app/components/modals/AdventureShareModal'
 import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
@@ -449,7 +445,6 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 	if (isLoading || !adventure || !adventureRun || error) {
 		return (
 			<>
-				<GoogleAdVerticalFixed />
 				<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
 					{error === 'notFound' ? (
 						<div className="flex flex-col items-center gap-4 text-center">
@@ -559,7 +554,6 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 	if (showWelcomeScreen) {
 		return (
 			<>
-				<GoogleAdVerticalFixed />
 				<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
 					<div className="w-full max-w-2xl flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
 						<Image
@@ -652,19 +646,10 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 
 		return (
 			<>
-				<GoogleAdVerticalFixed />
 				<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
 					<div className="flex flex-col items-center gap-6">
 						<Image src={palImage} alt="Pal" width={128} height={128} className="w-32 h-32" unoptimized />
 						<p className="text-2xl md:text-3xl text-center">{message}</p>
-						{/* Category grid for screens >= 330px */}
-						<div className="w-full max-w-xs hidden min-[330px]:block">
-							<GoogleAdCategoryGrid />
-						</div>
-						{/* Mobile banner for screens < 330px */}
-						<div className="w-full max-w-xs block min-[330px]:hidden">
-							<GoogleAdMobileBanner />
-						</div>
 						<BasicButton text="Next" onClick={handleContinue} customClass="px-8 py-3" />
 					</div>
 				</div>
@@ -676,7 +661,6 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 	if (showEndScreen && shareData) {
 		return (
 			<>
-				<GoogleAdVerticalFixed />
 				<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
 					<div className="w-full max-w-2xl flex flex-col gap-6">
 						<h1 className="text-3xl md:text-4xl text-center">You completed today&apos;s adventure!</h1>
@@ -853,11 +837,7 @@ Can you beat my score?`}
 	// Main riddle solving screen
 	return (
 		<>
-			<GoogleAdVerticalFixed />
 			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8 gap-6">
-				<GoogleAdDisplayUnitHorizontal />
-				<GoogleAdMobileBanner customClasses="mt-[-32px] mb-2" />
-
 				{/* Header */}
 				<div className="w-full flex flex-col gap-4">
 					<div className="flex items-center gap-2">

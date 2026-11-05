@@ -11,9 +11,6 @@ import { stripSolution, stripSolutions } from '@/app/util/stripSolution'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { GoogleAdCategoryGrid } from '../components/ads/GoogleAdCategoryGrid'
-import { GoogleAdMobileBanner } from '../components/ads/GoogleAdMobileBanner'
-import { GoogleAdVerticalFixed } from '../components/ads/GoogleAdVerticalFixed'
 
 export const metadata: Metadata = {
 	title: 'Daily Riddles | Riddles with Answers',
@@ -133,7 +130,6 @@ export default async function Home() {
 	return (
 		<>
 			<StructuredData data={structuredData} />
-			<GoogleAdVerticalFixed />
 			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-6 md:py-10 gap-10 md:gap-14">
 				<div className="w-full flex flex-col gap-5 md:gap-7">
 					<section className="w-full flex flex-col gap-5">
@@ -211,8 +207,6 @@ export default async function Home() {
 							</aside>
 						</div>
 					</section>
-
-					<GoogleAdMobileBanner />
 
 					{/* More ways to play — mobile & tablet */}
 					<section className="w-full flex flex-col gap-3 lg:hidden">
@@ -296,7 +290,6 @@ export default async function Home() {
 								href={`/riddles/${tag.id}`}
 							/>
 						))}
-						<GoogleAdCategoryGrid />
 					</div>
 				</section>
 

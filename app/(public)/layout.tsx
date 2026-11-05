@@ -144,11 +144,6 @@ export default async function RootLayout({
 				<link rel="apple-touch-icon" href="/web-app-manifest-192x192.png" />
 				{/* Theme Color */}
 				<meta name="theme-color" content="#ffffff" />
-				<script
-					async
-					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6902354361648358"
-					crossOrigin="anonymous"
-				/>
 				{/* Privacy-friendly analytics by Plausible */}
 				<script async src="https://plausible.hammertime.studio/js/pa-x-KEXLTn7CNv9VeZQ3Y3C.js"></script>
 				<script

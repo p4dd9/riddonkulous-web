@@ -28,7 +28,7 @@ export const config = {
 
 // Pages a regular browser may open (everything else redirects to the landing
 // page). API routes, admin, and any file with an extension (robots.txt,
-// sitemap.xml, ads.txt, sw.js, .well-known files) stay reachable.
+// sitemap.xml, sw.js, .well-known files) stay reachable.
 const BROWSER_PAGES =
 	/^\/(privacy-policy|terms-of-service|content-policy|about-us|faq|credits|subscribe|unsubscribe|admin|api|password|403|\.well-known)(\/|$)/
 

@@ -1,6 +1,3 @@
-import { GoogleAdDisplayUnitHorizontal } from '@/app/components/ads/GoogleAdDisplayUnitHorizontal'
-import { GoogleAdMobileBanner } from '@/app/components/ads/GoogleAdMobileBanner'
-import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixed'
 import { RiddleSingleView } from '@/app/components/riddles/RiddleSingleView'
 import { StructuredData } from '@/app/components/seo/StructuredData'
 import { getRiddleByNumber, getRiddleOfTheDay } from '@/app/services/riddleService'
@@ -118,10 +115,7 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 	return (
 		<>
 			<StructuredData data={structuredData} />
-			<GoogleAdVerticalFixed />
 			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8">
-				<GoogleAdDisplayUnitHorizontal />
-				<GoogleAdMobileBanner customClasses="mt-[-32px] mb-2" />
 				<RiddleSingleView
 					riddle={safeRiddle}
 					hasNext={hasNext}
@@ -129,9 +123,9 @@ export default async function DailyRiddlePage({ params }: DailyRiddlePageProps) 
 					continueUrl={hasNext ? `/riddle/daily/${riddleNumber + 1}` : undefined}
 					previousUrl={hasPrevious ? `/riddle/daily/${riddleNumber - 1}` : undefined}
 					title={
-					<div className="flex items-center gap-2">
-						<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />#
-						{riddle.riddleNumber} Riddle of the Day
+						<div className="flex items-center gap-2">
+							<Image src="/icons/light.png" alt="Light" width={32} height={32} className="w-8 h-8" />#
+							{riddle.riddleNumber} Riddle of the Day
 						</div>
 					}
 					showDate={true}

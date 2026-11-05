@@ -1,7 +1,3 @@
-import { GoogleAdDisplayUnitHorizontal } from '@/app/components/ads/GoogleAdDisplayUnitHorizontal'
-import { GoogleAdInFeedUnit } from '@/app/components/ads/GoogleAdInFeedUnit'
-import { GoogleAdMobileBanner } from '@/app/components/ads/GoogleAdMobileBanner'
-import { GoogleAdVerticalFixed } from '@/app/components/ads/GoogleAdVerticalFixed'
 import { LinkAsButton } from '@/app/components/buttons/LinkAsButton'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { getRiddlesByTag } from '@/app/services/riddleService'
@@ -146,26 +142,21 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 
 	return (
 		<>
-			<GoogleAdVerticalFixed />
 			<div className="relative h-full min-h-screen w-full flex flex-col items-center max-w-6xl mx-auto px-4 py-8 gap-6">
-				<GoogleAdMobileBanner customClasses="mt-[-32px] mb-2" />
-				<GoogleAdDisplayUnitHorizontal />
-			<div className="w-full max-w-4xl flex flex-col gap-4">
-				<h1 className="text-3xl md:text-4xl text-center mb-2">{tag.label} Riddles</h1>
-			</div>
-			{/* Category Description Section - At the top */}
-			<div className="w-full max-w-4xl flex flex-col gap-4">
-				<div className="prose prose-invert max-w-none">
-					<p className="text-white/80 text-base md:text-lg leading-relaxed">{categoryDescription}</p>
+				<div className="w-full max-w-4xl flex flex-col gap-4">
+					<h1 className="text-3xl md:text-4xl text-center mb-2">{tag.label} Riddles</h1>
 				</div>
-			</div>
-			{/* Riddles List */}
-			<div className="w-full max-w-4xl flex flex-col gap-4">
-				{riddles.map((riddle, index) => {
-					const isWebCreated = riddle.postId.startsWith('r_')
-					const showAd = (index + 1) % 4 === 0
-					return (
-						<>
+				{/* Category Description Section - At the top */}
+				<div className="w-full max-w-4xl flex flex-col gap-4">
+					<div className="prose prose-invert max-w-none">
+						<p className="text-white/80 text-base md:text-lg leading-relaxed">{categoryDescription}</p>
+					</div>
+				</div>
+				{/* Riddles List */}
+				<div className="w-full max-w-4xl flex flex-col gap-4">
+					{riddles.map((riddle) => {
+						const isWebCreated = riddle.postId.startsWith('r_')
+						return (
 							<div key={riddle.postId} className="w-full flex flex-col gap-3">
 								{isWebCreated && riddle.author ? (
 									<div className="flex items-center justify-start px-2">
@@ -183,49 +174,47 @@ export default async function RiddlesCategoryPage({ params, searchParams }: Ridd
 									solveHref={`/riddle/${riddle.postId}`}
 								/>
 							</div>
-							{showAd && <GoogleAdInFeedUnit customClasses="my-4" />}
-						</>
-					)
-				})}
-			</div>
-			{/* Navigation Buttons */}
-			{(hasNext || hasPrevious) && (
-				<div className="w-full flex justify-between gap-4 max-w-4xl">
-					<LinkAsButton
-						href={hasPrevious ? `/riddles/${category}?page=${currentPage - 1}` : '#'}
-						text="Back"
-						customClass="px-4 py-2 md:px-8 md:py-4 md:min-w-[120px]"
-						disabled={!hasPrevious}
-					/>
-					<LinkAsButton
-						href={hasNext ? `/riddles/${category}?page=${currentPage + 1}` : '#'}
-						text="Next"
-						customClass="flex px-4 py-2 md:px-8 md:py-4 md:min-w-[120px] justify-center"
-						disabled={!hasNext}
-					/>
+						)
+					})}
 				</div>
-			)}
-			{/* Other Riddles You Might Like Section */}
-			{otherCategories.length > 0 && (
-				<div className="w-full max-w-4xl flex flex-col gap-4 mt-8">
-					<h2 className="text-2xl md:text-3xl">Other Riddles You Might Like</h2>
-					<ul className="w-full flex flex-col gap-2">
-						{otherCategories.map((otherTag) => (
-							<li key={otherTag.id}>
-								<Link
-									href={`/riddles/${otherTag.id}`}
-									className="flex items-center justify-between py-2 rounded-md hover:bg-gray-800 transition-colors"
-								>
-									<span className="text-white">{otherTag.label}</span>
-									{otherTag.count !== undefined && (
-										<span className="text-sm text-white/60">{otherTag.count} riddles</span>
-									)}
-								</Link>
-							</li>
-						))}
-					</ul>
-				</div>
-			)}
+				{/* Navigation Buttons */}
+				{(hasNext || hasPrevious) && (
+					<div className="w-full flex justify-between gap-4 max-w-4xl">
+						<LinkAsButton
+							href={hasPrevious ? `/riddles/${category}?page=${currentPage - 1}` : '#'}
+							text="Back"
+							customClass="px-4 py-2 md:px-8 md:py-4 md:min-w-[120px]"
+							disabled={!hasPrevious}
+						/>
+						<LinkAsButton
+							href={hasNext ? `/riddles/${category}?page=${currentPage + 1}` : '#'}
+							text="Next"
+							customClass="flex px-4 py-2 md:px-8 md:py-4 md:min-w-[120px] justify-center"
+							disabled={!hasNext}
+						/>
+					</div>
+				)}
+				{/* Other Riddles You Might Like Section */}
+				{otherCategories.length > 0 && (
+					<div className="w-full max-w-4xl flex flex-col gap-4 mt-8">
+						<h2 className="text-2xl md:text-3xl">Other Riddles You Might Like</h2>
+						<ul className="w-full flex flex-col gap-2">
+							{otherCategories.map((otherTag) => (
+								<li key={otherTag.id}>
+									<Link
+										href={`/riddles/${otherTag.id}`}
+										className="flex items-center justify-between py-2 rounded-md hover:bg-gray-800 transition-colors"
+									>
+										<span className="text-white">{otherTag.label}</span>
+										{otherTag.count !== undefined && (
+											<span className="text-sm text-white/60">{otherTag.count} riddles</span>
+										)}
+									</Link>
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
 			</div>
 		</>
 	)
