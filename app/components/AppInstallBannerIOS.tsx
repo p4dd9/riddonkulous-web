@@ -1,12 +1,10 @@
 'use client'
 
+import { APP_STORE_URL } from '@/app/lib/appLinks'
 import { isInNativeApp } from '@/app/lib/isInNativeApp'
 import { isSafariUserAgent } from '@/app/lib/userAgent'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-
-// TODO: replace with the real App Store listing once the iOS app is live.
-export const APP_STORE_URL = '#'
 
 const DISMISS_KEY = 'riddonkulous:appBannerDismissedUntil'
 // How long to keep the banner hidden after a dismissal.

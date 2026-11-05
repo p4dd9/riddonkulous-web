@@ -1,6 +1,8 @@
 'use client'
 
 import { BasicButton } from '@/app/components/buttons/BasicButton'
+import { BottomSheetModal } from '@/app/components/modals/BottomSheetModal'
+import { LoginModal } from '@/app/components/modals/LoginModal'
 import { useAuth } from '@/app/contexts/AuthContext'
 import { unsubscribeFromNewsletter } from '@/app/services/userService'
 import Link from 'next/link'
@@ -10,6 +12,13 @@ export default function UnsubscribePage() {
 	const { user, isLoading } = useAuth()
 	const [status, setStatus] = useState<'loading' | 'success' | 'error' | 'not-authenticated'>('loading')
 	const [message, setMessage] = useState('')
+	const [showLoginModal, setShowLoginModal] = useState(false)
+
+	const handleLoginSuccess = () => {
+		setShowLoginModal(false)
+		// Reload so the effect runs again with the signed-in user
+		window.location.reload()
+	}
 
 	useEffect(() => {
 		const handleUnsubscribe = async () => {
@@ -53,9 +62,23 @@ export default function UnsubscribePage() {
 				{status === 'not-authenticated' && (
 					<div className="space-y-4">
 						<p className="text-white/80">{message}</p>
+						<p className="text-white/60 text-sm">
+							Log in with the Google account you subscribed with to stop the weekly newsletter.
+						</p>
 						<div className="flex gap-4">
+							<BasicButton
+								text="Login"
+								customClass="flex-1"
+								threeD={true}
+								onClick={() => setShowLoginModal(true)}
+							/>
 							<Link href="/" className="flex-1">
-								<BasicButton text="Go to Home" customClass="w-full" threeD={false} />
+								<BasicButton
+									text="Go to Home"
+									customClass="w-full"
+									variant="secondary"
+									threeD={false}
+								/>
 							</Link>
 						</div>
 					</div>
@@ -65,19 +88,15 @@ export default function UnsubscribePage() {
 					<div className="space-y-4">
 						<p className="text-green-400 text-lg">{message}</p>
 						<p className="text-white/60">
-							You will no longer receive our weekly newsletter. You can resubscribe at any time from your
-							profile settings.
+							You will no longer receive our weekly newsletter. You can resubscribe at any time at{' '}
+							<Link href="/subscribe" className="underline">
+								/subscribe
+							</Link>
+							.
 						</p>
 						<div className="flex gap-4">
-							<Link href="/user/me" className="flex-1">
-								<BasicButton text="Manage Subscription" customClass="w-full" threeD={false} />
-							</Link>
 							<Link href="/" className="flex-1">
-								<BasicButton
-									text="Go to Home"
-									customClass="w-full bg-[var(--color-bg)] border-2 border-primary"
-									threeD={false}
-								/>
+								<BasicButton text="Go to Home" customClass="w-full" threeD={false} />
 							</Link>
 						</div>
 					</div>
@@ -87,13 +106,17 @@ export default function UnsubscribePage() {
 					<div className="space-y-4">
 						<p className="text-red-400 text-lg">{message}</p>
 						<div className="flex gap-4">
-							<Link href="/user/me" className="flex-1">
-								<BasicButton text="Go to Profile" customClass="w-full" threeD={false} />
-							</Link>
+							<BasicButton
+								text="Try Again"
+								customClass="flex-1"
+								threeD={false}
+								onClick={() => window.location.reload()}
+							/>
 							<Link href="/" className="flex-1">
 								<BasicButton
 									text="Go to Home"
-									customClass="w-full bg-[var(--color-bg)] border-2 border-primary"
+									customClass="w-full"
+									variant="secondary"
 									threeD={false}
 								/>
 							</Link>
@@ -101,6 +124,17 @@ export default function UnsubscribePage() {
 					</div>
 				)}
 			</div>
+
+			{showLoginModal && (
+				<BottomSheetModal
+					isOpen={showLoginModal}
+					onClose={() => setShowLoginModal(false)}
+					title="Login Required"
+					icon="/icons/heart.png"
+				>
+					<LoginModal onClose={handleLoginSuccess} />
+				</BottomSheetModal>
+			)}
 		</div>
 	)
 }

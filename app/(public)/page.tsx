@@ -3,7 +3,8 @@ import { CategoryCard } from '@/app/components/categories/CategoryCard'
 import { PlatformsSection } from '@/app/components/PlatformsSection'
 import { RiddleCard } from '@/app/components/riddles/RiddleCard'
 import { StructuredData } from '@/app/components/seo/StructuredData'
-import { isNativeAppRequest } from '@/app/lib/nativeApp'
+import { AppLanding } from '@/app/components/playInApp/AppLanding'
+import { canPlayRequest, isNativeAppRequest } from '@/app/lib/nativeApp'
 import { getRiddleOfTheDay, getTrendingRiddles } from '@/app/services/riddleService'
 import { listTags } from '@/app/services/tagService'
 import { stripSolution, stripSolutions } from '@/app/util/stripSolution'
@@ -77,6 +78,11 @@ const playPathLinkClassName = (stretch = false) =>
 	}`
 
 export default async function Home() {
+	// Regular browsers only get the app landing page (see proxy.ts).
+	if (!(await canPlayRequest())) {
+		return <AppLanding />
+	}
+
 	const [riddleOfTheDay, trendingRiddles, tagsData, isNativeApp] = await Promise.all([
 		getRiddleOfTheDay(),
 		getTrendingRiddles(),
@@ -156,7 +162,8 @@ export default async function Home() {
 									Riddle of The Day
 								</h1>
 								<p className="text-sm md:text-lg opacity-80 max-w-xl">
-									A fresh brain teaser every day. Tap the card below to guess — a new puzzle drops daily.
+									A fresh brain teaser every day. Tap the card below to guess — a new puzzle drops
+									daily.
 								</p>
 							</div>
 						</div>

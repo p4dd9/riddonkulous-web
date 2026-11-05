@@ -1,10 +1,12 @@
 import { getBlockedIpMatch } from '@/app/lib/ipBlock'
-import { isNativeAppUserAgent } from '@/app/lib/nativeApp'
 import {
-	collectRequestDebug,
-	isCrawlPath,
-	isRequestDebugLogEnabled,
-} from '@/app/lib/requestDebug'
+	isViewSwitcherEnabled,
+	isWebPlayEnabled,
+	parseViewOverride,
+	resolveIsNativeApp,
+	VIEW_OVERRIDE_COOKIE,
+} from '@/app/lib/nativeApp'
+import { collectRequestDebug, isCrawlPath, isRequestDebugLogEnabled } from '@/app/lib/requestDebug'
 import { getBlockedCountries, getRequestCountry, isGeoBlockEnabled } from '@/app/lib/requestGeo'
 import { serverLogger } from '@/app/util/logger'
 import { jwtVerify } from 'jose'
@@ -23,6 +25,15 @@ export const config = {
 		'/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|otf|ttf|woff|woff2|json|webmanifest)).*)',
 	],
 }
+
+// Pages a regular browser may open (everything else redirects to the landing
+// page). API routes, admin, and any file with an extension (robots.txt,
+// sitemap.xml, ads.txt, sw.js, .well-known files) stay reachable.
+const BROWSER_PAGES =
+	/^\/(privacy-policy|terms-of-service|content-policy|about-us|faq|credits|subscribe|unsubscribe|admin|api|password|403|\.well-known)(\/|$)/
+
+const isBrowserAllowedPath = (pathname: string): boolean =>
+	pathname === '/' || BROWSER_PAGES.test(pathname) || /\.[a-z0-9]+$/i.test(pathname)
 
 const getAdminSecretKey = () => {
 	const secret = process.env.ADMIN_SESSION_SECRET
@@ -80,11 +91,44 @@ export async function proxy(request: NextRequest) {
 		}
 	}
 
-	// The native app is guest-only: auth-gated pages redirect home.
-	if (
-		isNativeAppUserAgent(request.headers.get('user-agent')) &&
-		/^\/(user\/me|subscribe|unsubscribe)(\/|$)/.test(pathname)
-	) {
+	// Local debugging: `?view=app|web|auto` stores the view override cookie and
+	// reloads without the param (see ViewSwitcher). Ignored in production unless
+	// VIEW_SWITCHER_ENABLED=true.
+	const viewParam = request.nextUrl.searchParams.get('view')
+	if (isViewSwitcherEnabled() && (viewParam === 'auto' || parseViewOverride(viewParam))) {
+		const cleanUrl = request.nextUrl.clone()
+		cleanUrl.searchParams.delete('view')
+		const response = NextResponse.redirect(cleanUrl)
+		if (viewParam === 'auto') {
+			response.cookies.delete(VIEW_OVERRIDE_COOKIE)
+		} else {
+			response.cookies.set(VIEW_OVERRIDE_COOKIE, viewParam as string, { path: '/', sameSite: 'lax' })
+		}
+		return response
+	}
+
+	// Riddle creation and the user area are gone for everyone. Admins sign in
+	// through /admin/login instead.
+	if (/^\/user\/me(\/|$)/.test(pathname)) {
+		return NextResponse.redirect(new URL('/', request.url))
+	}
+	if (pathname === '/api/riddle/create') {
+		return NextResponse.json({ error: 'Not Found' }, { status: 404 })
+	}
+
+	const isNativeApp = resolveIsNativeApp(
+		request.headers.get('user-agent'),
+		request.cookies.get(VIEW_OVERRIDE_COOKIE)?.value
+	)
+
+	// The native app is guest-only: newsletter pages (login-gated) redirect home.
+	if (isNativeApp && /^\/(subscribe|unsubscribe)(\/|$)/.test(pathname)) {
+		return NextResponse.redirect(new URL('/', request.url))
+	}
+
+	// Riddonkulous is played in the native app only. A regular browser gets the
+	// landing page (/) and the legal/info pages; every other page redirects home.
+	if (!isNativeApp && !isWebPlayEnabled() && !isBrowserAllowedPath(pathname)) {
 		return NextResponse.redirect(new URL('/', request.url))
 	}
 

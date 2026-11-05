@@ -63,12 +63,12 @@ export default function SubscribePage() {
 					<div className="space-y-4">
 						<p className="text-white/80">{message}</p>
 						<p className="text-white/60 text-sm">
-							Create an account or log in to subscribe to our weekly newsletter and get the best riddles
-							delivered to your inbox.
+							Log in with Google to subscribe to our weekly newsletter and get the best riddles delivered
+							to your inbox.
 						</p>
 						<div className="flex gap-4">
 							<BasicButton
-								text="Create Account / Login"
+								text="Login"
 								customClass="flex-1"
 								threeD={true}
 								onClick={() => setShowLoginModal(true)}
@@ -88,7 +88,12 @@ export default function SubscribePage() {
 						</p>
 						<div className="flex gap-4">
 							<Link href="/" className="flex-1">
-								<BasicButton text="Go to Home" customClass="w-full" variant="secondary" threeD={false} />
+								<BasicButton
+									text="Go to Home"
+									customClass="w-full"
+									variant="secondary"
+									threeD={false}
+								/>
 							</Link>
 						</div>
 					</div>
@@ -98,11 +103,19 @@ export default function SubscribePage() {
 					<div className="space-y-4">
 						<p className="text-red-400 text-lg">{message}</p>
 						<div className="flex gap-4">
-							<Link href="/user/me" className="flex-1">
-								<BasicButton text="Go to Profile" customClass="w-full" threeD={false} />
-							</Link>
+							<BasicButton
+								text="Try Again"
+								customClass="flex-1"
+								threeD={false}
+								onClick={() => window.location.reload()}
+							/>
 							<Link href="/" className="flex-1">
-								<BasicButton text="Go to Home" customClass="w-full" variant="secondary" threeD={false} />
+								<BasicButton
+									text="Go to Home"
+									customClass="w-full"
+									variant="secondary"
+									threeD={false}
+								/>
 							</Link>
 						</div>
 					</div>

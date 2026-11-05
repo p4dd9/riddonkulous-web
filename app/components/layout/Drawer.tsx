@@ -1,7 +1,5 @@
 'use client'
 
-import { CreateButton } from '@/app/components/buttons/CreateButton'
-import { useAuth } from '@/app/contexts/AuthContext'
 import type { Tag } from '@/app/services/tagService'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -15,7 +13,6 @@ interface DrawerProps {
 }
 
 export const Drawer = ({ isOpen, onClose, tags }: DrawerProps) => {
-	const { isNativeApp } = useAuth()
 	const drawerRef = useRef<HTMLDivElement>(null)
 
 	useBackDismiss(onClose, isOpen)
@@ -99,9 +96,7 @@ export const Drawer = ({ isOpen, onClose, tags }: DrawerProps) => {
 								className="w-6 h-6"
 							/>
 							<span className="text-lg">Daily Riddle Adventure</span>
-							<span className="ml-auto px-2 py-0.5 text-xs bg-primary text-white rounded-full">
-								NEW
-							</span>
+							<span className="ml-auto px-2 py-0.5 text-xs bg-primary text-white rounded-full">NEW</span>
 						</Link>
 						<Link
 							href="/#about-riddles"
@@ -151,7 +146,6 @@ export const Drawer = ({ isOpen, onClose, tags }: DrawerProps) => {
 					>
 						<span className="text-xs">Frequently Asked Questions</span>
 					</Link>
-					{!isNativeApp && <CreateButton variant="drawer" className="w-full cursor-pointer" onClick={onClose} />}
 				</div>
 			</div>
 		</div>

@@ -3,11 +3,11 @@ import { AppInstallBannerIOS } from '@/app/components/AppInstallBannerIOS'
 import { Footer } from '@/app/components/layout/Footer'
 import { Header } from '@/app/components/layout/Header'
 import { RateAppModalProvider } from '@/app/components/modals/RateAppModalProvider'
-import { SubscribeModalProvider } from '@/app/components/modals/SubscribeModalProvider'
+import { ViewSwitcher } from '@/app/components/dev/ViewSwitcher'
 import { NativeBridge } from '@/app/components/NativeBridge'
 import { ServiceWorkerUnregister } from '@/app/components/ServiceWorkerUnregister'
 import { AuthProvider } from '@/app/contexts/AuthContext'
-import { isNativeAppRequest } from '@/app/lib/nativeApp'
+import { canPlayRequest, getViewOverrideRequest, isNativeAppRequest, isViewSwitcherEnabled } from '@/app/lib/nativeApp'
 import { getCurrentUserServer } from '@/app/lib/serverAuth'
 import type { Tag } from '@/app/services/tagService'
 import { listTags } from '@/app/services/tagService'
@@ -127,9 +127,13 @@ export default async function RootLayout({
 }>) {
 	// The native app is guest-only: skip the session lookup entirely (cookies
 	// are ignored) and render without any auth UI.
-	const isNativeApp = await isNativeAppRequest()
+	const [isNativeApp, canPlay, viewOverride] = await Promise.all([
+		isNativeAppRequest(),
+		canPlayRequest(),
+		getViewOverrideRequest(),
+	])
 	const [sortedTags, initialUser] = await Promise.all([
-		getCachedTags(),
+		canPlay ? getCachedTags() : Promise.resolve([]),
 		isNativeApp ? Promise.resolve(null) : getCurrentUserServer(),
 	])
 
@@ -152,7 +156,7 @@ export default async function RootLayout({
 						__html: `window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()`,
 					}}
 				/>
-				{/* Google OAuth — login doesn't exist in the native app */}
+				{/* Google OAuth: only the newsletter pages (/subscribe, /unsubscribe, reached from emails) still sign in */}
 				{!isNativeApp && <script src="https://accounts.google.com/gsi/client" async></script>}
 			</head>
 			<body className="antialiased flex flex-col min-h-screen">
@@ -161,11 +165,14 @@ export default async function RootLayout({
 					<NativeBridge />
 					<AppInstallBanner />
 					<AppInstallBannerIOS />
-					<Header tags={sortedTags} />
+					{/* Browsers get the bare landing page: no header at all */}
+					{canPlay && <Header tags={sortedTags} />}
 					<main className="flex-1 h-full">{children}</main>
 					<Footer />
-					{!isNativeApp && <SubscribeModalProvider />}
 					<RateAppModalProvider />
+					{isViewSwitcherEnabled() && (
+						<ViewSwitcher override={viewOverride} isNativeApp={isNativeApp} canPlay={canPlay} />
+					)}
 				</AuthProvider>
 			</body>
 		</html>
