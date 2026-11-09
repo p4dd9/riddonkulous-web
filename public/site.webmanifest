@@ -1,7 +1,7 @@
 {
 	"name": "Riddonkulous",
 	"short_name": "Riddonkulous",
-	"description": "Daily riddles with answers. Brain teasers, logic puzzles, and tricky riddles that make you think.",
+	"description": "A riddle game for iOS and Android: 1,000 community riddles, boss riddles and themed campaigns.",
 	"start_url": "/",
 	"scope": "/",
 	"icons": [

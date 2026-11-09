@@ -18,11 +18,11 @@ import '../globals.css'
 export const metadata: Metadata = {
 	metadataBase: new URL('https://riddonkulous.com'),
 	title: {
-		default: 'Riddles with Answers | Brain Teasers & Logic Puzzles',
+		default: 'Riddonkulous | Riddle Game for iOS and Android',
 		template: '%s | Riddonkulous',
 	},
 	description:
-		'Riddles with answers, fresh every day. Brain teasers, logic puzzles, and tricky riddles that make you think. No fluff, just good riddles.',
+		'Riddonkulous is a riddle game for iOS and Android: 1,000 community riddles, boss riddles and themed campaigns. Free, offline, and family-friendly.',
 	keywords: [
 		'riddles',
 		'riddles with answers',
@@ -58,9 +58,9 @@ export const metadata: Metadata = {
 		locale: 'en_US',
 		url: 'https://riddonkulous.com',
 		siteName: 'Riddonkulous',
-		title: 'Riddles with Answers | Can You Solve These?',
+		title: 'Riddonkulous | Riddle Game for iOS and Android',
 		description:
-			'Got a riddle? We got answers. Daily brain teasers, logic puzzles, and tricky riddles. See if you can crack them.',
+			'1,000 community riddles, boss riddles and themed campaigns in a free riddle game for iOS and Android. See if you can crack them.',
 		images: [
 			{
 				url: '/web-app-manifest-512x512.png',
@@ -72,9 +72,9 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'Riddles with Answers | Can You Solve These?',
+		title: 'Riddonkulous | Riddle Game for iOS and Android',
 		description:
-			'Got a riddle? We got answers. Daily brain teasers, logic puzzles, and tricky riddles. See if you can crack them.',
+			'1,000 community riddles, boss riddles and themed campaigns in a free riddle game for iOS and Android. See if you can crack them.',
 		images: ['/web-app-manifest-512x512.png'],
 	},
 	robots: {

@@ -13,21 +13,21 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-	title: 'Daily Riddles | Riddles with Answers',
+	title: 'Riddle Game for iOS and Android',
 	description:
-		'New riddle every day, with answers. Brain teasers, logic puzzles, and tricky riddles that make you think sideways. No corporate nonsense, just good riddles.',
+		'Riddonkulous is a riddle game for iOS and Android: climb a ladder of 1,000 community riddles, beat a boss every ten steps and unlock themed campaigns. Free and offline.',
 	openGraph: {
-		title: 'Daily Riddles | Riddles with Answers',
+		title: 'Riddle Game for iOS and Android',
 		description:
-			'New riddle every day, with answers. Brain teasers, logic puzzles, and tricky riddles. Can you solve them?',
+			'Climb a ladder of 1,000 community riddles in a free riddle game for iOS and Android. Can you solve them?',
 		url: 'https://riddonkulous.com',
 		type: 'website',
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'Daily Riddles | Riddles with Answers',
+		title: 'Riddle Game for iOS and Android',
 		description:
-			'New riddle every day, with answers. Brain teasers, logic puzzles, and tricky riddles. Can you solve them?',
+			'Climb a ladder of 1,000 community riddles in a free riddle game for iOS and Android. Can you solve them?',
 	},
 	alternates: {
 		canonical: 'https://riddonkulous.com',

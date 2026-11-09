@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 	},
 }
 
-const VERSION = '5 November 2026'
+const VERSION = '9 November 2026'
 const CONTACT = 'hello@hammertime.studio'
 
 const Section = ({ title, children }: { title: string; children: ReactNode }) => (
@@ -77,8 +77,9 @@ export default function PrivacyPolicyPage() {
 						<P>
 							You do not need an account to play, and the app never asks for your name, email address or
 							phone number. Your progress stays on your device. To keep the game free, it shows ads, and
-							it offers an optional &quot;Remove ads&quot; purchase; the companies that run these for us
-							process some data, as described below.
+							it offers optional purchases (&quot;Remove ads&quot; and themed riddle campaigns); the
+							companies that run these for us process some data, as described below. The website has no
+							accounts and no login, except for managing the newsletter described below.
 						</P>
 						<P>
 							If you have any questions about this policy or your data, please contact us at <Mail />.
@@ -90,13 +91,15 @@ export default function PrivacyPolicyPage() {
 						<P>The app saves your game on your device:</P>
 						<List
 							items={[
-								'Your progress: which riddles you have solved or skipped, your stars, your experience points, and riddles you have started but not finished',
+								'Your progress on the ladder and in each campaign: which riddles you have solved or skipped, your stars, your experience points, and riddles you have started but not finished',
 								'Your coins, and the hints and items you have used on a riddle',
+								'A record of your play used for achievements and leaderboards, such as the days you played and the stars you earned each day',
 								'Your settings, such as sound effects and vibration, and which ad breaks you have already seen',
 							]}
 						/>
 						<P>
-							This data does not leave your device, except through your device&apos;s own backup: on
+							This data does not leave your device, except through Google Play Games on Android (see
+							below) and your device&apos;s own backup: on
 							Android, if you have turned on backup to your Google account, Android copies your saved game
 							there; on iOS, if you have turned on iCloud Backup, Apple includes it in your device backup.
 							Either way, your game comes back when you reinstall the app or move to a new device. That
@@ -159,10 +162,36 @@ export default function PrivacyPolicyPage() {
 							.
 						</P>
 
+						<Sub>Google Play Games (Android only)</Sub>
+						<P>
+							On Android, the app uses Google Play Games services, provided by Google Ireland Limited, for
+							achievements, leaderboards, game statistics and a cloud copy of your progress. If you are
+							signed in to Google Play Games on your phone, the app signs you in automatically; otherwise
+							nothing is sent until you choose to sign in, for example by opening Achievements in the
+							app&apos;s settings. While you are signed in, the app sends Google:
+						</P>
+						<List
+							items={[
+								'Which achievements you have unlocked, and your progress towards them',
+								'Your scores for the leaderboards (your stars, your stars in a day and your streak of three-star solves)',
+								'Game events such as solving or skipping a riddle, with its stars, whether it was a boss and how many hints you used, and the coins you earned',
+								'One cloud save with your ladder progress, your coins and the record used for achievements, so your game comes back on another Android device',
+							]}
+						/>
+						<P>
+							Google links this data to your Play Games profile and shows your gamer name, avatar and
+							scores on leaderboards according to your Play Games settings. We see only totals and the
+							leaderboards themselves, not your Google account&apos;s name or email address. Google
+							processes this data under its own Privacy Policy (
+							<Link href="https://policies.google.com/privacy">policies.google.com/privacy</Link>). The
+							iOS app does not use Google Play Games.
+						</P>
+
 						<Sub>Purchases (App Store, Google Play and RevenueCat)</Sub>
 						<P>
-							The &quot;Remove ads&quot; purchase is made through Apple&apos;s App Store on iOS and
-							through Google Play on Android. Apple or Google handles the payment under its own terms and
+							The &quot;Remove ads&quot; purchase and the campaign purchases (themed riddle packs, each a
+							one-time purchase) are made through Apple&apos;s App Store on iOS and through Google Play on
+							Android. Apple or Google handles the payment under its own terms and
 							Privacy Policy; we never receive your payment details or your Apple Account&apos;s or Google
 							account&apos;s name or email address.
 						</P>
@@ -180,9 +209,22 @@ export default function PrivacyPolicyPage() {
 							]}
 						/>
 						<P>
-							This lets the app know that you own &quot;Remove ads&quot;, even offline, and restore it on
-							a new device. RevenueCat processes this data in the United States; the transfer is covered
-							by the EU Standard Contractual Clauses.
+							This lets the app know which purchases you own, even offline, and restore them on a new
+							device. RevenueCat processes this data in the United States; the transfer is covered by the
+							EU Standard Contractual Clauses.
+						</P>
+
+						<Sub>Updates and Ratings</Sub>
+						<P>
+							Once per launch, the app asks the store whether a newer version is available: Google
+							Play&apos;s in-app update service on Android, and Apple&apos;s public App Store lookup on
+							iOS, which receives the app&apos;s store id and your country. If there is one, the app offers
+							the update; nothing is installed without your tap.
+						</P>
+						<P>
+							After the first solve of riddle 50 and riddle 100, the app may ask Apple or Google to show
+							their own rating card. Apple or Google decides whether it appears, and we never learn whether
+							or how you rated the app.
 						</P>
 
 						<Sub>Usage Statistics (Plausible)</Sub>
@@ -236,7 +278,8 @@ export default function PrivacyPolicyPage() {
 					<Section title="Why We Process Your Data">
 						<List
 							items={[
-								'To provide the game and the "Remove ads" purchase: saving your progress, checking and restoring the purchase (performance of our agreement with you, Art. 6(1)(b) GDPR)',
+								'To provide the game and your purchases: saving your progress, checking and restoring purchases, and, on Android while you are signed in to Google Play Games, achievements, leaderboards and the cloud save (performance of our agreement with you, Art. 6(1)(b) GDPR)',
+								'Update checks and the rating card: our legitimate interest in keeping the game working and up to date (Art. 6(1)(f) GDPR)',
 								'Personalized ads, and storing or reading information on your device for advertising: only with your consent (Art. 6(1)(a) GDPR and § 165(3) of the Austrian Telecommunications Act 2021), which you can withdraw at any time with effect for the future',
 								'Non-personalized ads, which keep the game free, and their measurement and fraud prevention: our legitimate interest in financing the game (Art. 6(1)(f) GDPR)',
 								'Usage statistics in the app and on the website: our legitimate interest in understanding how Riddonkulous is used and improving it, without identifying you (Art. 6(1)(f) GDPR)',
@@ -249,8 +292,8 @@ export default function PrivacyPolicyPage() {
 					<Section title="Who Receives Your Data">
 						<List
 							items={[
-								'Google, for ads (AdMob) in the app on both platforms, for payments (Google Play) on Android, for Google Sign-In on the website and, if you turned it on, Android’s backup to your Google account',
-								'Apple, for payments (App Store) on iOS and, if you turned it on, iCloud Backup',
+								'Google, for ads (AdMob) in the app on both platforms; on Android for payments and update checks (Google Play), Google Play Games and, if you turned it on, backup to your Google account; and for Google Sign-In on the newsletter pages',
+								'Apple, for payments and update checks (App Store) on iOS and, if you turned it on, iCloud Backup',
 								'RevenueCat, which processes purchase data on our behalf',
 								'SMTP2GO, which delivers the newsletter on our behalf',
 							]}
@@ -262,7 +305,8 @@ export default function PrivacyPolicyPage() {
 						<P>
 							The game saved on your device stays there until you uninstall the app or clear its data.
 							Your device&apos;s backup of it, in your Google account or in iCloud, is kept as
-							Google&apos;s or Apple&apos;s backup settings describe.
+							Google&apos;s or Apple&apos;s backup settings describe. Your Google Play Games cloud save,
+							achievements and scores stay in your Play Games profile until you delete them there.
 						</P>
 						<P>
 							RevenueCat keeps your purchase history for as long as we use it to check and restore your
@@ -297,7 +341,7 @@ export default function PrivacyPolicyPage() {
 						/>
 						<P>
 							To exercise any of these rights, please contact us at <Mail />. Because the app has no
-							accounts, please include the order number of your &quot;Remove ads&quot; purchase, from your
+							accounts, please include the order number of one of your purchases, from your
 							Google Play receipt (it starts with &quot;GPA.&quot;) or your App Store receipt email (its
 							&quot;Order ID&quot;), so we can find the right records. For the newsletter, please write
 							from the email address you subscribed with.
@@ -308,7 +352,8 @@ export default function PrivacyPolicyPage() {
 						<List
 							items={[
 								'Your saved game: uninstall the app. On Android, you can also clear its storage under Settings, Apps, Riddonkulous. This also resets your coins. To remove the backup of it too, delete the app’s backup in your Google account’s backup settings, or on iOS exclude the app from iCloud Backup under Settings, your name, iCloud, Manage Account Storage, Backups.',
-								'Purchase records: email us with the order number from your Google Play or App Store receipt, and we will have RevenueCat delete your customer record, except what tax and accounting law requires us to keep. "Remove ads" can then no longer be restored automatically.',
+								'Google Play Games data (Android): delete Riddonkulous’s data, or your whole Play Games profile, in the Google Play Games settings on your phone or in your Google account.',
+								'Purchase records: email us with the order number from your Google Play or App Store receipt, and we will have RevenueCat delete your customer record, except what tax and accounting law requires us to keep. Your purchases can then no longer be restored automatically.',
 								'Advertising data: on Android, reset or delete your advertising ID under Settings, Privacy, Ads; on iOS, withdraw tracking permission under Settings, Privacy & Security, Tracking. See Google’s Privacy Policy for the data Google holds.',
 								'Newsletter account: unsubscribe at riddonkulous.com/unsubscribe, and email us from that address if you also want the account itself deleted.',
 							]}

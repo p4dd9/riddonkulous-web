@@ -1,9 +1,17 @@
-import { FAQItem } from '@/app/components/faq/FAQItem'
 import { FAQHashHandler } from '@/app/components/faq/FAQHashHandler'
+import { FAQItem } from '@/app/components/faq/FAQItem'
+import { APP_STORE_URL, PLAY_STORE_URL, SUBREDDIT_URL } from '@/app/lib/appLinks'
 import Image from 'next/image'
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 
 export const revalidate = false // Static page
+
+const External = ({ href, children }: { href: string; children: ReactNode }) => (
+	<Link href={href} target="_blank" rel="noopener noreferrer" className="underline">
+		{children}
+	</Link>
+)
 
 export default async function FAQPage() {
 	return (
@@ -26,146 +34,176 @@ export default async function FAQPage() {
 					<FAQItem
 						id="what-is-riddonkulous"
 						question="What is Riddonkulous?"
-						answer="Riddonkulous is a platform for creating and solving riddles. It's a community-driven game where users can share their own riddles and challenge others to solve them."
-					/>
-					<FAQItem
-						id="is-it-free"
-						question="Is Riddonkulous free to use?"
-						answer="Yes! Riddonkulous is completely free to use. You can browse, solve riddles, and participate in the community without any cost."
-					/>
-					<FAQItem
-						id="how-to-create"
-						question="How do I create a riddle?"
-						answer="You can create a riddle by clicking the 'Create' button in the header or drawer menu, which will take you to Reddit where you can submit your riddle to the community."
-					/>
-					<FAQItem
-						id="approval-process"
-						question="Why does the approval process take time?"
 						answer={
 							<p>
-								The approval process can take time if we detect malicious, poor, or NSFW (Not Safe For
-								Work) content. Our moderation team reviews all submissions to ensure they meet our
-								quality standards and content policies. This helps maintain a safe and enjoyable
-								experience for all users. If your riddle is flagged for review, please be patient while
-								we process it. Approval decisions are ultimately up to the moderation team.
+								Riddonkulous is a riddle game for iPhone, iPad and Android. You climb a ladder of 1,000
+								riddles, with a tougher boss riddle every ten steps. Get it on the{' '}
+								<External href={APP_STORE_URL}>App Store</External> or{' '}
+								<External href={PLAY_STORE_URL}>Google Play</External>.
 							</p>
 						}
 					/>
 					<FAQItem
-						id="solve-without-account"
-						question="Can I solve riddles without creating an account?"
+						id="play-in-browser"
+						question="Can I still play on riddonkulous.com?"
 						answer={
 							<p>
-								Yes, you can solve riddles without creating an account. However, to create riddles and
-								participate in the subbredit, you&apos;ll need to join us on Reddit at{' '}
-								<Link
-									href="https://www.reddit.com/r/riddonkulous"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="underline"
-								>
-									reddit.com/r/riddonkulous
+								No. The game now lives in the app only, and this website just points to the stores. The
+								daily riddle, the Daily Adventure and the browser login are gone. On Reddit you can
+								still solve and share riddles in{' '}
+								<External href={SUBREDDIT_URL}>r/Riddonkulous</External>.
+							</p>
+						}
+					/>
+					<FAQItem
+						id="how-to-play"
+						question="How do I play?"
+						answer={
+							<p>
+								Read the riddle, then tap letter tiles to spell the answer. Some tiles are decoys that
+								don&apos;t belong in the answer. Solve a riddle to earn coins and experience, and to
+								open the next step of the ladder. Stuck? Spend coins on a hint, reveal a letter, remove
+								the decoys or skip the riddle. Solving without help earns three stars.
+							</p>
+						}
+					/>
+					<FAQItem
+						id="is-it-free"
+						question="Is Riddonkulous free?"
+						answer={
+							<p>
+								Yes. The whole ladder is free to play. The game shows an ad between some riddles (never
+								while you solve one), and you can watch a video for extra coins whenever you like. A
+								one-time &quot;Remove ads&quot; purchase turns off the ads between riddles for good.
+							</p>
+						}
+					/>
+					<FAQItem
+						id="campaigns"
+						question="What are campaigns?"
+						answer={
+							<p>
+								Campaigns are themed riddle packs, such as Gods of Olympus or Lions &amp; Legions, each
+								with its own ladder and bosses. The first three riddles of every campaign are free to
+								try; the rest unlock with a one-time purchase per campaign. Campaigns share your coins
+								and experience with the main ladder.
+							</p>
+						}
+					/>
+					<FAQItem
+						id="account"
+						question="Do I need an account?"
+						answer={
+							<p>
+								No. There is no login and no sign-up, and the app never asks for your name or email.
+								Your progress is saved on your phone. On Android, Google Play Games adds achievements,
+								leaderboards and a cloud copy of your progress if you&apos;re signed in to it.
+							</p>
+						}
+					/>
+					<FAQItem
+						id="new-phone"
+						question="How do I keep my progress on a new phone?"
+						answer={
+							<p>
+								On Android, sign in to Google Play Games with the same Google account and your ladder
+								progress and coins come back; Android&apos;s backup to your Google account restores them
+								too. On iPhone and iPad, your progress comes back when you restore the new device from
+								an iCloud backup. Purchases are never lost: tap &quot;Restore purchases&quot; in the
+								app&apos;s settings.
+							</p>
+						}
+					/>
+					<FAQItem
+						id="restore-purchases"
+						question="I bought Remove ads or a campaign but don't have it."
+						answer={
+							<p>
+								Open the app&apos;s settings and tap &quot;Restore purchases&quot;, signed in with the
+								same Apple Account or Google account you bought it with. If that doesn&apos;t help,
+								email us with the order number from your App Store or Google Play receipt.
+							</p>
+						}
+					/>
+					<FAQItem
+						id="offline"
+						question="Does it work offline?"
+						answer="Yes. All riddles are inside the app, so you can play without a connection. Ads, purchases and Google Play Games need one."
+					/>
+					<FAQItem
+						id="ad-privacy"
+						question="How do I change my ad privacy choices?"
+						answer={
+							<p>
+								In the European Economic Area, the UK and Switzerland, tap &quot;Privacy choices&quot;
+								in the app&apos;s settings. On iPhone, you can also turn tracking off under Settings,
+								Privacy &amp; Security, Tracking. Details are in our{' '}
+								<Link href="/privacy-policy" className="underline">
+									Privacy Policy
 								</Link>
 								.
 							</p>
 						}
 					/>
 					<FAQItem
-						id="how-to-login"
-						question="How do I login or create an account?"
+						id="where-riddles-come-from"
+						question="Where do the riddles come from?"
 						answer={
 							<p>
-								You can login or create an account using Google login only. Simply click the login
-								button in the header or drawer menu, and you&apos;ll be prompted to sign in with your
-								Google account. If you don&apos;t have an account yet, the same process will create one
-								for you automatically.
-							</p>
-						}
-					/>
-					<FAQItem
-						id="high-quality-content"
-						question='What is considered "quality content"?'
-						answer={
-							<div className="flex flex-col gap-3">
-								<p>
-									Quality riddles on Riddonkulous should meet these minimum requirements to ensure a
-									great experience for everyone:
-								</p>
-								<ul className="list-disc list-inside space-y-2 text-sm">
-									<li>
-										Clear and solvable: The riddle should have a logical answer that can be deduced
-										from the clues provided.
-									</li>
-									<li>
-										Proper grammar and spelling: The riddle should be well-written and free of
-										errors that might confuse solvers.
-									</li>
-									<li>
-										Appropriate length: The riddle should be long enough to provide meaningful clues
-										but concise enough to be engaging.
-									</li>
-									<li>
-										Original or properly attributed: If using an existing riddle, credit the
-										original source when possible.
-									</li>
-									<li>
-										Respectful content: Riddles should be appropriate for all ages and avoid
-										offensive or harmful content.
-									</li>
-									<li>
-										Correct answer: Ensure the answer is accurate and matches the clues provided in
-										the riddle.
-									</li>
-								</ul>
-								<p className="text-sm opacity-90">
-									Following these guidelines helps maintain a positive and engaging community for all
-									riddle enthusiasts!
-								</p>
-								<p className="text-sm">
-									For more details, please review our{' '}
-									<Link
-										href="https://hammertime.studio/en/reddit/content-policy"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="underline"
-									>
-										Content Policy
-									</Link>
-									.
-								</p>
-							</div>
-						}
-					/>
-					<FAQItem
-						id="how-to-delete-account"
-						question="How do I delete my account?"
-						answer={
-							<p>
-								To delete your account, go to your Profile page and scroll down to the &quot;Advanced
-								Settings&quot; section. Click on &quot;Advanced Settings&quot; to expand it, then click
-								the &quot;Delete Account&quot; button in the Danger Zone. You&apos;ll be asked to
-								confirm the deletion. Please note that this action is permanent and cannot be undone.
-								All your data will be permanently deleted.
-							</p>
-						}
-					/>
-					<FAQItem
-						id="newsletter-subscription"
-						question="How do I subscribe or unsubscribe from the newsletter?"
-						answer={
-							<p>
-								You can subscribe to our weekly newsletter by visiting{' '}
-								<Link href="/subscribe" className="underline">
-									/subscribe
+								From the Riddonkulous community on Reddit. We picked the best-loved riddles, checked
+								them and ordered them from easy to hard. Campaign riddles were written by our authors,
+								see the{' '}
+								<Link href="/credits" className="underline">
+									Credits
 								</Link>
-								. To unsubscribe, visit{' '}
+								.
+							</p>
+						}
+					/>
+					<FAQItem
+						id="submit-riddle"
+						question="Can I submit my own riddle?"
+						answer={
+							<p>
+								Yes, post it in <External href={SUBREDDIT_URL}>r/Riddonkulous</External>. New riddles
+								reach the app with updates, so popular ones may end up on the ladder. Please follow our{' '}
+								<Link href="/content-policy" className="underline">
+									Content Policy
+								</Link>
+								.
+							</p>
+						}
+					/>
+					<FAQItem
+						id="report-riddle"
+						question="I found a wrong answer or a typo."
+						answer="Please email us with the riddle's number on the ladder (or the campaign's name) and what's wrong, and we'll fix it in the next update."
+					/>
+					<FAQItem
+						id="delete-data"
+						question="How do I delete my data?"
+						answer={
+							<p>
+								Uninstalling the app deletes your saved game. For purchase records, ad data and backups,
+								see &quot;Data Deletion&quot; in our{' '}
+								<Link href="/privacy-policy" className="underline">
+									Privacy Policy
+								</Link>
+								.
+							</p>
+						}
+					/>
+					<FAQItem
+						id="newsletter"
+						question="How do I unsubscribe from the newsletter?"
+						answer={
+							<p>
+								Visit{' '}
 								<Link href="/unsubscribe" className="underline">
-									/unsubscribe
-								</Link>
-								. You can also manage your newsletter subscription preferences from your profile settings.
-								You must be logged in to subscribe or unsubscribe. The newsletter is sent from our
-								verified Gmail account and includes curated riddles, platform updates, and community
-								highlights.
+									riddonkulous.com/unsubscribe
+								</Link>{' '}
+								and sign in with the Google account you subscribed with. You won&apos;t receive it again
+								unless you subscribe again.
 							</p>
 						}
 					/>
@@ -174,9 +212,11 @@ export default async function FAQPage() {
 						question="How can I contact Riddonkulous?"
 						answer={
 							<p>
-								You can contact us at <a className="underline">hello[at]hammertime[dot]studio</a>. If
-								you encounter content that violates our policies, please report it to this email
-								address.
+								Email us at{' '}
+								<a href="mailto:hello@hammertime.studio" className="underline">
+									hello@hammertime.studio
+								</a>
+								. We read every message, including bug reports and riddle corrections.
 							</p>
 						}
 					/>
@@ -185,15 +225,10 @@ export default async function FAQPage() {
 						question="How can I support this project?"
 						answer={
 							<p>
-								You can support Riddonkulous by{' '}
-								<Link
-									href="https://hammertime.studio/en/support-my-work"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="underline"
-								>
-									visiting our support page
-								</Link>
+								Rate the app in the App Store or on Google Play, tell a friend, or{' '}
+								<External href="https://hammertime.studio/en/support-my-work">
+									visit our support page
+								</External>
 								.
 							</p>
 						}

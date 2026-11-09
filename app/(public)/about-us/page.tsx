@@ -5,11 +5,11 @@ import Link from 'next/link'
 export const metadata: Metadata = {
 	title: 'About Us | Riddonkulous',
 	description:
-		'Learn about Hammertime e.U., the studio behind Riddonkulous, and our mission to create educational gaming experiences.',
+		'Learn about Hammertime e.U., the independent studio behind the Riddonkulous riddle app for iOS and Android.',
 	openGraph: {
 		title: 'About Us | Riddonkulous',
 		description:
-			'Learn about Hammertime e.U., the studio behind Riddonkulous, and our mission to create educational gaming experiences.',
+			'Learn about Hammertime e.U., the independent studio behind the Riddonkulous riddle app for iOS and Android.',
 		url: 'https://riddonkulous.com/about-us',
 		type: 'website',
 	},
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 		card: 'summary',
 		title: 'About Us | Riddonkulous',
 		description:
-			'Learn about Hammertime e.U., the studio behind Riddonkulous, and our mission to create educational gaming experiences.',
+			'Learn about Hammertime e.U., the independent studio behind the Riddonkulous riddle app for iOS and Android.',
 	},
 	alternates: {
 		canonical: 'https://riddonkulous.com/about-us',
@@ -47,16 +47,15 @@ export default async function AboutUsPage() {
 					<section className="mb-8">
 						<h2 className="text-2xl mb-4 text-white">About Hammertime e.U.</h2>
 						<p className="text-white/80 mb-4">
-							Riddonkulous is a platform dedicated to creating and solving riddles, bringing together
-							riddle enthusiasts from around the world. We believe that riddles are more than just
-							entertainment - they are powerful tools for education, cognitive development, and creative
-							expression.
+							Hammertime e.U. is a small independent game studio from Austria. Riddonkulous started as a
+							riddle game on Reddit, where the r/Riddonkulous community shares its riddles,
+							and grew into an app for iPhone, iPad and Android: a ladder of 1,000 of the community&apos;s
+							favourite riddles, boss riddles every ten steps, and themed campaigns written by our authors.
 						</p>
 						<p className="text-white/80 mb-4">
-							Our mission is to make riddles accessible to everyone while fostering a vibrant community of
-							riddle creators and solvers. Whether you&apos;re looking to challenge your mind, learn about
-							the history of riddles, or create your own brain teasers, Riddonkulous provides the tools
-							and community to support your journey.
+							We believe riddles are more than entertainment: they train your mind, play with language and
+							are fun to share. Our goal is a riddle game anyone can pick up, works offline, and is
+							friendly for the whole family.
 						</p>
 					</section>
 

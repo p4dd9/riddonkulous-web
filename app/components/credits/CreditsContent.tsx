@@ -4,7 +4,7 @@ import Link from 'next/link'
 export const CreditsContent = () => {
 	return (
 		<div className="w-full max-w-2xl flex flex-col gap-6">
-			<h1 className="text-3xl md:text-4xl font-bold text-center mb-4">Credits</h1>
+			<h1 className="text-3xl md:text-4xl text-center mb-4">Credits</h1>
 			<div className="flex justify-center mb-4">
 				<Image
 					src="/pals/PAL054.gif"
@@ -18,7 +18,7 @@ export const CreditsContent = () => {
 
 			<p className="text-gray-300 text-center mb-6">
 				Hey everyone! I&apos;m Patrick. I&apos;m a software engineer and game developer who loves to create fun
-				and creative games that run in the browser. <br /> You can support Riddonkulous{' '}
+				and creative games for Reddit, the browser and your phone. <br /> You can support Riddonkulous{' '}
 				<Link
 					href="https://hammertime.studio/en/support-my-work"
 					target="_blank"
@@ -37,6 +37,45 @@ export const CreditsContent = () => {
 			</p>
 
 			<div className="flex flex-col gap-6">
+				<div className="flex flex-col gap-2">
+					<h2 className="text-xl ">Riddles</h2>
+					<ul className="flex flex-col gap-2 list-none">
+						<li>
+							<span>The r/Riddonkulous community</span>
+							<span className="text-gray-400 ml-2">- the 1,000 riddles of the app&apos;s ladder</span>
+						</li>
+						<li>
+							<span>James Baillie and Deloria Patton</span>
+							<span className="text-gray-400 ml-2">- the app&apos;s themed campaigns</span>
+						</li>
+					</ul>
+				</div>
+
+				<div className="flex flex-col gap-2">
+					<h2 className="text-xl ">App Visuals</h2>
+					<ul className="flex flex-col gap-3 list-none">
+						<li>
+							<span className="text-primary">Layer Lab</span>
+							<span className="text-gray-400 ml-2">- GUI &quot;Dark Stone&quot;</span>
+						</li>
+						<li>
+							<Link
+								href="https://fonts.google.com/specimen/Bubblegum+Sans"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="hover:underline text-primary"
+							>
+								Angel Koziupa and Alejandro Paul
+							</Link>
+							<span className="text-gray-400 ml-2">- Font &quot;Bubblegum Sans&quot;</span>
+						</li>
+						<li>
+							<span className="text-primary">RhosGFX</span>
+							<span className="text-gray-400 ml-2">- Achievement and campaign icons</span>
+						</li>
+					</ul>
+				</div>
+
 				<div className="flex flex-col gap-2">
 					<h2 className="text-xl ">Visuals</h2>
 					<ul className="flex flex-col gap-3 list-none">

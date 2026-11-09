@@ -48,8 +48,8 @@ export const AppLanding = () => (
 			<div className="flex flex-col gap-4 md:gap-6 items-center md:items-start">
 				<h1 className="text-4xl md:text-6xl">Play Riddonkulous on your phone</h1>
 				<p className="text-base md:text-xl opacity-80 max-w-2xl">
-					Daily riddles, the Daily Adventure and all community riddles live in the free Riddonkulous app for
-					iOS and Android.
+					Climb a ladder of 1,000 community riddles, beat a boss every ten steps and unlock themed campaigns.
+					Free on iOS and Android, and it works offline.
 				</p>
 				<StoreButtons />
 				<ul className="flex flex-col gap-2 items-center md:items-start">

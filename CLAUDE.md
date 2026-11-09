@@ -32,7 +32,7 @@ Riddonkulous is a riddle platform built with **Next.js 16** (React 19, TypeScrip
 - **Services** (`app/services/`) are server actions (`'use server'`) that call the Reddicore API
 - All services use `getApiBaseUrl()` and `getApiKey()` from `app/util/apiConfig.ts`
 - Use `fetcher<T>()` from `app/services/fetcher.ts` for type-safe requests with Zod validation
-- **Auth**: Google OAuth → Next.js API proxy → backend session cookies
+- **Auth**: Google OAuth → Next.js API proxy → backend session cookies. Only admins (`/admin/login`) and the unlinked newsletter pages (`/subscribe`, `/unsubscribe`) still sign in; visitors have no login.
 - **Auth context**: `app/contexts/AuthContext.tsx` provides `user`, `signIn`, `signOut`, `refreshUser`
 
 ### Schemas
