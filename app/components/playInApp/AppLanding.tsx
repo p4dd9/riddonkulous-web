@@ -1,4 +1,5 @@
 import { TwitchIcon } from '@/app/components/PlatformsSection'
+import { PromoCodeButton } from '@/app/components/playInApp/PromoCodeButton'
 import { StoreButtons } from '@/app/components/playInApp/StoreButtons'
 import { SUBREDDIT_URL, TWITCH_EXTENSION_URL } from '@/app/lib/appLinks'
 import Image from 'next/image'
@@ -74,6 +75,7 @@ export const AppLanding = () => (
 						</li>
 					))}
 				</ul>
+				<PromoCodeButton />
 			</div>
 		</section>
 	</div>

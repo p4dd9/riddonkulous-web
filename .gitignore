@@ -43,3 +43,5 @@ next-env.d.ts
 certificates
 
 riddonk_firebase.json
+# Google Play promo codes and their claims (see app/lib/promoCodes.ts)
+/data

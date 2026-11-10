@@ -22,6 +22,10 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    # Google Play promo codes (codes.csv) and who claimed them (claims.json).
+    # Kept outside the checkout because a deploy replaces it (setup-hammertime.sh).
+    volumes:
+      - ../_config/config/promo:/opt/riddonkulous-web/data/promo
     networks:
       internal:
     restart: always
