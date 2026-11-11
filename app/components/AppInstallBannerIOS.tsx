@@ -89,7 +89,7 @@ export const AppInstallBannerIOS = () => {
 							href={APP_STORE_URL}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="shrink-0 rounded-full bg-primary px-4 py-2 text-sm text-bg shadow-md transition-colors hover:bg-secondary"
+							className="shrink-0 btn-stone px-3 text-sm"
 						>
 							<span className="sm:hidden">Install</span>
 							<span className="hidden sm:inline">Install App</span>

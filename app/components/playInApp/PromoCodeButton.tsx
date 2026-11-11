@@ -110,7 +110,7 @@ export const PromoCodeButton = () => {
 			<button
 				type="button"
 				onClick={open}
-				className="text-sm md:text-lg opacity-80 underline hover:text-primary transition-colors cursor-pointer"
+				className="text-base md:text-xl text-[var(--color-muted)] underline hover:text-primary transition-colors cursor-pointer"
 			>
 				Have the secret word? Get an iOS or Android promo code
 			</button>
@@ -126,7 +126,7 @@ export const PromoCodeButton = () => {
 							<button
 								type="button"
 								onClick={copy}
-								className="bg-black/30 border-2 border-primary rounded-lg px-4 py-3 text-xl md:text-2xl tracking-widest break-all cursor-pointer"
+								className="stone-input px-4 py-3 text-xl md:text-2xl tracking-widest break-all cursor-pointer"
 								aria-label="Copy the code"
 							>
 								{promo.code}
@@ -136,7 +136,7 @@ export const PromoCodeButton = () => {
 								href={promo.url}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="bg-primary hover:bg-secondary text-bg px-5 py-3 rounded-lg transition-colors"
+								className="btn-stone px-4 py-1 text-xl"
 							>
 								Redeem on {PLATFORMS[promo.platform].store}
 							</a>
@@ -165,8 +165,8 @@ export const PromoCodeButton = () => {
 										role="radio"
 										aria-checked={platform === option}
 										onClick={() => choosePlatform(option)}
-										className={`flex-1 border-2 border-primary rounded-lg px-4 py-2 text-xl transition-colors cursor-pointer ${
-											platform === option ? 'bg-primary text-bg' : 'bg-black/30 hover:bg-black/50'
+										className={`flex-1 px-3 text-xl ${
+											platform === option ? 'btn-stone' : 'btn-stone-gray opacity-70'
 										}`}
 									>
 										{PLATFORMS[option].label}
@@ -183,10 +183,10 @@ export const PromoCodeButton = () => {
 								autoCapitalize="characters"
 								spellCheck={false}
 								maxLength={32}
-								className="bg-black/30 border-2 border-primary rounded-lg px-4 py-3 text-center text-2xl tracking-widest uppercase focus:outline-none"
+								className="stone-input px-4 py-3 text-center text-2xl tracking-widest uppercase"
 							/>
 							{error && (
-								<p className="text-[var(--color-primary)]" role="alert">
+								<p className="text-[var(--color-bad)]" role="alert">
 									{error}
 								</p>
 							)}
@@ -194,7 +194,7 @@ export const PromoCodeButton = () => {
 								<button
 									type="submit"
 									disabled={isLoading || !platform || !word.trim()}
-									className="flex-1 bg-primary hover:bg-secondary text-bg px-5 py-3 rounded-lg transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-default"
+									className="flex-1 btn-stone px-4 py-1 text-xl"
 								>
 									{isLoading
 										? 'Checking…'
@@ -203,7 +203,7 @@ export const PromoCodeButton = () => {
 								<button
 									type="button"
 									onClick={close}
-									className="flex-1 bg-gray-700 hover:bg-gray-600 px-5 py-3 rounded-lg transition-colors cursor-pointer"
+									className="flex-1 btn-stone-gray px-4 py-1 text-xl"
 								>
 									Cancel
 								</button>

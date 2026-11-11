@@ -1,7 +1,6 @@
 import { FAQHashHandler } from '@/app/components/faq/FAQHashHandler'
 import { FAQItem } from '@/app/components/faq/FAQItem'
 import { APP_STORE_URL, PLAY_STORE_URL, SUBREDDIT_URL } from '@/app/lib/appLinks'
-import Image from 'next/image'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 
@@ -19,17 +18,6 @@ export default async function FAQPage() {
 			<FAQHashHandler />
 			<div className="w-full max-w-2xl flex flex-col gap-6">
 				<h1 className="text-3xl md:text-4xl text-center mb-4">Frequently Asked Questions</h1>
-				<div className="flex justify-center mb-4">
-					<Image
-						src="/pals/PAL012.gif"
-						alt="FAQ character"
-						width={200}
-						height={200}
-						className="object-contain"
-						unoptimized
-					/>
-				</div>
-
 				<div className="flex flex-col gap-4">
 					<FAQItem
 						id="what-is-riddonkulous"

@@ -134,15 +134,6 @@ export default async function Home() {
 				<div className="w-full flex flex-col gap-5 md:gap-7">
 					<section className="w-full flex flex-col gap-5">
 						<div className="flex items-start gap-3 md:gap-5">
-							<Image
-								src="/pals/frog_magician.gif"
-								alt=""
-								width={112}
-								height={112}
-								className="hidden md:block w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 shrink-0"
-								aria-hidden
-								unoptimized
-							/>
 							<div className="flex flex-col gap-2 min-w-0 flex-1">
 								<p className="text-sm md:text-base text-primary/90">
 									Riddle #{riddleOfTheDay.riddleNumber} · {riddleDateLabel}

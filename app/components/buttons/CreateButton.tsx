@@ -26,8 +26,8 @@ export const CreateButton = ({ variant = 'header', className = '', onClick }: Cr
 
 	const baseClasses =
 		variant === 'header'
-			? 'text-sm cursor-pointer py-1 flex items-center gap-2 bg-primary hover:bg-secondary px-2 rounded-md text-white transition-colors max-[346px]:gap-0'
-			: 'w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary hover:bg-secondary rounded-md transition-colors text-white'
+			? 'text-sm cursor-pointer py-1 flex items-center gap-2 btn-stone px-2 rounded-md text-white transition-colors max-[346px]:gap-0'
+			: 'w-full flex items-center justify-center gap-2 px-4 py-3 btn-stone rounded-md transition-colors text-white'
 
 	return (
 		<button onClick={handleCreate} className={`${baseClasses} ${className}`}>

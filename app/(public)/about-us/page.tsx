@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -31,17 +30,6 @@ export default async function AboutUsPage() {
 		<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
 			<div className="w-full max-w-4xl flex flex-col gap-6">
 				<h1 className="text-3xl md:text-4xl text-center mb-4">About Us</h1>
-
-				<div className="flex justify-center mb-6">
-					<Image
-						src="/pals/frog_magician.gif"
-						alt="Frog Magician"
-						width={200}
-						height={200}
-						className="w-48 h-48 md:w-64 md:h-64"
-						unoptimized
-					/>
-				</div>
 
 				<div className="prose prose-invert max-w-none">
 					<section className="mb-8">

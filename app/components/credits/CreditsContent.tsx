@@ -1,21 +1,9 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
 export const CreditsContent = () => {
 	return (
 		<div className="w-full max-w-2xl flex flex-col gap-6">
 			<h1 className="text-3xl md:text-4xl text-center mb-4">Credits</h1>
-			<div className="flex justify-center mb-4">
-				<Image
-					src="/pals/PAL054.gif"
-					alt="Credits character"
-					width={200}
-					height={200}
-					className="object-contain"
-					unoptimized
-				/>
-			</div>
-
 			<p className="text-gray-300 text-center mb-6">
 				Hey everyone! I&apos;m Patrick. I&apos;m a software engineer and game developer who loves to create fun
 				and creative games for Reddit, the browser and your phone. <br /> You can support Riddonkulous{' '}

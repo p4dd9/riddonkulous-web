@@ -31,13 +31,13 @@ export const RiddleApprovedModal = ({ postId, onContinue }: RiddleApprovedModalP
 				<Link
 					href={riddleUrl}
 					onClick={onContinue}
-					className="flex-1 bg-primary hover:bg-secondary px-5 py-3 rounded-lg transition-colors text-center"
+					className="flex-1 btn-stone px-4 py-1 text-center"
 				>
 					View Riddle
 				</Link>
 				<button
 					onClick={onContinue}
-					className="flex-1 bg-gray-700 hover:bg-gray-600 px-5 py-3 rounded-lg transition-colors"
+					className="flex-1 btn-stone-gray px-4 py-1"
 				>
 					Next
 				</button>

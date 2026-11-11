@@ -423,7 +423,7 @@ export const CreateRiddleForm = () => {
 					<button
 						type="submit"
 						disabled={isFormDisabled}
-						className="flex-1 bg-primary hover:bg-secondary px-2 py-2 rounded-md text-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+						className="flex-1 btn-stone px-2 py-2 rounded-md text-white transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
 					>
 						{isSubmitting && <img src="/icons/hourglass.png" alt="" className="w-5 h-5 animate-spin" />}
 						{isSubmitting ? 'Creating Riddle...' : 'Create Riddle'}

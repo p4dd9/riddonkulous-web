@@ -34,7 +34,7 @@ export const ShareButton = ({
 		<>
 			<button
 				onClick={() => setIsShareModalOpen(true)}
-				className={`flex items-center cursor-pointer justify-center gap-2 px-3 py-1.5 bg-primary hover:bg-secondary rounded-md transition-colors ${className}`}
+				className={`flex items-center cursor-pointer justify-center gap-2 px-3 py-1.5 btn-stone rounded-md transition-colors ${className}`}
 				aria-label={iconAlt}
 			>
 				<Image src={icon} alt={iconAlt} width={20} height={20} className="w-5 h-5" />

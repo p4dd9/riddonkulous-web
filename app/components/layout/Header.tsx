@@ -81,7 +81,7 @@ export const Header = ({ tags }: HeaderProps) => {
 				<div ref={sentinelRef} className="absolute top-0 left-0 w-full h-px pointer-events-none" />
 				<header
 					ref={headerRef}
-					className={`w-full flex items-center justify-between py-2 px-2 bg-[var(--color-bg)] ${
+					className={`w-full flex items-center justify-between py-2 px-2 bg-[var(--color-stone)] border-b-2 border-[var(--color-shadow)] ${
 						isScrolled
 							? 'fixed top-0 left-0 right-0 m-2 !w-[calc(100%-12px)] rounded z-[100] shadow-lg border-2 border-primary'
 							: 'relative'
@@ -90,13 +90,13 @@ export const Header = ({ tags }: HeaderProps) => {
 					<div className="flex items-center gap-1.5">
 						<button
 							onClick={() => setIsDrawerOpen((prev) => !prev)}
-							className="flex items-center justify-center px-2 py-1 hover:bg-gray-800 rounded transition-colors cursor-pointer"
+							className="flex items-center justify-center px-2 py-1 hover:bg-black/20 rounded transition-colors cursor-pointer"
 							aria-label={isDrawerOpen ? 'Close menu' : 'Open menu'}
 						>
 							<Image src="/icons/folder.png" alt="Menu" width={28} height={28} className="w-7 h-7" />
 						</button>
 						<Link href="/" className="hover:opacity-80 transition-opacity text-2xl">
-							<h1>Riddonkulous</h1>
+							<h1 className="uppercase">Riddonkulous</h1>
 						</Link>
 					</div>
 				</header>

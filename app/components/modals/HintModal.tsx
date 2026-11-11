@@ -15,7 +15,7 @@ export const HintModal = ({ wordLength, onClose }: HintModalProps) => {
 			<div className="flex gap-3 flex-col">
 				<button
 					onClick={onClose}
-					className="flex-1 bg-primary hover:bg-secondary px-5 py-3 rounded-lg transition-colors"
+					className="flex-1 btn-stone px-4 py-1"
 				>
 					Got it
 				</button>

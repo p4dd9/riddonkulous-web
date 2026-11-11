@@ -19,7 +19,7 @@ export const StoreButtons = ({ className = '' }: StoreButtonsProps) => (
 				href={store.href}
 				target="_blank"
 				rel="noopener noreferrer"
-				className="flex items-center justify-center sm:justify-start gap-3 md:gap-4 px-5 py-3 md:px-8 md:py-4 md:min-w-64 rounded-lg bg-primary text-bg shadow-[0_6px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[4px] active:translate-y-[5px] transition-all duration-150 [&_svg]:w-8 [&_svg]:h-8 md:[&_svg]:w-11 md:[&_svg]:h-11"
+				className="btn-stone flex items-center justify-center sm:justify-start gap-3 md:gap-4 px-3 py-1 md:px-5 md:py-2 md:min-w-64 [&_svg]:w-8 [&_svg]:h-8 md:[&_svg]:w-11 md:[&_svg]:h-11"
 			>
 				{store.icon}
 				<span className="flex flex-col leading-none text-left gap-1">

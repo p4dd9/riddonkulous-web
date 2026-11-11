@@ -556,14 +556,6 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 			<>
 				<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
 					<div className="w-full max-w-2xl flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
-						<Image
-							src="/pals/PAL055.gif"
-							alt="Adventure Pal"
-							width={256}
-							height={256}
-							className="w-32 h-32 md:w-48 md:h-48 shrink-0"
-							unoptimized
-						/>
 						<div className="flex flex-col items-center md:items-start gap-4 flex-1">
 							<h1 className="text-3xl md:text-4xl ">Daily Riddle Adventure</h1>
 							<div className="flex flex-col gap-4 text-lg">
@@ -580,7 +572,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 										onClick={() => handleModeChange('liddle')}
 										className={`flex-1 px-4 py-3 rounded-md border-2 transition-all flex flex-col items-center gap-2 ${
 											riddleMode === 'liddle'
-												? 'bg-primary border-primary text-white shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px]'
+												? 'bg-tertiary border-tertiary text-white shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px]'
 												: 'bg-gray-800 border-gray-600 text-gray-300 hover:border-gray-500 opacity-60'
 										}`}
 									>
@@ -598,7 +590,7 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 										onClick={() => handleModeChange('riddle')}
 										className={`flex-1 px-4 py-3 rounded-md border-2 transition-all flex flex-col items-center gap-2 ${
 											riddleMode === 'riddle'
-												? 'bg-primary border-primary text-white shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px]'
+												? 'bg-tertiary border-tertiary text-white shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px]'
 												: 'bg-gray-800 border-gray-600 text-gray-300 hover:border-gray-500 opacity-60'
 										}`}
 									>
@@ -640,15 +632,10 @@ export default function AdventurePage({ params }: { params: Promise<{ number: st
 		]
 		const message = transitionMessages[currentRiddleIndex % transitionMessages.length]
 
-		// Random pal image (PAL001.gif to PAL009.gif) based on riddle index for consistency
-		const palNumber = String((currentRiddleIndex % 9) + 1).padStart(3, '0')
-		const palImage = `/pals/PAL${palNumber}.gif`
-
 		return (
 			<>
 				<div className="relative h-full min-h-screen w-full flex flex-col items-center justify-center max-w-6xl mx-auto px-4 py-8">
 					<div className="flex flex-col items-center gap-6">
-						<Image src={palImage} alt="Pal" width={128} height={128} className="w-32 h-32" unoptimized />
 						<p className="text-2xl md:text-3xl text-center">{message}</p>
 						<BasicButton text="Next" onClick={handleContinue} customClass="px-8 py-3" />
 					</div>
@@ -983,7 +970,7 @@ Can you beat my score?`}
 								onClick={() => handleModeChange('liddle')}
 								className={`w-full px-4 py-3 rounded-md border-2 transition-all flex flex-col items-start gap-2 ${
 									riddleMode === 'liddle'
-										? 'bg-primary border-primary text-white shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px]'
+										? 'bg-tertiary border-tertiary text-white shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px]'
 										: 'bg-gray-800 border-gray-600 text-gray-300 hover:border-gray-500 opacity-60'
 								}`}
 							>
@@ -997,7 +984,7 @@ Can you beat my score?`}
 								onClick={() => handleModeChange('riddle')}
 								className={`w-full px-4 py-3 rounded-md border-2 transition-all flex flex-col items-start gap-2 ${
 									riddleMode === 'riddle'
-										? 'bg-primary border-primary text-white shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px]'
+										? 'bg-tertiary border-tertiary text-white shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px]'
 										: 'bg-gray-800 border-gray-600 text-gray-300 hover:border-gray-500 opacity-60'
 								}`}
 							>

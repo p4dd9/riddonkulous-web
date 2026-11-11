@@ -15,12 +15,12 @@ interface BasicButtonProps {
 	disabled?: boolean
 }
 
-const defaultClasses = 'bg-primary hover:bg-primary px-2 py-.5 rounded-md text-white transition-colors cursor-pointer'
+const defaultClasses = 'btn-stone px-2'
 
-const secondaryClasses = 'bg-[var(--color-bg)] border-2 border-primary hover:bg-[var(--color-bg)] px-2 py-.5 rounded-md text-white transition-colors cursor-pointer'
+const secondaryClasses = 'btn-stone-gray px-2'
 
-const threeDClasses =
-	'shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px] active:shadow-[0_1px_0_0_rgba(0,0,0,0.7)] active:translate-y-[4px] transition-all duration-150'
+// The kit buttons carry their own bevel; threeD is kept in the props for callers but adds nothing
+const threeDClasses = ''
 
 export const BasicButton = ({
 	text = '',
@@ -69,7 +69,7 @@ export const BasicButton = ({
 			className={`${buttonClasses} ${textAlignClass}`}
 			style={textAlignStyle}
 		>
-			<div className={icon ? 'flex items-center gap-2' : ''}>
+			<div className={`${buttonClasses.includes('btn-stone') ? 'btn-stone-tight' : ''} ${icon ? 'flex items-center gap-2' : ''}`.trim()}>
 				{icon && <img src={icon} alt="" className={iconClass} />}
 				{displayText}
 			</div>

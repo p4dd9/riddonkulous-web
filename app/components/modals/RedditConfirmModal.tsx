@@ -20,13 +20,13 @@ export const RedditConfirmModal = ({ onConfirm, onClose }: RedditConfirmModalPro
 			<div className="flex gap-3 flex-col">
 				<button
 					onClick={onClose}
-					className="flex-1 bg-gray-700 hover:bg-gray-600 px-5 py-3 rounded-lg  transition-colors"
+					className="flex-1 btn-stone-gray px-4 py-1"
 				>
 					Cancel
 				</button>
 				<button
 					onClick={handleConfirm}
-					className="flex-1 bg-primary hover:bg-secondary px-5 py-3 rounded-lg  transition-colors"
+					className="flex-1 btn-stone px-4 py-1"
 				>
 					Yes, go to Reddit
 				</button>

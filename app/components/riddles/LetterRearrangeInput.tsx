@@ -134,7 +134,7 @@ export const LetterRearrangeInput = ({
 							key={item.id}
 							onClick={() => handleSelectedLetterClick(item.id)}
 							disabled={disabled || isAnimating}
-							className={`min-w-[40px] min-h-[40px] w-[40px] h-[40px] bg-primary hover:bg-primary/80 text-white rounded-md text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center ${
+							className={`min-w-[40px] min-h-[40px] w-[40px] h-[40px] bg-tertiary hover:bg-tertiary-hover text-white rounded-md text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center ${
 								isAnimating ? 'letter-slide-back' : ''
 							}`}
 						>
@@ -167,7 +167,7 @@ export const LetterRearrangeInput = ({
 				<button
 					onClick={handleShuffle}
 					disabled={disabled || letters.length === 0}
-					className="flex-1 px-4 py-2 bg-primary hover:bg-primary/80 text-white rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+					className="flex-1 px-4 py-2 bg-tertiary hover:bg-tertiary-hover text-white rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
 				>
 					<Image src="/icons/arrow_refresh.png" alt="Shuffle" width={20} height={20} className="w-5 h-5" />
 					<span>Shuffle</span>

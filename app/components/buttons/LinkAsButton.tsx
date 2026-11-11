@@ -19,12 +19,12 @@ interface LinkAsButtonProps {
 	disabled?: boolean
 }
 
-const defaultClasses = 'bg-primary hover:bg-primary px-2 py-.5 rounded-md text-white transition-colors'
+const defaultClasses = 'btn-stone px-2'
 
-const secondaryClasses = 'bg-[var(--color-bg)] border-2 border-primary hover:bg-[var(--color-bg)] px-2 py-.5 rounded-md text-white transition-colors'
+const secondaryClasses = 'btn-stone-gray px-2'
 
-const threeDClasses =
-	'shadow-[0_5px_0_0_rgba(0,0,0,0.7)] hover:shadow-[0_2px_0_0_rgba(0,0,0,0.7)] hover:translate-y-[3px] active:shadow-[0_1px_0_0_rgba(0,0,0,0.7)] active:translate-y-[4px] transition-all duration-150'
+// The kit buttons carry their own bevel; threeD is kept in the props for callers but adds nothing
+const threeDClasses = ''
 
 export const LinkAsButton = ({
 	href,
@@ -48,9 +48,9 @@ export const LinkAsButton = ({
 		// If customClass contains bg- or hover:bg-, remove default background classes
 		if (customClass.includes('bg-') || customClass.includes('hover:bg-')) {
 			if (variant === 'primary') {
-				baseClasses = baseClasses.replace('bg-primary', '').replace('hover:bg-primary', '').trim()
+				baseClasses = ''
 			} else {
-				baseClasses = baseClasses.replace('bg-[var(--color-bg)]', '').replace('hover:bg-[var(--color-bg)]', '').trim()
+				baseClasses = 'border-2 border-primary'
 			}
 		}
 		
@@ -91,7 +91,7 @@ export const LinkAsButton = ({
 	const mergedClassName = `${displayClass} ${buttonClasses} ${textAlignClass} ${className}`.trim()
 
 	const content = (
-		<div className={icon ? 'flex items-center gap-2' : ''}>
+		<div className={`${buttonClasses.includes('btn-stone') ? 'btn-stone-tight' : ''} ${icon ? 'flex items-center gap-2' : ''}`.trim()}>
 			{icon && <img src={icon} alt="" className={iconClass} />}
 			{displayText}
 		</div>

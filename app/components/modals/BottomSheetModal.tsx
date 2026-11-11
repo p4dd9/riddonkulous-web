@@ -40,7 +40,7 @@ export const BottomSheetModal = ({ isOpen, onClose, title, icon, children }: Bot
 		<>
 			{/* Overlay with fade transition */}
 			<div
-				className="fixed inset-0 bg-black z-[120] opacity-50 transition-opacity duration-[250ms] ease-linear"
+				className="fixed inset-0 bg-[#0c0905] z-[120] opacity-60 transition-opacity duration-[250ms] ease-linear"
 				onClick={handleOverlayClick}
 			/>
 
@@ -50,26 +50,26 @@ export const BottomSheetModal = ({ isOpen, onClose, title, icon, children }: Bot
 				onClick={handleOverlayClick}
 			>
 				<div
-					className="bg-[var(--color-bg)] w-full shadow-lg max-h-[90vh] flex flex-col rounded-t-2xl relative z-10"
+					className="stone-sheet w-full max-w-3xl mx-auto max-h-[90vh] flex flex-col relative z-10"
 					onClick={(e) => e.stopPropagation()}
 				>
 					{/* Header */}
-					<div className="flex items-center justify-between px-2 py-2 border-b-2 border-primary sticky top-0 z-10 bg-[var(--color-bg)]">
-						<h2 className="text-xl whitespace-nowrap overflow-hidden text-ellipsis pl-2 flex items-center gap-2">
+					<div className="flex items-center justify-between gap-2 pb-2 sticky top-0 z-10">
+						<h2 className="text-2xl text-gold whitespace-nowrap overflow-hidden text-ellipsis flex items-center gap-2">
 							{icon && <img src={icon} alt="" className="w-6 h-6" />}
 							{title || 'Modal'}
 						</h2>
 						<button
 							onClick={onClose}
-							className="text-gray-500 cursor-pointer hover:text-white text-4xl leading-none focus:outline-none px-2"
+							className="shrink-0 cursor-pointer focus:outline-none transition-transform active:scale-90"
 							aria-label="Close"
 						>
-							<img src="/icons/delete.png" alt="Close" className="w-7 h-7" />
+							<img src="/gui/btn_close_green.png" alt="Close" className="w-10 h-10" />
 						</button>
 					</div>
 
 					{/* Scrollable Content */}
-					<div className="p-4 overflow-auto">{children}</div>
+					<div className="pt-2 pb-5 overflow-auto">{children}</div>
 				</div>
 			</div>
 		</>,

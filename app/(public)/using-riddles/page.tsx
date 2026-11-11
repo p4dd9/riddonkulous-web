@@ -1,6 +1,5 @@
 import { RelatedResources } from '@/app/components/articles/RelatedResources'
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -44,18 +43,6 @@ export default async function UsingRiddles() {
 						Exilian Articles
 					</Link>
 				</p>
-			</div>
-
-			{/* Image Block */}
-			<div className="w-full flex justify-center mb-8">
-				<Image
-					src="/pals/PAL056.gif"
-					alt="Frog Magician"
-					width={200}
-					height={200}
-					className="w-48 h-48 md:w-64 md:h-64"
-					unoptimized
-				/>
 			</div>
 
 			{/* Content Blocks */}

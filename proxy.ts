@@ -1,11 +1,5 @@
 import { getBlockedIpMatch } from '@/app/lib/ipBlock'
-import {
-	isViewSwitcherEnabled,
-	isWebPlayEnabled,
-	parseViewOverride,
-	resolveIsNativeApp,
-	VIEW_OVERRIDE_COOKIE,
-} from '@/app/lib/nativeApp'
+import { isNativeAppUserAgent, isWebPlayEnabled } from '@/app/lib/nativeApp'
 import { collectRequestDebug, isCrawlPath, isRequestDebugLogEnabled } from '@/app/lib/requestDebug'
 import { getBlockedCountries, getRequestCountry, isGeoBlockEnabled } from '@/app/lib/requestGeo'
 import { serverLogger } from '@/app/util/logger'
@@ -91,22 +85,6 @@ export async function proxy(request: NextRequest) {
 		}
 	}
 
-	// Local debugging: `?view=app|web|auto` stores the view override cookie and
-	// reloads without the param (see ViewSwitcher). Ignored in production unless
-	// VIEW_SWITCHER_ENABLED=true.
-	const viewParam = request.nextUrl.searchParams.get('view')
-	if (isViewSwitcherEnabled() && (viewParam === 'auto' || parseViewOverride(viewParam))) {
-		const cleanUrl = request.nextUrl.clone()
-		cleanUrl.searchParams.delete('view')
-		const response = NextResponse.redirect(cleanUrl)
-		if (viewParam === 'auto') {
-			response.cookies.delete(VIEW_OVERRIDE_COOKIE)
-		} else {
-			response.cookies.set(VIEW_OVERRIDE_COOKIE, viewParam as string, { path: '/', sameSite: 'lax' })
-		}
-		return response
-	}
-
 	// Riddle creation and the user area are gone for everyone. Admins sign in
 	// through /admin/login instead.
 	if (/^\/user\/me(\/|$)/.test(pathname)) {
@@ -116,10 +94,7 @@ export async function proxy(request: NextRequest) {
 		return NextResponse.json({ error: 'Not Found' }, { status: 404 })
 	}
 
-	const isNativeApp = resolveIsNativeApp(
-		request.headers.get('user-agent'),
-		request.cookies.get(VIEW_OVERRIDE_COOKIE)?.value
-	)
+	const isNativeApp = isNativeAppUserAgent(request.headers.get('user-agent'))
 
 	// The native app is guest-only: newsletter pages (login-gated) redirect home.
 	if (isNativeApp && /^\/(subscribe|unsubscribe)(\/|$)/.test(pathname)) {

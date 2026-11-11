@@ -35,43 +35,184 @@
 	}
 }
 
-/*@font-face {
-	font-family: 'Font007';
-	src: url('/font/FONT007.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
-}*/
-
 @font-face {
-	font-family: 'Font001';
-	/* src: url('/font/Sweet Pancakes.otf') format('truetype'); */
-	src: url('/font/Jersey25-Regular.ttf') format('truetype');
+	font-family: 'BubblegumSans';
+	src: url('/font/BubblegumSans-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
 }
 
+/*
+ * The look of the mobile game (riddonkulous-mobile, src/stage/theme.ts): Layer Lab's Dark Stone kit, cream text on
+ * stone, gold accents, green actions. The kit textures live in public/gui.
+ */
 @theme {
-	--color-primary: #d4a017;
-	--color-secondary: #b8944f;
+	--color-primary: #ffd54a;
+	--color-secondary: #f0b93a;
 
 	--color-sky: #622aff;
-	--color-tertiary: #4a6b2a;
-	--color-tertiary-hover: #3a5520;
+	--color-tertiary: #5db676;
+	--color-tertiary-hover: #4aa063;
 
-	--color-bg: #0b1416;
+	--color-bg: #2b2720;
+	--color-stone: #4b4334;
+	--color-stone-light: #685e4f;
+	--color-text: #f6ecd6;
+	--color-muted: #c9bc9f;
+	--color-faint: #9c927c;
+	--color-shadow: #2a2116;
+	--color-gold-shadow: #6b4a12;
+	--color-green-shadow: #2c6e3f;
+	--color-ribbon-shadow: #8a5a24;
+	--color-bad: #ff9d82;
+
+	/* Tailwind's white and greys, warmed to the stone palette so older screens match without edits */
+	--color-white: #f6ecd6;
+	--color-gray-300: #d9ccb0;
+	--color-gray-400: #c9bc9f;
+	--color-gray-500: #9c927c;
+	--color-gray-600: #6f6555;
+	--color-gray-700: #574e40;
+	--color-gray-800: #453d31;
+	--color-gray-900: #342e25;
 }
 
 body {
 	background: var(--color-bg);
-	color: white;
-	font-family: 'Font001', Arial, Helvetica, sans-serif;
+	color: var(--color-text);
+	font-family: 'BubblegumSans', Arial, Helvetica, sans-serif;
+}
+
+/* The kit's cracked-stone floor behind every page (a fixed layer: iOS ignores background-attachment: fixed) */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	background:
+		radial-gradient(ellipse at center, rgba(43, 39, 32, 0.15) 0%, rgba(26, 22, 16, 0.78) 100%),
+		url('/gui/background.png') center / cover no-repeat;
+	pointer-events: none;
+}
+
+@layer base {
+	h1,
+	h2,
+	h3 {
+		text-shadow: 0 0.08em 0 var(--color-shadow);
+	}
+
+	h1 {
+		color: var(--color-primary);
+		text-shadow: 0 0.07em 0 var(--color-gold-shadow);
+	}
 }
 
 .font-bold,
 .font-semibold {
 	font-weight: 400 !important;
+}
+
+/*
+ * Kit frames as nine-slices. The slice numbers are the borders in texture pixels from the game's FRAMES table
+ * (riddonkulous-mobile src/stage/kit.ts); the border width is those pixels at the size the game draws them.
+ */
+@layer components {
+	.btn-stone,
+	.btn-stone-gray {
+		display: inline-block;
+		border: 12px solid transparent;
+		border-image: url('/gui/btn_green.png') 30 fill / 12px stretch;
+		background: none !important;
+		color: #fff;
+		text-align: center;
+		text-shadow: 0 2px 0 var(--color-green-shadow);
+		cursor: pointer;
+		transition:
+			transform 0.12s ease-out,
+			filter 0.12s ease-out;
+	}
+
+	.btn-stone-gray {
+		border-image-source: url('/gui/btn_gray.png');
+		color: var(--color-text);
+		text-shadow: 0 2px 0 var(--color-shadow);
+	}
+
+	.btn-stone:hover,
+	.btn-stone-gray:hover {
+		filter: brightness(1.07);
+	}
+
+	.btn-stone:active,
+	.btn-stone-gray:active {
+		transform: scale(0.95);
+	}
+
+	.btn-stone:disabled,
+	.btn-stone-gray:disabled,
+	.btn-stone[aria-disabled='true'] {
+		opacity: 0.45;
+		cursor: default;
+		filter: none;
+		transform: none;
+	}
+
+	/* Small buttons: the frame's border already pads them, so the label pulls back into it */
+	.btn-stone-tight {
+		margin: -5px -3px;
+	}
+
+	.stone-panel {
+		border: 10px solid transparent;
+		border-image: url('/gui/list_bg.png') 20 fill / 10px stretch;
+	}
+
+	.stone-card {
+		border: 14px solid transparent;
+		border-image: url('/gui/message_frame_default.png') 24 fill / 14px stretch;
+	}
+
+	.stone-popup {
+		border: 22px solid transparent;
+		border-image: url('/gui/popup_bg.png') 44 fill / 22px stretch;
+	}
+
+	/* A sheet rising from the bottom edge: the popup frame without its bottom border */
+	.stone-sheet {
+		border: 22px solid transparent;
+		border-bottom-width: 0;
+		border-image: url('/gui/popup_bg.png') 44 44 0 44 fill / 22px 22px 0 22px stretch;
+	}
+
+	.stone-ribbon {
+		display: inline-block;
+		border-style: solid;
+		border-color: transparent;
+		border-width: 7px 40px 22px 40px;
+		border-image: url('/gui/title_rabel.png') 14 80 44 80 fill / 7px 40px 22px 40px stretch;
+		color: #fff;
+		text-align: center;
+		text-shadow: 0 2px 0 var(--color-ribbon-shadow);
+	}
+
+	.stone-input {
+		background: rgba(12, 9, 5, 0.45);
+		border: 2px solid var(--color-stone-light);
+		border-radius: 10px;
+		color: var(--color-text);
+	}
+
+	.stone-input:focus {
+		outline: none;
+		border-color: var(--color-primary);
+	}
+
+	.text-gold {
+		color: var(--color-primary);
+		text-shadow: 0 0.07em 0 var(--color-gold-shadow);
+	}
 }
 
 /* Safe area insets for iOS devices */

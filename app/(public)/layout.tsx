@@ -3,11 +3,10 @@ import { AppInstallBannerIOS } from '@/app/components/AppInstallBannerIOS'
 import { Footer } from '@/app/components/layout/Footer'
 import { Header } from '@/app/components/layout/Header'
 import { RateAppModalProvider } from '@/app/components/modals/RateAppModalProvider'
-import { ViewSwitcher } from '@/app/components/dev/ViewSwitcher'
 import { NativeBridge } from '@/app/components/NativeBridge'
 import { ServiceWorkerUnregister } from '@/app/components/ServiceWorkerUnregister'
 import { AuthProvider } from '@/app/contexts/AuthContext'
-import { canPlayRequest, getViewOverrideRequest, isNativeAppRequest, isViewSwitcherEnabled } from '@/app/lib/nativeApp'
+import { canPlayRequest, isNativeAppRequest } from '@/app/lib/nativeApp'
 import { getCurrentUserServer } from '@/app/lib/serverAuth'
 import type { Tag } from '@/app/services/tagService'
 import { listTags } from '@/app/services/tagService'
@@ -127,11 +126,7 @@ export default async function RootLayout({
 }>) {
 	// The native app is guest-only: skip the session lookup entirely (cookies
 	// are ignored) and render without any auth UI.
-	const [isNativeApp, canPlay, viewOverride] = await Promise.all([
-		isNativeAppRequest(),
-		canPlayRequest(),
-		getViewOverrideRequest(),
-	])
+	const [isNativeApp, canPlay] = await Promise.all([isNativeAppRequest(), canPlayRequest()])
 	const [sortedTags, initialUser] = await Promise.all([
 		canPlay ? getCachedTags() : Promise.resolve([]),
 		isNativeApp ? Promise.resolve(null) : getCurrentUserServer(),
@@ -143,7 +138,7 @@ export default async function RootLayout({
 				{/* Apple Touch Icon */}
 				<link rel="apple-touch-icon" href="/web-app-manifest-192x192.png" />
 				{/* Theme Color */}
-				<meta name="theme-color" content="#ffffff" />
+				<meta name="theme-color" content="#2b2720" />
 				{/* Privacy-friendly analytics by Plausible */}
 				<script async src="https://plausible.hammertime.studio/js/pa-x-KEXLTn7CNv9VeZQ3Y3C.js"></script>
 				<script
@@ -165,9 +160,6 @@ export default async function RootLayout({
 					<main className="flex-1 h-full">{children}</main>
 					<Footer />
 					<RateAppModalProvider />
-					{isViewSwitcherEnabled() && (
-						<ViewSwitcher override={viewOverride} isNativeApp={isNativeApp} canPlay={canPlay} />
-					)}
 				</AuthProvider>
 			</body>
 		</html>

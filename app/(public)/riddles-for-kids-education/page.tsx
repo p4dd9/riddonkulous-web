@@ -1,6 +1,5 @@
 import { RelatedResources } from '@/app/components/articles/RelatedResources'
 import type { Metadata } from 'next'
-import Image from 'next/image'
 
 export const metadata: Metadata = {
 	title: 'Riddles for Kids: Educational Benefits | Riddonkulous',
@@ -30,18 +29,6 @@ export default async function RiddlesForKidsEducation() {
 		<div className="relative h-full min-h-screen w-full flex flex-col max-w-4xl mx-auto px-4 py-8 gap-8">
 			<div className="text-center mb-4">
 				<h1 className="text-3xl md:text-4xl mb-2">Riddles for Kids: Educational Benefits</h1>
-			</div>
-
-			{/* Image Block */}
-			<div className="w-full flex justify-center mb-8">
-				<Image
-					src="/pals/frog_magician.gif"
-					alt="Kids Education"
-					width={200}
-					height={200}
-					className="w-48 h-48 md:w-64 md:h-64"
-					unoptimized
-				/>
 			</div>
 
 			{/* Content Blocks */}

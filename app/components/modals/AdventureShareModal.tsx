@@ -79,7 +79,7 @@ export const AdventureShareModal = ({ url, title, text, onClose }: AdventureShar
 					onClick={copyToClipboard}
 					disabled={copied}
 					className={`flex items-center justify-center gap-3 px-5 py-3 rounded-lg transition-colors ${
-						copied ? 'bg-green-700 hover:bg-green-600 cursor-default' : 'bg-primary hover:bg-secondary'
+						copied ? 'bg-green-700 hover:bg-green-600 cursor-default' : 'btn-stone'
 					}`}
 				>
 					<Image

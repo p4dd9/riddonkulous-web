@@ -85,7 +85,7 @@ export const ShareModal = ({ url, title, description, onClose }: ShareModalProps
 				{canShare && (
 					<button
 						onClick={handleShare}
-						className="flex items-center justify-center gap-3 bg-primary hover:bg-secondary px-5 py-3 rounded-lg  transition-colors"
+						className="flex items-center justify-center gap-3 btn-stone px-4 py-1"
 					>
 						<Image src="/icons/world.png" alt="Share" width={20} height={20} className="w-5 h-5" />
 						<span>Share</span>

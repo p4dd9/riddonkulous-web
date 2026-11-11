@@ -1,8 +1,8 @@
 import { TwitchIcon } from '@/app/components/PlatformsSection'
 import { PromoCodeButton } from '@/app/components/playInApp/PromoCodeButton'
+import { RiddleDemo } from '@/app/components/playInApp/RiddleDemo'
 import { StoreButtons } from '@/app/components/playInApp/StoreButtons'
 import { SUBREDDIT_URL, TWITCH_EXTENSION_URL } from '@/app/lib/appLinks'
-import Image from 'next/image'
 
 const RedditIcon = () => (
 	<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -23,42 +23,62 @@ const otherPlaces = [
 		key: 'twitch',
 		href: TWITCH_EXTENSION_URL,
 		icon: <TwitchIcon />,
-		iconClassName: 'text-[#9146FF]',
+		iconClassName: 'text-[#b78cff]',
 		intro: 'Streaming? Play along live',
 		link: 'with the Twitch extension',
 	},
 ] as const
 
+const features = [
+	{
+		key: 'ladder',
+		icon: '/gui/icon_star.png',
+		title: '1,000 riddles',
+		text: 'One long ladder of community riddles. Up to three stars for every solve.',
+	},
+	{
+		key: 'boss',
+		icon: '/gui/icon_badge_gold.png',
+		title: 'A boss every ten',
+		text: 'Every tenth step is a hard classic that guards the way up.',
+	},
+	{
+		key: 'coins',
+		icon: '/gui/icon_score_coin.png',
+		title: 'Coins and items',
+		text: 'Every solve pays coins. Spend them on reveals, hints and skips.',
+	},
+] as const
+
 /**
  * The whole site in a regular browser: Riddonkulous is played in the iOS /
- * Android apps (and on Reddit and Twitch), so the web only points there.
+ * Android apps (and on Reddit and Twitch), so the web only points there. It
+ * wears the app's look (Dark Stone kit, Bubblegum Sans) and lets visitors
+ * try a few ladder riddles in a Pixi canvas (RiddleDemo).
  */
 export const AppLanding = () => (
-	<div className="relative h-full min-h-[70vh] w-full flex flex-col items-center justify-center max-w-5xl mx-auto px-4 py-10 md:py-16 gap-10 md:gap-14">
-		<section className="w-full flex flex-col md:flex-row items-center gap-6 md:gap-10 text-center md:text-left">
-			<Image
-				src="/pals/frog_magician.gif"
-				alt=""
-				width={224}
-				height={224}
-				className="w-32 h-32 md:w-56 md:h-56 shrink-0"
-				aria-hidden
-				unoptimized
-				priority
-			/>
-			<div className="flex flex-col gap-4 md:gap-6 items-center md:items-start">
-				<h1 className="text-4xl md:text-6xl">Play Riddonkulous on your phone</h1>
-				<p className="text-base md:text-xl opacity-80 max-w-2xl">
-					Climb a ladder of 1,000 community riddles, beat a boss every ten steps and unlock themed campaigns.
-					Free on iOS and Android, and it works offline.
+	<div className="relative w-full max-w-6xl mx-auto px-4 py-8 md:py-14 flex flex-col gap-12 md:gap-16">
+		<div className="flex flex-col items-center gap-8 lg:grid lg:grid-cols-[1fr_390px] lg:gap-x-14 lg:gap-y-8 lg:items-center">
+			<section className="flex flex-col gap-5 md:gap-6 items-center lg:items-start text-center lg:text-left lg:self-end">
+				<h1 className="text-[3.25rem] leading-none sm:text-7xl lg:text-8xl uppercase">Riddonkulous</h1>
+				<p className="stone-ribbon text-xl md:text-2xl whitespace-nowrap">The riddle game for your phone</p>
+				<p className="text-lg md:text-2xl text-[var(--color-muted)] max-w-xl">
+					Read the riddle, spell the answer. Climb a ladder of 1,000 community riddles, beat a boss every ten
+					steps and unlock themed campaigns. Free on iOS and Android, and it works offline.
 				</p>
 				<StoreButtons />
-				<ul className="flex flex-col gap-2 items-center md:items-start">
+			</section>
+
+			<section className="w-full flex flex-col items-center gap-3 lg:col-start-2 lg:row-start-1 lg:row-span-2">
+				<RiddleDemo />
+				<p className="text-base md:text-lg text-[var(--color-muted)]">Try it: tap the letters to spell the answer.</p>
+			</section>
+
+			<section className="w-full flex flex-col gap-4 items-center lg:items-start lg:self-start">
+				<ul className="stone-panel w-full max-w-xl flex flex-col gap-3 px-3 py-2">
 					{otherPlaces.map((place) => (
-						<li key={place.key} className="flex items-center gap-2 text-sm md:text-lg opacity-80">
-							<span
-								className={`shrink-0 [&_svg]:w-5 [&_svg]:h-5 md:[&_svg]:w-6 md:[&_svg]:h-6 ${place.iconClassName}`}
-							>
+						<li key={place.key} className="flex items-center gap-3 text-base md:text-xl">
+							<span className={`shrink-0 [&_svg]:w-6 [&_svg]:h-6 md:[&_svg]:w-7 md:[&_svg]:h-7 ${place.iconClassName}`}>
 								{place.icon}
 							</span>
 							<span>
@@ -67,7 +87,7 @@ export const AppLanding = () => (
 									href={place.href}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="underline hover:text-primary transition-colors"
+									className="text-primary underline hover:text-secondary transition-colors"
 								>
 									{place.link}
 								</a>
@@ -76,7 +96,20 @@ export const AppLanding = () => (
 					))}
 				</ul>
 				<PromoCodeButton />
-			</div>
+			</section>
+		</div>
+
+		<section className="w-full grid grid-cols-1 md:grid-cols-3 gap-4" aria-label="What is in the app">
+			{features.map((feature) => (
+				<div key={feature.key} className="stone-card flex items-center gap-4 px-2 py-1">
+					{/* eslint-disable-next-line @next/next/no-img-element */}
+					<img src={feature.icon} alt="" className="w-14 h-14 shrink-0 object-contain" aria-hidden />
+					<div className="flex flex-col gap-1">
+						<h2 className="text-2xl text-gold">{feature.title}</h2>
+						<p className="text-base md:text-lg text-[var(--color-muted)] leading-snug">{feature.text}</p>
+					</div>
+				</div>
+			))}
 		</section>
 	</div>
 )

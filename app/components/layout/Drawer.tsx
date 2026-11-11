@@ -59,7 +59,7 @@ export const Drawer = ({ isOpen, onClose, tags }: DrawerProps) => {
 				height: 'calc(100dvh - 64px)',
 				marginTop: '7px',
 			}}
-			className={`fixed left-0 top-[57px] md:top-[57px] w-full md:w-80 bg-[var(--color-bg)] z-[110] shadow-lg transform transition-transform duration-300 ease-out ${
+			className={`fixed left-0 top-[57px] md:top-[57px] w-full md:w-80 bg-[var(--color-stone)] z-[110] shadow-lg transform transition-transform duration-300 ease-out ${
 				isOpen ? 'translate-x-0' : '-translate-x-full'
 			}`}
 		>
@@ -96,7 +96,7 @@ export const Drawer = ({ isOpen, onClose, tags }: DrawerProps) => {
 								className="w-6 h-6"
 							/>
 							<span className="text-lg">Daily Riddle Adventure</span>
-							<span className="ml-auto px-2 py-0.5 text-xs bg-primary text-white rounded-full">NEW</span>
+							<span className="ml-auto px-2 py-0.5 text-xs bg-primary text-bg rounded-full">NEW</span>
 						</Link>
 						<Link
 							href="/#about-riddles"

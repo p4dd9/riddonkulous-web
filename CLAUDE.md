@@ -52,14 +52,14 @@ The native app is **guest-only**: it appends a `RiddonkulousApp` token to its Us
 Riddonkulous is only **playable** in the native app. In a regular browser the site is just a landing page: `/` renders `AppLanding` (`app/components/playInApp/`, store buttons + Twitch), there is no header, and `proxy.ts` redirects every other page to `/` except the allowlist in `BROWSER_PAGES` (privacy policy, terms, content policy, about us, FAQ, credits, newsletter pages, admin, API, files). The sitemap lists only those pages. Server code decides with `canPlayRequest()` (native app, or `WEB_PLAY_ENABLED=true`, which also lifts the redirects).
 
 There is no login or riddle creation for normal users: `/user/me/*` redirects to `/` and `/api/riddle/create` returns 404. Admins sign in at `/admin/login` (not linked). `/subscribe` and `/unsubscribe` keep working from newsletter emails (they have their own login modal) but nothing in the UI links to them.
-
-**Debugging either view locally:** `npm run dev` shows a "Debug view" pill (bottom left) with Browser / App / Auto. It sets the `riddonkulous_view` cookie through `?view=web|app|auto`, which overrides User-Agent detection everywhere (`resolveIsNativeApp`). The override is ignored in production unless `VIEW_SWITCHER_ENABLED=true`.
-
 ## Styling Rules
 
 - **Tailwind CSS v4** with custom theme defined in `app/globals.css`
-- Always use the custom theme variables (`--color-primary`, `--color-bg`, etc.) — avoid default Tailwind color classes
-- **Never use `font-semibold`, `font-bold`**, or any bold weight — the project font (Jersey25) does not support them
+- The site wears the mobile game's look (riddonkulous-mobile `src/stage/theme.ts` and `kit.ts`): Layer Lab's Dark Stone kit, cream text on stone, gold accents, green actions. Kit textures are in `public/gui/`; `globals.css` turns them into nine-slice classes: `btn-stone` / `btn-stone-gray` (buttons), `stone-panel`, `stone-card`, `stone-popup`, `stone-sheet`, `stone-ribbon`, `stone-input`, `text-gold`. Use those instead of flat `bg-primary` fills
+- Always use the custom theme variables (`--color-primary` gold, `--color-tertiary` green, `--color-bg`, `--color-muted`, etc.). Tailwind's `white` and `gray-*` are remapped to the stone palette in `@theme`; avoid other default Tailwind color classes
+- **Never use `font-semibold`, `font-bold`**, or any bold weight: the project font (Bubblegum Sans, OFL) has one weight only
+- No pixel-art pal GIFs (`/pals/*.gif`) in pages
+- The landing page's playable riddle is Pixi.js (`app/components/playInApp/RiddleDemo.tsx` loads `demo/riddleDemo.ts` on the client; `demo/kit.ts` mirrors the game's kit)
 - **Never use `<strong>` tags**
 - Reference existing component patterns in `app/components/` for styling conventions
 
