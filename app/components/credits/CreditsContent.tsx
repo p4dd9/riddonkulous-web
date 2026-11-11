@@ -40,32 +40,7 @@ export const CreditsContent = () => {
 				</div>
 
 				<div className="flex flex-col gap-2">
-					<h2 className="text-xl ">App Visuals</h2>
-					<ul className="flex flex-col gap-3 list-none">
-						<li>
-							<span className="text-primary">Layer Lab</span>
-							<span className="text-gray-400 ml-2">- GUI &quot;Dark Stone&quot;</span>
-						</li>
-						<li>
-							<Link
-								href="https://fonts.google.com/specimen/Bubblegum+Sans"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="hover:underline text-primary"
-							>
-								Angel Koziupa and Alejandro Paul
-							</Link>
-							<span className="text-gray-400 ml-2">- Font &quot;Bubblegum Sans&quot;</span>
-						</li>
-						<li>
-							<span className="text-primary">RhosGFX</span>
-							<span className="text-gray-400 ml-2">- Achievement and campaign icons</span>
-						</li>
-					</ul>
-				</div>
-
-				<div className="flex flex-col gap-2">
-					<h2 className="text-xl ">Visuals</h2>
+					<h2 className="text-xl ">Visuals Reddit</h2>
 					<ul className="flex flex-col gap-3 list-none">
 						<li>
 							<Link
@@ -160,20 +135,10 @@ export const CreditsContent = () => {
 				</div>
 
 				<div className="flex flex-col gap-2">
-					<h2 className="text-xl ">Authors</h2>
-					<p className="text-gray-400 mb-2">Medusa and The Gorgons Adventure</p>
-					<ul className="flex flex-col gap-2 list-none">
-						<li>James Baillie</li>
-						<li>Asther Kane</li>
-						<li>Deloria Patton</li>
-					</ul>
-				</div>
-
-				<div className="flex flex-col gap-2">
 					<h2 className="text-xl ">Special Thanks</h2>
 					<ul className="flex flex-col gap-2 list-none">
 						<li>
-							<span className="">D.E.M</span>
+							<span className="">D.E.M.</span>
 							<span className="text-gray-400 ml-2">
 								- Community Work and Outstanding Contributions to the Community
 							</span>
