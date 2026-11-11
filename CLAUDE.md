@@ -49,7 +49,7 @@ The native app is **guest-only**: it appends a `RiddonkulousApp` token to its Us
 
 ### Gameplay is app-only
 
-Riddonkulous is only **playable** in the native app. In a regular browser the site is just a landing page: `/` renders `AppLanding` (`app/components/playInApp/`, store buttons + Twitch), there is no header, and `proxy.ts` redirects every other page to `/` except the allowlist in `BROWSER_PAGES` (privacy policy, terms, content policy, about us, FAQ, credits, newsletter pages, admin, API, files). The sitemap lists only those pages. Server code decides with `canPlayRequest()` (native app, or `WEB_PLAY_ENABLED=true`, which also lifts the redirects).
+Riddonkulous is only **playable** in the native app. In a regular browser the site is just a landing page: `/` renders `AppLanding` (`app/components/playInApp/`, store buttons + Twitch), there is no header, and `proxy.ts` redirects every other page to `/` except the allowlist in `BROWSER_PAGES` (privacy policy, terms, content policy, FAQ, credits, newsletter pages, admin, API, files). The sitemap lists only those pages. Server code decides with `canPlayRequest()` (native app, or `WEB_PLAY_ENABLED=true`, which also lifts the redirects).
 
 There is no login or riddle creation for normal users: `/user/me/*` redirects to `/` and `/api/riddle/create` returns 404. Admins sign in at `/admin/login` (not linked). `/subscribe` and `/unsubscribe` keep working from newsletter emails (they have their own login modal) but nothing in the UI links to them.
 ## Styling Rules

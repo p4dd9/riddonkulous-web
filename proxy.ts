@@ -24,7 +24,7 @@ export const config = {
 // page). API routes, admin, and any file with an extension (robots.txt,
 // sitemap.xml, sw.js, .well-known files) stay reachable.
 const BROWSER_PAGES =
-	/^\/(privacy-policy|terms-of-service|content-policy|about-us|faq|credits|subscribe|unsubscribe|admin|api|password|403|\.well-known)(\/|$)/
+	/^\/(privacy-policy|terms-of-service|content-policy|faq|credits|subscribe|unsubscribe|admin|api|password|403|\.well-known)(\/|$)/
 
 const isBrowserAllowedPath = (pathname: string): boolean =>
 	pathname === '/' || BROWSER_PAGES.test(pathname) || /\.[a-z0-9]+$/i.test(pathname)
