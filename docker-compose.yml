@@ -22,7 +22,8 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-    # Google Play promo codes (codes.csv) and who claimed them (claims.json).
+    # Store promo codes (Android: codes.csv, iOS: codes_ios.csv) and who claimed
+    # them (claims.json, claims_ios.json).
     # Kept outside the checkout because a deploy replaces it (setup-hammertime.sh).
     volumes:
       - ../_config/config/promo:/opt/riddonkulous-web/data/promo

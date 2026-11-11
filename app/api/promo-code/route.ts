@@ -1,9 +1,17 @@
 import { getClientIp } from '@/app/lib/clientIp'
-import { claimPromoCode, getPromoWord, isLockedOut, noteWrongTry, playRedeemUrl } from '@/app/lib/promoCodes'
+import {
+	claimPromoCode,
+	getPromoWord,
+	isLockedOut,
+	isPromoPlatform,
+	noteWrongTry,
+	PromoPlatform,
+} from '@/app/lib/promoCodes'
 import { serverLogger } from '@/app/util/logger'
 import { NextRequest, NextResponse } from 'next/server'
 
-const CLAIM_COOKIE = 'riddonk_promo'
+// One claim cookie per platform, so a visitor can hold one code for each.
+const CLAIM_COOKIES: Record<PromoPlatform, string> = { android: 'riddonk_promo', ios: 'riddonk_promo_ios' }
 const YEAR_SECONDS = 60 * 60 * 24 * 365
 
 const reply = (body: object, status = 200) =>
@@ -23,9 +31,14 @@ export const POST = async (request: NextRequest) => {
 	}
 
 	let word = ''
+	let platform: PromoPlatform = 'android'
 	try {
 		const body = await request.json()
 		word = typeof body?.word === 'string' ? body.word : ''
+		if (body?.platform !== undefined) {
+			if (!isPromoPlatform(body.platform)) return reply({ error: 'Invalid request.' }, 400)
+			platform = body.platform
+		}
 	} catch {
 		return reply({ error: 'Invalid request.' }, 400)
 	}
@@ -36,14 +49,16 @@ export const POST = async (request: NextRequest) => {
 	}
 
 	try {
-		const result = await claimPromoCode(request.cookies.get(CLAIM_COOKIE)?.value, ip)
+		const cookie = CLAIM_COOKIES[platform]
+		const result = await claimPromoCode(platform, request.cookies.get(cookie)?.value, ip)
 
 		if (result.status === 'empty') {
-			return reply({ error: 'All codes are gone. Thanks for playing!' }, 410)
+			const store = platform === 'ios' ? 'iOS' : 'Android'
+			return reply({ error: `All ${store} codes are gone. Thanks for playing!` }, 410)
 		}
 
-		const response = reply({ code: result.code, url: playRedeemUrl(result.code) })
-		response.cookies.set(CLAIM_COOKIE, result.id, {
+		const response = reply({ code: result.code, url: result.url })
+		response.cookies.set(cookie, result.id, {
 			httpOnly: true,
 			sameSite: 'lax',
 			secure: process.env.NODE_ENV === 'production',
